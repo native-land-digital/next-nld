@@ -8,8 +8,6 @@ import { randomStartingPosition, createSetFeatureCollection } from '@/components
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-import styles from './map.module.css';
-
 export default function MainMap({ allLayers, map, setMap, hoveredFeatures, setHoveredFeatures, selectedFeatures, setSelectedFeatures, currentLayers }) {
 
   const currentLayersRef = useRef(currentLayers);
@@ -20,8 +18,7 @@ export default function MainMap({ allLayers, map, setMap, hoveredFeatures, setHo
     const newMap = new mapboxgl.Map({
       ...randomStartingPosition(),
       container: "nld-mapbox-map",
-      style: "mapbox://styles/nativeland/cl5sdtnnf000014mvdlefe0x9",
-      projection: "globe",
+      style: "mapbox://styles/nativeland/cm19wz3jo022001q1b5smhv5g",
       showZoom: false,
       showCompass: false,
       preserveDrawingBuffer: true,
@@ -115,7 +112,6 @@ export default function MainMap({ allLayers, map, setMap, hoveredFeatures, setHo
           }
         });
 
-        console.log('whu')
         map.on("click", (e) => {
           const featuresUnderMouse = map.queryRenderedFeatures(e.point, { layers: currentLayersRef.current });
           createSelectedFeatures(featuresUnderMouse);
@@ -127,6 +123,6 @@ export default function MainMap({ allLayers, map, setMap, hoveredFeatures, setHo
   }
 
   return (
-    <div id="nld-mapbox-map" className={styles.main_map}></div>
+    <div id="nld-mapbox-map" className="w-full h-full"></div>
   );
 }

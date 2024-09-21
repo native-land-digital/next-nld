@@ -1,7 +1,9 @@
 .mapboxgl-ctrl-geocoder {
-  width: 100% !important;
-  margin-top: 10px;
-  box-shadow: none;
-  border: thin solid #aaa;
-  font-size: 12px;
+  @apply w-full;
+  @apply mt-2.5;
+  @apply shadow-none;
+  @apply text-xs;
+  @apply border;
+  @apply border-solid;
+  @apply border-slate-200;
 }

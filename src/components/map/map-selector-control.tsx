@@ -3,7 +3,6 @@ import Switch from "react-switch";
 import Select from 'react-select';
 
 import './map.geocoder.css';
-import styles from './map.module.css';
 
 export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures }) {
 
@@ -41,16 +40,16 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
     }
 
     return (
-      <div className={styles.nld_selector_control_container}>
-        <div className={styles.nld_search_control}>
-          <div className={styles.nld_switch_container}>
+      <div className="w-72 absolute z-10 left-0 top-0 m-2.5">
+        <div className="w-full shadow-lg shadow-gray-500/40 bg-white rounded p-2.5">
+          <div className="flex justify-between items-center text-center text-sm text-black">
             <div>
               <Switch
                 checked={currentLayers.indexOf('territories') > -1}
                 onChange={(checked) => adjustCurrentLayers(checked, 'territories')}
                 width={40}
                 height={20}
-                onColor={"#1e325b"}
+                onColor={"#1e3a8a"} // blue-900
                 uncheckedIcon={false}
                 checkedIcon={false}
                 handleDiameter={15} />
@@ -62,7 +61,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 onChange={(checked) => adjustCurrentLayers(checked, 'languages')}
                 width={40}
                 height={20}
-                onColor={"#1e325b"}
+                onColor={"#1e3a8a"} // blue-900
                 uncheckedIcon={false}
                 checkedIcon={false}
                 handleDiameter={15} />
@@ -74,20 +73,20 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 onChange={(checked) => adjustCurrentLayers(checked, 'treaties')}
                 width={40}
                 height={20}
-                onColor={"#1e325b"}
+                onColor={"#1e3a8a"} // blue-900
                 uncheckedIcon={false}
                 checkedIcon={false}
                 handleDiameter={15} />
               <p>Treaties</p>
             </div>
           </div>
-          <hr className={styles.hr} />
+          <hr className="mt-1.5 border-slate-300" />
           <div>
-            <p className={styles.info_text}>Search your address, or toggle switches above to add shapes. Click around! <a href="https://native-land.ca/teachers-guide/">Think critically about this map</a>.</p>
-            <div id="nld_geocoder" className={styles.nld_geocoder} />
+            <p className="text-xs text-black mt-2.5">Search your address, or toggle switches above to add shapes. Click around! <a href="https://native-land.ca/teachers-guide/">Think critically about this map</a>.</p>
+            <div id="nld_geocoder" className="m-0" />
           </div>
         </div>
-        <div className={styles.nld_select_container}>
+        <div className="mt-2.5">
           <Select
             placeholder="Territories"
             options={[
@@ -96,7 +95,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
               { value: 'vanilla', label: 'Vanilla' }
             ]} />
         </div>
-        <div className={styles.nld_select_container}>
+        <div className="mt-2.5">
           <Select
             placeholder="Languages"
             options={[
@@ -105,7 +104,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
             { value: 'vanilla', label: 'Vanilla' }
           ]} />
         </div>
-        <div className={styles.nld_select_container}>
+        <div className="mt-2.5">
           <Select
             placeholder="Treaties"
             options={[
@@ -115,11 +114,15 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
           ]} />
         </div>
         {selectedFeatures.length > 0 ?
-          <div className={styles.nld_results_container}>
-            <p className={styles.results_text}>Contact local nations to verify:</p>
-            <ul className={styles.results_list}>
+          <div className="shadow-lg shadow-gray-500/40 bg-white rounded p-2.5 mt-2.5">
+            <p className="text-sm text-black mb-1.5">Contact local nations to verify:</p>
+            <ul className="list-none">
               {selectedFeatures.map(feature => {
-                return <li><input type="checkbox" checked={toggledFeatures.indexOf(feature.properties.Slug) === -1} className={styles.results_checkbox} onChange={() => nationToggle(feature.properties.Slug)} /><a href={feature.properties.description} target="_blank">{feature.properties.Name} ↗</a></li>
+                return (
+                  <li key={`selected-features-${feature.properties.Slug}`}>
+                    <input type="checkbox" checked={toggledFeatures.indexOf(feature.properties.Slug) === -1} className="mr-1.5" onChange={() => nationToggle(feature.properties.Slug)} />
+                    <a href={feature.properties.description} target="_blank">{feature.properties.Name} ↗</a>
+                  </li>)
               })}
             </ul>
           </div>

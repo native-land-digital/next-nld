@@ -14,14 +14,17 @@ datasource db {
 }
 
 model User {
-	id           Int @id @default(autoincrement())
-	email        String @unique
-	name         String?
-  role         String @default("member")
-  api_key      String?
+	id              Int @id @default(autoincrement())
+  createdAt       DateTime  @default(now())
+	email           String @unique
+  password        String?
+	name            String?
+  role            String @default("member")
+  organization    String?
+  api_key         String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
 }
 
 model Polygon {
-	id           Int @id @default(autoincrement())
-	name         String?
+	id              Int @id @default(autoincrement())
+	name            String?
 }

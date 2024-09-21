@@ -4,9 +4,6 @@ import Select from 'react-select';
 
 import { exportMap } from '@/components/map/map-utils';
 
-import './map.geocoder.css';
-import styles from './map.module.css';
-
 export default function TogglesControl({ allLayers, map }) {
 
     const [ textZoomed, setTextZoomed ] = useState(false);
@@ -75,11 +72,11 @@ export default function TogglesControl({ allLayers, map }) {
     }
 
     return (
-      <div className={styles.nld_toggles_control_container}>
-        <button onClick={() => zoomText()} className={styles.nld_toggles_button}>Zoom</button>
-        <button onClick={() => exportMap(map)} className={styles.nld_toggles_button}>Print</button>
-        <button onClick={() => toggleColors()} className={styles.nld_toggles_button}>Colors</button>
-        <button onClick={() => toggleLabels()} className={styles.nld_toggles_button}>OpenStreetMap Labels</button>
+      <div className="flex absolute z-10 bottom-0 right-0 mr-10 mb-8">
+        <button onClick={() => zoomText()} className="bg-blue-900 px-4 py-2 text-sm rounded text-white mr-2.5 hover:bg-blue-600">Zoom</button>
+        <button onClick={() => exportMap(map)} className="bg-blue-900 px-4 py-2 text-sm rounded text-white mr-2.5 hover:bg-blue-600">Print</button>
+        <button onClick={() => toggleColors()} className="bg-blue-900 px-4 py-2 text-sm rounded text-white mr-2.5 hover:bg-blue-600">Colors</button>
+        <button onClick={() => toggleLabels()} className="bg-blue-900 px-4 py-2 text-sm rounded text-white mr-2.5 hover:bg-blue-600">OpenStreetMap Labels</button>
       </div>
     )
 }

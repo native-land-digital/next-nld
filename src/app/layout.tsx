@@ -1,21 +1,8 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import './bulma.css'
 import "./globals.css";
 
 import Header from '@/components/nav/header';
 import Footer from '@/components/nav/footer';
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata: Metadata = {
   title: "Native-Land.ca | Our home on native land",
@@ -29,9 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="antialiased">
         <Header />
-        {children}
+        <div>
+          {children}
+        </div>
         <Footer />
       </body>
     </html>
