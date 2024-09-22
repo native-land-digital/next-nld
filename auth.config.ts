@@ -20,7 +20,7 @@ export const authConfig = {
         return {
           user : {
             name : session.user.name,
-            role : token.role
+            permissions : token.permissions
           }
         }
       }
@@ -28,7 +28,7 @@ export const authConfig = {
     },
     async jwt({ token, user }) {
       if(user) {
-        token.role = user.role;
+        token.permissions = user.permissions;
       }
       return token;
     }

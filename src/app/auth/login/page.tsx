@@ -33,7 +33,7 @@ export default function Login() {
       setError(results.error);
     } else {
       setError(false);
-      navigate('/admin')
+      navigate('/dashboard')
     }
   }
 
@@ -84,7 +84,7 @@ export default function Login() {
                 </div>
               </div>
             : false }
-            <p className="text-gray-800 text-sm !mt-8 text-center">Don't have an account? <a href="" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">Register here</a></p>
+            <p className="text-gray-800 text-sm !mt-8 text-center">Don't have an account? <a href="/auth/signup" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">Register here</a></p>
           </div>
         </div>
       </div>

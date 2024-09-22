@@ -21,26 +21,30 @@ To build:
 
 Next up:
 
-- Layout with a secondary horizontal menu along the top there, add
-  - User Management
-  - API
-  - Research
-  - Profile
-  - Dashboard which is the default, just some links or something? Some help etc
-  - Logout
-- Proper database models and researcher editing
-- API 
+- Uploading and downloading geoJSON
+- Adding other fields and repeater fields, WYSIWYG stuff
+
+- API
 - Adding good error handling for API responses across app
+- Tying in the research to-do list directly on the researcher page
+- Would they like to be able to load other polygons to draw better relationally?
 
 ## To fix
 
-- Potentially dockerizing for development ?
+- Working out the docker image for Postgres/PostGIS (only for development!!)
+
+docker compose build
+docker compose up
+
+
 - Not taking Dockerfile values when creating Postgres DB (taking local Postgres stuff instead?!)
 - Making sure Typescript is actually being used, lol, not just .tsx files
 - Adding links into the footers
 - Adding the HTML content and layout for the pages
 - Issue with Mapbox glyphs not showing (maybe need a different recipe?)
 - Setup an external blog and move posts over to there
+
+- https://mapscaping.com/polygons-vs-multipolygons-in-gis/
 
 ## Database structure notes
 

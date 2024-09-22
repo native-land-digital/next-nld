@@ -1,7 +1,8 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { signIn } from "next-auth/react";
-import { navigate } from '@/lib/actions'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Signup() {
 
@@ -9,10 +10,8 @@ export default function Signup() {
   const [ name, setName ] = useState("");
   const [ organization, setOrganization ] = useState("");
   const [ password, setPassword ] = useState("");
-  const [ error, setError ] = useState(false);
 
   const doSignUp = async () => {
-    setError(false);
     fetch('/api/users', {
       method : "POST",
       headers : { 'Content-Type': 'application/json' },
@@ -23,11 +22,9 @@ export default function Signup() {
         password : password
       })
     }).then(resp => resp.json()).then(results => {
-      console.log(results)
       if(results.error) {
-        setError(results.error);
+        toast(results.error)
       } else {
-        setError(false);
         doSignIn();
       }
     });
@@ -37,7 +34,7 @@ export default function Signup() {
     await signIn('credentials', {
       email : email,
       password : password,
-      callbackUrl : '/admin'
+      callbackUrl : '/dashboard'
     });
   }
 
@@ -84,13 +81,7 @@ export default function Signup() {
               </button>
             </div>
 
-            {error ?
-              <div className="mt-3">
-                <div className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-red-500 break-all">
-                  {error}
-                </div>
-              </div>
-            : false }
+            <ToastContainer />
           </div>
         </div>
       </div>

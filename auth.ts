@@ -15,7 +15,7 @@ async function getUser(email: string): Promise<User | undefined> {
       select : {
         id : true,
         name : true,
-        role : true,
+        permissions : true,
         email : true,
         password : true
       }
@@ -48,6 +48,7 @@ export const authOptions = {
 
           if(user) {
             if(user && user.password === hashPassword(password)) {
+              console.log(user)
               delete user.password;
               return user;
             } else {

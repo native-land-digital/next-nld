@@ -1,28 +1,33 @@
-import { NextRequest, NextResponse } from 'next/server'
-import NextAuth from 'next-auth';
+import { withAuth } from "next-auth/middleware"
 
-const PUBLIC_FILE = /\.(.*)$/
-
-// export async function middleware(req: NextRequest) {
-//   if (
-//     req.nextUrl.pathname.startsWith('/_next') ||
-//     req.nextUrl.pathname.includes('/api/') ||
-//     PUBLIC_FILE.test(req.nextUrl.pathname)
-//   ) {
-//     return
-//   }
-//
-//   if (req.nextUrl.locale === 'default') {
-//     const locale = req.cookies.get('NEXT_LOCALE')?.value || 'en'
-//
-//     return NextResponse.redirect(
-//       new URL(`/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url)
-//     )
-//   }
-// }
+export default withAuth({
+  callbacks: {
+    authorized: ({ req, token }) => {
+      const path = req.nextUrl.pathname;
+      // Returns user to signin if they try to access an unauthorized route
+      if (path.startsWith("/dashboard/api")) {
+        if(!token?.permissions.includes("api")) {
+          return false;
+        }
+      }
+      if (path.startsWith("/dashboard/users")) {
+        if(!token?.permissions.includes("manage_users")) {
+          return false;
+        }
+      }
+      if (path.startsWith("/dashboard/research")) {
+        if(!token?.permissions.includes("research")) {
+          return false;
+        }
+      }
+      return token !== null;
+    }
+  }
+})
 
 // Blocking admin non-logged in
-export { default } from "next-auth/middleware"
 export const config = {
-  matcher: ["/admin"]
+  matcher: [
+    "/dashboard/:path*"
+  ]
 }
