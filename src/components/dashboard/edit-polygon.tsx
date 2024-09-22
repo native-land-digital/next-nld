@@ -1,9 +1,13 @@
 'use client'
 import { useState, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
-import MainMap from '@/components/dashboard/map-editor';
+import MainMap from '@/components/dashboard/editors/map-editor';
+import WYSIWYGEDitor from '@/components/dashboard/editors/wysiwyg-editor';
+import MediaEditor from '@/components/dashboard/editors/media-editor';
+import WebsiteEditor from '@/components/dashboard/editors/website-editor';
+import ChangelogEditor from '@/components/dashboard/editors/changelog-editor';
+import RelationEditor from '@/components/dashboard/editors/relation-editor';
 
 import { availableCategories } from '@/lib/map/categories';
 
@@ -20,16 +24,6 @@ export default function EditPolygon({ polygon }) {
   const [ relatedTo, setRelatedTo ] = useState(polygon.relatedTo);
   const [ geometry, setGeometry ] = useState(polygon.geometry);
 
-  // const savePermissions = (checked, permission) => {
-  //   let newPermissions = JSON.parse(JSON.stringify(permissions));
-  //   if(checked) {
-  //     newPermissions.push(permission);
-  //   } else {
-  //     newPermissions.splice(newPermissions.indexOf(permission), 1);
-  //   }
-  //   setPermissions(newPermissions)
-  // }
-
   const savePolygon = () => {
     fetch(`/api/polygons/${polygon.id}`, {
       method : "PATCH",
@@ -37,6 +31,13 @@ export default function EditPolygon({ polygon }) {
       body : JSON.stringify({
         name : name,
         category : category,
+        description : description,
+        pronunciation : pronunciation,
+        published : published,
+        websites : websites,
+        media : media,
+        changelog : changelog,
+        relatedTo : relatedTo,
         geometry : geometry
       })
     }).then(resp => resp.json()).then(results => {
@@ -87,12 +88,46 @@ export default function EditPolygon({ polygon }) {
         </div>
 
         <div className="mt-2.5">
-          <label className="text-gray-800 text-sm mb-1 block">Description</label>
-          <div className="relative flex items-center">
-            <textarea value={description ? description : ""} onChange={(e) => setDescription(e.target.value)} name="description" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter description"></textarea>
+          <label className="text-gray-800 text-sm mb-1 block">Public</label>
+          <div className="relative">
+            <label htmlFor="published" className='capitalize text-sm'>
+              <input id="published" type="checkbox" checked={published} name="published" onChange={(e) => setPublished(e.target.checked)} className="mr-1.5" />
+              Published
+            </label>
           </div>
         </div>
 
+      </div>
+
+      <div className="w-full">
+        <div className="mt-2.5">
+          <label className="text-gray-800 text-sm mb-1 block">Description</label>
+          <WYSIWYGEDitor description={description} setDescription={setDescription} />
+        </div>
+      </div>
+
+
+      <div className="mt-6">
+        <label className="text-gray-800 text-normal mb-1 block">Media</label>
+        <MediaEditor media={media} setMedia={setMedia} />
+      </div>
+
+      <div className="mt-6">
+        <label className="text-gray-800 text-normal mb-1 block">Websites</label>
+        <WebsiteEditor websites={websites} setWebsites={setWebsites} />
+      </div>
+
+      <div className="mt-6">
+        <label className="text-gray-800 text-normal mb-1 block">Related To</label>
+        <RelationEditor relatedTo={relatedTo} setRelatedTo={setRelatedTo} />
+      </div>
+
+      <div className="mt-6">
+        <label className="text-gray-800 text-normal mb-1 block">Changelog</label>
+        <ChangelogEditor changelog={changelog} setChangelog={setChangelog} />
+      </div>
+
+      <div className="w-full md:w-1/2">
         <div className="!mt-8">
           <button onClick={() => savePolygon()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
             Save Changes
@@ -100,7 +135,6 @@ export default function EditPolygon({ polygon }) {
         </div>
 
       </div>
-      <ToastContainer />
     </div>
   );
 }

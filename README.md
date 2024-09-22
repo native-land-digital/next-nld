@@ -18,10 +18,10 @@ To build:
 - translation: should only rebuild the front page, how to provide strings to it?
 - reducing size of bulma, creating custom build, or just writing 100% custom CSS]
 - Adding modal to front loader
+- Making updating repeater queries more efficient 
 
 Next up:
 
-- Uploading and downloading geoJSON
 - Adding other fields and repeater fields, WYSIWYG stuff
 
 - API

@@ -2,13 +2,13 @@
 import { useState, useEffect } from 'react';
 import { signIn } from "next-auth/react";
 import { navigate } from '@/lib/actions'
+import { toast } from 'react-toastify';
 
 export default function Login() {
 
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
   const [ rememberMe, setRememberMe ] = useState(false);
-  const [ error, setError ] = useState(false);
 
   useEffect(() => {
     if(localStorage.getItem('nld_email')) {
@@ -30,9 +30,8 @@ export default function Login() {
       redirect : false
     });
     if(results.error) {
-      setError(results.error);
+      toast(results.error);
     } else {
-      setError(false);
       navigate('/dashboard')
     }
   }
@@ -77,13 +76,6 @@ export default function Login() {
               </button>
             </div>
 
-            {error ?
-              <div className="mt-3">
-                <div className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-red-500 ">
-                  {error}
-                </div>
-              </div>
-            : false }
             <p className="text-gray-800 text-sm !mt-8 text-center">Don't have an account? <a href="/auth/signup" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">Register here</a></p>
           </div>
         </div>

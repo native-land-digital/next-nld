@@ -18,7 +18,7 @@ export const PATCH = async (req: NextRequest, route: { params: { id: string }}) 
 	} catch (error) {
 		console.error(error);
 
-		return NextResponse.json(`Something went wrong. Here is the error message: ${JSON.stringify(error)}`, { status: 500 });
+		return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}`}, { status: 500 });
 	}
 }
 
@@ -34,6 +34,6 @@ export const DELETE = async (req: NextRequest, route: { params: { id: string }})
 	} catch (error) {
 		console.error(error);
 
-		return NextResponse.json(`Something went wrong. Here is the error message: ${JSON.stringify(error)}`, { status: 500 });
+		return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
 	}
 }

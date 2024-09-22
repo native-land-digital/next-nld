@@ -4,6 +4,8 @@ import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import combine from "@turf/combine";
+import bbox from "@turf/bbox";
+import { toast } from 'react-toastify';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -38,11 +40,7 @@ export default function MapEditor({ geometry, setGeometry }) {
             }
           }
         })
-        polygons.current = loadedPolygons;
-        draw.add({
-          type : "FeatureCollection",
-          features : polygons.current
-        })
+        setMapFeatures(loadedPolygons)
       }
     }
   }, [geometry, draw])
@@ -63,6 +61,15 @@ export default function MapEditor({ geometry, setGeometry }) {
     } else {
       setGeometry("null")
     }
+  }
+
+  const setMapFeatures = (features) => {
+    polygons.current = features;
+    setGeometryFromPolygons();
+    let featureCollection = { type : "FeatureCollection", features : features }
+    draw.add(featureCollection)
+    const bounds = bbox(featureCollection)
+    map.fitBounds(bounds, { padding : 50, duration : 0 })
   }
 
   const addControls = () => {
@@ -114,7 +121,61 @@ export default function MapEditor({ geometry, setGeometry }) {
 
   }
 
+  const downloadGeoJSON = () => {
+    const featureCollection = { type : "FeatureCollection", features : polygons.current.map(polygon => {
+      polygon.properties = {};
+      return polygon;
+    }) }
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(featureCollection));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href",     dataStr);
+    downloadAnchorNode.setAttribute("download", "nld-export.json");
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  }
+
+  const uploadGeoJSON = (event) => {
+    var reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const json = JSON.parse(e.target.result);
+        if(json.features.length > 0) {
+          let nonPolygons = json.features.filter(feature => feature.geometry.type.indexOf("Polygon") === -1);
+          if(nonPolygons.length === 0) {
+            let finalPolygons = json.features.filter(feature => feature.geometry.type === "Polygon")
+            let multipolygons = json.features.filter(feature => feature.geometry.type === "MultiPolygon");
+            multipolygons.forEach(multipolygon => {
+              multipolygon.geometry.coordinates.forEach(coordinateSet => {
+                finalPolygons.push({ type : "Feature", geometry : { type : "Polygon", coordinates : coordinateSet }});
+              })
+            })
+            toast("Succesfully uploaded")
+            if(window.confirm("Do you want to replace the polygons on the map? This will delete any existing polygons.")) {
+              draw.deleteAll();
+              setMapFeatures(finalPolygons)
+            }
+          } else {
+            toast("You have non-polygons in the JSON. Please verify at at https://geojson.io")
+          }
+        } else {
+          toast("The geoJSON seems empty. Please verify at at https://geojson.io")
+        }
+      } catch {
+        toast("There's an issue with the geoJSON. Please verify it at https://geojson.io")
+      }
+    };
+    reader.readAsText(event.target.files[0]);
+  }
+
   return (
-    <div id="nld-research-mapbox-map" className="w-full h-screen"></div>
+    <div className="relative">
+      <div id="nld-research-mapbox-map" className="w-full h-screen"></div>
+      <div className="absolute flex right-0 top-0 m-2 text-xs z-100">
+        <div className="py-1 px-2 mr-2 bg-white rounded hover:bg-gray-200 cursor-pointer" onClick={() => downloadGeoJSON()}>Download GeoJSON</div>
+        <input type="file" className="hidden" id="geojson-upload-input" onChange={(e) => uploadGeoJSON(e)} />
+        <label htmlFor="geojson-upload-input" className="py-1 px-2 bg-white rounded hover:bg-gray-200 cursor-pointer">Upload GeoJSON</label>
+      </div>
+    </div>
   )
 }

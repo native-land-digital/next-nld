@@ -1,8 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { possiblePermissions } from '@/lib/auth/permissions';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 export default function EditUser({ user }) {
 
@@ -108,8 +107,7 @@ export default function EditUser({ user }) {
             Save Changes
           </button>
         </div>
-
-        <ToastContainer />
+        
       </div>
     </div>
   );

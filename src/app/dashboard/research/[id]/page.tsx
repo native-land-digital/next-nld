@@ -31,6 +31,10 @@ export default async function Page({ params }) {
     }
   });
 
+  if(!polygon) {
+    return false;
+  }
+
   polygon.geometry = null;
   if(polygonShape && polygonShape[0] && polygonShape[0].st_asgeojson) {
     polygon.geometry = JSON.parse(polygonShape[0].st_asgeojson)

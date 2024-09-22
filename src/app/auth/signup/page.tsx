@@ -1,8 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { signIn } from "next-auth/react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 export default function Signup() {
 
@@ -81,7 +80,6 @@ export default function Signup() {
               </button>
             </div>
 
-            <ToastContainer />
           </div>
         </div>
       </div>
