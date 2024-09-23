@@ -16,6 +16,8 @@ datasource db {
 model Media {
   id              Int @id @default(autoincrement())
   url             String
+  title           String?
+  caption         String?
   polygonId       Int
   polygon         Polygon @relation(fields: [polygonId], references: [id], onDelete: Cascade)
 }
@@ -59,7 +61,7 @@ model User {
 model Polygon {
 	id              Int @id @default(autoincrement())
 	name            String
-  depr_slug       String?
+  depr_slug       String? @unique
   description     String?
   pronunciation   String?
   category        String?

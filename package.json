@@ -2,6 +2,9 @@
   "name": "next-nld",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed/seed.ts"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -20,6 +23,7 @@
     "@tinymce/tinymce-react": "^5.1.1",
     "@turf/bbox": "^7.1.0",
     "@turf/combine": "^7.1.0",
+    "@types/crypto-js": "^4.2.2",
     "aws-crt": "^1.22.0",
     "aws-sdk": "^2.1691.0",
     "crypto-js": "^4.2.0",
@@ -37,7 +41,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.16.5",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.20",
@@ -45,6 +49,7 @@
     "eslint-config-next": "14.2.12",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.12",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
   }
 }

@@ -5,26 +5,56 @@ import AdminHeader from '@/components/dashboard/header'
 import AdminMenu from '@/components/dashboard/menu'
 import CreatePolygon from '@/components/dashboard/create-polygon'
 
-export default async function Page() {
-  const polygons = await prisma.polygon.findMany({
+export default async function Page({ searchParams }) {
+
+  let page = 0;
+  let search = false;
+  if(searchParams.page) {
+    page = Number(searchParams.page);
+  }
+  if(searchParams.search) {
+    search = searchParams.search;
+  }
+  let query = {
     select : {
       id : true,
       name : true,
       category : true
+    },
+    orderBy : {
+      updatedAt : 'desc'
+    },
+    skip : page * 50,
+    take : 50
+  }
+  if(search) {
+    query['where'] = {
+      name : {
+        contains : search,
+        mode: 'insensitive'
+      }
     }
-  });
+  }
+  const polygons = await prisma.polygon.findMany(query);
+  console.log(polygons.length)
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
       <AdminHeader title={"Research"} breadcrumbs={["Dashboard", "Research"]} />
       <div className="min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
         <AdminMenu />
-        <div className="col-span-2 bg-white rounded-t h-screen shadow-lg p-4 mt-5">
-          <div className="flex">
-            <div>
-              <input type="text" placeholder="Enter polygon name to search" />
+        <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
+          <div className="flex w-full mb-5 bg-gray-100 p-2.5 rounded">
+            <div className="w-1/2">
+              <form className="flex">
+                <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
+                <button className="border border-gray-300 px-4 py-3 rounded ml-2.5">Search</button>
+                {search ?
+                  <a className="border border-gray-300 px-4 py-3 rounded ml-2.5" href="/dashboard/research">Clear</a>
+                : false}
+              </form>
             </div>
-            <div>
+            <div className="w-1/2 flex justify-end">
               <CreatePolygon />
             </div>
           </div>
@@ -50,6 +80,30 @@ export default async function Page() {
               })}
             </tbody>
           </table>
+          {polygons.length >= 50 ?
+            <nav className="flex items-center mt-2.5" aria-label="Pagination">
+              {page > 0 ?
+                <form>
+                  <input type="hidden" name="page" value={page - 1} />
+                  <button type="submit" className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" aria-label="Previous">
+                    <svg aria-hidden="true" className="hidden shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m15 18-6-6 6-6"></path>
+                    </svg>
+                    <span>Previous</span>
+                  </button>
+                </form>
+              : false}
+              <form>
+                <input type="hidden" name="page" value={page + 1} />
+                <button type="submit" className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" aria-label="Next">
+                  <span>Next</span>
+                  <svg aria-hidden="true" className="hidden shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </button>
+              </form>
+            </nav>
+          : false}
         </div>
       </div>
     </div>

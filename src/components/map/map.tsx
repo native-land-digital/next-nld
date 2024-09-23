@@ -60,13 +60,43 @@ export default function MainMap({ allLayers, map, setMap, hoveredFeatures, setHo
     }
   }, [currentLayers])
 
+  const polygonQuery = async (query) => {
+    return fetch(`/api/polygons/search?s=${query}&geosearch=true`)
+      .then(resp => resp.json())
+      .then(response => {
+        const features = response.map((polygon, i) => {
+          return {
+            type : "Feature",
+            id : `feature-from-db-${i}`,
+            place_name : polygon.name + ` (${polygon.category})`,
+            center : polygon.centroid.coordinates,
+            bbox : [
+              polygon.bounds.coordinates[0][2][0],
+              polygon.bounds.coordinates[0][0][1],
+              polygon.bounds.coordinates[0][0][0],
+              polygon.bounds.coordinates[0][2][1],
+            ]
+          }
+        })
+        return Promise.resolve(features);
+      })
+  }
+
   const addControls = () => {
     let nav = new mapboxgl.NavigationControl();
     map.addControl(nav, "bottom-right");
     const geocoder = new MapboxGeocoder({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
-      mapboxgl: mapboxgl
+      mapboxgl: mapboxgl,
+      externalGeocoder : polygonQuery
     });
+    geocoder.on('result', ({ result }) => {
+      const createSelectedFeatures = createSetFeatureCollection("isSelected", map);
+      let point = map.project(result.center);
+      const featuresUnderMouse = map.queryRenderedFeatures(point, { layers: currentLayersRef.current });
+      createSelectedFeatures(featuresUnderMouse);
+      setSelectedFeatures(featuresUnderMouse);
+    })
     document.getElementById('nld_geocoder').appendChild(geocoder.onAdd(map));
   }
 
