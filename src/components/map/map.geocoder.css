@@ -1,9 +1,0 @@
-.mapboxgl-ctrl-geocoder {
-  @apply w-full;
-  @apply mt-2.5;
-  @apply shadow-none;
-  @apply text-xs;
-  @apply border;
-  @apply border-solid;
-  @apply border-slate-200;
-}

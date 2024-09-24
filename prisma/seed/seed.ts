@@ -14,12 +14,16 @@ async function main() {
       name : "Admin User",
       email : "test@native-land.ca",
       password : hashPassword("test"),
-      permissions : ["profile", "api", "research", "manage_users"],
+      permissions : ["profile", "api", "research", "manage_users", "update_mapbox"],
       organization : "Native Land Digital"
     }
   });
 
   // nldExport.splice(10); // For import testing
+
+  // Removing template that came along with export
+  let templateIndex = nldExport.findIndex(entry => entry.name.includes("Template"));
+  nldExport.splice(templateIndex, 1);
 
   let createdRecords = 0;
   for await (const entry of nldExport) {
@@ -27,8 +31,8 @@ async function main() {
     let newPolygon = await prisma.polygon.create({
       data : {
         name : entry.name,
-        depr_slug : entry.depr_slug,
-        description : entry.description,
+        slug : entry.slug,
+        sources : entry.sources,
         category : entry.category,
         published : true,
         pronunciation : entry.pronunciation ? entry.pronunciation : "",
@@ -96,16 +100,16 @@ async function main() {
   const polygons = await prisma.polygon.findMany({
     select : {
       id : true,
-      depr_slug : true
+      slug : true
     }
   });
 
   for await (const entry of nldExport) {
-    let thisPolygon = polygons.find(polygon => polygon.depr_slug === entry.depr_slug)
+    let thisPolygon = polygons.find(polygon => polygon.slug === entry.slug)
     if(thisPolygon) {
       let hasRelation = false;
       entry.related.forEach(thisRelation => {
-        let relatedPolygon = polygons.find(polygon => polygon.depr_slug === thisRelation.relatedTo_slug)
+        let relatedPolygon = polygons.find(polygon => polygon.slug === thisRelation.relatedTo_slug)
         if(relatedPolygon) {
           hasRelation = true;
         }
@@ -119,7 +123,7 @@ async function main() {
             relatedTo : {
               createMany : {
                 data : entry.related.map(thisRelation => {
-                  let relatedPolygon = polygons.find(polygon => polygon.depr_slug === thisRelation.relatedTo_slug)
+                  let relatedPolygon = polygons.find(polygon => polygon.slug === thisRelation.relatedTo_slug)
                   return {
                     description : thisRelation.description,
                     relatedToId : relatedPolygon ? relatedPolygon.id : 0

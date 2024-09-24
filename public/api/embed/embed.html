@@ -1,0 +1,89 @@
+<!-- Embed code -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Native-land.ca | API Endpoint</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+      <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+      <link rel="icon" href="/favicon.png" type="image/x-icon"/>
+    <link rel="stylesheet" href="css/leaflet.css" />
+
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
+    <style>
+        body, html {
+            padding: 0;
+            margin: 0;
+        }
+        a {
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        body .leaflet-control-container .leaflet-control-attribution {
+          background: rgba(255,255,255,0.9);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="nativeLandMap" class="nativeLandMap" style="width:100%;height:300px;"></div>
+</body>
+<script src="js/leaflet.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/fromgeojson.js"></script>
+<script src="js/underscore-min.js"></script>
+<script>
+    $(document).ready(function() {
+      $('#nativeLandMap').height(window.innerHeight);
+
+      var afterQuestionMark = window.location.href.substr(window.location.href.indexOf("?") + 1);
+      $.get( "https://native-land.ca/api/index.php?"+afterQuestionMark, function( data ) {
+          var map = L.map('nativeLandMap').setView([51.505, -0.09], 13);
+          L.tileLayer( 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+              attribution: false
+          }).addTo( map );
+          if(afterQuestionMark.indexOf('lang=fr')===-1) {
+            map.attributionControl.setPrefix('This map is a work in progress. For corrections and feedback, visit <a target="_blank" href="http://native-land.ca">Native-Land.ca</a>');
+          } else {
+            map.attributionControl.setPrefix('Cette carte est un travail en cours. Pour soumettre une correction ou un commentaire, visitez le site <a target="_blank" href="http://native-land.ca">Native-Land.ca</a>');
+          }
+          var allGeoJsons = [];
+          if(!Array.isArray(data)) {
+            data = JSON.parse(data);
+          }
+          for(var i=0;i<data.length;i++) {
+              var thisGeoJson = L.geoJson(data[i],{
+                  onEachFeature: function(feature, layer) {
+                      layer.bindPopup('<a target="_blank" href="'+feature.properties.description+'">'+feature.properties.Name+'</a>');
+                  },
+                  style: function(feature) {
+                      const color = getRandomColor();
+                      return {
+                          opacity: 0.8,
+                          color: '#333',
+                          weight : 0.1,
+                          fillOpacity: 0.35,
+                          fillColor: color
+                      }
+                  }
+              });
+              allGeoJsons.push(thisGeoJson);
+          }
+          var layerGeoJsons = L.featureGroup(allGeoJsons).addTo(map);
+          map.fitBounds(layerGeoJsons.getBounds());
+      });
+
+      // Get random color
+      function getRandomColor() {
+          var letters = '0123456789ABCDEF'.split('');
+          var color = '#';
+          for (var i = 0; i < 6; i++ ) {
+              color += letters[Math.floor(Math.random() * 16)];
+          }
+          return color;
+      }
+    });
+
+</script>

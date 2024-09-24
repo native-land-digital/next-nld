@@ -21,7 +21,7 @@ export default function MapEditor({ geometry, setGeometry }) {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
     const newMap = new mapboxgl.Map({
       container: "nld-research-mapbox-map",
-      style: "mapbox://styles/nativeland/clbgxjvlu003015o1g8upud1b",
+      style: process.env.NEXT_PUBLIC_MAPBOX_STYLE_RESEARCH,
     });
     setMap(newMap)
 

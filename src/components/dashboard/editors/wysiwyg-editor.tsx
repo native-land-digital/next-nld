@@ -2,7 +2,7 @@
 import { useRef } from 'react'
 import { Editor } from '@tinymce/tinymce-react';
 
-export default function WYSIWYGEditor({ description, setDescription }) {
+export default function WYSIWYGEditor({ sources, setSources }) {
 
   const editorRef = useRef(null);
   const TINY_MCE_KEY = process.env.NEXT_PUBLIC_TINYMCE_KEY;
@@ -13,9 +13,9 @@ export default function WYSIWYGEditor({ description, setDescription }) {
          id="tiny-mce-editor"
          apiKey={TINY_MCE_KEY}
          onInit={(evt, editor) => editorRef.current = editor}
-         value={description}
+         value={sources}
          onEditorChange={(content) => {
-           setDescription(content)
+           setSources(content)
          }}
          init={{
             height: 300,

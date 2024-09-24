@@ -1,6 +1,6 @@
 import prisma from "@/lib/db/prisma";
 
-import AdminHeader from '@/components/dashboard/header'
+import SubHeader from '@/components/nav/sub-header'
 import AdminMenu from '@/components/dashboard/menu'
 import EditPolygon from '@/components/dashboard/edit-polygon'
 
@@ -17,8 +17,8 @@ export default async function Page({ params }) {
       id : true,
       name : true,
       category : true,
-      depr_slug : true,
-      description : true,
+      slug : true,
+      sources : true,
       pronunciation : true,
       published : true,
       media : true,
@@ -44,7 +44,7 @@ export default async function Page({ params }) {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <AdminHeader title={"Research"} breadcrumbs={["Dashboard", "Research", polygon.name]} />
+      <SubHeader title={"Research"} breadcrumbs={["Dashboard", "Research", polygon.name]} />
       <div className="min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
         <AdminMenu />
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">

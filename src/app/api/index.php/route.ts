@@ -4,11 +4,13 @@
 import prisma from "@/lib/db/prisma";
 import { Prisma, Polygon } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/root/logger";
 
 export const GET = async (req: NextRequest ) => {
 	const maps = req.nextUrl.searchParams.get('maps');
 	const position = req.nextUrl.searchParams.get('position');
 	const name = req.nextUrl.searchParams.get('name');
+	const key = req.nextUrl.searchParams.get('key');
   if(!maps) {
     return NextResponse.json({ error : `You did not include a maps type with your request (territories, languages, and/or treaties)` }, { status: 500 });
   } else {
@@ -24,11 +26,6 @@ export const GET = async (req: NextRequest ) => {
           coordinates : [parseFloat(latlng[1]), parseFloat(latlng[0])]
         }
         try {
-          console.log(`
-            SELECT id
-            FROM "Polygon"
-            WHERE ST_Contains(geometry, ST_GeomFromGeoJSON('${JSON.stringify(positionGeometry)}'))
-          `)
           const polygonShapes = await prisma.$queryRaw`
             SELECT id
             FROM "Polygon"
@@ -44,7 +41,7 @@ export const GET = async (req: NextRequest ) => {
         select : {
           id : true,
           name : true,
-          depr_slug : true
+          slug : true
         },
         where : {
           AND : [{
@@ -77,7 +74,6 @@ export const GET = async (req: NextRequest ) => {
       const polygons = await prisma.polygon.findMany(query)
       if(polygons.length > 0) {
   			const ids = polygons.map(polygon => polygon.id);
-        console.log(ids)
   		  const polygonShapes = await prisma.$queryRaw`
   		    SELECT id, ST_AsGeoJSON(geometry) as geojson
   				FROM "Polygon"
@@ -93,8 +89,8 @@ export const GET = async (req: NextRequest ) => {
                 properties : {
                   "Name" : polygon.name,
                   "ID" : polygon.id,
-                  "Slug" : polygon.depr_slug,
-                  "description" : "<link goes here>",
+                  "Slug" : polygon.slug,
+                  "description" : `${process.env.NEXTAUTH_URL}/maps/${polygon.category}/${polygon.slug}`,
                   "color" : "<color goes here>",
                 },
                 geometry : {
@@ -109,6 +105,7 @@ export const GET = async (req: NextRequest ) => {
   			})
       }
       if (featureList.length > 0) {
+				logger.info(`API ${req.nextUrl.search} ${key ? key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
     		return NextResponse.json(featureList);
       } else {
         return NextResponse.json(featureList);
@@ -118,4 +115,48 @@ export const GET = async (req: NextRequest ) => {
       return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
     }
   }
+}
+
+export const POST = async (req: NextRequest) => {
+		const body: CreateUserReqBody = await req.json();
+
+		if (!body.maps) {
+			return NextResponse.json({ error : "Please provide a category (territories, languages, and/or treaties)" }, { status: 400 });
+		}
+		if (!body.polygon_geojson) {
+			return NextResponse.json({ error : "Please provide an geoJSON polygon" }, { status: 400 });
+		}
+
+		try {
+			// only takes a single shape right now
+			let geometryAsString = JSON.stringify(body.polygon_geojson.features[0].geometry);
+			const polygonShapes = await prisma.$queryRawUnsafe(`
+				SELECT id, name, slug, ST_AsGeoJSON(geometry) as geojson
+				FROM "Polygon"
+				WHERE category = '${body.maps}'
+				AND ST_Intersects(geometry, ST_GeomFromGeoJSON('${geometryAsString}'))
+			`)
+			const featureList = polygonShapes.map(polygon => {
+				let geometry = JSON.parse(polygon.geojson)
+				return {
+					type : "Feature",
+					properties : {
+						"Name" : polygon.name,
+						"ID" : polygon.id,
+						"Slug" : polygon.slug,
+						"description" : `${process.env.NEXTAUTH_URL}/maps/${polygon.category}/${polygon.slug}`,
+						"color" : "<color goes here>",
+					},
+					geometry : {
+						type : geometry.coordinates[0].length === 1 ? "Polygon" : "MultiPolygon",
+						coordinates : geometry.coordinates[0].length === 1 ? geometry.coordinates[0] : geometry.coordinates
+					}
+				}
+			})
+			logger.info(`API ${req.nextUrl.search} ${key ? key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
+			return NextResponse.json(featureList);
+		} catch (error) {
+			console.error(error);
+			return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
+		}
 }

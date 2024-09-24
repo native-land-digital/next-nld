@@ -15,7 +15,7 @@ export default function EditPolygon({ polygon }) {
 
   const [ name, setName ] = useState(polygon.name);
   const [ category, setCategory ] = useState(polygon.category);
-  const [ description, setDescription ] = useState(polygon.description);
+  const [ sources, setSources ] = useState(polygon.sources);
   const [ pronunciation, setPronunciation ] = useState(polygon.pronunciation);
   const [ published, setPublished ] = useState(polygon.published);
   const [ media, setMedia ] = useState(polygon.media);
@@ -31,7 +31,7 @@ export default function EditPolygon({ polygon }) {
       body : JSON.stringify({
         name : name,
         category : category,
-        description : description,
+        sources : sources,
         pronunciation : pronunciation,
         published : published,
         websites : websites,
@@ -101,8 +101,8 @@ export default function EditPolygon({ polygon }) {
 
       <div className="w-full">
         <div className="mt-2.5">
-          <label className="text-gray-800 text-sm mb-1 block">Description</label>
-          <WYSIWYGEDitor description={description} setDescription={setDescription} />
+          <label className="text-gray-800 text-sm mb-1 block">Sources</label>
+          <WYSIWYGEDitor sources={sources} setSources={setSources} />
         </div>
       </div>
 

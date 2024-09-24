@@ -61,8 +61,8 @@ model User {
 model Polygon {
 	id              Int @id @default(autoincrement())
 	name            String
-  depr_slug       String? @unique
-  description     String?
+  slug            String? @unique
+  sources         String?
   pronunciation   String?
   category        String?
   published       Boolean @default(false)

@@ -1,14 +1,52 @@
-"use client"
-import dynamic from 'next/dynamic';
+import prisma from "@/lib/db/prisma";
+import MapContainer from '@/components/front-map/map-container';
 
-const MapContainer = dynamic(() => import('@/components/map/map-container'), {
-  loading: () => <p>Loading...</p>,
-})
+export default async function Home() {
 
-export default function Home() {
+  // Querying for select2 list initial options
+  const territoryOptions = await prisma.polygon.findMany({
+    select : {
+      id : true,
+      name : true
+    },
+    where : {
+      category : 'territories'
+    },
+    orderBy : {
+      name : 'asc'
+    },
+    take : 50
+  });
+  const languageOptions = await prisma.polygon.findMany({
+    select : {
+      id : true,
+      name : true
+    },
+    where : {
+      category : 'languages'
+    },
+    orderBy : {
+      name : 'asc'
+    },
+    take : 50
+  });
+  const treatyOptions = await prisma.polygon.findMany({
+    select : {
+      id : true,
+      name : true
+    },
+    where : {
+      category : 'treaties'
+    },
+    orderBy : {
+      name : 'asc'
+    },
+    take : 50
+  });
+
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
-      <MapContainer />
+      <MapContainer territoryOptions={territoryOptions} languageOptions={languageOptions} treatyOptions={treatyOptions} />
     </div>
   );
 }

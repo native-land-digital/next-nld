@@ -4,14 +4,17 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest ) => {
 	const search = req.nextUrl.searchParams.get('s');
+	const category = req.nextUrl.searchParams.get('category');
 	const geosearch = req.nextUrl.searchParams.get('geosearch');
   try {
-    const polygons = await prisma.polygon.findMany({
+		let query = {
       where : {
-        name : {
-          contains : search,
-          mode: 'insensitive'
-        },
+				AND : [{
+					name : {
+	          contains : search,
+	          mode: 'insensitive'
+	        }
+				}]
       },
       select : {
         id : true,
@@ -19,8 +22,14 @@ export const GET = async (req: NextRequest ) => {
         category : true
       },
       take: 5
-    });
-		if(geosearch) {
+    }
+		if(category) {
+			query.where['AND'].push({
+				category : category
+			})
+		}
+    const polygons = await prisma.polygon.findMany(query);
+		if(geosearch && polygons.length > 0) {
 			const ids = polygons.map(polygon => polygon.id);
 		  const polygonShapes = await prisma.$queryRaw`
 		    SELECT id, ST_AsGeoJSON(ST_Centroid(geometry)) as centroid, ST_AsGeoJSON(ST_Envelope(geometry)) as bounds

@@ -16,6 +16,9 @@ export default async function AdminMenu() {
         {session.user.permissions.indexOf('research') > -1 ?
           <a href="/dashboard/research" className="border-r-2 p-2.5 hover:bg-slate-100">Research</a>
         : false}
+        {session.user.permissions.indexOf('update_mapbox') > -1 ?
+          <a href="/dashboard/mapbox" className="border-r-2 p-2.5 hover:bg-slate-100">Mapbox</a>
+        : false}
         {session.user.permissions.indexOf('manage_users') > -1 ?
           <a href="/dashboard/users" className="border-r-2 p-2.5 hover:bg-slate-100">User Management</a>
         : false}
