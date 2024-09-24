@@ -1,10 +1,11 @@
 import Image from "next/image";
 
-import { navItems } from '@/components/nav/nav-constants';
+import { getNavItems } from '@/components/nav/nav-constants';
 
-export default function Footer() {
+export default function Footer({ dict }) {
 
   // Filtering this for the footer menus
+  const navItems = getNavItems(dict)
   let modifiedNavItems = JSON.parse(JSON.stringify(navItems));
   modifiedNavItems = modifiedNavItems.filter(navItem => navItem.label !== "Language" && navItem.label !== "Contact")
 

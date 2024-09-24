@@ -1,6 +1,15 @@
+import { NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware"
+import createMiddleware from 'next-intl/middleware';
+import { chain } from "@nimpl/middleware-chain";
 
-export default withAuth({
+const intlMiddleware = createMiddleware({
+  locales: ['en', 'fr', 'es'],
+  defaultLocale: 'en',
+  localePrefix: 'as-needed'
+});
+
+const authMiddleware = withAuth({
   callbacks: {
     authorized: ({ req, token }) => {
       const path = req.nextUrl.pathname;
@@ -20,14 +29,21 @@ export default withAuth({
           return false;
         }
       }
+      if (path.startsWith("/dashboard/mapbox")) {
+        if(!token?.permissions.includes("update_mapbox")) {
+          return false;
+        }
+      }
       return token !== null;
     }
   }
 })
 
-// Blocking admin non-logged in
+export default chain([
+  [intlMiddleware, { exclude : /^\/api|_next\/static|_next\/image|public|favicon.ico(\/.*)?$/ }],
+  [authMiddleware, { include : /^\/dashboard(\/.*)?$/ }]
+]);
+
 export const config = {
-  matcher: [
-    "/dashboard/:path*"
-  ]
-}
+    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};

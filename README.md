@@ -36,6 +36,7 @@ Technologies at use include:
 - Amazon S3 buckets
 - Mapbox MTS and Mapbox GL JS
 - Winston logging
+- i18n for internationalization
 
 We would love to have you involved if you have any fixes or additions you'd like to see on the site.
 
@@ -59,24 +60,23 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 
 Next up:
 - Preparing internationalization
-  - Do a first basic load of terms in the menu (server)
   - Then some terms in the map (client)
   - Then some HTML (sample page)
     - Testing parsing (https://discourse.aurelia.io/t/handling-long-blocks-of-text-to-be-translated-in-i18n/3168/27 use Json5?)
   - Then create folder structure and JSONs
   - Then move over all English content
+  - Set up so that only English content is generated server side (no translations for everything else)
 - Setting up static pages HTML structure
 - Ensuring we are creating new unique slugs
-- Make sure API can be fed to mobile app
+- Endpoints for mobile app
 - Deletion functionality for researchers and users
-- Adding captions and titles to researcher media
 - Handling bugs
 
 Minor:
+- Adding captions and titles to researcher media
 - Adding working links to breadcrumbs
 - Checking and rendering related field front end
 - Remove extra template post from the seed JSON
-- Create API documentation at external documentation site
 - Implement email sending for contact forms
 - Add color to index.php API (needs importing?)
 - Check for any redirection needs on legacy API
@@ -87,19 +87,20 @@ Minor:
 - Keep seed file in public repo? Or only on request from a user?
 
 Junior:
-- Migrate blog posts from Wordpress to an external blog site
 - Adding links to social media to footer
 - Adding modal to front page map
 - Mobile layout
 - Adding strings for internationalization
+- Migrate blog posts from Wordpress to an external blog site
 - Reviewing API returning 400 vs 500 errors
 - Adding Instagram feed (looks a bit complicated annoyingly)
+- Create API documentation at external documentation site
 
 Bugs:
 - Working to get either database in the right encoding, downloading seed file in better encoding, or render properly in frontend with special characters
 - Possible sql injection until we figure out the sql raw query in index.php POST and polygons/id PUT
 - Ensuring poly-in-poly (index.php POST) can take multiple polygons
-- Some territory slugs do not work as URLs -- possible to use IDs and do redirects instead?
+- Some territory slugs do not work as URLs -- possible to use IDs and do redirects from old slugs instead?
 - Looking around for any small errors with JSX in server or frontend code, resolving
 - Issues with maximum glyphs in Mapbox GL JS front page map (style issue?)
 - Small cleanups (removing email verification / password reset notes in Log In, adding link to Login from Signup)

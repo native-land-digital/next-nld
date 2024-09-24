@@ -1,10 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
-  i18n: {
-    locales : ['en-US', 'fr', 'es'],
-    defaultLocale : 'en-US'
-  },
   redirects: () => {
     return [{
       source: "/about",

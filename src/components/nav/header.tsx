@@ -2,11 +2,13 @@
 import { useState } from 'react';
 import Image from "next/image";
 
-import { navItems } from '@/components/nav/nav-constants';
+import { getNavItems } from '@/components/nav/nav-constants';
 
-export default function Header() {
+export default function Header({ dict }) {
 
   const [ openNav, setOpenNav ] = useState(false);
+
+  const navItems = getNavItems(dict);
 
   return (
     <nav className="flex items-center justify-between flex-wrap bg-white py-4 px-6">
