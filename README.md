@@ -36,7 +36,7 @@ Technologies at use include:
 - Amazon S3 buckets
 - Mapbox MTS and Mapbox GL JS
 - Winston logging
-- i18n for internationalization
+- i18n and json5
 
 We would love to have you involved if you have any fixes or additions you'd like to see on the site.
 
@@ -59,25 +59,18 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 ### Notes for current development to-dos
 
 Next up:
-- Preparing internationalization
-  - Then some terms in the map (client)
-  - Then some HTML (sample page)
-    - Testing parsing (https://discourse.aurelia.io/t/handling-long-blocks-of-text-to-be-translated-in-i18n/3168/27 use Json5?)
-  - Then create folder structure and JSONs
-  - Then move over all English content
-  - Set up so that only English content is generated server side (no translations for everything else)
-- Setting up static pages HTML structure
-- Ensuring we are creating new unique slugs
-- Endpoints for mobile app
-- Deletion functionality for researchers and users
+- Endpoints for mobile app (map-list (category, id, title, slug); map-page(all provided to frontend), )
 - Handling bugs
+- Sending emails (contact forms)
+- Creating contact forms
+- Developing front page HTML
+- Set up so that only English content is generated server side (no translations for everything else)
+- Fail gracefully to loading english content if other intl content doesn't exist
 
 Minor:
 - Adding captions and titles to researcher media
 - Adding working links to breadcrumbs
 - Checking and rendering related field front end
-- Remove extra template post from the seed JSON
-- Implement email sending for contact forms
 - Add color to index.php API (needs importing?)
 - Check for any redirection needs on legacy API
 - Endpoint for combined geoJSON for whole categories
@@ -90,7 +83,8 @@ Junior:
 - Adding links to social media to footer
 - Adding modal to front page map
 - Mobile layout
-- Adding strings for internationalization
+- Move over all English translations (template is at `en/about/how-it-works.json5`)
+- Setting up static pages HTML (template is at `about/how-it-works`)
 - Migrate blog posts from Wordpress to an external blog site
 - Reviewing API returning 400 vs 500 errors
 - Adding Instagram feed (looks a bit complicated annoyingly)

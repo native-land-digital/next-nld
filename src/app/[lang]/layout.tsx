@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Header from '@/components/nav/header';
 import Footer from '@/components/nav/footer';
-import { getNavDictionary } from '@/i18n/dictionaries';
+import { getDictionary } from '@/i18n/dictionaries';
 
 export const metadata: Metadata = {
   title: "Native-Land.ca | Our home on native land",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({children, params: { lang } }) {
 
-  const dict = await getNavDictionary(lang)
+  const dict = await getDictionary(lang, 'nav');
 
   return (
     <html lang="en">

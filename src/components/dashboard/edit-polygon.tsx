@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { navigate } from '@/lib/actions'
 
 import MainMap from '@/components/dashboard/editors/map-editor';
 import WYSIWYGEDitor from '@/components/dashboard/editors/wysiwyg-editor';
@@ -48,6 +49,23 @@ export default function EditPolygon({ polygon }) {
         toast("Polygon saved successfully")
       }
     });
+  }
+
+  const deletePolygon = () => {
+    if(window.confirm("Are you sure you want to delete this polygon? This can't be undone.")) {
+      fetch(`/api/polygons/${polygon.id}`, {
+        method : "DELETE"
+      }).then(resp => resp.json()).then(results => {
+        if(results.error) {
+          toast(results.error)
+        } else {
+          setTimeout(() => {
+            navigate(`/dashboard/research/`);
+          }, 500)
+          toast("Polygon deleted successfully")
+        }
+      })
+    }
   }
 
   return (
@@ -127,13 +145,23 @@ export default function EditPolygon({ polygon }) {
         <ChangelogEditor changelog={changelog} setChangelog={setChangelog} />
       </div>
 
-      <div className="w-full md:w-1/2">
-        <div className="!mt-8">
-          <button onClick={() => savePolygon()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
-            Save Changes
-          </button>
+      <div className="flex">
+        <div className="w-full md:w-1/2">
+          <div className="!mt-8">
+            <button onClick={() => savePolygon()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+              Save Changes
+            </button>
+          </div>
+
         </div>
 
+        <div className="w-full md:w-1/2">
+          <div className="!mt-8 flex justify-end">
+            <button onClick={() => deletePolygon()} className="py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-red-600 hover:bg-red-700 focus:outline-none">
+              Delete
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

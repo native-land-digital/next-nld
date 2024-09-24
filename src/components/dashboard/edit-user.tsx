@@ -42,6 +42,23 @@ export default function EditUser({ user }) {
     });
   }
 
+  const deleteUser = () => {
+    if(window.confirm("Are you sure you want to delete this user? This can't be undone.")) {
+      fetch(`/api/users/${polygon.id}`, {
+        method : "DELETE"
+      }).then(resp => resp.json()).then(results => {
+        if(results.error) {
+          toast(results.error)
+        } else {
+          setTimeout(() => {
+            navigate(`/dashboard/users/`);
+          }, 500)
+          toast("User deleted successfully")
+        }
+      })
+    }
+  }
+
   return (
     <div>
       <a href="/dashboard/users"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>Back</a>
@@ -102,12 +119,21 @@ export default function EditUser({ user }) {
           </div>
         </div>
 
-        <div className="!mt-8">
-          <button onClick={() => saveUser()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
-            Save Changes
-          </button>
-        </div>
-        
+        <div className="flex">
+          <div className="!mt-8">
+            <button onClick={() => saveUser()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+              Save Changes
+            </button>
+          </div>
+
+          <div className="w-full md:w-1/2">
+            <div className="!mt-8 flex justify-end">
+              <button onClick={() => deleteUser()} className="py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-red-600 hover:bg-red-700 focus:outline-none">
+                Delete
+              </button>
+            </div>
+          </div>
+
       </div>
     </div>
   );

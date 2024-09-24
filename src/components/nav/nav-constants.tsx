@@ -1,78 +1,78 @@
 export const getNavItems = (dict) => {
   return [{
-    label : dict.about,
+    label : dict['about'],
     children : [{
-      label : "Our Team",
-      href : "",
+      label : dict['our-team'],
+      href : "/about/our-team",
     },{
-      label : "Why It Matters",
-      href : "",
+      label : dict['why-it-matters'],
+      href : "/about/why-it-matters",
     },{
-      label : "How It Works",
-      href : "",
+      label : dict['how-it-works'],
+      href : "/about/how-it-works",
     },{
-      label : "Partners & Contributors",
-      href : "",
+      label : dict['partners-contributors'],
+      href : "/about/partners-and-contributors",
     },{
-      label : "Roadmap",
-      href : "",
+      label : dict['roadmap'],
+      href : "/about/roadmap",
     }]
   },{
-    label : "Media",
+    label : dict['media'],
     children : [{
-      label : "Community & Blog",
+      label : dict['community-blog'],
       href : "",
     },{
-      label : "Media Coverage",
-      href : "",
+      label : dict['media-coverage'],
+      href : "/media/media-coverage",
     }]
   },{
-    label : "Contribute",
+    label : dict['contribute'],
     children : [{
-      label : "Jobs",
-      href : "",
+      label : dict['jobs'],
+      href : "/how-to-contribute/jobs",
     },{
-      label : "Volunteer",
-      href : "",
+      label : dict['volunteer'],
+      href : "/how-to-contribute/volunteer",
     },{
-      label : "Fixes & Adding Maps",
-      href : "",
+      label : dict['fixes-adding-maps'],
+      href : "/how-to-contribute/fixes-and-adding-maps",
     },{
-      label : "Languages",
-      href : "",
+      label : dict['languages'],
+      href : "/how-to-contribute/languages",
     },{
-      label : "Supporter's Circle",
-      href : "",
+      label : dict['supporters-circle'],
+      href : "/support/supporters-circle",
     }]
   },{
-    label : "Resources",
+    label : dict['resources'],
     children : [{
-      label : "Territory Acknowledgement",
+      label : dict['territory-acknowledgement'],
+      href : "/resources/territory-acknowledgement",
+    },{
+      label : dict['teachers-guide'],
+      href : "/resources/teachers-guide",
+    },{
+      label : dict['mobile-apps'],
+      href : "/resources/mobile-apps",
+    },{
+      label : dict['api'],
       href : "",
     },{
-      label : "Teacher's Guide",
-      href : "",
+      label : dict['territories-list'],
+      href : "/resources/territories-list",
     },{
-      label : "Mobile Apps",
-      href : "",
+      label : dict['languages-list'],
+      href : "/resources/languages-list",
     },{
-      label : "API",
-      href : "",
-    },{
-      label : "Territories List",
-      href : "",
-    },{
-      label : "Languages List",
-      href : "",
-    },{
-      label : "Treaties List",
-      href : "",
+      label : dict['treaties-list'],
+      href : "/resources/treaties-list",
     }]
   },{
-    label : "Contact",
-    href : ""
+    label : dict['contact'],
+    href : "/contact"
   },{
-    label : "Language",
+    label : dict['language'],
     icon : (
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-translate m-1" viewBox="0 0 16 16">
         <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z"/>
@@ -80,11 +80,14 @@ export const getNavItems = (dict) => {
       </svg>
     ),
     children : [{
-      label : "English",
-      href : ""
+      label : dict['english'],
+      href : "/en"
     },{
-      label : "French",
-      href : ""
+      label : dict['french'],
+      href : "/fr"
+    },{
+      label : dict['spanish'],
+      href : "/es"
     }]
   }]
 }

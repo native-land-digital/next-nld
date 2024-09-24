@@ -1,9 +1,9 @@
 import 'server-only'
+import json5 from "json5";
+import { promises as fs } from 'fs';
 
-const navDictionary = {
-  en: () => import('@/i18n/locales/en/nav.json').then((module) => module.default),
-  fr: () => import('@/i18n/locales/fr/nav.json').then((module) => module.default),
-  es: () => import('@/i18n/locales/es/nav.json').then((module) => module.default),
+export const getDictionary = async(locale, path) => {
+  let raw = await fs.readFile(process.cwd() + `/src/i18n/locales/${locale}/${path}.json5`, 'utf8')
+  let parsed = json5.parse(raw);
+  return parsed;
 }
-
-export const getNavDictionary = async (locale) => navDictionary[locale]()

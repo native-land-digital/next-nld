@@ -1,0 +1,53 @@
+{
+  "how-to-use-header" : "How To Use Native-Land.ca",
+  "how-to-use" : "\
+    <p>There are a number of ways to use this website. </p>\
+    <p><strong>You can use it directly</strong> above by entering your address, or by mousing or clicking around on the map to see the relevant territories in a location.</p>\
+    <p>Once you click, a number of links will appear with different nation names. By clicking on those links, you will be taken to a page specifically about that nation, language, or treaty, where you can view some sources, give feedback, and learn a little more. We are always trying to expand our resources on these pages.</p>\
+    <p>You can also export the map to a printable image file, turn map labels on or off to see non-Indigenous borders and towns, and select or search from a dropdown of territories, treaties, and languages.</p>\
+    <p><strong>We also have mobile apps </strong>available for iOS and Android. To use these, you can enter an address into the search bar at the top of the app, or you can press anywhere on the map to “drop a pin” and see more about the location you’ve selected.</p>\
+    <p><strong>There are also texting services</strong> developed by Code for Anchorage and other external organizations available. You can see more about this on our blog post here.</p>\
+  ",
+  "organization-header" : "The Organization",
+  "organization" : ["\
+    <p>Native Land Digital is a registered Canadian not-for-profit organization. We have a majority-Indigenous Board of Directors, representing people who have close ties to land bases, communities, and deep knowledge about Indigenous ways of being and knowing. The Board of Directors is further informed by an Advisory Council, consisting of a variety of specialists in mapmaking, GIS, relations with Indigenous communities, and more. Together, these two forces help to face and deal with many of complex issues that mapping Indigenous territories involves, such as:</p>\
+    <ul>\
+    <li>Who belongs on a map of Indigenous territories? What defines “being Indigenous”, especially across time and space?</li>\
+    <li>How many sources, and what types of sources, are acceptable when it comes to making a map?</li>\
+    <li>How do we balance “accuracy” of borders with the breadth of an ever-expanding global map?</li>\
+    <li>How do we engage with Indigenous people and communities to better facilitate self-representation?</li>\
+    <li>How do we create an organization that represents an Indigenous way of governing?</li>\
+    </ul>\
+    <p>Of course, the Board of Directors holds ultimate authority in the organization in terms of our goals, priorities, and allocation of any funding we receive.</p>\
+    <p>On a day-to-day basis, the organization is run by our Executive Director, whose duties involve handling employee management, logistical issues around finances and funding, the achievement of goals delineated by the board, increasing engagement and communication, and much more. </p>\
+    <p>We hope to include more volunteers and employees as we continue to grow, but we are limited by the size of the organization and our current funding capacity. However, we are very excited about the future — see our Roadmap for more details.</p>\
+    <p>A few of our major guidelines include:</p>\
+    <ul>\
+    <li>Representing Indigenous nations and people on their own terms and not trying to an “arbiter” of truth when it comes to territory claims</li>\
+    <li>Increasing representation and real power of Indigenous people in our organization and with our partners</li>\
+    <li>Enhancing the visibility and strength of Indigenous history, narratives that combat colonialism, and education initiatives</li>\
+    </ul>\
+  "],
+  "technology-header" : "The Technology",
+  "technology" : "\
+    <p>We use a combination of technologies to make the site relatively easy to update, access, and share. These include:</p>\
+    <ul>\
+    <li>Mapbox (Mapbox GL JS and the Mapbox API)</li>\
+    <li>WordPress (along with custom plugins that we have developed)</li>\
+    <li>React Native and Expo (for our mobile apps)</li>\
+    <li>Slack</li>\
+    <li>Google Drive and Google Docs</li>\
+    <li>Zoom and other video communication</li>\
+    <li>Facebook, Twitter, Instagram</li>\
+    </ul>\
+    <p>The technical process of updating the map involves entries made in WordPress for each individual nation, language, or treaty, which can have individual sources added, media uploaded, links, and more. This is then pushed to Mapbox, from which we refresh our API and public geoJSONs on a daily basis.</p>\
+    <p>In updating the map, we always aim to use at least two valid sources, which can include oral history, written documents, or maps sketched by people deemed to be reasonable authorities. In cases of conflicting maps, we generally err on the side of being more expansive, in an effort to encourage people using the maps to do their own research and to avoid having large “blank areas” on the map. We acknowledge that there are issues with this approach, and have discussed this in public talks and in our blog.</p>\
+    <p>We welcome and accept fixes, thoughts, suggestions, and angry comments alike, from anyone who is interested in emailing us. At times, we may grow so busy that it is difficult to respond, but we do our best to respond where we can, engage with others, and provide support for our platform.</p>\
+  ",
+  "funding-header" : "Funding",
+  "funding" : "\
+    <p>As of 2020, we are primarily funded by the Kalliopeia Foundation. We have received funding from Vancity Credit Union as well.</p>\
+    <p>Individual donors also play an important part in our funding. We also occasionally receive honorariums for talks or lectures that we provide to universities or other forums.</p>\
+    <p>We are always seeking out new opportunities for funding, so please get in touch with us if you would like to help us out or suggest any grants or possibilities!</p>\
+  "
+}

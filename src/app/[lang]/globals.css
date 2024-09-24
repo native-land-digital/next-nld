@@ -31,3 +31,16 @@ body {
     text-wrap: balance;
   }
 }
+
+/* On static pages where we are setting HTML directly */
+.static-page p {
+  @apply mt-2.5;
+}
+.static-page h2 {
+  @apply text-2xl;
+  @apply font-bold;
+  @apply mt-5;
+}
+.static-page h2:first-child {
+  @apply mt-0;
+}

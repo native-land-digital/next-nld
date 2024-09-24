@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
+import slugify from 'slugify'
 
 import prisma from "@/lib/db/prisma";
 import { Polygon } from "@prisma/client";
@@ -17,9 +18,31 @@ export const POST = async (req: NextRequest) => {
   	}
 
   	try {
+      // Creating unique slug
+      let slug = slugify(body.name, { lower : true });
+      let slugSuffix = "-";
+      let slugNumber = 1;
+      let slugIsUnique = false;
+      while(!slugIsUnique) {
+        let currentSlug = slug + (slugNumber > 1 ? (slugSuffix + slugNumber.toString()) : "")
+        const foundSlug = await prisma.polygon.findUnique({
+          where : {
+            slug : currentSlug
+          }
+        })
+        if(!foundSlug) {
+          slugIsUnique = true;
+          slug = currentSlug;
+        } else {
+          slugNumber = slugNumber + 1;
+        }
+      }
+
+      // Inserting into db
   		const polygon = await prisma.polygon.create({
   			data: {
   				name: body.name,
+          slug : slug
   			}
   		});
   		return NextResponse.json({
