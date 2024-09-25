@@ -13,7 +13,7 @@ export const GET = async (req: NextRequest) => {
 
       try {
     	  const polygons = await prisma.$queryRaw`
-    	    SELECT id, name, category, slug, ST_AsGeoJSON(geometry) as geojson
+    	    SELECT id, name, category, slug, ST_AsGeoJSON(geometry) as geojson, ST_AsGeoJSON(ST_Centroid(geometry)) as centroid
     			FROM "Polygon"
     	    WHERE category = ${category}
     	  `
@@ -41,6 +41,19 @@ export const GET = async (req: NextRequest) => {
                   }
                 }
                 features.push(JSON.stringify(feature));
+                // let centroid = JSON.parse(polygon.centroid)
+                // let centroidFeature = {
+                //   type : "Feature",
+                //   id : polygon.id,
+                //   properties : {
+                //     Name : polygon.name,
+                //   },
+                //   geometry : {
+                //     type : "Point",
+                //     coordinates : centroid.coordinates
+                //   }
+                // }
+                // features.push(JSON.stringify(centroidFeature));
               }
             }
           })

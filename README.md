@@ -46,7 +46,7 @@ To get set up, clone this repo to your local machine. `npm install` and ensure y
 
 The repo has a `compose.yml` file that will create and install a PostgreSQL database with PostGIS installed on your Docker. The references to this are already in the `.env` file. However, if you'd prefer to set this up with your own `psql` instance, just replace the `DATABASE_URL` in the `.env` to get things working. Otherwise, start docker and run `docker compose build` and `docker compose up` to get connected.
 
-You will need to run the Prisma migrations and the seed files in order to get a fully working local site. Do this with `npx prisma migrate` and `npx prisma db seed`. The seed file is in the `prisma/seed` folder if you need to make any changes to it.
+You will need to run the Prisma migrations and the seed files in order to get a fully working local site. You will need to ask a member of the Native Land team for the `nld-export.json` seed file. Once you have this, place it in `prisma/seed/nld-export.json`. Then run `npx prisma migrate` and `npx prisma db seed`. The seed file is in the `prisma/seed` folder if you need to make any changes to it.
 
 It will also create a default user with full admin permissions. Login with `test@native-land.ca` and password `test`.
 
@@ -58,31 +58,25 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 
 ### Notes for current development to-dos
 
-Next up:
-- Endpoints for mobile app (map-list (category, id, title, slug); map-page(all provided to frontend), )
-- Handling bugs
-- Sending emails (contact forms)
-- Creating contact forms
-- Developing front page HTML
-- Set up so that only English content is generated server side (no translations for everything else)
-- Fail gracefully to loading english content if other intl content doesn't exist
+Major:
+- Deployment first staging version
 
 Minor:
+- Designing front page HTML
+- Add color to index.php API (needs importing?)
 - Adding captions and titles to researcher media
 - Adding working links to breadcrumbs
 - Checking and rendering related field front end
-- Add color to index.php API (needs importing?)
 - Check for any redirection needs on legacy API
-- Endpoint for combined geoJSON for whole categories
 - Add last updated date in Mapbox updating research section (for clarity)
 - Set up a redirect from `https://native-land.ca/wp-json/nativeland/v1/api/index.php` to `/api/index.php` for POST requests (poly-in-poly)
 - Consolidating API code with helper functions (instead of duplicating)
-- Keep seed file in public repo? Or only on request from a user?
 
 Junior:
 - Adding links to social media to footer
 - Adding modal to front page map
 - Mobile layout
+- Replacing all common strings with internationalized strings
 - Move over all English translations (template is at `en/about/how-it-works.json5`)
 - Setting up static pages HTML (template is at `about/how-it-works`)
 - Migrate blog posts from Wordpress to an external blog site
@@ -91,19 +85,23 @@ Junior:
 - Create API documentation at external documentation site
 
 Bugs:
-- Working to get either database in the right encoding, downloading seed file in better encoding, or render properly in frontend with special characters
+- Issues with maximum glyphs in Mapbox GL JS front page map (style issue?) -- CURRENTLY WITH MAPBOX SUPPORT
+- Some territory slugs do not work as URLs -- possible/preferable to use IDs and do redirects from old slugs instead?
 - Possible sql injection until we figure out the sql raw query in index.php POST and polygons/id PUT
 - Ensuring poly-in-poly (index.php POST) can take multiple polygons
-- Some territory slugs do not work as URLs -- possible to use IDs and do redirects from old slugs instead?
 - Looking around for any small errors with JSX in server or frontend code, resolving
-- Issues with maximum glyphs in Mapbox GL JS front page map (style issue?)
 - Small cleanups (removing email verification / password reset notes in Log In, adding link to Login from Signup)
 
+Deployment:
+- Creating AWS bucket for staging and production
+- Downloading latest export file from the live site and all images, uploading to AWS
+
 Before first deploy:
-- Check if updating the properties metavalues will affect anyone using the tilesets from Mapbox? Do we need to keep the same schema?
+- Ensuring database backups reliability
 - Verify that embed.html is working
 
 After first deploy:
+- Do a fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 - Enhancing Winston logs to go straight to Heroku or other service
 - Adding a new API endpoint that requires API keys
 
@@ -120,3 +118,8 @@ Aspirational:
 - Integrating researcher to-do list with the researcher dashboard section
 - Adding ability to load other polygons for researchers to draw with more context (perhaps just changing the underlying Style?)
 - Adding more refined permissions to enable external researchers to edit only certain polygons or sets of polygons
+
+Questions:
+- Do we want contact forms? Or just list emails?
+- Getting Patreon back into gear?
+- Make color customizable?

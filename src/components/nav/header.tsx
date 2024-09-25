@@ -1,5 +1,6 @@
 "use client"
 import { useState } from 'react';
+import Logo from '@/public/images/nld-logo.png'
 import Image from "next/image";
 
 import { getNavItems } from '@/components/nav/nav-constants';
@@ -13,7 +14,7 @@ export default function Header({ dict }) {
   return (
     <nav className="flex items-center justify-between flex-wrap bg-white py-4 px-6">
       <div className="flex items-center flex-shrink-0 mr-6 ml-6">
-        <a href="/"><Image src="/nld-logo.png" alt="Native Land Digital logo" width="23" height="36" /></a>
+        <a href="/"><Image src={Logo} alt="Native Land Digital logo" width="23" height="36" /></a>
         <a href="/"><span className="font-normal text-2xl tracking-tight ml-5 text-slate-600">Native Land Digital</span></a>
       </div>
       <div className="block lg:hidden">

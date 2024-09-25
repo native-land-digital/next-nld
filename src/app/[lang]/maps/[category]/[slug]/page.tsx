@@ -79,8 +79,13 @@ export default async function Page({ params }) {
           </section>
           <section className="mt-5">
             <h3 className="text-xl font-bold mb-3" id="changelog">Changelog</h3>
-            <Changelog changelog={polygon.changelog} />
+            <Changelog changelog={polygon.changelog} createdAt={polygon.createdAt} updatedAt={polygon.updatedAt} />
           </section>
+          <section className="mt-5">
+            <h3 className="text-xl font-bold mb-3" id="send-correction">Send Correction</h3>
+            <p>If something is wrong here, we would love to hear from you so we can fix it. Send us an email to <strong>research@native-land.ca</strong>.</p>
+          </section>
+
         </div>
       </div>
     </div>

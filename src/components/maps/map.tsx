@@ -17,57 +17,44 @@ export default function Map({ geometry }) {
       style: process.env.NEXT_PUBLIC_MAPBOX_STYLE,
     });
     setMap(newMap)
-  }, [])
-
-  useEffect(() => {
-    if(map) {
-      addControls()
-      map.on('load', () => {
-        setMapFeature()
-      })
-    }
-  }, [map])
-
-  const setMapFeature = () => {
-    let loadedPolygons = geometry.coordinates.map(polygonGeometry => {
-      return {
-        type : "Feature",
-        id : (Math.random() + 1).toString(36).substring(7),
-        geometry : {
-          type : "Polygon",
-          coordinates : polygonGeometry
-        }
-      }
-    })
-    let featureCollection = { type : "FeatureCollection", features : loadedPolygons }
-    map.addSource('geometry-feature', {
-      type : "geojson",
-      data : featureCollection
-    })
-    map.addLayer({
-      id : 'geometry-feature',
-      type : "fill",
-      source : 'geometry-feature',
-      paint : {
-        'fill-color' : 'rgba(0, 0, 0, 0.2)'
-      }
-    })
-    map.addLayer({
-      id : 'geometry-feature-line',
-      type : "line",
-      source : 'geometry-feature',
-      paint : {
-        'line-width' : 1
-      }
-    })
-    const bounds = bbox(featureCollection)
-    map.fitBounds(bounds, { padding : 50, duration : 0 })
-  }
-
-  const addControls = () => {
     let nav = new mapboxgl.NavigationControl();
-    map.addControl(nav, "bottom-right");
-  }
+    newMap.addControl(nav, "bottom-right");
+    newMap.on('load', () => {
+      let loadedPolygons = geometry.coordinates.map(polygonGeometry => {
+        return {
+          type : "Feature",
+          id : (Math.random() + 1).toString(36).substring(7),
+          geometry : {
+            type : "Polygon",
+            coordinates : polygonGeometry
+          }
+        }
+      })
+      let featureCollection = { type : "FeatureCollection", features : loadedPolygons }
+      newMap.addSource('geometry-feature', {
+        type : "geojson",
+        data : featureCollection
+      })
+      newMap.addLayer({
+        id : 'geometry-feature',
+        type : "fill",
+        source : 'geometry-feature',
+        paint : {
+          'fill-color' : 'rgba(0, 0, 0, 0.2)'
+        }
+      })
+      newMap.addLayer({
+        id : 'geometry-feature-line',
+        type : "line",
+        source : 'geometry-feature',
+        paint : {
+          'line-width' : 1
+        }
+      })
+      const bounds = bbox(featureCollection)
+      newMap.fitBounds(bounds, { padding : 50, duration : 0 })
+    })
+  }, [])
 
   return (
     <div id="map">

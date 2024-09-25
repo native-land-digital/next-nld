@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Logo from '@/public/images/nld-logo.png'
 
 import { getNavItems } from '@/components/nav/nav-constants';
 
@@ -14,9 +15,7 @@ export default function Footer({ dict }) {
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-8 py-10 max-sm:max-w-sm max-sm:mx-auto gap-y-8">
           <div className="col-span-full mb-10 lg:col-span-2 lg:mb-0">
-              <a href="https://pagedone.io/"  className="flex justify-center lg:justify-start">
-                <Image src="/nld-logo.png" alt="Native Land Digital logo" width="38" height="60" />
-              </a>
+              <Image src={Logo} alt="Native Land Digital logo" width="38" height="60" />
               <p className="py-8 text-sm text-gray-500 lg:max-w-xs text-center lg:text-left">Native Land Digital is a Canadian non-profit organization.</p>
               <a href="#"  className="py-2.5 px-5 h-9 block w-fit bg-indigo-600 rounded-full shadow-sm text-xs text-white mx-auto transition-all  duration-500 hover:bg-indigo-700 lg:mx-0">
                   Contact us

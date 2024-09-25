@@ -40,7 +40,7 @@ const authMiddleware = withAuth({
 })
 
 export default chain([
-  [intlMiddleware, { exclude : /^\/api|_next\/static|_next\/image|public|favicon.ico(\/.*)?$/ }],
+  [intlMiddleware, { exclude : /^\/api|_next\/static|_next\/image|favicon.ico(\/.*)?$/ }],
   [authMiddleware, { include : /^\/dashboard(\/.*)?$/ }]
 ]);
 

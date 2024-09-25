@@ -1,7 +1,11 @@
 import prisma from "@/lib/db/prisma";
-import MapContainer from '@/components/front-map/map-container';
+import { getDictionary } from '@/i18n/dictionaries';
 
-export default async function Home() {
+import MapContainer from '@/components/front-map/map-container';
+import MapModal from '@/components/front-map/modal';
+import FrontPage from '@/components/static/front-page';
+
+export default async function Home({ params: { lang } }) {
 
   // Querying for select2 list initial options
   const territoryOptions = await prisma.polygon.findMany({
@@ -44,9 +48,13 @@ export default async function Home() {
     take : 50
   });
 
+  const dict = await getDictionary(lang, 'front-page-map')
+
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
-      <MapContainer territoryOptions={territoryOptions} languageOptions={languageOptions} treatyOptions={treatyOptions} />
+      <MapModal dict={dict} />
+      <MapContainer dict={dict} territoryOptions={territoryOptions} languageOptions={languageOptions} treatyOptions={treatyOptions} />
+      <FrontPage lang={lang} />
     </div>
   );
 }

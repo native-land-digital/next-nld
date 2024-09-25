@@ -12,12 +12,16 @@ export const metadata: Metadata = {
   description: "Native Land is a resource to learn more about Indigenous territories, languages, lands, and ways of life. We welcome you to our site.",
 };
 
+export async function generateStaticParams() {
+  return [{ lang: 'en' }]
+}
+
 export default async function RootLayout({children, params: { lang } }) {
 
   const dict = await getDictionary(lang, 'nav');
 
   return (
-    <html lang="en">
+    <html lang={lang}>
       <body className="antialiased">
         <Header dict={dict} />
         <div>

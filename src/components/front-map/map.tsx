@@ -15,7 +15,7 @@ export default function MainMap({ allLayers, map, setMap, hoveredFeatures, setHo
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
-    // mapboxgl.clearStorage();
+    mapboxgl.clearStorage();
     const newMap = new mapboxgl.Map({
       ...randomStartingPosition(),
       container: "nld-mapbox-map",

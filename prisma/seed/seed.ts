@@ -30,6 +30,8 @@ async function main() {
 
     let newPolygon = await prisma.polygon.create({
       data : {
+        createdAt : new Date(entry.createdAt),
+        updatedAt : new Date(entry.updatedAt),
         name : entry.name,
         slug : entry.slug,
         sources : entry.sources,

@@ -5,6 +5,53 @@ import { getToken } from "next-auth/jwt"
 
 type UpdatePolygonReqBody = Partial<Omit<Polygon, "id">>;
 
+export const GET = async (req: NextRequest, route: { params: { slug: string }}) => {
+  const { slug: slug } = route.params;
+
+	try {
+    const polygonShape = await prisma.$queryRaw`
+      SELECT ST_AsGeoJSON(geometry) FROM "Polygon"
+      WHERE slug = ${slug}
+    `
+    const polygon = await prisma.polygon.findUnique({
+      where : {
+        slug : slug,
+        published : true
+      },
+      select : {
+        id : true,
+        name : true,
+        category : true,
+        slug : true,
+        sources : true,
+        pronunciation : true,
+        media : true,
+        websites : true,
+        changelog : true,
+        relatedFrom : true,
+        relatedTo : true,
+        createdAt : true,
+        updatedAt : true
+      }
+    });
+
+    if(polygon) {
+      polygon.geometry = null;
+      if(polygonShape && polygonShape[0] && polygonShape[0].st_asgeojson) {
+        polygon.geometry = JSON.parse(polygonShape[0].st_asgeojson)
+      }
+    } else {
+      return NextResponse.json({ error : `Polygon not found` }, { status: 500 });
+    }
+
+    return NextResponse.json({ polygon });
+
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
+  }
+}
+
 export const PATCH = async (req: NextRequest, route: { params: { id: string }}) => {
   const token = await getToken({ req })
 	if(token && token.permissions.includes('research')) {

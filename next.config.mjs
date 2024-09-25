@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
+  reactStrictMode: false,
   redirects: () => {
     return [{
       source: "/about",
