@@ -9,7 +9,7 @@ body {
 
 @layer base {
   a {
-    @apply text-blue-900;
+    @apply text-blue-600;
   }
 }
 

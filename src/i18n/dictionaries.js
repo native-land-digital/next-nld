@@ -3,7 +3,7 @@ import json5 from "json5";
 import { promises as fs } from 'fs';
 
 export const getDictionary = async(locale, path) => {
-  let englishTranslation = false;
+  let englishTranslation = {};
   try {
     await fs.access(process.cwd() + `/src/i18n/locales/en/${path}.json5`)
     let translation = await fs.readFile(process.cwd() + `/src/i18n/locales/en/${path}.json5`)
@@ -11,9 +11,9 @@ export const getDictionary = async(locale, path) => {
     if(locale === 'en') {
       return englishTranslation
     }
-  } catch {
-    console.error(`You haven't created an English translation for this page ${path}.`)
-    return {};
+  } catch (err) {
+    console.error(`You haven't created an English translation for this page ${path}. ${err}`)
+    return englishTranslation
   }
 
   try {
@@ -26,8 +26,8 @@ export const getDictionary = async(locale, path) => {
       modifiedOriginal[prop] = parsedTranslation[prop]
     }
     return modifiedOriginal;
-  } catch {
-    console.log(`Missing a translation file for ${path}, falling back to English.`)
+  } catch (err) {
+    console.log(`Missing a translation file for ${path}, falling back to English. ${err}`)
     return englishTranslation;
   }
 

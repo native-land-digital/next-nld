@@ -20,16 +20,13 @@ export const GET = async (req ) => {
       // Check point in polygons
       let matchingShapeIDs = [];
       if(position) {
-        const latlng = position.split(',');
-        const positionGeometry = {
-          type : "Point",
-          coordinates : [parseFloat(latlng[1]), parseFloat(latlng[0])]
-        }
+        const latlngString = position.split(',');
+				const latlng = [parseFloat(latlngString[1]), parseFloat(latlngString[0])];
         try {
           const polygonShapes = await prisma.$queryRaw`
             SELECT id
             FROM "Polygon"
-            WHERE ST_Contains(geometry, ST_GeomFromGeoJSON('${JSON.stringify(positionGeometry)}'))
+            WHERE ST_Contains(geometry, ST_GeomFromText(format('POINT(%s %s)', ${parseFloat(latlngString[1])}, ${parseFloat(latlngString[0])}), 4326))
           `
           matchingShapeIDs = polygonShapes.map(shape => shape.id);
         } catch (err) {
@@ -41,6 +38,8 @@ export const GET = async (req ) => {
         select : {
           id : true,
           name : true,
+					color : true,
+					category : true,
           slug : true
         },
         where : {
@@ -91,7 +90,7 @@ export const GET = async (req ) => {
                   "ID" : polygon.id,
                   "Slug" : polygon.slug,
                   "description" : `${process.env.NEXTAUTH_URL}/maps/${polygon.category}/${polygon.slug}`,
-                  "color" : "<color goes here>",
+                  "color" : polygon.color,
                 },
                 geometry : {
                   type : geometry.coordinates[0].length === 1 ? "Polygon" : "MultiPolygon",
@@ -128,33 +127,55 @@ export const POST = async (req) => {
 		}
 
 		try {
-			// only takes a single shape right now
-			const geometryAsString = JSON.stringify(body.polygon_geojson.features[0].geometry);
-			const polygonShapes = await prisma.$queryRawUnsafe(`
-				SELECT id, name, slug, ST_AsGeoJSON(geometry) as geojson
-				FROM "Polygon"
-				WHERE category = '${body.maps}'
-				AND ST_Intersects(geometry, ST_GeomFromGeoJSON('${geometryAsString}'))
-			`)
-			const featureList = polygonShapes.map(polygon => {
-				const geometry = JSON.parse(polygon.geojson)
-				return {
-					type : "Feature",
-					properties : {
-						"Name" : polygon.name,
-						"ID" : polygon.id,
-						"Slug" : polygon.slug,
-						"description" : `${process.env.NEXTAUTH_URL}/maps/${polygon.category}/${polygon.slug}`,
-						"color" : "<color goes here>",
-					},
-					geometry : {
-						type : geometry.coordinates[0].length === 1 ? "Polygon" : "MultiPolygon",
-						coordinates : geometry.coordinates[0].length === 1 ? geometry.coordinates[0] : geometry.coordinates
+			if(body.polygon_geojson.features.length > 0) {
+				const sqlArray = [];
+				body.polygon_geojson.features.forEach(feature => {
+					const subArray = [];
+					const numArray = [];
+					feature.geometry.coordinates[0].forEach(coordPair => {
+						subArray.push(Prisma.raw`%s %s`)
+						numArray.push(coordPair[0])
+						numArray.push(coordPair[1])
+					})
+					const joinedSub = Prisma.join(subArray);
+					const joinedNum = Prisma.join(numArray);
+					const and = Prisma.sql`AND ST_Intersects(geometry, ST_GeomFromText(format('POLYGON((${joinedSub}))', ${joinedNum}), 4326))`
+					sqlArray.push(and);
+				})
+				// let andQuery = Prisma.sql`AND ST_Intersects(geometry, ST_GeomFromText(format('POLYGON((${string}))', ${numbers}), 4326))`
+				const polygonShapes = await prisma.$queryRaw`
+					SELECT id, name, category, color, slug, ST_AsGeoJSON(geometry) as geojson
+					FROM "Polygon"
+					WHERE category = ${body.maps}
+					${Prisma.join(sqlArray)}
+				`
+				// ${geometryAsString}
+				// WHERE ST_Contains(geometry, ST_GeomFromText(format('POINT(%s %s)', ${parseFloat(latlngString[1])}, ${parseFloat(latlngString[0])}), 4326))
+				const featureList = []
+				polygonShapes.forEach(polygon => {
+					const geometry = JSON.parse(polygon.geojson)
+					if(geometry) {
+						featureList.push({
+							type : "Feature",
+							properties : {
+								"Name" : polygon.name,
+								"ID" : polygon.id,
+								"Slug" : polygon.slug,
+								"description" : `${process.env.NEXTAUTH_URL}/maps/${polygon.category}/${polygon.slug}`,
+								"color" : polygon.color,
+							},
+							geometry : {
+								type : geometry.coordinates[0].length === 1 ? "Polygon" : "MultiPolygon",
+								coordinates : geometry.coordinates[0].length === 1 ? geometry.coordinates[0] : geometry.coordinates
+							}
+						})
 					}
-				}
-			})
-			logger.info(`API ${req.nextUrl.search} ${key ? key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
-			return NextResponse.json(featureList);
+				})
+				logger.info(`API ${req.nextUrl.search} ${body.key ? body.key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
+				return NextResponse.json(featureList);
+			} else {
+				return NextResponse.json({ error : "The polygon has no features" }, { status: 400 });
+			}
 		} catch (error) {
 			console.error(error);
 			return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });

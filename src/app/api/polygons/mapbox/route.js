@@ -12,7 +12,7 @@ export const GET = async (req) => {
 
       try {
     	  const polygons = await prisma.$queryRaw`
-    	    SELECT id, name, category, slug, ST_AsGeoJSON(geometry) as geojson, ST_AsGeoJSON(ST_Centroid(geometry)) as centroid
+    	    SELECT id, name, color, category, slug, ST_AsGeoJSON(geometry) as geojson, ST_AsGeoJSON(ST_Centroid(geometry)) as centroid
     			FROM "Polygon"
     	    WHERE category = ${category}
     	  `
@@ -31,7 +31,7 @@ export const GET = async (req) => {
                     id : polygon.id,
                     Slug : polygon.slug,
                     Name : polygon.name,
-                    color : '#ccc',
+                    color : polygon.color,
                     description : process.env.NEXTAUTH_URL + `/maps/${polygon.category}/${polygon.slug}`
                   },
                   geometry : {

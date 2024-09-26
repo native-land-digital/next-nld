@@ -68,8 +68,6 @@ Major:
 
 Minor:
 - Designing front page HTML
-- Index.php set point instead of string
-- Add color to index.php API (needs importing?)
 - Adding captions and titles to researcher media
 - Adding working links to breadcrumbs
 - Checking and rendering related field front end
@@ -89,12 +87,12 @@ Junior:
 - Reviewing API returning 400 vs 500 errors
 - Adding Instagram feed (looks a bit complicated annoyingly)
 - Create API documentation at external documentation site
+- Picking some prettier fonts
 
 Bugs:
 - Issues with maximum glyphs in Mapbox GL JS front page map (style issue?) -- CURRENTLY WITH MAPBOX SUPPORT
 - Some territory slugs do not work as URLs -- possible/preferable to use IDs and do redirects from old slugs instead?
-- Possible sql injection until we figure out the sql raw query in index.php POST and polygons/id PUT
-- Ensuring poly-in-poly (index.php POST) can take multiple polygons
+- Fixing up the raw sql in the polygon PUT (use index.php method)
 - Looking around for any small errors with JSX in server or frontend code, resolving
 - Small cleanups (removing email verification / password reset notes in Log In, adding link to Login from Signup)
 
