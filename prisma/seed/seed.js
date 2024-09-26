@@ -1,4 +1,4 @@
-import { PrismaClient, Polygon, User } from '@/prisma-generated/client'
+import { PrismaClient } from '@/prisma/client'
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
 import { Readable } from 'stream'
 
