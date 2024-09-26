@@ -12,7 +12,7 @@ export const getDictionary = async(locale, path) => {
       return englishTranslation
     }
   } catch (err) {
-    console.error(`You haven't created an English translation for this page ${path}. ${err}`)
+    console.log(`You haven't created an English translation for this page ${path}. ${err}`)
     return englishTranslation
   }
 
