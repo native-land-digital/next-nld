@@ -2,7 +2,7 @@
   Legacy Native-Land.ca API. Set at this URL because that's where it was for an awfully long time so far.
 */
 import prisma from "@/lib/db/prisma";
-import { Prisma } from "@prisma/client";
+import { Prisma } from '@/prisma-generated/client';
 import { NextResponse } from "next/server";
 import { logger } from "@/root/logger";
 

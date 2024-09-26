@@ -22,7 +22,8 @@
       "@/components/*": ["./src/components/*"],
       "@/i18n/*": ["./src/i18n/*"],
       "@/lib/*": ["./src/lib/*"],
-      "@/public/*": ["./public/*"]
+      "@/public/*": ["./public/*"],
+      "@/prisma-generated/*": ["./src/prisma/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
