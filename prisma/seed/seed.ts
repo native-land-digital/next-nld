@@ -130,7 +130,7 @@ async function main() {
       if(newPolygon) {
         createdRecords = createdRecords + 1;
         if(entry.geometry) {
-          console.log(entry.name)
+          // console.log(entry.name)
           // console.log(entry.geometry)
           let geometryAsString = JSON.stringify(entry.geometry);
           await prisma.$executeRawUnsafe(`

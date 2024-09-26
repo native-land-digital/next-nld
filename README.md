@@ -63,8 +63,8 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 ### Notes for current development to-dos
 
 Major:
-- Deployment first staging version
-- Getting dev credentials and various credentials sorted out, docs for deployment and local setup
+- Testing the prod import (problems with slugs)
+- Creating a "seed" build command for deploying to previews
 
 Minor:
 - Designing front page HTML
