@@ -1,7 +1,5 @@
 'use client'
-import { useState } from 'react'
 import AsyncSelect from 'react-select/async';
-import { toast } from 'react-toastify';
 
 import AddButton from '@/components/dashboard/editors/common/add-button';
 import RemoveButton from '@/components/dashboard/editors/common/remove-button';
@@ -22,7 +20,7 @@ export default function RelationEditor({ relatedTo, setRelatedTo }) {
   };
 
   const changeRelatedTo = (value, action, prop, index) => {
-    let newRelatedTo = [...relatedTo];
+    const newRelatedTo = [...relatedTo];
     if(action === 'add') {
       newRelatedTo.push({ relatedToId : null, description : "" })
     } else if(action === 'edit') {

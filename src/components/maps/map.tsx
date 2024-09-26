@@ -1,14 +1,11 @@
 'use client'
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
-import combine from "@turf/combine";
 import bbox from "@turf/bbox";
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 export default function Map({ geometry }) {
-
-  const [ map, setMap ] = useState(false);
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
@@ -17,10 +14,10 @@ export default function Map({ geometry }) {
       style: process.env.NEXT_PUBLIC_MAPBOX_STYLE,
     });
     setMap(newMap)
-    let nav = new mapboxgl.NavigationControl();
+    const nav = new mapboxgl.NavigationControl();
     newMap.addControl(nav, "bottom-right");
     newMap.on('load', () => {
-      let loadedPolygons = geometry.coordinates.map(polygonGeometry => {
+      const loadedPolygons = geometry.coordinates.map(polygonGeometry => {
         return {
           type : "Feature",
           id : (Math.random() + 1).toString(36).substring(7),
@@ -30,7 +27,7 @@ export default function Map({ geometry }) {
           }
         }
       })
-      let featureCollection = { type : "FeatureCollection", features : loadedPolygons }
+      const featureCollection = { type : "FeatureCollection", features : loadedPolygons }
       newMap.addSource('geometry-feature', {
         type : "geojson",
         data : featureCollection

@@ -38,7 +38,7 @@ export default function FileUploader({ media, setMedia }) {
       })
 
       if (uploadResponse.ok) {
-        let newMedia = JSON.parse(JSON.stringify(media))
+        const newMedia = JSON.parse(JSON.stringify(media))
         newMedia.push({ url : `${url}${fields.key}` })
         setMedia(newMedia);
       } else {

@@ -1,6 +1,5 @@
 import 'server-only'
 import json5 from "json5";
-import path from 'path';
 import { promises as fs } from 'fs';
 
 export const getDictionary = async(locale, path) => {
@@ -12,7 +11,7 @@ export const getDictionary = async(locale, path) => {
     if(locale === 'en') {
       return englishTranslation
     }
-  } catch (err) {
+  } catch {
     console.error(`You haven't created an English translation for this page ${path}.`)
     return {};
   }
@@ -27,7 +26,7 @@ export const getDictionary = async(locale, path) => {
       modifiedOriginal[prop] = parsedTranslation[prop]
     }
     return modifiedOriginal;
-  } catch (err) {
+  } catch {
     console.log(`Missing a translation file for ${path}, falling back to English.`)
     return englishTranslation;
   }

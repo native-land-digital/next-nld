@@ -1,5 +1,4 @@
 import prisma from "@/lib/db/prisma";
-import { Prisma, Polygon } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest, route: { params: { id: string }}) => {
@@ -11,12 +10,12 @@ export const GET = async (req: NextRequest, route: { params: { id: string }}) =>
 	    WHERE id = ${Number(polygonId)}
 	  `
     if(polygons.length > 0) {
-      let polygon = polygons[0]
+      const polygon = polygons[0]
   		if(polygon) {
   			try {
   				polygon.bounds = JSON.parse(polygon.bounds);
   			} catch (err) {
-  				console.log('An error with parsing the geometry')
+  				console.log(`An error with parsing the geometry, ${JSON.stringify(err)}`)
   			}
   		}
       if (polygon) {

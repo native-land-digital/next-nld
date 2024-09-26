@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { possiblePermissions } from '@/lib/auth/permissions';
 import { toast } from 'react-toastify';
 
@@ -12,7 +12,7 @@ export default function EditUser({ user }) {
   const [ organization, setOrganization ] = useState(user.organization);
 
   const savePermissions = (checked, permission) => {
-    let newPermissions = JSON.parse(JSON.stringify(permissions));
+    const newPermissions = JSON.parse(JSON.stringify(permissions));
     if(checked) {
       newPermissions.push(permission);
     } else {

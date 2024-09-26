@@ -1,5 +1,5 @@
 import prisma from "@/lib/db/prisma";
-import { Prisma, Polygon } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest ) => {
@@ -7,7 +7,7 @@ export const GET = async (req: NextRequest ) => {
 	const category = req.nextUrl.searchParams.get('category');
 	const geosearch = req.nextUrl.searchParams.get('geosearch');
   try {
-		let query = {
+		const query = {
       where : {
 				AND : [{
 					name : {
@@ -37,13 +37,13 @@ export const GET = async (req: NextRequest ) => {
 		    WHERE id IN (${Prisma.join(ids)})
 		  `
 			polygons.forEach(polygon => {
-				let thisPolygonShape = polygonShapes.find(shape => shape.id === polygon.id);
+				const thisPolygonShape = polygonShapes.find(shape => shape.id === polygon.id);
 				if(thisPolygonShape) {
 					try {
 						polygon.centroid = JSON.parse(thisPolygonShape.centroid);
 						polygon.bounds = JSON.parse(thisPolygonShape.bounds);
 					} catch (err) {
-						console.log('An error with parsing the geometry')
+						console.log(`An error with parsing the geometry, ${JSON.stringify(err)}`)
 					}
 				}
 			})

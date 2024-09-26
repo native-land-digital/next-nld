@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState, useRef } from 'react';
+import { useState } from 'react';
 
 import Map from '@/components/front-map/map';
 import SelectorControl from '@/components/front-map/map-selector-control';

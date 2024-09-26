@@ -4,7 +4,7 @@ import { navigate } from '@/lib/actions'
 import { toast } from 'react-toastify';
 
 const makeNewPolygon = () => {
-  let name = window.prompt("Enter a name for the new polygon");
+  const name = window.prompt("Enter a name for the new polygon");
   if(name) {
     fetch('/api/polygons', {
       method : "POST",

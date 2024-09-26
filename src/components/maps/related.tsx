@@ -6,8 +6,7 @@ export default function Related({ relatedTo }) {
 
   return (
     <>
-      {relatedTo.map((relation, i) => {
-        console.log(relation)
+      {relatedTo.map(() => {
         // return (
         //   <div key={`website-${i}`} className="mb-2.5">
         //     <a href={website.url}>{website.title && website.title !== "" ? website.title : website.url}</a>

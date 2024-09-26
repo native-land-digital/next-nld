@@ -7,7 +7,7 @@ export default function MediaEditor({ media, setMedia }) {
   const deleteObject = (e, url) => {
     e.preventDefault();
     if(url) {
-      let key = url.split('/')[url.split('/').length - 1];
+      const key = url.split('/')[url.split('/').length - 1];
       fetch(`/api/upload?key=${key}`, {
         method : "DELETE",
         headers : { 'Content-Type': 'application/json' }
@@ -15,7 +15,7 @@ export default function MediaEditor({ media, setMedia }) {
         if(response.error) {
           toast(response.error);
         } else {
-          let newMedia = JSON.parse(JSON.stringify(media))
+          const newMedia = JSON.parse(JSON.stringify(media))
           newMedia.splice(newMedia.findIndex(thisMedia => thisMedia.url === url), 1);
           setMedia(newMedia);
         }

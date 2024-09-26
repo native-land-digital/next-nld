@@ -1,6 +1,5 @@
 import prisma from "@/lib/db/prisma";
 import { FormData, File } from 'node-fetch';
-import { Prisma, Polygon } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
 
@@ -20,12 +19,12 @@ export const GET = async (req: NextRequest) => {
         if(polygons.length > 0) {
 
           // Prepare line-delimited geoJSON
-          let features = [];
+          const features = [];
           polygons.forEach(polygon => {
             if(polygon.geojson) {
-              let geometry = JSON.parse(polygon.geojson)
+              const geometry = JSON.parse(polygon.geojson)
               if(geometry && geometry.coordinates) {
-                let feature = {
+                const feature = {
                   type : "Feature",
                   id : polygon.id,
                   properties : {
@@ -57,7 +56,7 @@ export const GET = async (req: NextRequest) => {
               }
             }
           })
-          let lineDelimitedGeoJSON = features.join('\n');
+          const lineDelimitedGeoJSON = features.join('\n');
 
           // console.log(lineDelimitedGeoJSON)
 
@@ -87,75 +86,47 @@ export const GET = async (req: NextRequest) => {
 
           // FOR NEW TILESETS
           // CREATES A NEW TILESET
-          // try {
-          //   console.log(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`)
-          //   const tilesetSourceCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
-          //     method : "POST",
-          //     body : formData
-          //   });
-          //   const tilesetSourceCallJSON = await tilesetSourceCall.json();
-          //   console.log("tileset source created");
-          //   console.log(tilesetSourceCallJSON);
-          // } catch(err) {
-          //   console.log(err)
-          //   return NextResponse.json({ error : `Error creating tileset source ${JSON.stringify(err)}` }, { status: 500 });
-          // }
-          //
-          // const recipe = { version : 1, layers : {}}
-          // recipe.layers[tileset_source_layer] = {
-          //   "source": `mapbox://tileset-source/${mapbox_username}/${tileset_source}`,
-          //   "minzoom": 1,
-          //   "maxzoom": 10
-          // }
-          //
-          // try {
-          //   const tilesetCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}?access_token=${secret_access_token}`, {
-          //     method : "POST",
-          //     headers : {
-          //       "Content-Type" : "application/json"
-          //     },
-          //     body : JSON.stringify({
-          //       recipe : recipe,
-          //       name : tilesetName
-          //     })
-          //   });
-          //   const tilesetCallJSON = await tilesetCall.json();
-          //   console.log("tileset with recipe created");
-          //   console.log(tilesetCallJSON);
-          // } catch(err) {
-          //   console.log(err)
-          //   return NextResponse.json({ error : `Error creating tileset ${JSON.stringify(err)}` }, { status: 500 });
-          // }
-          //
-          // await new Promise(resolve => setTimeout(resolve, 5000)); // Because the tileset takes a moment to register
-          //
-          // try {
-          //   const tilesetPublishCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}/publish?access_token=${secret_access_token}`, {
-          //     method : "POST"
-          //   });
-          //   const tilesetPublishCallJSON = await tilesetPublishCall.json();
-          //   console.log("tileset published");
-          //   console.log(tilesetPublishCallJSON);
-          // } catch(err) {
-          //   console.log(err)
-          //   return NextResponse.json({ error : `Error publishing tileset ${JSON.stringify(err)}` }, { status: 500 });
-          // }
-
-
-          // FOR UPDATING
-          // REPLACES THE EXISTING TILESET
           try {
-            const tilesetCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
-              method : "PUT",
+            console.log(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`)
+            const tilesetSourceCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
+              method : "POST",
               body : formData
             });
+            const tilesetSourceCallJSON = await tilesetSourceCall.json();
+            console.log("tileset source created");
+            console.log(tilesetSourceCallJSON);
+          } catch(err) {
+            console.log(err)
+            return NextResponse.json({ error : `Error creating tileset source ${JSON.stringify(err)}` }, { status: 500 });
+          }
+
+          const recipe = { version : 1, layers : {}}
+          recipe.layers[tileset_source_layer] = {
+            "source": `mapbox://tileset-source/${mapbox_username}/${tileset_source}`,
+            "minzoom": 1,
+            "maxzoom": 10
+          }
+
+          try {
+            const tilesetCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}?access_token=${secret_access_token}`, {
+              method : "POST",
+              headers : {
+                "Content-Type" : "application/json"
+              },
+              body : JSON.stringify({
+                recipe : recipe,
+                name : tilesetName
+              })
+            });
             const tilesetCallJSON = await tilesetCall.json();
-            console.log("tileset source updated");
+            console.log("tileset with recipe created");
             console.log(tilesetCallJSON);
           } catch(err) {
             console.log(err)
-            return NextResponse.json({ error : `Error updating tileset source ${JSON.stringify(err)}` }, { status: 500 });
+            return NextResponse.json({ error : `Error creating tileset ${JSON.stringify(err)}` }, { status: 500 });
           }
+
+          await new Promise(resolve => setTimeout(resolve, 5000)); // Because the tileset takes a moment to register
 
           try {
             const tilesetPublishCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}/publish?access_token=${secret_access_token}`, {
@@ -168,6 +139,34 @@ export const GET = async (req: NextRequest) => {
             console.log(err)
             return NextResponse.json({ error : `Error publishing tileset ${JSON.stringify(err)}` }, { status: 500 });
           }
+
+
+          // FOR UPDATING
+          // REPLACES THE EXISTING TILESET
+          // try {
+          //   const tilesetCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
+          //     method : "PUT",
+          //     body : formData
+          //   });
+          //   const tilesetCallJSON = await tilesetCall.json();
+          //   console.log("tileset source updated");
+          //   console.log(tilesetCallJSON);
+          // } catch(err) {
+          //   console.log(err)
+          //   return NextResponse.json({ error : `Error updating tileset source ${JSON.stringify(err)}` }, { status: 500 });
+          // }
+          //
+          // try {
+          //   const tilesetPublishCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}/publish?access_token=${secret_access_token}`, {
+          //     method : "POST"
+          //   });
+          //   const tilesetPublishCallJSON = await tilesetPublishCall.json();
+          //   console.log("tileset published");
+          //   console.log(tilesetPublishCallJSON);
+          // } catch(err) {
+          //   console.log(err)
+          //   return NextResponse.json({ error : `Error publishing tileset ${JSON.stringify(err)}` }, { status: 500 });
+          // }
 
       		return NextResponse.json({
             featuresUpdated : polygons.length,

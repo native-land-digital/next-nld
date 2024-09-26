@@ -2,13 +2,12 @@ import { useEffect, useState, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-import SelectorControl from '@/components/front-map/map-selector-control';
 import { randomStartingPosition, createSetFeatureCollection, makeBoundsFromPoly, getUniqueFeatures } from '@/components/front-map/map-utils';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-export default function MainMap({ allLayers, map, setMap, hoveredFeatures, setHoveredFeatures, selectedFeatures, setSelectedFeatures, currentLayers }) {
+export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, currentLayers }) {
 
   const currentLayersRef = useRef(currentLayers);
   const [ popup, setPopup ] = useState(false);
@@ -26,7 +25,7 @@ export default function MainMap({ allLayers, map, setMap, hoveredFeatures, setHo
     });
     setMap(newMap)
 
-    let newPopup = new mapboxgl.Popup({
+    const newPopup = new mapboxgl.Popup({
       closeButton: false,
       closeOnClick: false,
       offset: 10,
@@ -79,7 +78,7 @@ export default function MainMap({ allLayers, map, setMap, hoveredFeatures, setHo
   }
 
   const addControls = () => {
-    let nav = new mapboxgl.NavigationControl();
+    const nav = new mapboxgl.NavigationControl();
     map.addControl(nav, "bottom-right");
     const geocoder = new MapboxGeocoder({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
@@ -93,7 +92,7 @@ export default function MainMap({ allLayers, map, setMap, hoveredFeatures, setHo
     geocoder.on('result', ({ result }) => {
       setTimeout(() => {
         const createSelectedFeatures = createSetFeatureCollection("isSelected", map);
-        let point = map.project(result.center);
+        const point = map.project(result.center);
         const featuresUnderMouse = map.queryRenderedFeatures(point, { layers: currentLayersRef.current });
         const noDuplicates = getUniqueFeatures(featuresUnderMouse, 'id');
         createSelectedFeatures(noDuplicates);
@@ -109,7 +108,7 @@ export default function MainMap({ allLayers, map, setMap, hoveredFeatures, setHo
         clearInterval(loadCheck)
         allLayers.forEach(layer => {
           // Ensuring popup disappears
-          map.on('mouseout', layer, (e) => popup.remove());
+          map.on('mouseout', layer, () => popup.remove());
           // Setting hover opacity effects
           // These are tied to the custom feature states defined in the events created below
           map.setPaintProperty(layer, "fill-opacity", [

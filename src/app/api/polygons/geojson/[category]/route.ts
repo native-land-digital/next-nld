@@ -1,9 +1,6 @@
 import prisma from "@/lib/db/prisma";
 import { Polygon } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt"
-
-type UpdatePolygonReqBody = Partial<Omit<Polygon, "id">>;
 
 export const GET = async (req: NextRequest, route: { params: { slug: string }}) => {
   const { category: category } = route.params;
@@ -16,9 +13,9 @@ export const GET = async (req: NextRequest, route: { params: { slug: string }}) 
     `
 
     if(polygons) {
-      let featureCollection = { type : "FeatureCollection", features : [] }
+      const featureCollection = { type : "FeatureCollection", features : [] }
       polygons.forEach(polygon => {
-        let geometry = JSON.parse(polygon.geojson)
+        const geometry = JSON.parse(polygon.geojson)
         if(geometry) {
           featureCollection.features.push({
             type : "Feature",

@@ -6,7 +6,7 @@ import RemoveButton from '@/components/dashboard/editors/common/remove-button';
 export default function ChangelogEditor({ changelog, setChangelog }) {
 
   const changeChangelog = (value, action, prop, index) => {
-    let newChangelog = [...changelog];
+    const newChangelog = [...changelog];
     if(action === 'add') {
       newChangelog.push({ createdAt : new Date().toISOString().split('T')[0], description : "" })
     } else if(action === 'edit') {

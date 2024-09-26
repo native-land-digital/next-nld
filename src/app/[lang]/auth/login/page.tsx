@@ -63,11 +63,6 @@ export default function Login() {
                   Remember me
                 </label>
               </div>
-              <div className="text-sm">
-                <a href="#" className="text-blue-600 hover:underline font-semibold">
-                  Forgot your password?
-                </a>
-              </div>
             </div>
 
             <div className="!mt-8">
@@ -76,7 +71,7 @@ export default function Login() {
               </button>
             </div>
 
-            <p className="text-gray-800 text-sm !mt-8 text-center">Don't have an account? <a href="/auth/signup" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">Register here</a></p>
+            <p className="text-gray-800 text-sm !mt-8 text-center">No account? <a href="/auth/signup" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">Register here</a></p>
           </div>
         </div>
       </div>

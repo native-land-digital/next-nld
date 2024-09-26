@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 export async function POST(request: Request) {
   const token = await getToken({ req })
 	if(token && token.permissions.includes('research')) {
-    const { filename, contentType } = await request.json()
+    const { contentType } = await request.json()
 
     try {
       const client = new S3Client({ region: process.env.AWS_REGION })
@@ -41,7 +41,7 @@ export async function DELETE(req: NextRequest) {
       const bucketParams = { Bucket: process.env.AWS_BUCKET_NAME, Key: key };
       try {
         const client = new S3Client({ region: process.env.AWS_REGION })
-        const data = await client.send(new DeleteObjectCommand(bucketParams));
+        await client.send(new DeleteObjectCommand(bucketParams));
         return Response.json({ deleted : key })
       } catch (err) {
         return Response.json({ error: err })

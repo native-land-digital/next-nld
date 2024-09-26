@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import Switch from "react-switch";
-import Select from 'react-select';
 
 import { exportMap } from '@/components/front-map/map-utils';
 
@@ -33,10 +31,6 @@ export default function TogglesControl({ allLayers, map }) {
       setTextZoomed(!textZoomed)
     }
 
-    const printMap = () => {
-
-    }
-
     const toggleColors = () => {
       allLayers.forEach(layer => {
         if(colorsOn) {
@@ -49,25 +43,23 @@ export default function TogglesControl({ allLayers, map }) {
     }
 
     const toggleLabels = () => {
-      allLayers.forEach(layer => {
-        map.getStyle().layers.forEach((layer) => {
-          if((layer.type === "symbol" ||
-            layer["source-layer"] === "admin" ||
-            layer["source-layer"] === "road" ||
-            layer["source-layer"] === "landuse") &&
-          !(
-            layer.id.indexOf("territories") > -1 ||
-            layer.id.indexOf("languages") > -1 ||
-            layer.id.indexOf("treaties") > -1
-          )) {
-            if(labelsOn) {
-              map.setLayoutProperty(layer.id, "visibility", "none");
-            } else {
-              map.setLayoutProperty(layer.id, "visibility", "visible");
-            }
+      map.getStyle().layers.forEach((layer) => {
+        if((layer.type === "symbol" ||
+          layer["source-layer"] === "admin" ||
+          layer["source-layer"] === "road" ||
+          layer["source-layer"] === "landuse") &&
+        !(
+          layer.id.indexOf("territories") > -1 ||
+          layer.id.indexOf("languages") > -1 ||
+          layer.id.indexOf("treaties") > -1
+        )) {
+          if(labelsOn) {
+            map.setLayoutProperty(layer.id, "visibility", "none");
+          } else {
+            map.setLayoutProperty(layer.id, "visibility", "visible");
           }
-        });
-      })
+        }
+      });
       setLabelsOn(!labelsOn)
     }
 

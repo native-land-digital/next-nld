@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { signIn } from "next-auth/react";
 import { toast } from 'react-toastify';
 

@@ -5,9 +5,7 @@ import slugify from 'slugify'
 import prisma from "@/lib/db/prisma";
 import { Polygon } from "@prisma/client";
 
-
-export const GET = async (req: NextRequest, route: { params: { slug: string }}) => {
-  const { slug: slug } = route.params;
+export const GET = async (req: NextRequest) => {
 
 	try {
     const territories = await prisma.polygon.findMany({
@@ -76,11 +74,11 @@ export const POST = async (req: NextRequest) => {
   	try {
       // Creating unique slug
       let slug = slugify(body.name, { lower : true });
-      let slugSuffix = "-";
+      const slugSuffix = "-";
       let slugNumber = 1;
       let slugIsUnique = false;
       while(!slugIsUnique) {
-        let currentSlug = slug + (slugNumber > 1 ? (slugSuffix + slugNumber.toString()) : "")
+        const currentSlug = slug + (slugNumber > 1 ? (slugSuffix + slugNumber.toString()) : "")
         const foundSlug = await prisma.polygon.findUnique({
           where : {
             slug : currentSlug

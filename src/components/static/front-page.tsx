@@ -31,7 +31,7 @@ export default async function FrontPage({ lang }) {
     take : 3
   });
 
-  const dict = await getDictionary(lang, 'front-page')
+  // const dict = await getDictionary(lang, 'front-page')
 
   return (
     <div className="font-[sans-serif] bg-white py-10 text-center">
@@ -39,7 +39,7 @@ export default async function FrontPage({ lang }) {
         <section>
           <h2 className="text-6xl font-bold"><span className="text-blue-600 underline underline-offset-2 decoration-yellow-600/30 decoration-[15px]">Welcome.</span> <span className="text-black">We are glad you are here.</span></h2>
           <p className="text-xl text-gray-400 my-8">Native Land is an app to help map Indigenous territories, treaties, and languages.</p>
-          <p className="bg-blue-600/20 px-4 py-2.5 rounded inline font-bold">Don't hesitate to <a href="/contact">get in touch</a> if you see an error!</p>
+          <p className="bg-blue-600/20 px-4 py-2.5 rounded inline font-bold">Dont hesitate to <a href="/contact">get in touch</a> if you see an error!</p>
         </section>
         <section>
           <div className="grid grid-cols-2 pad-5">
@@ -161,7 +161,7 @@ export default async function FrontPage({ lang }) {
             </div>
             <div className="grid grid-cols-2">
               <div>
-                <h5>Supporter's Circle</h5>
+                <h5>Supporters Circle</h5>
                 <p>Join our new Supporter’s Circle and help be a part of the connections between Indigenous communities.</p>
                 <a href="">Learn more</a>
               </div>

@@ -1,6 +1,5 @@
 import SubHeader from '@/components/nav/sub-header'
 import AdminMenu from '@/components/dashboard/menu'
-import { toast } from 'react-toastify';
 
 import UpdateMapbox from '@/components/dashboard/update-mapbox';
 

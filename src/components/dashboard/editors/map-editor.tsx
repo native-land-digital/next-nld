@@ -30,7 +30,7 @@ export default function MapEditor({ geometry, setGeometry }) {
   useEffect(() => {
     if(geometry && draw && geometry !== "null") {
       if(polygons.current.length === 0) {
-        let loadedPolygons = geometry.coordinates.map(polygonGeometry => {
+        const loadedPolygons = geometry.coordinates.map(polygonGeometry => {
           return {
             type : "Feature",
             id : (Math.random() + 1).toString(36).substring(7),
@@ -56,7 +56,7 @@ export default function MapEditor({ geometry, setGeometry }) {
     if(polygons.current.length > 0) {
       const featureCollection = { type : "FeatureCollection", features : polygons.current }
       const combined = combine(featureCollection)
-      let featureGeometry = combined.features[0].geometry;
+      const featureGeometry = combined.features[0].geometry;
       setGeometry(featureGeometry)
     } else {
       setGeometry("null")
@@ -66,14 +66,14 @@ export default function MapEditor({ geometry, setGeometry }) {
   const setMapFeatures = (features) => {
     polygons.current = features;
     setGeometryFromPolygons();
-    let featureCollection = { type : "FeatureCollection", features : features }
+    const featureCollection = { type : "FeatureCollection", features : features }
     draw.add(featureCollection)
     const bounds = bbox(featureCollection)
     map.fitBounds(bounds, { padding : 50, duration : 0 })
   }
 
   const addControls = () => {
-    let nav = new mapboxgl.NavigationControl();
+    const nav = new mapboxgl.NavigationControl();
     map.addControl(nav, "bottom-right");
     const geocoder = new MapboxGeocoder({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
@@ -97,23 +97,23 @@ export default function MapEditor({ geometry, setGeometry }) {
   const addEventListeners = () => {
 
     map.on('draw.create', ({ features }) => {
-      let newPolygons = JSON.parse(JSON.stringify(polygons.current));
+      const newPolygons = JSON.parse(JSON.stringify(polygons.current));
       newPolygons.push(features[0]);
       polygons.current = newPolygons;
       setGeometryFromPolygons();
     })
 
     map.on('draw.update', ({ features }) => {
-      let newPolygons = JSON.parse(JSON.stringify(polygons.current));
-      let polygonIndex = polygons.current.findIndex(feature => feature.id === features[0].id);
+      const newPolygons = JSON.parse(JSON.stringify(polygons.current));
+      const polygonIndex = polygons.current.findIndex(feature => feature.id === features[0].id);
       newPolygons[polygonIndex] = features[0];
       polygons.current = newPolygons;
       setGeometryFromPolygons();
     })
 
     map.on('draw.delete', ({ features }) => {
-      let newPolygons = JSON.parse(JSON.stringify(polygons.current));
-      let polygonIndex = polygons.current.findIndex(feature => feature.id === features[0].id);
+      const newPolygons = JSON.parse(JSON.stringify(polygons.current));
+      const polygonIndex = polygons.current.findIndex(feature => feature.id === features[0].id);
       newPolygons.splice(polygonIndex, 1);
       polygons.current = newPolygons;
       setGeometryFromPolygons();
@@ -136,15 +136,15 @@ export default function MapEditor({ geometry, setGeometry }) {
   }
 
   const uploadGeoJSON = (event) => {
-    var reader = new FileReader();
+    const reader = new FileReader();
     reader.onload = (e) => {
       try {
         const json = JSON.parse(e.target.result);
         if(json.features.length > 0) {
-          let nonPolygons = json.features.filter(feature => feature.geometry.type.indexOf("Polygon") === -1);
+          const nonPolygons = json.features.filter(feature => feature.geometry.type.indexOf("Polygon") === -1);
           if(nonPolygons.length === 0) {
-            let finalPolygons = json.features.filter(feature => feature.geometry.type === "Polygon")
-            let multipolygons = json.features.filter(feature => feature.geometry.type === "MultiPolygon");
+            const finalPolygons = json.features.filter(feature => feature.geometry.type === "Polygon")
+            const multipolygons = json.features.filter(feature => feature.geometry.type === "MultiPolygon");
             multipolygons.forEach(multipolygon => {
               multipolygon.geometry.coordinates.forEach(coordinateSet => {
                 finalPolygons.push({ type : "Feature", geometry : { type : "Polygon", coordinates : coordinateSet }});

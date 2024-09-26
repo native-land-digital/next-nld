@@ -27,7 +27,7 @@ export default function Header({ dict }) {
           {navItems.map(navItem => {
             if(navItem.children && navItem.children.length > 0) {
               return (
-                <div key={`nav-${navItem.label}`} onMouseLeave={(e) => setOpenNav(false)}>
+                <div key={`nav-${navItem.label}`} onMouseLeave={() => setOpenNav(false)}>
                   <div className={`${navItem.label}-dropdown cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6`} onMouseOver={() => setOpenNav(navItem.label)}>
                     <span className="pointer-events-none">{navItem.icon ? navItem.icon : navItem.label}</span>
                     <svg className="w-3 h-3 pointer-events-none mt-1.5 ml-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">

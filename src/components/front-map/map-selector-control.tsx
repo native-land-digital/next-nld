@@ -11,7 +11,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
     const [ toggledFeatures, setToggledFeatures ] = useState([])
 
     const adjustCurrentLayers = (checked, layer) => {
-      let newCurrentLayers = JSON.parse(JSON.stringify(currentLayers));
+      const newCurrentLayers = JSON.parse(JSON.stringify(currentLayers));
       if(checked) {
         newCurrentLayers.push(layer);
       } else {
@@ -21,7 +21,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
     }
 
     const nationToggle = (slug) => {
-      let newToggledFeatures = JSON.parse(JSON.stringify(toggledFeatures))
+      const newToggledFeatures = JSON.parse(JSON.stringify(toggledFeatures))
       if(newToggledFeatures.indexOf(slug) > -1) {
         newToggledFeatures.splice(newToggledFeatures.indexOf(slug), 1)
       } else {
@@ -42,7 +42,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
 
     const selectDropdown = (id, category) => {
       fetch(`/api/polygons/search/${id}`).then(resp => resp.json()).then(polygon => {
-        let bounds = makeBoundsFromPoly(polygon)
+        const bounds = makeBoundsFromPoly(polygon)
         map.fitBounds(bounds, { padding : 20 })
         adjustCurrentLayers(true, category);
       })

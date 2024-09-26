@@ -6,7 +6,7 @@ import RemoveButton from '@/components/dashboard/editors/common/remove-button';
 export default function WebsiteEditor({ websites, setWebsites }) {
 
   const changeWebsites = (value, action, prop, index) => {
-    let newWebsites = JSON.parse(JSON.stringify(websites));
+    const newWebsites = JSON.parse(JSON.stringify(websites));
     if(action === 'add') {
       newWebsites.push({ url : "", title : "" })
     } else if(action === 'edit') {

@@ -14,7 +14,7 @@ export default async function Page({ searchParams }) {
   if(searchParams.search) {
     search = searchParams.search;
   }
-  let query = {
+  const query = {
     select : {
       id : true,
       name : true,

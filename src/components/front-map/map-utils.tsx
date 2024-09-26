@@ -68,7 +68,7 @@ export const createSetFeatureCollection = (featureStateKey, map) => {
 
 export const exportMap = (map) => {
   if (!("devicePixelRatio" in window)) {
-    var dpi = 300;
+    const dpi = 300;
     Object.defineProperty(window, "devicePixelRatio", {
       get: function () {
         return dpi / 96;
@@ -133,7 +133,7 @@ export const exportMap = (map) => {
     );
 
     // downloading image
-    let link = document.createElement("a");
+    const link = document.createElement("a");
     link.download = "image.png";
     link.href = screenshotCanvas.toDataURL("image/png", 0.92);
     link.click();

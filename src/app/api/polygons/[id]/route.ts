@@ -61,9 +61,9 @@ export const PATCH = async (req: NextRequest, route: { params: { id: string }}) 
 
 		try {
 			if(body.geometry && body.geometry !== "null") {
-				let featureGeometry = body.geometry;
+				const featureGeometry = body.geometry;
 				try {
-					let geometryAsString = JSON.stringify(featureGeometry);
+					const geometryAsString = JSON.stringify(featureGeometry);
 					await prisma.$executeRawUnsafe(`
 				    UPDATE "Polygon"
 						SET geometry = ST_GeomFromGeoJSON('${geometryAsString}')
@@ -86,28 +86,28 @@ export const PATCH = async (req: NextRequest, route: { params: { id: string }}) 
 			// Prevents having to find which ones exist on the data and then delete, update, create etc
 			// To be revised later
 			// Should only be sent if anything actually changed, really. Well, it's inefficient, so what?
-			let websites = body.websites;
+			const websites = body.websites;
 			body.websites = {
 				deleteMany : {},
 				createMany : {
 					data : websites.map(website => { return { url : website.url, title : website.title }})
 				}
 			}
-			let changelog = body.changelog;
+			const changelog = body.changelog;
 			body.changelog = {
 				deleteMany : {},
 				createMany : {
 					data : changelog.map(change => { return { createdAt : new Date(change.createdAt), description : change.description }})
 				}
 			}
-			let media = body.media;
+			const media = body.media;
 			body.media = {
 				deleteMany : {},
 				createMany : {
 					data : media.map(thisMedia => { return { url : thisMedia.url }})
 				}
 			}
-			let relatedTo = body.relatedTo;
+			const relatedTo = body.relatedTo;
 			body.relatedTo = {
 				deleteMany : {},
 				createMany : {

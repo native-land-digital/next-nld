@@ -2,7 +2,7 @@
   Legacy Native-Land.ca API. Set at this URL because that's where it was for an awfully long time so far.
 */
 import prisma from "@/lib/db/prisma";
-import { Prisma, Polygon } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/root/logger";
 
@@ -15,12 +15,12 @@ export const GET = async (req: NextRequest ) => {
     return NextResponse.json({ error : `You did not include a maps type with your request (territories, languages, and/or treaties)` }, { status: 500 });
   } else {
     try {
-      let featureList = [];
+      const featureList = [];
       const mapCategories = maps.split(',');
       // Check point in polygons
       let matchingShapeIDs = [];
       if(position) {
-        let latlng = position.split(',');
+        const latlng = position.split(',');
         const positionGeometry = {
           type : "Point",
           coordinates : [parseFloat(latlng[1]), parseFloat(latlng[0])]
@@ -29,7 +29,7 @@ export const GET = async (req: NextRequest ) => {
           const polygonShapes = await prisma.$queryRaw`
             SELECT id
             FROM "Polygon"
-            WHERE ST_Contains(geometry, ST_GeomFromGeoJSON('{"type":"Point","coordinates":[-122.83028873,49.18842944]}'))
+            WHERE ST_Contains(geometry, ST_GeomFromGeoJSON('${JSON.stringify(positionGeometry)}'))
           `
           matchingShapeIDs = polygonShapes.map(shape => shape.id);
         } catch (err) {
@@ -37,7 +37,7 @@ export const GET = async (req: NextRequest ) => {
         }
       }
       // Add various sections to query
-      let query = {
+      const query = {
         select : {
           id : true,
           name : true,
@@ -52,7 +52,7 @@ export const GET = async (req: NextRequest ) => {
         }
       }
       if(name) {
-        let nameSet = name.split(',');
+        const nameSet = name.split(',');
         query.where['AND'].push({
           OR : nameSet.map(singleName => {
             return {
@@ -80,10 +80,10 @@ export const GET = async (req: NextRequest ) => {
   		    WHERE id IN (${Prisma.join(ids)})
   		  `
   			polygons.forEach(polygon => {
-  				let thisPolygonShape = polygonShapes.find(shape => shape.id === polygon.id);
+  				const thisPolygonShape = polygonShapes.find(shape => shape.id === polygon.id);
   				if(thisPolygonShape) {
   					try {
-              let geometry = JSON.parse(thisPolygonShape.geojson)
+              const geometry = JSON.parse(thisPolygonShape.geojson)
               featureList.push({
                 type : "Feature",
                 properties : {
@@ -99,7 +99,7 @@ export const GET = async (req: NextRequest ) => {
                 }
               })
   					} catch (err) {
-  						console.log('An error with parsing the geometry')
+  						console.log(`An error with parsing the geometry, ${JSON.stringify(err)}`)
   					}
   				}
   			})
@@ -129,7 +129,7 @@ export const POST = async (req: NextRequest) => {
 
 		try {
 			// only takes a single shape right now
-			let geometryAsString = JSON.stringify(body.polygon_geojson.features[0].geometry);
+			const geometryAsString = JSON.stringify(body.polygon_geojson.features[0].geometry);
 			const polygonShapes = await prisma.$queryRawUnsafe(`
 				SELECT id, name, slug, ST_AsGeoJSON(geometry) as geojson
 				FROM "Polygon"
@@ -137,7 +137,7 @@ export const POST = async (req: NextRequest) => {
 				AND ST_Intersects(geometry, ST_GeomFromGeoJSON('${geometryAsString}'))
 			`)
 			const featureList = polygonShapes.map(polygon => {
-				let geometry = JSON.parse(polygon.geojson)
+				const geometry = JSON.parse(polygon.geojson)
 				return {
 					type : "Feature",
 					properties : {
