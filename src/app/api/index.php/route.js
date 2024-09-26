@@ -21,7 +21,6 @@ export const GET = async (req ) => {
       let matchingShapeIDs = [];
       if(position) {
         const latlngString = position.split(',');
-				const latlng = [parseFloat(latlngString[1]), parseFloat(latlngString[0])];
         try {
           const polygonShapes = await prisma.$queryRaw`
             SELECT id

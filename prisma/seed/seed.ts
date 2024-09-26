@@ -76,12 +76,32 @@ async function main() {
 
     for await (const entry of importJSON) {
 
+      // Ensuring unique slug
+      let slug = JSON.parse(JSON.stringify(entry.slug));
+      const slugSuffix = "-";
+      let slugNumber = 1;
+      let slugIsUnique = false;
+      while(!slugIsUnique) {
+        const currentSlug = slug + (slugNumber > 1 ? (slugSuffix + slugNumber.toString()) : "")
+        const foundSlug = await prisma.polygon.findUnique({
+          where : {
+            slug : currentSlug
+          }
+        })
+        if(!foundSlug) {
+          slugIsUnique = true;
+          slug = currentSlug;
+        } else {
+          slugNumber = slugNumber + 1;
+        }
+      }
+
       let newPolygon = await prisma.polygon.create({
         data : {
           createdAt : new Date(entry.createdAt),
           updatedAt : new Date(entry.updatedAt),
           name : entry.name,
-          slug : entry.slug,
+          slug : slug,
           color : entry.color,
           sources : entry.sources,
           category : entry.category,

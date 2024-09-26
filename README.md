@@ -59,12 +59,18 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 ## Deployment notes
 
 - When generating a database with Supabase for Prisma, need to add `pgbouncer=true&connection_limit=1` to the Transaction DB URL
+- Builds will only run on pushes to `dev` (Preview) and `main` (Production)
+
+## Weird exceptions
+- Mapbox style has a bug fix in the `text-field` parameter to re-render the Osage name. Because the characters are registered as outside of standard Unicode and outside the range of 65535, it causes the map to error. As a result we use the following expression to allow things to render.
+```
+[ "case", [ "in", "Osage", [ "to-string", ["get", "Name"] ] ], "Osage", [ "to-string", ["get", "Name"] ] ]
+```
 
 ### Notes for current development to-dos
 
 Major:
-- Testing the prod import (problems with slugs)
-- Creating a "seed" build command for deploying to previews
+- Creating a "seed" build command for deploying to previews (empty db and copy live db each time)
 
 Minor:
 - Adding captions and titles to researcher media
@@ -74,7 +80,7 @@ Minor:
 - Add last updated date in Mapbox updating research section (for clarity)
 - Set up a redirect from `https://native-land.ca/wp-json/nativeland/v1/api/index.php` to `/api/index.php` for POST requests (poly-in-poly)
 - Consolidating API code with helper functions (instead of duplicating)
-- Weird name for prod tileset
+- Take published date from the corresponding GL JS published for seed file to preserve historical data :)
 
 Junior:
 - Adding links to social media to footer
@@ -89,15 +95,10 @@ Junior:
 - Picking some prettier fonts
 
 Bugs:
-- Issues with maximum glyphs in Mapbox GL JS front page map (style issue?) -- CURRENTLY WITH MAPBOX SUPPORT
 - Some territory slugs do not work as URLs -- possible/preferable to use IDs and do redirects from old slugs instead?
 - Fixing up the raw sql in the polygon PUT (use index.php method)
 - Looking around for any small errors with JSX in server or frontend code, resolving
 - Small cleanups (removing email verification / password reset notes in Log In, adding link to Login from Signup)
-
-Deployment:
-- Creating AWS bucket for staging and production
-- Downloading latest export file from the live site and all images, uploading to AWS
 
 Before first deploy:
 - Ensuring database backups reliability
