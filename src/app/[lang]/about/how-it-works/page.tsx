@@ -2,7 +2,7 @@ import SubHeader from '@/components/nav/sub-header'
 import Sidebar from '@/components/static/sidebar';
 import { getDictionary } from '@/i18n/dictionaries';
 
-export default async function Page({ params: { lang } }) {
+export default async function Page({ params : { lang }} : { params : { lang: string }; }) {
 
   const dict = await getDictionary(lang, 'about/how-it-works')
 

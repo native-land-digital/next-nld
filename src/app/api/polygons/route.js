@@ -1,9 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
 import slugify from 'slugify'
 
 import prisma from "@/lib/db/prisma";
-import { Polygon } from "@prisma/client";
 
 export const GET = async () => {
 
@@ -59,13 +58,11 @@ export const GET = async () => {
   }
 }
 
-type CreatePolygonReqBody = Omit<Polygon, "id">;
-
-export const POST = async (req: NextRequest) => {
+export const POST = async (req) => {
   const token = await getToken({ req })
 
 	if(token && token.permissions.includes('research')) {
-  	const body: CreatePolygonReqBody = await req.json();
+  	const body = await req.json();
 
   	if (!body.name) {
   		return NextResponse.json({ error : "Please provide a name" }, { status: 400 });

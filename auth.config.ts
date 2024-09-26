@@ -1,3 +1,5 @@
+// @ts-nocheck
+import NextAuthConfig from "next-auth"
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/db/prisma";
 
@@ -7,13 +9,6 @@ export const authConfig = {
     signOut: '/auth/logout'
   },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      console.log('here error')
-      if(user?.error) {
-         throw new Error(user.error)
-      }
-      return true
-    },
     async session({ session, user, token }) {
       if(session.user) {
         return {
@@ -27,6 +22,7 @@ export const authConfig = {
     },
     async jwt({ token, user }) {
       if(user) {
+        token.id = user.id;
         token.permissions = user.permissions;
       }
       return token;
@@ -41,4 +37,4 @@ export const authConfig = {
   secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: "jwt", maxAge: 24 * 60 * 60 },
   providers: [],
-};
+} satisfies NextAuthConfig;

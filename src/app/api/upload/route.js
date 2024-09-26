@@ -3,7 +3,7 @@ import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { getToken } from "next-auth/jwt"
 import { v4 as uuidv4 } from 'uuid'
 
-export async function POST(request: Request) {
+export async function POST(request) {
   const token = await getToken({ req })
 	if(token && token.permissions.includes('research')) {
     const { contentType } = await request.json()
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
   }
 }
 
-export async function DELETE(req: NextRequest) {
+export async function DELETE(req) {
   const token = await getToken({ req })
 	if(token && token.permissions.includes('research')) {
   	const key = req.nextUrl.searchParams.get('key');

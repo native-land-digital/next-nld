@@ -1,9 +1,9 @@
 import prisma from "@/lib/db/prisma";
 import { FormData, File } from 'node-fetch';
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
 
-export const GET = async (req: NextRequest) => {
+export const GET = async (req) => {
   const token = await getToken({ req })
 
 	if(token && token.permissions.includes('update_mapbox')) {

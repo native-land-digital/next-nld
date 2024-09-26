@@ -11,28 +11,34 @@ export default function Login() {
   const [ rememberMe, setRememberMe ] = useState(false);
 
   useEffect(() => {
-    if(localStorage.getItem('nld_email')) {
-      setEmail(localStorage.getItem('nld_email'))
+    const saved_email = localStorage.getItem('nld_email')
+    if(typeof saved_email === 'string') {
+      setEmail(saved_email)
     }
-    if(localStorage.getItem('nld_rememberMe')) {
-      setRememberMe(localStorage.getItem('nld_rememberMe') === 'true' ? true : false)
+    const saved_remember = localStorage.getItem('nld_rememberMe')
+    if(saved_remember) {
+      setRememberMe(saved_remember === 'true' ? true : false)
     }
   }, [])
 
   const doSignIn = async () => {
     if(rememberMe) {
       localStorage.setItem('nld_email', email);
-      localStorage.setItem('nld_rememberMe', rememberMe);
+      localStorage.setItem('nld_rememberMe', rememberMe ? 'true' : 'false');
     }
     const results = await signIn('credentials', {
       email : email,
       password : password,
       redirect : false
     });
-    if(results.error) {
-      toast(results.error);
+    if(!results) {
+      toast("Error logging in");
     } else {
-      navigate('/dashboard')
+      if(results.error) {
+        toast(results.error);
+      } else {
+        navigate('/dashboard')
+      }
     }
   }
 

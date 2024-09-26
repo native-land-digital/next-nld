@@ -6,7 +6,7 @@ import RemoveButton from '@/components/dashboard/editors/common/remove-button';
 
 export default function RelationEditor({ relatedTo, setRelatedTo }) {
 
-  const loadOptions = (inputValue: string, callback) => {
+  const loadOptions = (inputValue, callback) => {
     if(inputValue.length >= 2) {
       fetch(`/api/polygons/search?s=${inputValue}`).then(resp => resp.json()).then(response => {
         callback(response.map(polygon => {

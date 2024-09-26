@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,7 +6,7 @@ import Header from '@/components/nav/header';
 import Footer from '@/components/nav/footer';
 import { getDictionary } from '@/i18n/dictionaries';
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Native-Land.ca | Our home on native land",
   description: "Native Land is a resource to learn more about Indigenous territories, languages, lands, and ways of life. We welcome you to our site.",
 };

@@ -1,8 +1,8 @@
 import prisma from "@/lib/db/prisma";
 import { Prisma } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest ) => {
+export const GET = async (req ) => {
 	const search = req.nextUrl.searchParams.get('s');
 	const category = req.nextUrl.searchParams.get('category');
 	const geosearch = req.nextUrl.searchParams.get('geosearch');

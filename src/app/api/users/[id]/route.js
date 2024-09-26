@@ -1,13 +1,10 @@
 import prisma from "@/lib/db/prisma";
-import { User } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-type UpdateUserReqBody = Partial<Omit<User, "id">>;
-
-export const PATCH = async (req: NextRequest, route: { params: { id: string }}) => {
+export const PATCH = async (req, route) => {
   const token = await getToken({ req })
 	if(token && token.permissions.includes('manage_users')) {
-		const body: UpdateUserReqBody = await req.json();
+		const body = await req.json();
 		const { id: userId } = route.params;
 
 		try {
@@ -27,7 +24,7 @@ export const PATCH = async (req: NextRequest, route: { params: { id: string }}) 
   }
 }
 
-export const DELETE = async (req: NextRequest, route: { params: { id: string }}) => {
+export const DELETE = async (req, route) => {
   const token = await getToken({ req })
 	if(token && token.permissions.includes('manage_users')) {
 		const { id: userId } = route.params;

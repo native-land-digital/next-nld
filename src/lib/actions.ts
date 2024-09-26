@@ -2,6 +2,6 @@
 
 import { redirect } from 'next/navigation'
 
-export async function navigate(url: FormData) {
+export async function navigate(url: string) {
   redirect(url)
 }

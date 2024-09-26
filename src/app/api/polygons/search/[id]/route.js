@@ -1,7 +1,7 @@
 import prisma from "@/lib/db/prisma";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest, route: { params: { id: string }}) => {
+export const GET = async (req, route) => {
   const { id: polygonId } = route.params;
   try {
 	  const polygons = await prisma.$queryRaw`

@@ -3,10 +3,10 @@
 */
 import prisma from "@/lib/db/prisma";
 import { Prisma } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { logger } from "@/root/logger";
 
-export const GET = async (req: NextRequest ) => {
+export const GET = async (req ) => {
 	const maps = req.nextUrl.searchParams.get('maps');
 	const position = req.nextUrl.searchParams.get('position');
 	const name = req.nextUrl.searchParams.get('name');
@@ -117,8 +117,8 @@ export const GET = async (req: NextRequest ) => {
   }
 }
 
-export const POST = async (req: NextRequest) => {
-		const body: CreateUserReqBody = await req.json();
+export const POST = async (req) => {
+		const body = await req.json();
 
 		if (!body.maps) {
 			return NextResponse.json({ error : "Please provide a category (territories, languages, and/or treaties)" }, { status: 400 });

@@ -1,11 +1,8 @@
 import prisma from "@/lib/db/prisma";
-import { Polygon } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
 
-type UpdatePolygonReqBody = Partial<Omit<Polygon, "id">>;
-
-export const GET = async (req: NextRequest, route: { params: { slug: string }}) => {
+export const GET = async (req, route) => {
   const { slug: slug } = route.params;
 
 	try {
@@ -52,11 +49,11 @@ export const GET = async (req: NextRequest, route: { params: { slug: string }}) 
   }
 }
 
-export const PATCH = async (req: NextRequest, route: { params: { id: string }}) => {
+export const PATCH = async (req, route) => {
   const token = await getToken({ req })
 	if(token && token.permissions.includes('research')) {
 
-		const body: UpdatePolygonReqBody = await req.json();
+		const body = await req.json();
 		const { id: polygonId } = route.params;
 
 		try {
@@ -134,7 +131,7 @@ export const PATCH = async (req: NextRequest, route: { params: { id: string }}) 
 	}
 }
 
-export const DELETE = async (req: NextRequest, route: { params: { id: string }}) => {
+export const DELETE = async (req, route) => {
   const token = await getToken({ req })
 	if(token && token.permissions.includes('research')) {
 		const { id: polygonId } = route.params;

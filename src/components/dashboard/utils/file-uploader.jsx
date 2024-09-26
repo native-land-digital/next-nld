@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify';
 
 export default function FileUploader({ media, setMedia }) {
-  const [file, setFile] = useState<File | null>(null)
+  const [file, setFile] = useState(null)
   const [uploading, setUploading] = useState(false)
 
   const handleSubmit = async () => {
@@ -28,7 +28,7 @@ export default function FileUploader({ media, setMedia }) {
 
       const formData = new FormData()
       Object.entries(fields).forEach(([key, value]) => {
-        formData.append(key, value as string)
+        formData.append(key, value)
       })
       formData.append('file', file)
 

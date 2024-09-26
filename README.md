@@ -112,6 +112,7 @@ After first deploy:
 - Adding a new API endpoint that requires API keys
 
 Optimization:
+- Properly do typescript in auth config files
 - Catch logs for API requests that are errors
 - Reading over SQL injection in Prisma docs
 - Adding a Mapbox updates table, with "Recent update" to help when emptying mapboxgl cache after tile update

@@ -1,14 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 import { hashPassword } from '@/lib/auth/utils';
 import prisma from "@/lib/db/prisma";
-import { User } from "@prisma/client";
 
-type CreateUserReqBody = Omit<User, "id">;
+export const POST = async (req) => {
 
-export const POST = async (req: NextRequest) => {
-
-		const body: CreateUserReqBody = await req.json();
+		const body = await req.json();
 
 		if (!body.name) {
 			return NextResponse.json({ error : "Please provide a name" }, { status: 400 });
