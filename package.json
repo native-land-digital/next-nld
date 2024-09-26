@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "start:db": "docker run --name postgis -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgis/postgis",
     "lint": "next lint"
