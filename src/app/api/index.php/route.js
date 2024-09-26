@@ -4,7 +4,7 @@
 import prisma from "@/lib/db/prisma";
 import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
-import { logger } from "@/root/logger";
+// import { logger } from "@/root/logger";
 
 export const GET = async (req ) => {
 	const maps = req.nextUrl.searchParams.get('maps');
@@ -103,7 +103,7 @@ export const GET = async (req ) => {
   			})
       }
       if (featureList.length > 0) {
-				logger.info(`API ${req.nextUrl.search} ${key ? key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
+				// logger.info(`API ${req.nextUrl.search} ${key ? key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
     		return NextResponse.json(featureList);
       } else {
         return NextResponse.json(featureList);
@@ -170,7 +170,7 @@ export const POST = async (req) => {
 						})
 					}
 				})
-				logger.info(`API ${req.nextUrl.search} ${body.key ? body.key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
+				// logger.info(`API ${req.nextUrl.search} ${body.key ? body.key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
 				return NextResponse.json(featureList);
 			} else {
 				return NextResponse.json({ error : "The polygon has no features" }, { status: 400 });
