@@ -60,6 +60,7 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 
 - When generating a database with Supabase for Prisma, need to add `pgbouncer=true&connection_limit=1` to the Transaction DB URL
 - Builds will only run on pushes to `dev` (Preview) and `main` (Production)
+- Anytime a fresh DB is needed for `dev` Preview, dump and copy to the Dev DB from Supabase
 
 ## Weird exceptions
 - Mapbox style has a bug fix in the `text-field` parameter to re-render the Osage name. Because the characters are registered as outside of standard Unicode and outside the range of 65535, it causes the map to error. As a result we use the following expression to allow things to render.
@@ -70,7 +71,6 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 ### Notes for current development to-dos
 
 Major:
-- Creating a "seed" build command for deploying to previews (empty db and copy live db each time)
 
 Minor:
 - Adding captions and titles to researcher media
@@ -108,6 +108,7 @@ Before first deploy:
 - Update Research map for Prod
 
 After first deploy:
+- Setting up regular backups for Supabase
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
 - Do a fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 - Enhancing Winston logs to go straight to Heroku or other service
