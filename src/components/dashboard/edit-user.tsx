@@ -111,30 +111,33 @@ export default function EditUser({ user }) {
                 <div key={`checkbox-${permission}`}>
                   <label htmlFor={permission} className='capitalize text-sm'>
                     <input id={permission} type="checkbox" checked={permissions.includes(permission)} name={permission} onChange={(e) => savePermissions(e.target.checked, permission)} className="mr-1.5" />
-                    {permission}
+                    {permission.replace('_', ' ')}
                   </label>
                 </div>
               )
             })}
           </div>
         </div>
+      </div>
 
-        <div className="flex">
+      <div className="flex">
+        <div className="w-full md:w-1/2">
           <div className="!mt-8">
             <button onClick={() => saveUser()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
               Save Changes
             </button>
           </div>
+        </div>
 
-          <div className="w-full md:w-1/2">
-            <div className="!mt-8 flex justify-end">
-              <button onClick={() => deleteUser()} className="py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-red-600 hover:bg-red-700 focus:outline-none">
-                Delete
-              </button>
-            </div>
+        <div className="w-full md:w-1/2">
+          <div className="!mt-8 flex justify-end">
+            <button onClick={() => deleteUser()} className="py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-red-600 hover:bg-red-700 focus:outline-none">
+              Delete
+            </button>
           </div>
-
+        </div>
       </div>
+
     </div>
   );
 }

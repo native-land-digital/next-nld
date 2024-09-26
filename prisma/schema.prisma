@@ -63,6 +63,7 @@ model Polygon {
 	name            String
   slug            String? @unique
   sources         String?
+  color           String?
   pronunciation   String?
   category        String?
   published       Boolean @default(false)

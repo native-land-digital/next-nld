@@ -60,9 +60,11 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 
 Major:
 - Deployment first staging version
+- Getting dev credentials and various credentials sorted out, docs for deployment and local setup
 
 Minor:
 - Designing front page HTML
+- Index.php set point instead of string
 - Add color to index.php API (needs importing?)
 - Adding captions and titles to researcher media
 - Adding working links to breadcrumbs
@@ -71,10 +73,10 @@ Minor:
 - Add last updated date in Mapbox updating research section (for clarity)
 - Set up a redirect from `https://native-land.ca/wp-json/nativeland/v1/api/index.php` to `/api/index.php` for POST requests (poly-in-poly)
 - Consolidating API code with helper functions (instead of duplicating)
+- Weird name for prod tileset
 
 Junior:
 - Adding links to social media to footer
-- Adding modal to front page map
 - Mobile layout
 - Replacing all common strings with internationalized strings
 - Move over all English translations (template is at `en/about/how-it-works.json5`)
@@ -99,8 +101,12 @@ Deployment:
 Before first deploy:
 - Ensuring database backups reliability
 - Verify that embed.html is working
+- Protecting TinyMCE key?
+- Adding a protected Mapbox public token (only for main URL) for prod
+- Update Research map for Prod
 
 After first deploy:
+- Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
 - Do a fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 - Enhancing Winston logs to go straight to Heroku or other service
 - Adding a new API endpoint that requires API keys
