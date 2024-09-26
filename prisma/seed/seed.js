@@ -6,40 +6,6 @@ import { hashPassword } from '../../src/lib/auth/utils';
 
 const prisma = new PrismaClient();
 
-interface Media {
-  url : string;
-  title : string;
-  caption : string;
-}
-interface Relation {
-  description : string;
-  relatedTo_slug : string;
-}
-interface Website {
-  url : string;
-  title : string;
-}
-interface Changelog {
-  createdAt : string;
-  description : string;
-}
-
-interface Entry {
-  createdAt : string;
-  updatedAt : string;
-  name : string;
-  slug : string;
-  color: string;
-  category : string;
-  sources : string;
-  pronunciation : string;
-  websites : Website[],
-  changelog : Changelog[],
-  related : Relation[],
-  media : Media[],
-  geometry : string;
-}
-
 async function main() {
 
   // Get appropriate seed file from AWS bucket
@@ -49,7 +15,7 @@ async function main() {
   // const readStream = data.Body as Readable;
   if(data && data.Body) {
     const importString = await data.Body.transformToString();
-    let importJSON = <Entry[]>JSON.parse(importString)
+    let importJSON = JSON.parse(importString)
     // console.log(importJSON)
 
     // importJSON.splice(10); // For import testing
