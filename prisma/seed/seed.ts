@@ -43,176 +43,170 @@ interface Entry {
 
 async function main() {
 
-  if(process.env.ENVIRONMENT === 'local' || process.env.ENVIRONMENT === 'prod') {
+  // Get appropriate seed file from AWS bucket
+  const client = new S3Client({ region: process.env.AWS_REGION })
+  const seedBucketParams = { Bucket: process.env.AWS_SEED_BUCKET_NAME, Key: process.env.AWS_SEED_FILE };
+  const data = await client.send(new GetObjectCommand(seedBucketParams));
+  // const readStream = data.Body as Readable;
+  if(data && data.Body) {
+    const importString = await data.Body.transformToString();
+    let importJSON = <Entry[]>JSON.parse(importString)
+    // console.log(importJSON)
 
-    // Get appropriate seed file from AWS bucket
-    const client = new S3Client({ region: process.env.AWS_REGION })
-    const seedBucketParams = { Bucket: process.env.AWS_SEED_BUCKET_NAME, Key: process.env.AWS_SEED_FILE };
-    const data = await client.send(new GetObjectCommand(seedBucketParams));
-    // const readStream = data.Body as Readable;
-    if(data && data.Body) {
-      const importString = await data.Body.transformToString();
-      let importJSON = <Entry[]>JSON.parse(importString)
-      // console.log(importJSON)
+    // importJSON.splice(10); // For import testing
 
-      // importJSON.splice(10); // For import testing
+    // Admin user
+    let admin = await prisma.user.create({
+      data : {
+        name : "Admin User",
+        email : "test@native-land.ca",
+        password : hashPassword("test"),
+        permissions : ["profile", "api", "research", "manage_users", "update_mapbox"],
+        organization : "Native Land Digital"
+      }
+    });
 
-      // Admin user
-      let admin = await prisma.user.create({
-        data : {
-          name : "Admin User",
-          email : "test@native-land.ca",
-          password : hashPassword("test"),
-          permissions : ["profile", "api", "research", "manage_users", "update_mapbox"],
-          organization : "Native Land Digital"
+    // Removing template that came along with export
+    let templateIndex = importJSON.findIndex(entry => entry.name.includes("Template"));
+    if(typeof templateIndex !== undefined && templateIndex > -1) {
+      importJSON.splice(templateIndex, 1);
+    }
+
+    let createdRecords = 0;
+
+    for await (const entry of importJSON) {
+
+      // Ensuring unique slug
+      let slug = JSON.parse(JSON.stringify(entry.slug));
+      const slugSuffix = "-";
+      let slugNumber = 1;
+      let slugIsUnique = false;
+      while(!slugIsUnique) {
+        const currentSlug = slug + (slugNumber > 1 ? (slugSuffix + slugNumber.toString()) : "")
+        const foundSlug = await prisma.polygon.findUnique({
+          where : {
+            slug : currentSlug
+          }
+        })
+        if(!foundSlug) {
+          slugIsUnique = true;
+          slug = currentSlug;
+        } else {
+          slugNumber = slugNumber + 1;
         }
-      });
-
-      // Removing template that came along with export
-      let templateIndex = importJSON.findIndex(entry => entry.name.includes("Template"));
-      if(typeof templateIndex !== undefined && templateIndex > -1) {
-        importJSON.splice(templateIndex, 1);
       }
 
-      let createdRecords = 0;
-
-      for await (const entry of importJSON) {
-
-        // Ensuring unique slug
-        let slug = JSON.parse(JSON.stringify(entry.slug));
-        const slugSuffix = "-";
-        let slugNumber = 1;
-        let slugIsUnique = false;
-        while(!slugIsUnique) {
-          const currentSlug = slug + (slugNumber > 1 ? (slugSuffix + slugNumber.toString()) : "")
-          const foundSlug = await prisma.polygon.findUnique({
-            where : {
-              slug : currentSlug
-            }
-          })
-          if(!foundSlug) {
-            slugIsUnique = true;
-            slug = currentSlug;
-          } else {
-            slugNumber = slugNumber + 1;
-          }
-        }
-
-        let newPolygon = await prisma.polygon.create({
-          data : {
-            createdAt : new Date(entry.createdAt),
-            updatedAt : new Date(entry.updatedAt),
-            name : entry.name,
-            slug : slug,
-            color : entry.color,
-            sources : entry.sources,
-            category : entry.category,
-            published : true,
-            pronunciation : entry.pronunciation ? entry.pronunciation : "",
-            websites : {
-              createMany : {
-                data : entry.websites.map(website => {
-                  return {
-                    url : website.url,
-                    title : website.title
-                  }
-                })
-              }
-            },
-            changelog : {
-              createMany : {
-                data : entry.changelog.map(change => {
-                  return {
-                    createdAt : new Date(change.createdAt),
-                    description : change.description
-                  }
-                })
-              }
-            },
-            media : {
-              createMany : {
-                data : entry.media.map(thisMedia => {
-                  return {
-                    url : `https://${process.env.AWS_WP_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${thisMedia.url}`,
-                    title : thisMedia.title,
-                    caption : thisMedia.caption
-                  }
-                })
-              }
+      let newPolygon = await prisma.polygon.create({
+        data : {
+          createdAt : new Date(entry.createdAt),
+          updatedAt : new Date(entry.updatedAt),
+          name : entry.name,
+          slug : slug,
+          color : entry.color,
+          sources : entry.sources,
+          category : entry.category,
+          published : true,
+          pronunciation : entry.pronunciation ? entry.pronunciation : "",
+          websites : {
+            createMany : {
+              data : entry.websites.map(website => {
+                return {
+                  url : website.url,
+                  title : website.title
+                }
+              })
             }
           },
-          select : {
-            id : true
+          changelog : {
+            createMany : {
+              data : entry.changelog.map(change => {
+                return {
+                  createdAt : new Date(change.createdAt),
+                  description : change.description
+                }
+              })
+            }
+          },
+          media : {
+            createMany : {
+              data : entry.media.map(thisMedia => {
+                return {
+                  url : `https://${process.env.AWS_WP_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${thisMedia.url}`,
+                  title : thisMedia.title,
+                  caption : thisMedia.caption
+                }
+              })
+            }
           }
-        });
-
-        // console.log(newPolygon)
-
-        // Then add the geometry
-        if(newPolygon) {
-          createdRecords = createdRecords + 1;
-          if(entry.geometry) {
-            // console.log(entry.name)
-            // console.log(entry.geometry)
-            let geometryAsString = JSON.stringify(entry.geometry);
-            await prisma.$executeRawUnsafe(`
-              UPDATE "Polygon"
-              SET geometry = ST_Force2D(ST_GeomFromGeoJSON('${JSON.stringify(entry.geometry)}'))
-              WHERE id = ${newPolygon.id};
-            `)
-          }
-        } else {
-          console.log('MISSED A POLYGON')
-        }
-
-      }
-
-      console.log('created ', createdRecords);
-
-      // Then add the related fields
-      const polygons = await prisma.polygon.findMany({
+        },
         select : {
-          id : true,
-          slug : true
+          id : true
         }
       });
 
-      for await (const entry of importJSON) {
-        let thisPolygon = polygons.find(polygon => polygon.slug === entry.slug)
-        if(thisPolygon) {
-          let hasRelation = false;
-          entry.related.forEach(thisRelation => {
-            let relatedPolygon = polygons.find(polygon => polygon.slug === thisRelation.relatedTo_slug)
-            if(relatedPolygon) {
-              hasRelation = true;
-            }
-          })
-          if(hasRelation) {
-            let newPolygonRelation = await prisma.polygon.update({
-              where : {
-                id : thisPolygon.id
-              },
-              data : {
-                relatedTo : {
-                  createMany : {
-                    data : entry.related.map(thisRelation => {
-                      let relatedPolygon = polygons.find(polygon => polygon.slug === thisRelation.relatedTo_slug)
-                      return {
-                        description : thisRelation.description,
-                        relatedToId : relatedPolygon ? relatedPolygon.id : 0
-                      }
-                    })
-                  }
+      console.log(entry.name)
+
+      // Then add the geometry
+      if(newPolygon) {
+        createdRecords = createdRecords + 1;
+        if(entry.geometry) {
+          // console.log(entry.name)
+          // console.log(entry.geometry)
+          let geometryAsString = JSON.stringify(entry.geometry);
+          await prisma.$executeRawUnsafe(`
+            UPDATE "Polygon"
+            SET geometry = ST_Force2D(ST_GeomFromGeoJSON('${JSON.stringify(entry.geometry)}'))
+            WHERE id = ${newPolygon.id};
+          `)
+        }
+      } else {
+        console.log('MISSED A POLYGON')
+      }
+
+    }
+
+    console.log('created ', createdRecords);
+
+    // Then add the related fields
+    const polygons = await prisma.polygon.findMany({
+      select : {
+        id : true,
+        slug : true
+      }
+    });
+
+    for await (const entry of importJSON) {
+      let thisPolygon = polygons.find(polygon => polygon.slug === entry.slug)
+      if(thisPolygon) {
+        let hasRelation = false;
+        entry.related.forEach(thisRelation => {
+          let relatedPolygon = polygons.find(polygon => polygon.slug === thisRelation.relatedTo_slug)
+          if(relatedPolygon) {
+            hasRelation = true;
+          }
+        })
+        if(hasRelation) {
+          let newPolygonRelation = await prisma.polygon.update({
+            where : {
+              id : thisPolygon.id
+            },
+            data : {
+              relatedTo : {
+                createMany : {
+                  data : entry.related.map(thisRelation => {
+                    let relatedPolygon = polygons.find(polygon => polygon.slug === thisRelation.relatedTo_slug)
+                    return {
+                      description : thisRelation.description,
+                      relatedToId : relatedPolygon ? relatedPolygon.id : 0
+                    }
+                  })
                 }
               }
-            });
-          }
+            }
+          });
         }
       }
     }
-
-  } else if(process.env.ENVIRONMENT === 'dev') {
-    // In this case, manually dump and import the database from prod to the dev DB
   }
 
 }

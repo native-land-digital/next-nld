@@ -60,6 +60,7 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 
 - When generating a database with Supabase for Prisma, need to add `pgbouncer=true&connection_limit=1` to the Transaction DB URL
 - Builds will only run on pushes to `dev` (Preview) and `main` (Production)
+- Pushing new DB schemas to prod is done through Prisma, then a DB dump if needed from a local modified version (seeds are too slow)
 - Anytime a fresh DB is needed for `dev` Preview, dump and copy to the Dev DB from Supabase
 
 ## Weird exceptions
