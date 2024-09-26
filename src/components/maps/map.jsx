@@ -13,7 +13,6 @@ export default function Map({ geometry }) {
       container: "nld-maps-mapbox-map",
       style: process.env.NEXT_PUBLIC_MAPBOX_STYLE,
     });
-    setMap(newMap)
     const nav = new mapboxgl.NavigationControl();
     newMap.addControl(nav, "bottom-right");
     newMap.on('load', () => {
