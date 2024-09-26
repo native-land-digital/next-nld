@@ -67,7 +67,6 @@ Major:
 - Creating a "seed" build command for deploying to previews
 
 Minor:
-- Designing front page HTML
 - Adding captions and titles to researcher media
 - Adding working links to breadcrumbs
 - Checking and rendering related field front end
