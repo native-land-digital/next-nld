@@ -56,6 +56,10 @@ All polygons are stored in the PostGIS database as MultiPolygons. They can be fl
 
 Logs are generated when hitting the public API (`/api/index.php`) and stored in the `logs/` folder.
 
+## Deployment notes
+
+- When generating a database with Supabase for Prisma, need to add `pgbouncer=true&connection_limit=1` to the Transaction DB URL
+
 ### Notes for current development to-dos
 
 Major:
