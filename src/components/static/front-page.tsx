@@ -1,7 +1,7 @@
 import prisma from "@/lib/db/prisma";
 import Image from "next/image";
 
-import { getDictionary } from '@/i18n/dictionaries';
+// import { getDictionary } from '@/i18n/dictionaries';
 import Mission from '@/public/images/mission.webp'
 import Mapping from '@/public/images/physical-world-map.webp'
 import Education from '@/public/images/stacked-paper-sheets.webp'
@@ -15,7 +15,7 @@ import Disclaimer from '@/public/images/disclaimer-3.webp'
 import Patreon from '@/public/images/patreon.webp'
 import SupportersCircle from '@/public/images/black-circle.webp'
 
-export default async function FrontPage({ lang }) {
+export default async function FrontPage() {
 
   const latestUpdates = await prisma.polygon.findMany({
     select : {

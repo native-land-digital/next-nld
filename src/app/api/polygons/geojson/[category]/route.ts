@@ -1,5 +1,4 @@
 import prisma from "@/lib/db/prisma";
-import { Polygon } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest, route: { params: { slug: string }}) => {

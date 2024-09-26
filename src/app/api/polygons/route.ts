@@ -5,7 +5,7 @@ import slugify from 'slugify'
 import prisma from "@/lib/db/prisma";
 import { Polygon } from "@prisma/client";
 
-export const GET = async (req: NextRequest) => {
+export const GET = async () => {
 
 	try {
     const territories = await prisma.polygon.findMany({

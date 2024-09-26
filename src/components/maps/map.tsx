@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import bbox from "@turf/bbox";
 
