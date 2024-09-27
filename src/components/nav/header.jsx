@@ -117,9 +117,9 @@ export default function Header({ dict }) {
             </div>
             <div className={`${openNav === 'language' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <Link href="" locale="en" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['english']}</Link>
-                <Link href="" locale="fr" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['french']}</Link>
-                <Link href="" locale="es" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['spanish']}</Link>
+                <Link href="/en" locale={false} className="text-sm block px-3 py-2 hover:text-slate-400">{dict['english']}</Link>
+                <Link href="/fr" locale={false} className="text-sm block px-3 py-2 hover:text-slate-400">{dict['french']}</Link>
+                <Link href="/es" locale={false} className="text-sm block px-3 py-2 hover:text-slate-400">{dict['spanish']}</Link>
               </div>
             </div>
           </div>

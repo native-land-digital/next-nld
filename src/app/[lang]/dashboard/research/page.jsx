@@ -1,4 +1,5 @@
 import prisma from "@/lib/db/prisma";
+import Link from 'next/link'
 
 import SubHeader from '@/components/nav/sub-header'
 import AdminMenu from '@/components/dashboard/menu'
@@ -38,7 +39,7 @@ export default async function Page({ searchParams }) {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={"Research"} breadcrumbs={["Dashboard", "Research"]} />
+      <SubHeader title={"Research"} />
       <div className="min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
         <AdminMenu />
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
@@ -48,7 +49,7 @@ export default async function Page({ searchParams }) {
                 <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
                 <button className="border border-gray-300 px-4 py-3 rounded ml-2.5">Search</button>
                 {search ?
-                  <a className="border border-gray-300 px-4 py-3 rounded ml-2.5" href="/dashboard/research">Clear</a>
+                  <Link className="border border-gray-300 px-4 py-3 rounded ml-2.5" href="/dashboard/research">Clear</Link>
                 : false}
               </form>
             </div>
@@ -72,7 +73,7 @@ export default async function Page({ searchParams }) {
                     <td className="px-6 py-4 text-sm font-medium text-black">{polygon.id}</td>
                     <td className="px-6 py-4 text-sm font-medium text-black">{polygon.name}</td>
                     <td className="px-6 py-4 text-sm font-medium text-black">{polygon.category}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black"><a href={`/dashboard/research/${polygon.id}`}>➜</a></td>
+                    <td className="px-6 py-4 text-sm font-medium text-black"><Link href={`/dashboard/research/${polygon.id}`}>➜</Link></td>
                   </tr>
                 )
               })}

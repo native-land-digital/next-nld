@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { navigate } from '@/lib/actions'
+import Link from 'next/link'
 
 import MainMap from '@/components/dashboard/editors/map-editor';
 import WYSIWYGEDitor from '@/components/dashboard/editors/wysiwyg-editor';
@@ -70,7 +71,7 @@ export default function EditPolygon({ polygon }) {
 
   return (
     <div>
-      <a href="/dashboard/research"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>Back</a>
+      <Link href="/dashboard/research"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>Back</Link>
       <h2 className="font-semibold text-3xl">{polygon.name}</h2>
       <p className="text-xs mt-1" suppressHydrationWarning>Polygon created {new Date(polygon.createdAt).toLocaleString()}, updated {new Date(polygon.updatedAt).toLocaleString()}</p>
       <hr className="mt-3 mb-3" />

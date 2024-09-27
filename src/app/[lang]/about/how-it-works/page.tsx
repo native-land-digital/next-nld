@@ -8,7 +8,7 @@ export default async function Page({ params : { lang }} : { params : { lang: str
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={"How It Works"} breadcrumbs={["About", "How It Works"]} />
+      <SubHeader title={"How It Works"} />
       <div className="grid gap-5 grid-cols-3 min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black static-page">
         <Sidebar />
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">

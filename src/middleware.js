@@ -1,12 +1,27 @@
+import { NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware"
 import createMiddleware from 'next-intl/middleware';
 import { chain } from "@nimpl/middleware-chain";
 
-const intlMiddleware = createMiddleware({
+const intlOptions = {
   locales: ['en', 'fr', 'es'],
   defaultLocale: 'en',
   localePrefix: 'as-needed'
-});
+}
+
+const intlMiddleware = createMiddleware(intlOptions);
+
+const pathMiddleware = (req) => {
+  const headers = new Headers(req.headers);
+  headers.set("x-current-path", req.nextUrl.pathname);
+  headers.set("x-current-lang", intlOptions.defaultLocale);
+  intlOptions.locales.forEach(locale => {
+    if(req.nextUrl.pathname.indexOf(`/${locale}/`) > -1) {
+      headers.set("x-current-lang", locale);
+    }
+  })
+  return NextResponse.next({ headers });
+}
 
 const authMiddleware = withAuth({
   callbacks: {
@@ -40,7 +55,8 @@ const authMiddleware = withAuth({
 
 export default chain([
   [intlMiddleware, { exclude : /^\/api|_next\/static|_next\/image|favicon.ico(\/.*)?$/ }],
-  [authMiddleware, { include : /^\/dashboard(\/.*)?$/ }]
+  [authMiddleware, { include : /^\/dashboard(\/.*)?$/ }],
+  [pathMiddleware]
 ]);
 
 export const config = {

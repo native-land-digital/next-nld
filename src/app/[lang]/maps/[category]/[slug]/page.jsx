@@ -45,7 +45,7 @@ export default async function Page({ params }) {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={polygon.name} breadcrumbs={[polygon.category, polygon.name]} />
+      <SubHeader title={polygon.name} />
       <div className="grid gap-5 grid-cols-3 min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
         <div className="col-span-1 bg-white rounded-t shadow-lg p-4 mt-5">
           <ol className="list-inside text-gray-400">

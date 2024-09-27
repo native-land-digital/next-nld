@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { possiblePermissions } from '@/lib/auth/permissions';
 import { toast } from 'react-toastify';
+import Link from 'next/link'
 
 export default function EditUser({ user }) {
 
@@ -61,7 +62,7 @@ export default function EditUser({ user }) {
 
   return (
     <div>
-      <a href="/dashboard/users"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>Back</a>
+      <Link href="/dashboard/users"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>Back</Link>
       <h2 className="font-semibold text-3xl">{user.name}</h2>
       <p className="text-xs mt-1" suppressHydrationWarning>User created {new Date(user.createdAt).toLocaleString()}</p>
       <hr className="mt-3 mb-3" />

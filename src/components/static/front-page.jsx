@@ -1,5 +1,6 @@
 import prisma from "@/lib/db/prisma";
 import Image from "next/image";
+import Link from 'next/link'
 
 import { getDictionary } from '@/i18n/dictionaries';
 import Mission from '@/public/images/mission.webp'
@@ -47,7 +48,7 @@ export default async function FrontPage({ lang }) {
             <div className="flex flex-col justify-center align-center text-black text-left p-2.5">
               <h3 className="text-4xl font-bold mb-5">{dict["our-mission-header"]}</h3>
               <p className="text-slate-400 mr-16 mb-5">{dict["our-mission"]}</p>
-              <a className="text-blue-600" href="/about/why-it-matters">{dict["our-mission-link"]}</a>
+              <Link className="text-blue-600" href="/about/why-it-matters">{dict["our-mission-link"]}</Link>
             </div>
             <div>
               <Image src={Mission} alt="Mission" className="w-full h-auto" />
@@ -89,19 +90,19 @@ export default async function FrontPage({ lang }) {
           <h3 className="text-black text-3xl font-bold pb-16">{dict["partners-supporters"]}</h3>
           <div className="grid grid-cols-5 pad-5">
             <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-              <a href="https://kalliopeia.org/"><Image className="w-full" src={Kalliopeia} alt="Kalliopeia logo" /></a>
+              <Link href="https://kalliopeia.org/"><Image className="w-full" src={Kalliopeia} alt="Kalliopeia logo" /></Link>
             </div>
             <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-              <a href="https://mapbox.com/"><Image src={Mapbox} alt="Mapbox logo" /></a>
+              <Link href="https://mapbox.com/"><Image src={Mapbox} alt="Mapbox logo" /></Link>
             </div>
             <div className="place-center w-1/2 m-auto mt-5 h-30 overflow-hidden pt-5">
-              <a href="https://www.digital-democracy.org/"><Image src={DigitalDemocracy} alt="Digital Democracy logo" /></a>
+              <Link href="https://www.digital-democracy.org/"><Image src={DigitalDemocracy} alt="Digital Democracy logo" /></Link>
             </div>
             <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-              <a href="https://mapster.me/"><Image src={Mapster} alt="Mapster Technology Inc logo" /></a>
+              <Link href="https://mapster.me/"><Image src={Mapster} alt="Mapster Technology Inc logo" /></Link>
             </div>
             <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-              <a href="https://www.vancity.com/"><Image src={Vancity} alt="Vancity logo" /></a>
+              <Link href="https://www.vancity.com/"><Image src={Vancity} alt="Vancity logo" /></Link>
             </div>
           </div>
         </section>
@@ -112,14 +113,14 @@ export default async function FrontPage({ lang }) {
               return (
                 <div key={`polygon-${polygon.id}`}>
                   {polygon.media.length > 0 ?
-                    <a href={`maps/${polygon.category}/${polygon.slug}`}>
+                    <Link href={`maps/${polygon.category}/${polygon.slug}`}>
                       <div className="w-1/2 m-auto mt-5 h-[100px] bg-cover mb-2.5" style={{backgroundImage : `url(${polygon.media[0].url})`}}></div>
-                    </a>
+                    </Link>
                   : false}
                   <p className="uppercase text-gray-300 text-xs pb-2.5">{polygon.category}</p>
-                  <a href={`maps/${polygon.category}/${polygon.slug}`}>
+                  <Link href={`maps/${polygon.category}/${polygon.slug}`}>
                     <h5 className="text-xl font-bold">{polygon.name}</h5>
-                  </a>
+                  </Link>
                   <p className="text-sm pt-2.5">{new Date(polygon.updatedAt).toLocaleDateString()}</p>
                 </div>
               )
@@ -135,7 +136,7 @@ export default async function FrontPage({ lang }) {
             <div className="flex flex-col justify-center align-center text-black text-left p-2.5">
               <h3 className="text-4xl font-bold mb-5">{dict["disclaimer-header"]}</h3>
               <p className="text-slate-400 mr-16 mb-5">{dict["disclaimer"]}</p>
-              <a className="text-blue-600" href="/contact">{dict["disclaimer-link"]}</a>
+              <Link className="text-blue-600" href="/contact">{dict["disclaimer-link"]}</Link>
             </div>
           </div>
         </section>
@@ -204,13 +205,13 @@ export default async function FrontPage({ lang }) {
           </div>
         </section>
         <section className="w-full md:w-3/4 m-auto my-24">
-          <a href="/support-us" className="py-2.5 px-5 bg-blue-600 rounded mb-5 text-white">{dict["support-button"]}</a>
+          <Link href="/support-us" className="py-2.5 px-5 bg-blue-600 rounded mb-5 text-white">{dict["support-button"]}</Link>
           <div className="grid grid-cols-2 gap-5 mt-12 text-black">
             <div className="grid grid-cols-2 rounded shadow-lg">
               <div className="flex flex-col justify-center text-left p-5">
                 <h5 className="text-xl font-bold mt-5">{dict["patreon-header"]}</h5>
                 <p className="mt-5 mb-5 text-slate-500">{dict["patreon"]}</p>
-                <a href="">{dict["patreon-link"]}</a>
+                <Link href="">{dict["patreon-link"]}</Link>
               </div>
               <div>
                 <Image className="w-full h-auto p-7" src={Patreon} alt="patreon" />
@@ -220,7 +221,7 @@ export default async function FrontPage({ lang }) {
               <div className="flex flex-col justify-center text-left p-5">
                 <h5 className="text-xl font-bold mt-5">{dict["supporters-circle-header"]}</h5>
                 <p className="mt-5 mb-5 text-slate-500">{dict["supporters-circle"]}</p>
-                <a href="">{dict["supporters-circle-link"]}</a>
+                <Link href="">{dict["supporters-circle-link"]}</Link>
               </div>
               <div>
                 <Image src={SupportersCircle} alt="supporters-circle" />

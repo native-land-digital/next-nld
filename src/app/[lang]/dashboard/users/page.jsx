@@ -1,4 +1,5 @@
 import prisma from "@/lib/db/prisma";
+import Link from 'next/link'
 
 import SubHeader from '@/components/nav/sub-header'
 import AdminMenu from '@/components/dashboard/menu'
@@ -16,7 +17,7 @@ export default async function Page() {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={"User Management"} breadcrumbs={["Dashboard", "User Management"]} />
+      <SubHeader title={"User Management"} />
       <div className="min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
         <AdminMenu />
         <div className="col-span-2 bg-white rounded-t h-screen shadow-lg p-4 mt-5">
@@ -40,7 +41,7 @@ export default async function Page() {
                     <td className="px-6 py-4 text-sm font-medium text-black">{user.email}</td>
                     <td className="px-6 py-4 text-sm font-medium text-black">{user.organization}</td>
                     <td className="px-6 py-4 text-sm font-medium text-black">{user.permissions.join(', ')}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black"><a href={`/dashboard/users/${user.id}`}>➜</a></td>
+                    <td className="px-6 py-4 text-sm font-medium text-black"><Link href={`/dashboard/users/${user.id}`}>➜</Link></td>
                   </tr>
                 )
               })}

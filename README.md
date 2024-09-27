@@ -35,7 +35,6 @@ Technologies at use include:
 - Next Auth
 - Amazon S3 buckets
 - Mapbox MTS and Mapbox GL JS
-- Winston logging
 - i18n and json5
 
 We would love to have you involved if you have any fixes or additions you'd like to see on the site.
@@ -100,6 +99,7 @@ Bugs:
 - Small cleanups (removing email verification / password reset notes in Log In, adding link to Login from Signup)
 
 Before first deploy:
+- Doing logging to log drains
 - Ensuring database backups reliability
 - Verify that embed.html is working
 - Protecting TinyMCE key?
@@ -122,6 +122,7 @@ Optimization:
 - Improving use of Typescript (pretty lazy right now)
 - Checking and removing duplicate research entries (requires collaboration with research team)
 - Providing more options to react select lists on front page? Is it necessary or 50 initial results is enough?
+- Getting language to reload on the current page 
 
 Aspirational:
 - Integrating researcher to-do list with the researcher dashboard section
