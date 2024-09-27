@@ -6,7 +6,9 @@ import { getNavItems } from '@/components/nav/nav-constants';
 export default function Footer({ dict }) {
 
   // Filtering this for the footer menus
+  console.log(dict)
   const navItems = getNavItems(dict)
+  console.log(navItems)
   let modifiedNavItems = JSON.parse(JSON.stringify(navItems));
   modifiedNavItems = modifiedNavItems.filter(navItem => navItem.label !== "Language" && navItem.label !== "Contact")
 

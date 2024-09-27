@@ -8,12 +8,12 @@ export const getDictionary = async(locale, path) => {
     await fs.access(process.cwd() + `/src/i18n/locales/en/${path}.json5`)
     let translation = await fs.readFile(process.cwd() + `/src/i18n/locales/en/${path}.json5`)
     englishTranslation = json5.parse(translation);
-    if(locale === 'en') {
+    if(!locale || locale === 'en') {
       return englishTranslation
     }
   } catch (err) {
     console.log(`You haven't created an English translation for this page ${path}. ${err}`)
-    return englishTranslation
+    return {}
   }
 
   try {
