@@ -99,6 +99,7 @@ Bugs:
 - Small cleanups (removing email verification / password reset notes in Log In, adding link to Login from Signup)
 
 Before first deploy:
+- Directly testing all exposed API endpoints
 - Doing logging to log drains
 - Ensuring database backups reliability
 - Verify that embed.html is working

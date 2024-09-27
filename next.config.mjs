@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+import json5 from 'json5';
+
 const nextConfig = {
   output: "standalone",
   reactStrictMode: false,
@@ -20,7 +22,17 @@ const nextConfig = {
       destination: "/resources/teachers-guide",
       permanent: true
     }]
-  }
+  },
+  webpack: (config, options) => {
+    config.module.rules.push({
+      test: /\.json5$/,
+      type: "json",
+      parser: {
+        parse: json5.parse
+      }
+    });
+    return config;
+  },
 };
 
 export default nextConfig;
