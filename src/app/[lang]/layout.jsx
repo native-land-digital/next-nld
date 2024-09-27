@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Header from '@/components/nav/header';
-import Footer from '@/components/nav/footer';
+// import Footer from '@/components/nav/footer';
 import { getDictionary } from '@/i18n/dictionaries';
 
 export const metadata = {
@@ -26,9 +26,9 @@ export default async function RootLayout({children, params: { lang } }) {
         <div>
           {children}
         </div>
-        <Footer dict={dict} />
         <ToastContainer />
       </body>
     </html>
   );
 }
+// <Footer dict={dict} />
