@@ -83,7 +83,6 @@ Minor:
 - Take published date from the corresponding GL JS published for seed file to preserve historical data :)
 
 Junior:
-- Adding links to social media to footer
 - Mobile layout
 - Replacing all common strings with internationalized strings
 - Move over all English translations (template is at `en/about/how-it-works.json5`)
