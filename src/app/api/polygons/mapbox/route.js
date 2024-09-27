@@ -61,26 +61,26 @@ export const GET = async (req) => {
           // console.log(lineDelimitedGeoJSON)
 
           // Do the MTS dance
-          // const mapbox_username = process.env.MAPBOX_USERNAME;
-          // const secret_access_token = process.env.MAPBOX_SECRET_TOKEN;
-          // let tilesetName = "";
-          // if(category === 'territories') {
-          //   tilesetName = process.env.TERRITORIES_TILESET_NAME;
-          // } else if(category === 'languages') {
-          //   tilesetName = process.env.LANGUAGES_TILESET_NAME;
-          // } else if(category === 'treaties') {
-          //   tilesetName = process.env.TREATIES_TILESET_NAME;
-          // }
-          // const tileset_source = tilesetName + "_source";
-          // const tileset_source_layer = tilesetName + "_source_layer";
-          // const tileset = mapbox_username + '.' + tilesetName + '_layer';
-          //
-          // // Create formdata to send
-          // const formData = new FormData()
-          // const buffer = Buffer.from(lineDelimitedGeoJSON);
-          // const file = new File([buffer], 'upload.json')
-          // formData.set('file', file, 'upload.json')
-          //
+          const mapbox_username = process.env.MAPBOX_USERNAME;
+          const secret_access_token = process.env.MAPBOX_SECRET_TOKEN;
+          let tilesetName = "";
+          if(category === 'territories') {
+            tilesetName = process.env.TERRITORIES_TILESET_NAME;
+          } else if(category === 'languages') {
+            tilesetName = process.env.LANGUAGES_TILESET_NAME;
+          } else if(category === 'treaties') {
+            tilesetName = process.env.TREATIES_TILESET_NAME;
+          }
+          const tileset_source = tilesetName + "_source";
+          const tileset_source_layer = tilesetName + "_source_layer";
+          const tileset = mapbox_username + '.' + tilesetName + '_layer';
+
+          // Create formdata to send
+          const formData = new FormData()
+          const buffer = Buffer.from(lineDelimitedGeoJSON);
+          const file = new File([buffer], 'upload.json')
+          formData.set('file', file, 'upload.json')
+
           // // Only activate one of the below methods at a time.
           // // They are both here in case, in the future, you need to create a new tileset this way.
           //

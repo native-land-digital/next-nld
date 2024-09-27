@@ -33,11 +33,11 @@ export default function Header({ dict }) {
             </div>
             <div className={`${openNav === 'about' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <Link href="/about/our-team" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['our-team']}</Link>
-                <Link href="/about/why-it-matters" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['why-it-matters']}</Link>
-                <Link href="/about/how-it-works" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['how-it-works']}</Link>
-                <Link href="/about/partners-and-contributors" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['partners-contributors']}</Link>
-                <Link href="/about/roadmap" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['roadmap']}</Link>
+                <Link href="/about/our-team" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['our-team']}</Link>
+                <Link href="/about/why-it-matters" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['why-it-matters']}</Link>
+                <Link href="/about/how-it-works" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['how-it-works']}</Link>
+                <Link href="/about/partners-and-contributors" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['partners-contributors']}</Link>
+                <Link href="/about/roadmap" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['roadmap']}</Link>
               </div>
             </div>
           </div>
@@ -53,8 +53,8 @@ export default function Header({ dict }) {
             </div>
             <div className={`${openNav === 'media' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <a href="#" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['community-blog']}</a>
-                <Link href="/media/media-coverage" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['media-coverage']}</Link>
+                <a href="#" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['community-blog']}</a>
+                <Link href="/media/media-coverage" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['media-coverage']}</Link>
               </div>
             </div>
           </div>
@@ -70,11 +70,11 @@ export default function Header({ dict }) {
             </div>
             <div className={`${openNav === 'contribute' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <Link href="/how-to-contribute/jobs" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['jobs']}</Link>
-                <Link href="/how-to-contribute/volunteer" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['volunteer']}</Link>
-                <Link href="/how-to-contribute/fixes-and-adding-maps" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['fixes-adding-maps']}</Link>
-                <Link href="/how-to-contribute/languages" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['languages']}</Link>
-                <Link href="/support/supporters-circle" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['supporters-circle']}</Link>
+                <Link href="/how-to-contribute/jobs" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['jobs']}</Link>
+                <Link href="/how-to-contribute/volunteer" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['volunteer']}</Link>
+                <Link href="/how-to-contribute/fixes-and-adding-maps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['fixes-adding-maps']}</Link>
+                <Link href="/how-to-contribute/languages" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['languages']}</Link>
+                <Link href="/support/supporters-circle" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['supporters-circle']}</Link>
               </div>
             </div>
           </div>
@@ -90,13 +90,13 @@ export default function Header({ dict }) {
             </div>
             <div className={`${openNav === 'resources' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <Link href="/resources/territory-acknowledgement" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['territory-acknowledgement']}</Link>
-                <Link href="/resources/teachers-guide" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['teachers-guide']}</Link>
-                <Link href="/resources/mobile-apps" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['mobile-apps']}</Link>
-                <a href="" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['api']}</a>
-                <Link href="/resources/territories-list" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['territories-list']}</Link>
-                <Link href="/resources/languages-list" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['languages-list']}</Link>
-                <Link href="/resources/treaties-list" className="text-sm block px-3 py-2 hover:text-slate-400">{dict['treaties-list']}</Link>
+                <Link href="/resources/territory-acknowledgement" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['territory-acknowledgement']}</Link>
+                <Link href="/resources/teachers-guide" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['teachers-guide']}</Link>
+                <Link href="/resources/mobile-apps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['mobile-apps']}</Link>
+                <a href="" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['api']}</a>
+                <Link href="/resources/territories-list" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['territories-list']}</Link>
+                <Link href="/resources/languages-list" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['languages-list']}</Link>
+                <Link href="/resources/treaties-list" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['treaties-list']}</Link>
               </div>
             </div>
           </div>
@@ -117,9 +117,9 @@ export default function Header({ dict }) {
             </div>
             <div className={`${openNav === 'language' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <Link href="/en" locale={false} className="text-sm block px-3 py-2 hover:text-slate-400">{dict['english']}</Link>
-                <Link href="/fr" locale={false} className="text-sm block px-3 py-2 hover:text-slate-400">{dict['french']}</Link>
-                <Link href="/es" locale={false} className="text-sm block px-3 py-2 hover:text-slate-400">{dict['spanish']}</Link>
+                <Link href="/en" locale={false} className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['english']}</Link>
+                <Link href="/fr" locale={false} className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['french']}</Link>
+                <Link href="/es" locale={false} className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['spanish']}</Link>
               </div>
             </div>
           </div>

@@ -1,6 +1,4 @@
 import 'server-only'
-import json5 from "json5";
-import { promises as fs } from 'fs';
 
 const dictionaries = {
   "nav" : {
