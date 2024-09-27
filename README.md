@@ -70,10 +70,10 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 ### Notes for current development to-dos
 
 Major:
+- Sorting out some of these language errors, maybe a better way to load them?
 
 Minor:
 - Adding captions and titles to researcher media
-- Adding working links to breadcrumbs
 - Checking and rendering related field front end
 - Check for any redirection needs on legacy API
 - Add last updated date in Mapbox updating research section (for clarity)
@@ -122,7 +122,7 @@ Optimization:
 - Improving use of Typescript (pretty lazy right now)
 - Checking and removing duplicate research entries (requires collaboration with research team)
 - Providing more options to react select lists on front page? Is it necessary or 50 initial results is enough?
-- Getting language to reload on the current page 
+- Getting language to reload on the current page
 
 Aspirational:
 - Integrating researcher to-do list with the researcher dashboard section
