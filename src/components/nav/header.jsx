@@ -100,6 +100,7 @@ export default function Header({ dict }) {
               </div>
             </div>
           </div>
+          <Link href="/contact" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{dict['contact']}</Link>
           <div onMouseLeave={() => setOpenNav(false)}>
             <div onMouseOver={() => setOpenNav('language')} className="cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">
               <span className="pointer-events-none">
@@ -123,7 +124,6 @@ export default function Header({ dict }) {
               </div>
             </div>
           </div>
-          <Link href="/contact" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{dict['contact']}</Link>
         </div>
         <div>
           <Link href="#" className="inline-block text-sm px-4 py-2 leading-none rounded text-white bg-blue-900 hover:text-teal-00 hover:bg-blue-600 mt-4 lg:mt-0">{dict['support-us']}</Link>

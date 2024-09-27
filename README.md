@@ -70,7 +70,6 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 ### Notes for current development to-dos
 
 Major:
-- Sorting out some of these language errors, maybe a better way to load them?
 
 Minor:
 - Adding captions and titles to researcher media

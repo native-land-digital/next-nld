@@ -72,7 +72,7 @@ export const GET = async (req) => {
             tilesetName = process.env.TREATIES_TILESET_NAME;
           }
           const tileset_source = tilesetName + "_source";
-          const tileset_source_layer = tilesetName + "_source_layer";
+          // const tileset_source_layer = tilesetName + "_source_layer";
           const tileset = mapbox_username + '.' + tilesetName + '_layer';
 
           // Create formdata to send
