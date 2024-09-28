@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import SubHeader from '@/components/nav/sub-header'
 
 export default function NotFound() {

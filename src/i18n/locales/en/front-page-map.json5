@@ -1,9 +1,0 @@
-{
-  "disclaimer-header" : "Native Land Disclaimer",
-  "disclaimer" : "\
-    <p>This map does not represent or intend to represent official or legal boundaries of any Indigenous nations. To learn about definitive boundaries, contact the nations in question.</p>\
-    <p>Also, this map is not perfect -- it is a work in progress with tons of contributions from the community. Please send us fixes if you find errors.</p>\
-    <p>If you would like to read more about the ideas behind Native Land or where we are going, check out the <a href=''>blog</a>. You can also see the <a href='/about/roadmap/'>roadmap</a>.</p>\
-  ",
-  "disclaimer-close" : "Go to Map"
-}
