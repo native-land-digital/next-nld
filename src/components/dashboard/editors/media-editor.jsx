@@ -36,8 +36,8 @@ export default function MediaEditor({ media, setMedia }) {
       <div className="my-2.5">
         {media.map((thisMedia, i) => {
           return (
-            <div className="flex">
-              <a key={`media-${i}`} href={`${thisMedia.url}`} target="_blank">
+            <div key={`media-${i}`} className="flex">
+              <a href={`${thisMedia.url}`} target="_blank">
                 <div className="w-40 h-40 bg-cover bg-no-repeat bg-center relative" style={{backgroundImage : `url(${thisMedia.url})`}}>
                   <div className="absolute top-0 right-0" onClick={(e) => deleteObject(e, thisMedia.url)}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-trash3-fill m-1 p-1 bg-white rounded cursor-pointer hover:bg-gray-200" viewBox="0 0 16 16">

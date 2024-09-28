@@ -2,7 +2,6 @@ import prisma from "@/lib/db/prisma";
 import Link from 'next/link';
 
 import SubHeader from '@/components/nav/sub-header'
-import Sidebar from '@/components/static/sidebar';
 
 export default async function Page({ searchParams, params : { category }}) {
 

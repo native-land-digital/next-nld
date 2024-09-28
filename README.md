@@ -70,6 +70,7 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 ### Notes for current development to-dos
 
 Major:
+- API slug-finder on logged-in API page
 
 Minor:
 
@@ -79,11 +80,11 @@ Junior:
 - Move over all English translations (template is at `en/about/how-it-works.json5`)
 - Setting up static pages HTML (template is at `about/how-it-works`)
 - Migrate blog posts from Wordpress to an external blog site
-- Reviewing API returning 400 vs 500 errors
 - Adding Instagram feed (looks a bit complicated annoyingly)
 - Create API documentation at external documentation site
 - Picking some prettier fonts
 - Link somewhere front page or nav to main /maps directory
+- Reviewing API returning 400 vs 500 errors
 
 Bugs:
 - Fixing up the raw sql in the polygon PUT (use index.php method)

@@ -3,7 +3,6 @@ import { getServerSession } from "next-auth/next"
 
 import SubHeader from '@/components/nav/sub-header'
 import AdminMenu from '@/components/dashboard/menu'
-import EditUser from '@/components/dashboard/edit-user'
 import { authOptions } from "@/root/auth";
 
 export default async function Page() {
