@@ -1,17 +1,26 @@
-export default function Related({ relatedTo }) {
+import Link from 'next/link';
 
-  if(relatedTo.length === 0) {
+export default function Related({ relatedTo, relatedFrom }) {
+
+  if(relatedTo.length === 0 && relatedFrom.length === 0) {
     return (<p>No related maps are currently entered.</p>)
   }
 
+  let singleRelationSet = relatedTo;
+  relatedFrom.forEach(relation => {
+    singleRelationSet.push(relation);
+  })
+
   return (
     <>
-      {relatedTo.map(() => {
-        // return (
-        //   <div key={`website-${i}`} className="mb-2.5">
-        //     <a href={website.url}>{website.title && website.title !== "" ? website.title : website.url}</a>
-        //   </div>
-        // )
+      {singleRelationSet.map((relation, i) => {
+        return (
+          <div key={`relation-${i}`} className="mb-2.5">
+            <p className="text-black">
+              <Link href={`/maps/${relation.relatedTo.category}/${relation.relatedTo.slug}`}>{relation.relatedTo.name}</Link> {relation.description ? `- ${relation.description}` : ''}
+            </p>
+          </div>
+        )
         return false;
       })}
     </>

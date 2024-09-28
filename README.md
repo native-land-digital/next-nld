@@ -72,13 +72,6 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 Major:
 
 Minor:
-- Adding captions and titles to researcher media
-- Checking and rendering related field front end
-- Check for any redirection needs on legacy API
-- Add last updated date in Mapbox updating research section (for clarity)
-- Set up a redirect from `https://native-land.ca/wp-json/nativeland/v1/api/index.php` to `/api/index.php` for POST requests (poly-in-poly)
-- Consolidating API code with helper functions (instead of duplicating)
-- Take published date from the corresponding GL JS published for seed file to preserve historical data :)
 
 Junior:
 - Mobile layout
@@ -90,30 +83,27 @@ Junior:
 - Adding Instagram feed (looks a bit complicated annoyingly)
 - Create API documentation at external documentation site
 - Picking some prettier fonts
+- Link somewhere front page or nav to main /maps directory
 
 Bugs:
-- Some territory slugs do not work as URLs -- possible/preferable to use IDs and do redirects from old slugs instead?
 - Fixing up the raw sql in the polygon PUT (use index.php method)
-- Looking around for any small errors with JSX in server or frontend code, resolving
-- Small cleanups (removing email verification / password reset notes in Log In, adding link to Login from Signup)
 
 Before first deploy:
-- Directly testing all exposed API endpoints
+- Prep fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 - Doing logging to log drains
+- Directly testing all exposed API endpoints
 - Ensuring database backups reliability
 - Verify that embed.html is working
-- Protecting TinyMCE key?
-- Adding a protected Mapbox public token (only for main URL) for prod
 - Update Research map for Prod
 
 After first deploy:
-- Setting up regular backups for Supabase
+- Adding a protected Mapbox public token (only for main URL) for prod
+- Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
-- Do a fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
-- Enhancing Winston logs to go straight to Heroku or other service
-- Adding a new API endpoint that requires API keys
 
 Optimization:
+- Integrating some kind of linter check akin to NextJS when merging
+- Add last updated date in Mapbox updating research section (for clarity)
 - Properly do typescript in auth config files
 - Catch logs for API requests that are errors
 - Reading over SQL injection in Prisma docs
@@ -125,6 +115,7 @@ Optimization:
 - Getting language to reload on the current page
 
 Aspirational:
+- Adding a new API endpoint that requires API keys
 - Integrating researcher to-do list with the researcher dashboard section
 - Adding ability to load other polygons for researchers to draw with more context (perhaps just changing the underlying Style?)
 - Adding more refined permissions to enable external researchers to edit only certain polygons or sets of polygons

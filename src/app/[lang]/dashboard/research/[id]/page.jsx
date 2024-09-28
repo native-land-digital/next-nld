@@ -18,6 +18,7 @@ export default async function Page({ params }) {
       name : true,
       category : true,
       slug : true,
+      color : true,
       sources : true,
       pronunciation : true,
       published : true,
@@ -39,8 +40,6 @@ export default async function Page({ params }) {
   if(polygonShape && polygonShape[0] && polygonShape[0].st_asgeojson) {
     polygon.geometry = JSON.parse(polygonShape[0].st_asgeojson)
   }
-
-  console.log(polygon)
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">

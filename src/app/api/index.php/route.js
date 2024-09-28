@@ -78,27 +78,11 @@ export const GET = async (req ) => {
   		  `
   			polygons.forEach(polygon => {
   				const thisPolygonShape = polygonShapes.find(shape => shape.id === polygon.id);
-  				if(thisPolygonShape) {
-  					try {
-              const geometry = JSON.parse(thisPolygonShape.geojson)
-              featureList.push({
-                type : "Feature",
-                properties : {
-                  "Name" : polygon.name,
-                  "ID" : polygon.id,
-                  "Slug" : polygon.slug,
-                  "description" : `${process.env.NEXTAUTH_URL}/maps/${polygon.category}/${polygon.slug}`,
-                  "color" : polygon.color,
-                },
-                geometry : {
-                  type : geometry.coordinates[0].length === 1 ? "Polygon" : "MultiPolygon",
-                  coordinates : geometry.coordinates[0].length === 1 ? geometry.coordinates[0] : geometry.coordinates
-                }
-              })
-  					} catch (err) {
-  						console.log(`An error with parsing the geometry, ${JSON.stringify(err)}`)
-  					}
-  				}
+					polygon.geojson = thisPolygonShape.geojson;
+					let feature = constructFeature(polygon);
+					if(feature) {
+						featureList.push(feature);
+					}
   			})
       }
       if (featureList.length > 0) {
@@ -151,22 +135,9 @@ export const POST = async (req) => {
 				// WHERE ST_Contains(geometry, ST_GeomFromText(format('POINT(%s %s)', ${parseFloat(latlngString[1])}, ${parseFloat(latlngString[0])}), 4326))
 				const featureList = []
 				polygonShapes.forEach(polygon => {
-					const geometry = JSON.parse(polygon.geojson)
-					if(geometry) {
-						featureList.push({
-							type : "Feature",
-							properties : {
-								"Name" : polygon.name,
-								"ID" : polygon.id,
-								"Slug" : polygon.slug,
-								"description" : `${process.env.NEXTAUTH_URL}/maps/${polygon.category}/${polygon.slug}`,
-								"color" : polygon.color,
-							},
-							geometry : {
-								type : geometry.coordinates[0].length === 1 ? "Polygon" : "MultiPolygon",
-								coordinates : geometry.coordinates[0].length === 1 ? geometry.coordinates[0] : geometry.coordinates
-							}
-						})
+					let feature = constructFeature(polygon);
+					if(feature) {
+						featureList.push(feature);
 					}
 				})
 				console.log(`API ${req.nextUrl.search} ${body.key ? body.key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
@@ -178,4 +149,26 @@ export const POST = async (req) => {
 			console.error(error);
 			return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
 		}
+}
+
+const constructFeature = (polygon) => {
+	const geometry = JSON.parse(polygon.geojson)
+	if(geometry) {
+		return {
+			type : "Feature",
+			properties : {
+				"Name" : polygon.name,
+				"ID" : polygon.id,
+				"Slug" : polygon.slug,
+				"description" : `${process.env.NEXTAUTH_URL}/maps/${polygon.category}/${polygon.slug}`,
+				"color" : polygon.color,
+			},
+			geometry : {
+				type : geometry.coordinates[0].length === 1 ? "Polygon" : "MultiPolygon",
+				coordinates : geometry.coordinates[0].length === 1 ? geometry.coordinates[0] : geometry.coordinates
+			}
+		}
+	} else {
+		return false;
+	}
 }

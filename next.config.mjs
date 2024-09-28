@@ -21,6 +21,22 @@ const nextConfig = {
       source: "/resources",
       destination: "/resources/teachers-guide",
       permanent: true
+    },{
+      source: "/resources/territories-list",
+      destination: "/maps/territories",
+      permanent: true
+    },{
+      source: "/resources/languages-list",
+      destination: "/maps/languages",
+      permanent: true
+    },{
+      source: "/resources/treaties-list",
+      destination: "/maps/treaties",
+      permanent: true
+    },{
+      source: "/wp-json/nativeland/v1/api/index.php",
+      destination : "/api/index.php",
+      permanent: true
     }]
   },
   webpack: (config, options) => {

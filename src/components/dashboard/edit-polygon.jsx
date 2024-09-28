@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { navigate } from '@/lib/actions'
+import { SwatchesPicker } from 'react-color';
 import Link from 'next/link'
 
 import MainMap from '@/components/dashboard/editors/map-editor';
@@ -19,12 +20,15 @@ export default function EditPolygon({ polygon }) {
   const [ category, setCategory ] = useState(polygon.category);
   const [ sources, setSources ] = useState(polygon.sources);
   const [ pronunciation, setPronunciation ] = useState(polygon.pronunciation);
+  const [ color, setColor ] = useState(polygon.color);
   const [ published, setPublished ] = useState(polygon.published);
   const [ media, setMedia ] = useState(polygon.media);
   const [ websites, setWebsites ] = useState(polygon.websites);
   const [ changelog, setChangelog ] = useState(polygon.changelog);
   const [ relatedTo, setRelatedTo ] = useState(polygon.relatedTo);
   const [ geometry, setGeometry ] = useState(polygon.geometry);
+
+  const [ showSwatches, setShowSwatches ] = useState(false);
 
   const savePolygon = () => {
     fetch(`/api/polygons/${polygon.id}`, {
@@ -34,6 +38,7 @@ export default function EditPolygon({ polygon }) {
         name : name,
         category : category,
         sources : sources,
+        color : color,
         pronunciation : pronunciation,
         published : published,
         websites : websites,
@@ -96,6 +101,22 @@ export default function EditPolygon({ polygon }) {
                 return (<option key={`option-${category}`} value={category}>{category}</option>)
               })}
             </select>
+          </div>
+        </div>
+
+
+        <div className="mt-2.5">
+          <label className="text-gray-800 text-sm mb-1 block">Color</label>
+          <div className="relative flex items-center">
+            <div className="w-10 h-10" style={{backgroundColor : color }}></div>
+            <button className="ml-2.5 py-1 px-2.5 text-sm tracking-wide rounded-lg text-black bg-gray-100 hover:bg-gray-200 focus:outline-none" onClick={() => setShowSwatches(true)}>Pick color</button>
+            <div className={`${showSwatches ? 'absolute block' : 'hidden'} ml-40 z-30`}>
+              <div className="fixed top-0 bottom-0 right-0 left-0" onClick={() => setShowSwatches(false)}></div>
+              <SwatchesPicker
+                color={color}
+                onChangeComplete={(color) => { setColor(color.hex); setShowSwatches(false); }}
+              />
+            </div>
           </div>
         </div>
 

@@ -18,9 +18,9 @@ export default function SubHeader({ title }) {
           {splitPath.map(path => {
             return (
               <span key={`crumb-${path}`}>
-                <span className="ml-2 mr-1">/</span>
+                <span className="ml-2 mr-2">/</span>
                 <Link className="capitalize text-white hover:text-slate-300" href={pathname.slice(0, pathname.indexOf(`/${path}`) + path.length + 1)}>
-                  {path.replace(/-/g, ' ')}
+                  {decodeURIComponent(path.replace(/-/g, ' '))}
                 </Link>
               </span>
             )

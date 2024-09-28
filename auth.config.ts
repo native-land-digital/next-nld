@@ -13,6 +13,7 @@ export const authConfig = {
       if(session.user) {
         return {
           user : {
+            id : token.id,
             name : session.user.name,
             permissions : token.permissions
           }

@@ -10,7 +10,7 @@ export default function ChangelogEditor({ changelog, createdAt, updatedAt }) {
         )
       })}
       </ul>
-      <p className="text-xs mt-2.5">* some dates may be inaccurate due to tech changes along the way</p>
+      <p className="text-xs mt-2.5">* older dates may be inaccurate due to tech changes along the way</p>
     </>
   );
 }

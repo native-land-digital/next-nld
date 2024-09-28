@@ -39,7 +39,7 @@ export default function FileUploader({ media, setMedia }) {
 
       if (uploadResponse.ok) {
         const newMedia = JSON.parse(JSON.stringify(media))
-        newMedia.push({ url : `${url}${fields.key}` })
+        newMedia.push({ url : `${url}${fields.key}`, title : '', caption : '' })
         setMedia(newMedia);
       } else {
         toast('S3 Upload Error:', uploadResponse)

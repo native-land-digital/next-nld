@@ -93,7 +93,8 @@ export const POST = async (req) => {
   		const polygon = await prisma.polygon.create({
   			data: {
   				name: body.name,
-          slug : slug
+          slug : slug,
+					color : randomHslToHex()
   			}
   		});
   		return NextResponse.json({
@@ -106,4 +107,19 @@ export const POST = async (req) => {
   } else {
     return NextResponse.json({ error : `You do not have permission to access this endpoint` }, { status: 500 });
   }
+}
+
+const randomHslToHex = () => {
+	let h = (360 * Math.random());
+	let s = 70;
+	let l = 72;
+	let a = 0.8;
+  l /= 100;
+  const a = s * Math.min(l, 1 - l) / 100;
+  const f = n => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2, '0');   // convert to Hex and prefix "0" if needed
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
 }

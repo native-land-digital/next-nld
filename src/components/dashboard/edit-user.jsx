@@ -4,7 +4,7 @@ import { possiblePermissions } from '@/lib/auth/permissions';
 import { toast } from 'react-toastify';
 import Link from 'next/link'
 
-export default function EditUser({ user }) {
+export default function EditUser({ user, isAdmin }) {
 
   const [ name, setName ] = useState(user.name);
   const [ email, setEmail ] = useState(user.email);
@@ -62,7 +62,9 @@ export default function EditUser({ user }) {
 
   return (
     <div>
-      <Link href="/dashboard/users"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>Back</Link>
+      {isAdmin ?
+        <Link href="/dashboard/users"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>Back</Link>
+      : false}
       <h2 className="font-semibold text-3xl">{user.name}</h2>
       <p className="text-xs mt-1" suppressHydrationWarning>User created {new Date(user.createdAt).toLocaleString()}</p>
       <hr className="mt-3 mb-3" />
@@ -103,22 +105,24 @@ export default function EditUser({ user }) {
           </div>
         </div>
 
-        <div className="mt-2.5">
-          <label className="text-gray-800 text-sm mb-1 block">Permissions</label>
-          <div className="relative">
-            <p className="text-gray-500 text-xs mb-2.5">Users will need to log out and back in before any permission changes take effect.</p>
-            {possiblePermissions.map(permission => {
-              return (
-                <div key={`checkbox-${permission}`}>
-                  <label htmlFor={permission} className='capitalize text-sm'>
-                    <input id={permission} type="checkbox" checked={permissions.includes(permission)} name={permission} onChange={(e) => savePermissions(e.target.checked, permission)} className="mr-1.5" />
-                    {permission.replace('_', ' ')}
-                  </label>
-                </div>
-              )
-            })}
+        {isAdmin ?
+          <div className="mt-2.5">
+            <label className="text-gray-800 text-sm mb-1 block">Permissions</label>
+            <div className="relative">
+              <p className="text-gray-500 text-xs mb-2.5">Users will need to log out and back in before any permission changes take effect.</p>
+              {possiblePermissions.map(permission => {
+                return (
+                  <div key={`checkbox-${permission}`}>
+                    <label htmlFor={permission} className='capitalize text-sm'>
+                      <input id={permission} type="checkbox" checked={permissions.includes(permission)} name={permission} onChange={(e) => savePermissions(e.target.checked, permission)} className="mr-1.5" />
+                      {permission.replace('_', ' ')}
+                    </label>
+                  </div>
+                )
+              })}
+            </div>
           </div>
-        </div>
+        : false}
       </div>
 
       <div className="flex">
@@ -130,13 +134,15 @@ export default function EditUser({ user }) {
           </div>
         </div>
 
-        <div className="w-full md:w-1/2">
-          <div className="!mt-8 flex justify-end">
-            <button onClick={() => deleteUser()} className="py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-red-600 hover:bg-red-700 focus:outline-none">
-              Delete
-            </button>
+        {isAdmin ?
+          <div className="w-full md:w-1/2">
+            <div className="!mt-8 flex justify-end">
+              <button onClick={() => deleteUser()} className="py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-red-600 hover:bg-red-700 focus:outline-none">
+                Delete
+              </button>
+            </div>
           </div>
-        </div>
+        : false}
       </div>
 
     </div>

@@ -1,5 +1,9 @@
 export default function Media({ media }) {
 
+  if(media.length === 0) {
+    return (<p>No media yet.</p>)
+  }
+
   return (
     <>
       <div>

@@ -1,4 +1,9 @@
 export default function Websites({ websites }) {
+
+  if(websites.length === 0) {
+    return (<p>No websites yet.</p>)
+  }
+
   return (
     <>
       {websites.map((website, i) => {

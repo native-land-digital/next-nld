@@ -12,11 +12,11 @@ export default async function Page({ params }) {
   // Extra query because all the related fields are too hard to write in SQL
   const polygonShape = await prisma.$queryRaw`
     SELECT ST_AsGeoJSON(geometry) FROM "Polygon"
-    WHERE slug = ${params.slug}
+    WHERE slug = ${params.slug.toLowerCase()}
   `
   const polygon = await prisma.polygon.findUnique({
     where : {
-      slug : params.slug,
+      slug : params.slug.toLowerCase(),
       published : true
     },
     select : {
@@ -29,8 +29,34 @@ export default async function Page({ params }) {
       media : true,
       websites : true,
       changelog : true,
-      relatedFrom : true,
-      relatedTo : true,
+      relatedFrom : {
+        select : {
+          relatedTo : true,
+          relatedFrom : true,
+          description : true
+        }
+      },
+      relatedTo : {
+        select : {
+          relatedTo : {
+            select : {
+              id : true,
+              name : true,
+              category : true,
+              slug : true
+            }
+          },
+          relatedFrom : {
+            select : {
+              id : true,
+              name : true,
+              category : true,
+              slug : true
+            }
+          },
+          description : true
+        }
+      },
       createdAt : true,
       updatedAt : true
     }
@@ -67,7 +93,7 @@ export default async function Page({ params }) {
           </section>
           <section className="mt-5">
             <h3 className="text-xl font-bold mb-3" id="related-maps">Related</h3>
-            <Related relatedTo={polygon.relatedTo} />
+            <Related relatedTo={polygon.relatedTo} relatedFrom={polygon.relatedFrom} />
           </section>
           <section className="mt-5">
             <h3 className="text-xl font-bold mb-3" id="media">Media</h3>

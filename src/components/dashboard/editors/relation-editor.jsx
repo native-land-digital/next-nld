@@ -28,7 +28,6 @@ export default function RelationEditor({ relatedTo, setRelatedTo }) {
     } else if (action === 'remove') {
       newRelatedTo.splice(index, 1);
     }
-    console.log(newRelatedTo)
     setRelatedTo(newRelatedTo)
   }
 

@@ -101,7 +101,7 @@ export const PATCH = async (req, route) => {
 			body.media = {
 				deleteMany : {},
 				createMany : {
-					data : media.map(thisMedia => { return { url : thisMedia.url }})
+					data : media.map(thisMedia => { return { url : thisMedia.url, caption : thisMedia.caption, title : thisMedia.title }})
 				}
 			}
 			const relatedTo = body.relatedTo;

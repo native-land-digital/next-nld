@@ -24,7 +24,7 @@ export default async function Page({ params }) {
       <div className="min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
         <AdminMenu />
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
-          <EditUser user={user} />
+          <EditUser user={user} isAdmin={true} />
         </div>
       </div>
     </div>
