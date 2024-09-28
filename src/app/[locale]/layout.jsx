@@ -1,6 +1,8 @@
 import "./globals.css";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { unstable_setRequestLocale } from 'next-intl/server';
+import { routing } from '@/i18n/routing';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -12,12 +14,13 @@ export const metadata = {
   description: "Native Land is a resource to learn more about Indigenous territories, languages, lands, and ways of life. We welcome you to our site.",
 };
 
-export async function generateStaticParams() {
-  return [{ lang: 'en' }]
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({locale}));
 }
 
 export default async function RootLayout({children, params: { locale } }) {
 
+  unstable_setRequestLocale(locale);
   const messages = await getMessages();
 
   return (
