@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 import SubHeader from '@/components/nav/sub-header'
 
 export default function NotFound() {

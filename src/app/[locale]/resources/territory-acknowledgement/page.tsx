@@ -23,7 +23,7 @@ export default async function Page({ params : { locale }} : { params : { locale:
         <Sidebar />
         <div className="col-span-2 bg-white rounded-t shadow-lg mt-5">
           <div className="w-full max-h-[200px] overflow-hidden rounded-t">
-            <Image src={ResourcesTop} className="object-cover rounded-t" />
+            <Image src={ResourcesTop} alt="Territory Acknowledgement Header Image" className="object-cover rounded-t" />
           </div>
           <div className="px-4 pb-4">
             <Content />

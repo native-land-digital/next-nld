@@ -23,7 +23,7 @@ export default async function Page({ params : { locale }} : { params : { locale:
         <Sidebar />
         <div className="col-span-2 bg-white rounded-t shadow-lg mt-5">
           <div className="w-full max-h-[200px] overflow-hidden rounded-t">
-            <Image src={SupportTop} className="object-cover object-center rounded-t" />
+            <Image src={SupportTop} alt="Supporter's Circle Header Image" className="object-cover object-center rounded-t" />
           </div>
           <div className="px-4 pb-4">
             <Content />

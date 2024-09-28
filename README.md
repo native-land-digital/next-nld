@@ -70,22 +70,18 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 ### Notes for current development to-dos
 
 Major:
-- As needed intl does some weird caching stuff or something???? With redirects etc??
 - Testing preview branch functionality
 
 Minor:
+- Migrate blog posts from Wordpress to an external blog site
 - Add login/signup button to menu
 - Integrating some kind of linter check akin to NextJS when merging
 - Prep fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
-- Verify that embed.html is working
 - Directly testing all exposed API endpoints
 
 Junior:
 - Mobile layout
 - Replacing all common strings with internationalized strings
-- Move over all English translations (template is at `en/about/how-it-works.json5`)
-- Setting up static pages HTML (template is at `about/how-it-works`)
-- Migrate blog posts from Wordpress to an external blog site
 - Adding Instagram feed (looks a bit complicated annoyingly)
 - Link somewhere front page or nav to main /maps directory
 - Reviewing API returning 400 vs 500 errors

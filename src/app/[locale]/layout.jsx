@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Header from '@/components/nav/header';
 import Footer from '@/components/nav/footer';
-import { getDictionary } from '@/i18n/dictionaries';
 
 export const metadata = {
   title: "Native-Land.ca | Our home on native land",
