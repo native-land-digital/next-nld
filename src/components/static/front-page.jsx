@@ -18,7 +18,7 @@ import SupportersCircle from '@/public/images/front/black-circle.webp'
 
 export default async function FrontPage() {
 
-  const t = useTranslations('FrontPage');
+  const t = await useTranslations('FrontPage');
 
   const latestUpdates = await prisma.polygon.findMany({
     select : {
