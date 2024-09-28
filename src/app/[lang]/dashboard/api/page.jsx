@@ -75,7 +75,7 @@ export default async function Page({ searchParams }) {
           </div>
           {polygons.map(polygon => {
             return (
-              <div className="mb-5 text-black">
+              <div key={`api-${polygon.id}`} className="mb-5 text-black">
                 <p className="text-xl font-bold">{polygon.name} ({polygon.category}) <Link href={`/maps/${polygon.category}/${polygon.slug}`}>➜</Link></p>
                 <pre>{polygon.slug}</pre>
                 <p>Sample request:</p>

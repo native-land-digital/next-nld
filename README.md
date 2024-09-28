@@ -71,7 +71,6 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 
 Major:
 - Testing preview branch functionality
-- The language stuff is just randomly changing all the time
 
 Minor:
 - Add login/signup button to menu
