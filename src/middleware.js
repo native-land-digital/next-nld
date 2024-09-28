@@ -2,20 +2,15 @@ import { NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware"
 import createMiddleware from 'next-intl/middleware';
 import { chain } from "@nimpl/middleware-chain";
+import { routing } from '@/i18n/routing';
 
-const intlOptions = {
-  locales: ['en', 'fr', 'es'],
-  defaultLocale: 'en',
-  localePrefix: 'as-needed'
-}
-
-const intlMiddleware = createMiddleware(intlOptions);
+const intlMiddleware = createMiddleware(routing);
 
 const pathMiddleware = (req) => {
   const headers = new Headers(req.headers);
   headers.set("x-current-path", req.nextUrl.pathname);
-  headers.set("x-current-lang", intlOptions.defaultLocale);
-  intlOptions.locales.forEach(locale => {
+  headers.set("x-current-lang", routing.defaultLocale);
+  routing.locales.forEach(locale => {
     if(req.nextUrl.pathname.indexOf(`/${locale}/`) > -1) {
       headers.set("x-current-lang", locale);
     }

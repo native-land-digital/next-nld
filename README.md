@@ -70,6 +70,7 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 ### Notes for current development to-dos
 
 Major:
+- As needed intl does some weird caching stuff or something???? With redirects etc??
 - Testing preview branch functionality
 
 Minor:

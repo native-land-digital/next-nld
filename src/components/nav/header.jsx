@@ -1,10 +1,13 @@
 "use client"
 import { useState } from 'react';
-import Link from 'next/link'
-import Logo from '@/public/images/nld-logo.png'
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing';
+import Logo from '@/public/images/general/nld-logo.png'
 import Image from "next/image";
 
-export default function Header({ dict }) {
+export default function Header() {
+
+  const t = useTranslations('Navigation');
 
   const [ openNav, setOpenNav ] = useState(false);
 
@@ -12,7 +15,7 @@ export default function Header({ dict }) {
     <nav className="flex items-center justify-between flex-wrap bg-white py-4 px-6">
       <div className="flex items-center flex-shrink-0 mr-6 ml-6">
         <Link href="/"><Image src={Logo} alt="Native Land Digital logo" width="23" height="36" /></Link>
-        <Link href="/"><span className="font-normal text-2xl tracking-tight ml-5 text-slate-600">Native Land Digital</span></Link>
+        <Link href="/"><span className="font-normal text-2xl tracking-tight ml-5 text-slate-600">{t('native-land')}</span></Link>
       </div>
       <div className="block lg:hidden">
         <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
@@ -23,7 +26,7 @@ export default function Header({ dict }) {
         <div className="text-base justify-end md:flex">
           <div onMouseLeave={() => setOpenNav(false)}>
             <div onMouseOver={() => setOpenNav('about')} className={`about-dropdown cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6`}>
-              <span className="pointer-events-none">{dict['about']}</span>
+              <span className="pointer-events-none">{t('about')}</span>
               <svg className="w-3 h-3 pointer-events-none mt-1.5 ml-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <title>chevron-down</title>
                 <g fill="none">
@@ -33,17 +36,17 @@ export default function Header({ dict }) {
             </div>
             <div className={`${openNav === 'about' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <Link href="/about/our-team" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['our-team']}</Link>
-                <Link href="/about/why-it-matters" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['why-it-matters']}</Link>
-                <Link href="/about/how-it-works" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['how-it-works']}</Link>
-                <Link href="/about/partners-and-contributors" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['partners-contributors']}</Link>
-                <Link href="/about/roadmap" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['roadmap']}</Link>
+                <Link href="/about/our-team" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('our-team')}</Link>
+                <Link href="/about/why-it-matters" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('why-it-matters')}</Link>
+                <Link href="/about/how-it-works" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('how-it-works')}</Link>
+                <Link href="/about/partners-and-contributors" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('partners-contributors')}</Link>
+                <Link href="/about/roadmap" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('roadmap')}</Link>
               </div>
             </div>
           </div>
           <div onMouseLeave={() => setOpenNav(false)}>
             <div onMouseOver={() => setOpenNav('media')} className="cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">
-              <span className="pointer-events-none">{dict['media']}</span>
+              <span className="pointer-events-none">{t('media')}</span>
               <svg className="w-3 h-3 pointer-events-none mt-1.5 ml-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <title>chevron-down</title>
                 <g fill="none">
@@ -53,14 +56,14 @@ export default function Header({ dict }) {
             </div>
             <div className={`${openNav === 'media' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <a href="#" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['community-blog']}</a>
-                <Link href="/media/media-coverage" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['media-coverage']}</Link>
+                <a href="#" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('community-blog')}</a>
+                <Link href="/media/media-coverage" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('media-coverage')}</Link>
               </div>
             </div>
           </div>
           <div onMouseLeave={() => setOpenNav(false)}>
             <div onMouseOver={() => setOpenNav('contribute')} className="cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">
-              <span className="pointer-events-none">{dict['contribute']}</span>
+              <span className="pointer-events-none">{t('contribute')}</span>
               <svg className="w-3 h-3 pointer-events-none mt-1.5 ml-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <title>chevron-down</title>
                 <g fill="none">
@@ -70,17 +73,17 @@ export default function Header({ dict }) {
             </div>
             <div className={`${openNav === 'contribute' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <Link href="/how-to-contribute/jobs" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['jobs']}</Link>
-                <Link href="/how-to-contribute/volunteer" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['volunteer']}</Link>
-                <Link href="/how-to-contribute/fixes-and-adding-maps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['fixes-adding-maps']}</Link>
-                <Link href="/how-to-contribute/languages" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['languages']}</Link>
-                <Link href="/support/supporters-circle" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['supporters-circle']}</Link>
+                <Link href="/how-to-contribute/jobs" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('jobs')}</Link>
+                <Link href="/how-to-contribute/volunteer" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('volunteer')}</Link>
+                <Link href="/how-to-contribute/fixes-and-adding-maps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('fixes-adding-maps')}</Link>
+                <Link href="/how-to-contribute/languages" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('languages')}</Link>
+                <Link href="/support/supporters-circle" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('supporters-circle')}</Link>
               </div>
             </div>
           </div>
           <div onMouseLeave={() => setOpenNav(false)}>
             <div onMouseOver={() => setOpenNav('resources')} className="cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">
-              <span className="pointer-events-none">{dict['resources']}</span>
+              <span className="pointer-events-none">{t('resources')}</span>
               <svg className="w-3 h-3 pointer-events-none mt-1.5 ml-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <title>chevron-down</title>
                 <g fill="none">
@@ -90,17 +93,17 @@ export default function Header({ dict }) {
             </div>
             <div className={`${openNav === 'resources' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <Link href="/resources/territory-acknowledgement" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['territory-acknowledgement']}</Link>
-                <Link href="/resources/teachers-guide" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['teachers-guide']}</Link>
-                <Link href="/resources/mobile-apps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['mobile-apps']}</Link>
-                <a href="https://victor-gerard-temprano.gitbook.io/native-land-digital-api" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['api']}</a>
-                <Link href="/maps/territories" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['territories-list']}</Link>
-                <Link href="/maps/languages" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['languages-list']}</Link>
-                <Link href="/maps/treaties" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['treaties-list']}</Link>
+                <Link href="/resources/territory-acknowledgement" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('territory-acknowledgement')}</Link>
+                <Link href="/resources/teachers-guide" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('teachers-guide')}</Link>
+                <Link href="/resources/mobile-apps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('mobile-apps')}</Link>
+                <a href="https://victor-gerard-temprano.gitbook.io/native-land-digital-api" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('api')}</a>
+                <Link href="/maps/territories" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('territories-list')}</Link>
+                <Link href="/maps/languages" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('languages-list')}</Link>
+                <Link href="/maps/treaties" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('treaties-list')}</Link>
               </div>
             </div>
           </div>
-          <Link href="/contact" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{dict['contact']}</Link>
+          <Link href="/contact" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{t('contact')}</Link>
           <div onMouseLeave={() => setOpenNav(false)}>
             <div onMouseOver={() => setOpenNav('language')} className="cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">
               <span className="pointer-events-none">
@@ -118,15 +121,15 @@ export default function Header({ dict }) {
             </div>
             <div className={`${openNav === 'language' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <Link href="/en" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['english']}</Link>
-                <Link href="/fr" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['french']}</Link>
-                <Link href="/es" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{dict['spanish']}</Link>
+                <Link href="/" locale="en" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('english')}</Link>
+                <Link href="/" locale="fr" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('french')}</Link>
+                <Link href="/" locale="es" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('spanish')}</Link>
               </div>
             </div>
           </div>
         </div>
         <div>
-          <Link href="#" className="inline-block text-sm px-4 py-2 leading-none rounded text-white bg-blue-900 hover:text-teal-00 hover:bg-blue-600 mt-4 lg:mt-0">{dict['support-us']}</Link>
+          <Link href="/support" className="inline-block text-sm px-4 py-2 leading-none rounded text-white bg-blue-900 hover:text-teal-00 hover:bg-blue-600 mt-4 lg:mt-0">{t('support-us')}</Link>
         </div>
       </div>
     </nav>

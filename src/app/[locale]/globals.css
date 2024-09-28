@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply text-white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  a {
+    @apply text-blue-600;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Necessary styles for HTML */
+.front-page-modal p {
+  @apply mt-2.5;
+}
+
+/* On static pages where we are setting HTML directly */
+.static-page h2 {
+  @apply text-2xl;
+  @apply font-bold;
+  @apply mt-5;
+}
+.static-page h3 {
+  @apply text-xl;
+  @apply font-bold;
+  @apply mt-5;
+}
+.static-page p {
+  @apply mt-4;
+}
+.static-page ul {
+  @apply mt-4;
+  @apply ml-6;
+  @apply list-disc;
+  @apply list-outside;
+}
+.static-page ul li {
+  @apply mt-1.5;
+}
+.static-page a img {
+  @apply pt-2.5;
+}
+.static-page img {
+  @apply mt-2.5;
+}
+.static-page img:first-child {
+  @apply -mt-4;
+  /* @apply -ml-4; */
+  @apply -mr-8;
+}
+.static-page hr {
+  @apply mt-4;
+}

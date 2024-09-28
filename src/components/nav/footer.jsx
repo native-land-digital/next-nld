@@ -1,8 +1,11 @@
 import Image from "next/image";
-import Link from 'next/link'
-import Logo from '@/public/images/nld-logo.png'
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 
-export default function Footer({ dict }) {
+import Logo from '@/public/images/general/nld-logo.png'
+
+export default function Footer() {
+  const t = useTranslations('Navigation');
 
   return (
     <footer className="w-full bg-white">
@@ -10,92 +13,92 @@ export default function Footer({ dict }) {
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-8 py-10 max-sm:max-w-sm max-sm:mx-auto gap-y-8">
           <div className="col-span-full mb-10 lg:col-span-2 lg:mb-0">
               <Image src={Logo} alt="Native Land Digital logo" width="38" height="60" />
-              <p className="py-8 text-sm text-gray-500 lg:max-w-xs text-center lg:text-left">{dict['about-blurb']}</p>
+              <p className="py-8 text-sm text-gray-500 lg:max-w-xs text-center lg:text-left">{t('about-blurb')}</p>
               <Link href="/contact"  className="py-2.5 px-5 h-9 block w-fit bg-indigo-600 rounded-full shadow-sm text-xs text-white mx-auto transition-all  duration-500 hover:bg-indigo-700 lg:mx-0">
-                {dict['contact']}
+                {t('contact')}
               </Link>
           </div>
           <div className="lg:mx-auto text-left">
-            <h4 className="text-lg text-gray-900 font-medium mb-7">{dict['about']}</h4>
+            <h4 className="text-lg text-gray-900 font-medium mb-7">{t('about')}</h4>
             <ul className="text-sm  transition-all duration-500">
               <li className="mb-3">
-                <Link href="/about/our-team" className="text-gray-600 hover:text-gray-900">{dict['our-team']}</Link>
+                <Link href="/about/our-team" className="text-gray-600 hover:text-gray-900">{t('our-team')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/about/why-it-matters" className="text-gray-600 hover:text-gray-900">{dict['why-it-matters']}</Link>
+                <Link href="/about/why-it-matters" className="text-gray-600 hover:text-gray-900">{t('why-it-matters')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/about/how-it-works" className="text-gray-600 hover:text-gray-900">{dict['how-it-works']}</Link>
+                <Link href="/about/how-it-works" className="text-gray-600 hover:text-gray-900">{t('how-it-works')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/about/partners-and-contributors" className="text-gray-600 hover:text-gray-900">{dict['partners-contributors']}</Link>
+                <Link href="/about/partners-and-contributors" className="text-gray-600 hover:text-gray-900">{t('partners-contributors')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/about/roadmap" className="text-gray-600 hover:text-gray-900">{dict['roadmap']}</Link>
+                <Link href="/about/roadmap" className="text-gray-600 hover:text-gray-900">{t('roadmap')}</Link>
               </li>
             </ul>
           </div>
           <div className="lg:mx-auto text-left">
-            <h4 className="text-lg text-gray-900 font-medium mb-7">{dict['media']}</h4>
+            <h4 className="text-lg text-gray-900 font-medium mb-7">{t('media')}</h4>
             <ul className="text-sm  transition-all duration-500">
               <li className="mb-3">
-                <a href="" className="text-gray-600 hover:text-gray-900">{dict['community-blog']}</a>
+                <a href="" className="text-gray-600 hover:text-gray-900">{t('community-blog')}</a>
               </li>
               <li className="mb-3">
-                <Link href="/media/media-coverage" className="text-gray-600 hover:text-gray-900">{dict['media-coverage']}</Link>
+                <Link href="/media/media-coverage" className="text-gray-600 hover:text-gray-900">{t('media-coverage')}</Link>
               </li>
             </ul>
           </div>
           <div className="lg:mx-auto text-left">
-            <h4 className="text-lg text-gray-900 font-medium mb-7">{dict['contribute']}</h4>
+            <h4 className="text-lg text-gray-900 font-medium mb-7">{t('contribute')}</h4>
             <ul className="text-sm  transition-all duration-500">
               <li className="mb-3">
-                <Link href="/how-to-contribute/jobs" className="text-gray-600 hover:text-gray-900">{dict['jobs']}</Link>
+                <Link href="/how-to-contribute/jobs" className="text-gray-600 hover:text-gray-900">{t('jobs')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/how-to-contribute/volunteer" className="text-gray-600 hover:text-gray-900">{dict['volunteer']}</Link>
+                <Link href="/how-to-contribute/volunteer" className="text-gray-600 hover:text-gray-900">{t('volunteer')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/how-to-contribute/fixes-and-adding-maps" className="text-gray-600 hover:text-gray-900">{dict['fixes-adding-maps']}</Link>
+                <Link href="/how-to-contribute/fixes-and-adding-maps" className="text-gray-600 hover:text-gray-900">{t('fixes-adding-maps')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/how-to-contribute/languages" className="text-gray-600 hover:text-gray-900">{dict['languages']}</Link>
+                <Link href="/how-to-contribute/languages" className="text-gray-600 hover:text-gray-900">{t('languages')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/support/supporters-circle" className="text-gray-600 hover:text-gray-900">{dict['supporters-circle']}</Link>
+                <Link href="/support/supporters-circle" className="text-gray-600 hover:text-gray-900">{t('supporters-circle')}</Link>
               </li>
             </ul>
           </div>
           <div className="lg:mx-auto text-left">
-            <h4 className="text-lg text-gray-900 font-medium mb-7">{dict['resources']}</h4>
+            <h4 className="text-lg text-gray-900 font-medium mb-7">{t('resources')}</h4>
             <ul className="text-sm  transition-all duration-500">
               <li className="mb-3">
-                <Link href="/resources/territory-acknowledgement" className="text-gray-600 hover:text-gray-900">{dict['territory-acknowledgement']}</Link>
+                <Link href="/resources/territory-acknowledgement" className="text-gray-600 hover:text-gray-900">{t('territory-acknowledgement')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/resources/teachers-guide" className="text-gray-600 hover:text-gray-900">{dict['teachers-guide']}</Link>
+                <Link href="/resources/teachers-guide" className="text-gray-600 hover:text-gray-900">{t('teachers-guide')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/resources/mobile-apps" className="text-gray-600 hover:text-gray-900">{dict['mobile-apps']}</Link>
+                <Link href="/resources/mobile-apps" className="text-gray-600 hover:text-gray-900">{t('mobile-apps')}</Link>
               </li>
               <li className="mb-3">
-                <a href="https://victor-gerard-temprano.gitbook.io/native-land-digital-api" className="text-gray-600 hover:text-gray-900">{dict['api']}</a>
+                <a href="https://victor-gerard-temprano.gitbook.io/native-land-digital-api" className="text-gray-600 hover:text-gray-900">{t('api')}</a>
               </li>
               <li className="mb-3">
-                <Link href="/resources/territories-list" className="text-gray-600 hover:text-gray-900">{dict['territories-list']}</Link>
+                <Link href="/resources/territories-list" className="text-gray-600 hover:text-gray-900">{t('territories-list')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/resources/languages-list" className="text-gray-600 hover:text-gray-900">{dict['languages-list']}</Link>
+                <Link href="/resources/languages-list" className="text-gray-600 hover:text-gray-900">{t('languages-list')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/resources/treaties-list" className="text-gray-600 hover:text-gray-900">{dict['treaties-list']}</Link>
+                <Link href="/resources/treaties-list" className="text-gray-600 hover:text-gray-900">{t('treaties-list')}</Link>
               </li>
             </ul>
           </div>
       </div>
       <div className="py-7 border-t border-gray-200">
           <div className="flex items-center justify-center flex-col lg:justify-between lg:flex-row">
-            <span className="text-sm text-gray-500">©<Link className="ml-1" href="https://native-land.ca/">{dict['native-land']}</Link> {dict['copyright']}</span>
+            <span className="text-sm text-gray-500">©<Link className="ml-1" href="https://native-land.ca/">{t('native-land')}</Link> {t('copyright')}</span>
             <div className="flex mt-4 space-x-4 sm:justify-center lg:mt-0 ">
               <a href="https://www.facebook.com/nativelandnet/"  className="w-9 h-9 rounded-full bg-gray-700 flex justify-center items-center hover:bg-indigo-600">
                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#FFF" viewBox="0 0 16 16">

@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 import json5 from 'json5';
+import createNextIntlPlugin from 'next-intl/plugin';
+import createMDX from '@next/mdx'
+
+const withNextIntl = createNextIntlPlugin();
+const withMDX = createMDX();
 
 const nextConfig = {
   output: "standalone",
@@ -22,6 +27,10 @@ const nextConfig = {
       destination: "/resources/teachers-guide",
       permanent: true
     },{
+      source: "/languages",
+      destination: "/resources/translations",
+      permanent: true
+    },{
       source: "/resources/territories-list",
       destination: "/maps/territories",
       permanent: true
@@ -39,6 +48,7 @@ const nextConfig = {
       permanent: true
     }]
   },
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   webpack: (config, options) => {
     config.module.rules.push({
       test: /\.json5$/,
@@ -49,6 +59,9 @@ const nextConfig = {
     });
     return config;
   },
+  experimental: {
+    mdxRs: true,
+  },
 };
 
-export default nextConfig;
+export default withNextIntl(withMDX(nextConfig));
