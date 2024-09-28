@@ -79,7 +79,7 @@ export default function Footer({ dict }) {
                 <Link href="/resources/mobile-apps" className="text-gray-600 hover:text-gray-900">{dict['mobile-apps']}</Link>
               </li>
               <li className="mb-3">
-                <a href="" className="text-gray-600 hover:text-gray-900">{dict['api']}</a>
+                <a href="https://victor-gerard-temprano.gitbook.io/native-land-digital-api" className="text-gray-600 hover:text-gray-900">{dict['api']}</a>
               </li>
               <li className="mb-3">
                 <Link href="/resources/territories-list" className="text-gray-600 hover:text-gray-900">{dict['territories-list']}</Link>

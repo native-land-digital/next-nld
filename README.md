@@ -70,9 +70,15 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 ### Notes for current development to-dos
 
 Major:
-- API slug-finder on logged-in API page
+- Testing preview branch functionality
+- The language stuff is just randomly changing all the time
 
 Minor:
+- Add login/signup button to menu
+- Integrating some kind of linter check akin to NextJS when merging
+- Prep fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
+- Verify that embed.html is working
+- Directly testing all exposed API endpoints
 
 Junior:
 - Mobile layout
@@ -81,8 +87,6 @@ Junior:
 - Setting up static pages HTML (template is at `about/how-it-works`)
 - Migrate blog posts from Wordpress to an external blog site
 - Adding Instagram feed (looks a bit complicated annoyingly)
-- Create API documentation at external documentation site
-- Picking some prettier fonts
 - Link somewhere front page or nav to main /maps directory
 - Reviewing API returning 400 vs 500 errors
 
@@ -90,12 +94,9 @@ Bugs:
 - Fixing up the raw sql in the polygon PUT (use index.php method)
 
 Before first deploy:
-- Prep fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
+- Connect Gitbook to Native Land URL
 - Doing logging to log drains
-- Directly testing all exposed API endpoints
 - Ensuring database backups reliability
-- Verify that embed.html is working
-- Update Research map for Prod
 
 After first deploy:
 - Adding a protected Mapbox public token (only for main URL) for prod
@@ -103,7 +104,6 @@ After first deploy:
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
 
 Optimization:
-- Integrating some kind of linter check akin to NextJS when merging
 - Add last updated date in Mapbox updating research section (for clarity)
 - Properly do typescript in auth config files
 - Catch logs for API requests that are errors

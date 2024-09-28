@@ -53,8 +53,8 @@ export const GET = async (req ) => {
         query.where['AND'].push({
           OR : nameSet.map(singleName => {
             return {
-              name : {
-                contains : singleName,
+              slug : {
+                contains : encodeURIComponent(singleName).toLowerCase(),
                 mode : 'insensitive'
               }
             }
@@ -68,6 +68,7 @@ export const GET = async (req ) => {
           }
         })
       }
+			console.log(JSON.stringify(query))
       const polygons = await prisma.polygon.findMany(query)
       if(polygons.length > 0) {
   			const ids = polygons.map(polygon => polygon.id);
