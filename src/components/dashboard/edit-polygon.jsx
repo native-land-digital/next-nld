@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
 import { navigate } from '@/lib/actions'
 import { SwatchesPicker } from 'react-color';
-import Link from 'next/link'
+import { Link } from '@/i18n/routing';
 
 import MainMap from '@/components/dashboard/editors/map-editor';
 import WYSIWYGEDitor from '@/components/dashboard/editors/wysiwyg-editor';

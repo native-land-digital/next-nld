@@ -1,9 +1,12 @@
 "use client"
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { signIn } from "next-auth/react";
 import { toast } from 'react-toastify';
 
 export default function Signup() {
+
+  const t = useTranslations('Auth');
 
   const [ email, setEmail ] = useState("");
   const [ name, setName ] = useState("");
@@ -42,45 +45,45 @@ export default function Signup() {
       <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
         <div className="max-w-md w-full">
           <div className="p-8 rounded-2xl bg-white shadow">
-            <h2 className="text-gray-800 text-center text-2xl font-bold">Sign up</h2>
-            <p className="text-gray-800 text-sm mt-2.5">Welcome to Native Land! With an account, you can gain access to our API, or join our volunteer team.</p>
+            <h2 className="text-gray-800 text-center text-2xl font-bold">{t('sign-up')}</h2>
+            <p className="text-gray-800 text-sm mt-2.5">{t('welcome')}</p>
             <hr className="border-slate-400 mb-4 mt-4 w-6/12 m-auto" />
             <div>
-              <label className="text-gray-800 text-sm mb-1.5 block">Name</label>
+              <label className="text-gray-800 text-sm mb-1.5 block">{t('name')}</label>
               <div className="relative flex items-center">
-                <input value={name} onChange={(e) => setName(e.target.value)} name="name" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter name" />
+                <input value={name} onChange={(e) => setName(e.target.value)} name="name" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('name-placeholder')} />
               </div>
             </div>
 
             <div>
-              <label className="text-gray-800 text-sm mb-1.5 block mt-3">Email</label>
+              <label className="text-gray-800 text-sm mb-1.5 block mt-3">{t('email')}</label>
               <div className="relative flex items-center">
-                <input value={email} onChange={(e) => setEmail(e.target.value)} name="email" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter email" />
+                <input value={email} onChange={(e) => setEmail(e.target.value)} name="email" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('email-placeholder')} />
               </div>
             </div>
 
             <div>
-              <label className="text-gray-800 text-sm mb-1.5 block mt-3">Password</label>
+              <label className="text-gray-800 text-sm mb-1.5 block mt-3">{t('password')}</label>
               <div className="relative flex items-center">
-                <input value={password} onChange={(e) => setPassword(e.target.value)} name="password" type="password" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter password" />
+                <input value={password} onChange={(e) => setPassword(e.target.value)} name="password" type="password" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('password-placeholder')} />
               </div>
             </div>
 
             <div>
-              <label className="text-gray-800 text-sm mb-1.5 block mt-3">Organization</label>
-              <p className="text-gray-800 text-xs mb-1.5">If you are part of an organization using Native Land, please tell us here.</p>
+              <label className="text-gray-800 text-sm mb-1.5 block mt-3">{t('organization')}</label>
+              <p className="text-gray-800 text-xs mb-1.5">{t('organization-note')}</p>
               <div className="relative flex items-center">
-                <input value={organization} onChange={(e) => setOrganization(e.target.value)} name="organization" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter organization" />
+                <input value={organization} onChange={(e) => setOrganization(e.target.value)} name="organization" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('organization-placeholder')} />
               </div>
             </div>
 
             <div className="!mt-8">
               <button onClick={() => doSignUp()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
-                Sign up
+                {t('sign-up')}
               </button>
             </div>
 
-            <p className="text-gray-800 text-sm !mt-8 text-center">Have an account already? <a href="/auth/login" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">Log in here</a></p>
+            <p className="text-gray-800 text-sm !mt-8 text-center">{t('have-account')} <a href="/auth/login" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">{t('log-here')}</a></p>
 
           </div>
         </div>

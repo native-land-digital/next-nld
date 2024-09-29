@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Switch from "react-switch";
 import AsyncSelect from 'react-select/async';
-import Link from 'next/link'
+import { Link } from '@/i18n/routing';
 
 import { makeBoundsFromPoly } from '@/components/front-map/map-utils';
 
@@ -173,7 +173,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 return (
                   <li key={`selected-features-${feature.properties.Slug}`}>
                     <input type="checkbox" checked={toggledFeatures.indexOf(feature.properties.Slug) === -1} className="mr-1.5" onChange={() => nationToggle(feature.properties.Slug)} />
-                    <Link href={feature.properties.description} target="_blank">{feature.properties.Name} ↗</Link>
+                    <Link href={process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'preview' ? feature.properties.description.substring(feature.properties.description.indexOf('/')) : feature.properties.description} target="_blank">{feature.properties.Name} ↗</Link>
                   </li>)
               })}
             </ul>

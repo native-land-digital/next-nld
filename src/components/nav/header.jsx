@@ -103,6 +103,7 @@ export default function Header() {
               </div>
             </div>
           </div>
+          <Link href="/auth/login" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{t('login')}</Link>
           <Link href="/contact" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{t('contact')}</Link>
           <div onMouseLeave={() => setOpenNav(false)}>
             <div onMouseOver={() => setOpenNav('language')} className="cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">

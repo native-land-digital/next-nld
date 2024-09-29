@@ -1,5 +1,5 @@
 import prisma from "@/lib/db/prisma";
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { getTranslations } from 'next-intl/server';
 
 import PolygonCard from '@/components/static/polygon-card';

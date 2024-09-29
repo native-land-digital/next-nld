@@ -1,5 +1,5 @@
 import prisma from "@/lib/db/prisma";
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
 
@@ -7,7 +7,7 @@ import SubHeader from '@/components/nav/sub-header'
 import PolygonCard from '@/components/static/polygon-card';
 
 export default async function Page({ params : { locale }, searchParams }) {
-  
+
   unstable_setRequestLocale(locale);
   const t = await getTranslations('Maps');
   const tCommon = await getTranslations('Common');

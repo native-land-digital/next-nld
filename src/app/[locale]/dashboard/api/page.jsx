@@ -1,5 +1,5 @@
 import prisma from "@/lib/db/prisma";
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { getServerSession } from "next-auth/next"
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
@@ -10,7 +10,7 @@ import { authOptions } from "@/root/auth";
 
 export default async function Page({ params : { locale }, searchParams }) {
   const session = await getServerSession(authOptions);
-  
+
   unstable_setRequestLocale(locale);
   const tNav = await getTranslations('Navigation');
   const tCommon = await getTranslations('Common');

@@ -86,6 +86,9 @@ export default async function Footer() {
                 <a href="https://victor-gerard-temprano.gitbook.io/native-land-digital-api" className="text-gray-600 hover:text-gray-900">{t('api')}</a>
               </li>
               <li className="mb-3">
+                <Link href="/maps" className="text-gray-600 hover:text-gray-900">{t('all-maps')}</Link>
+              </li>
+              <li className="mb-3">
                 <Link href="/resources/territories-list" className="text-gray-600 hover:text-gray-900">{t('territories-list')}</Link>
               </li>
               <li className="mb-3">
@@ -101,6 +104,7 @@ export default async function Footer() {
           <div className="flex items-center justify-center flex-col lg:justify-between lg:flex-row">
             <span className="text-sm text-gray-500">©<Link className="ml-1" href="https://native-land.ca/">{t('native-land')}</Link> {t('copyright')}</span>
             <div className="flex mt-4 space-x-4 sm:justify-center lg:mt-0 ">
+              <Link href="/auth/login" className="text-gray-600 justify-self-center self-center hover:text-gray-900">{t('login')}</Link>
               <a href="https://www.facebook.com/nativelandnet/"  className="w-9 h-9 rounded-full bg-gray-700 flex justify-center items-center hover:bg-indigo-600">
                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#FFF" viewBox="0 0 16 16">
                   <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>

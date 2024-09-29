@@ -57,9 +57,21 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 
 ## Deployment notes
 
+Deployment will run from the `dev` branch to a Preview in Vercel. In the Preview, comments and notes can be made.
+
+From there, changes will be reviewed and the resulting PR assigned to main.
+
+Notes:
+
 - When generating a database with Supabase for Prisma, need to add `pgbouncer=true&connection_limit=1` to the Transaction DB URL
 - Builds will only run on pushes to `dev` (Preview) and `main` (Production)
 - Do seeding from local to avoid Vercel timeouts
+
+Current costs:
+
+- Premium Supabase ($35 monthly)
+- Maximum budget of $100 in Vercel
+- Logging
 
 ## Weird exceptions
 - Mapbox style has a bug fix in the `text-field` parameter to re-render the Osage name. Because the characters are registered as outside of standard Unicode and outside the range of 65535, it causes the map to error. As a result we use the following expression to allow things to render.
@@ -70,36 +82,32 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 ### Notes for current development to-dos
 
 Major:
-- Testing preview branch functionality
 
 Minor:
-- Add login/signup button to menu
-- Prep fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
-- Directly testing all exposed API endpoints
+- Adding Instagram feed (looks a bit complicated annoyingly)
 - Publishing blog posts each day
+- Prep fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
+- Sending live site preview to Tanya, doing a walkthrough
 
 Junior:
 - Mobile layout
-- Adding Instagram feed (looks a bit complicated annoyingly)
-- Link somewhere front page or nav to main /maps directory
-- Reviewing API returning 400 vs 500 errors
 
 Bugs:
-- Fixing up the raw sql in the polygon PUT (use index.php method)
 
 Before first deploy:
 - Doing logging to log drains
-- Ensuring database backups reliability
 
 After first deploy:
-- Setting up Github action to run npm run build on any PR to dev or main
+- Seeing if Google Analytics is logging correctly
 - Adding a protected Mapbox public token (only for main URL) for prod
 - Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
+- Adding tileset documentation to API 
+- Reviewing API returning 400 vs 500 errors
+- Setting up Github action to run npm run build on any PR to dev or main
 
 Optimization:
 - Add last updated date in Mapbox updating research section (for clarity)
-- Properly do typescript in auth config files
 - Catch logs for API requests that are errors
 - Reading over SQL injection in Prisma docs
 - Adding a Mapbox updates table, with "Recent update" to help when emptying mapboxgl cache after tile update
@@ -108,6 +116,8 @@ Optimization:
 - Checking and removing duplicate research entries (requires collaboration with research team)
 - Providing more options to react select lists on front page? Is it necessary or 50 initial results is enough?
 - Getting language to reload on the current page
+- Ensuring front-page API endpoints (in `polygons/search`) only are valid when coming from the front page)
+- Use of `executeRawUnsafe` inside the protected polygon PATCH endpoint could be improved (needs to handle insertion of Multipolygons)
 
 Aspirational:
 - Adding placenames
@@ -118,6 +128,9 @@ Aspirational:
 - Adding more refined permissions to enable external researchers to edit only certain polygons or sets of polygons
 
 Questions:
-- Do we want contact forms? Or just list emails?
 - Getting Patreon back into gear?
-- Make color customizable?
+- Doing more blog posts again?
+- Updating content?
+- Adding a new roadmap?
+- At last tackling Africa?
+- Redoing top links? Showing off maps more, special pages more

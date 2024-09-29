@@ -4,48 +4,53 @@ import { getToken } from "next-auth/jwt"
 
 export const GET = async (req, route) => {
   const { slug: slug } = route.params;
+	const secret = req.nextUrl.searchParams.get('secret');
 
-	try {
-    const polygonShape = await prisma.$queryRaw`
-      SELECT ST_AsGeoJSON(geometry) FROM "Polygon"
-      WHERE slug = ${slug}
-    `
-    const polygon = await prisma.polygon.findUnique({
-      where : {
-        slug : slug,
-        published : true
-      },
-      select : {
-        id : true,
-        name : true,
-        category : true,
-        slug : true,
-        sources : true,
-        pronunciation : true,
-        media : true,
-        websites : true,
-        changelog : true,
-        relatedFrom : true,
-        relatedTo : true,
-        createdAt : true,
-        updatedAt : true
-      }
-    });
+  if(secret === process.env.MOBILE_APP_SECRET) {
+  	try {
+      const polygonShape = await prisma.$queryRaw`
+        SELECT ST_AsGeoJSON(geometry) FROM "Polygon"
+        WHERE slug = ${slug}
+      `
+      const polygon = await prisma.polygon.findUnique({
+        where : {
+          slug : slug,
+          published : true
+        },
+        select : {
+          id : true,
+          name : true,
+          category : true,
+          slug : true,
+          sources : true,
+          pronunciation : true,
+          media : true,
+          websites : true,
+          changelog : true,
+          relatedFrom : true,
+          relatedTo : true,
+          createdAt : true,
+          updatedAt : true
+        }
+      });
 
-    if(polygon) {
-      polygon.geometry = null;
-      if(polygonShape && polygonShape[0] && polygonShape[0].st_asgeojson) {
-        polygon.geometry = JSON.parse(polygonShape[0].st_asgeojson)
+      if(polygon) {
+        polygon.geometry = null;
+        if(polygonShape && polygonShape[0] && polygonShape[0].st_asgeojson) {
+          polygon.geometry = JSON.parse(polygonShape[0].st_asgeojson)
+        }
+      } else {
+        return NextResponse.json({ error : `Polygon not found` }, { status: 500 });
       }
-    } else {
-      return NextResponse.json({ error : `Polygon not found` }, { status: 500 });
+
+      return NextResponse.json({ polygon });
+
+    } catch (error) {
+      console.error(error);
+      return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
     }
-
-    return NextResponse.json({ polygon });
-
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
+  } else {
+    return NextResponse.json({ error : `This is an endpoint only meant for the mobile app.` }, { status: 500 });
   }
 }
 

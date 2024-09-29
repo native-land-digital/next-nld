@@ -81,9 +81,9 @@ export const GET = async (req) => {
           const file = new File([buffer], 'upload.json')
           formData.set('file', file, 'upload.json')
 
-          // // Only activate one of the below methods at a time.
-          // // They are both here in case, in the future, you need to create a new tileset this way.
-          //
+          // Only activate one of the below methods at a time.
+          // They are both here in case, in the future, you need to create a new tileset this way.
+
           // // FOR NEW TILESETS
           // // CREATES A NEW TILESET
           // try {

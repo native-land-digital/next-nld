@@ -131,7 +131,23 @@
   },
   "Auth" : {
     "no-account" : "Don't have an account?",
-    "register-here" : "Register here"
+    "register-here" : "Register here",
+    "sign-in" : "Sign in",
+    "sign-up" : "Sign up",
+    "name" : "Name",
+    "name-placeholder" : "Enter name",
+    "email" : "Email",
+    "email-placeholder" : "Enter email",
+    "password" : "Password",
+    "password-placeholder" : "Enter password",
+    "remember-me" : "Remember me",
+    "welcome" : "Welcome to Native Land! With an account, you can gain access to our API, or join our volunteer team.",
+    "organization" : "Organization",
+    "organization-placeholder" : "Enter organization",
+    "organization-note" : "If you are part of an organization using Native Land, please tell us here.",
+    "have-account" : "Have an account already?",
+    "log-here" : "Log in here",
+    "error-log" : "Error logging in"
   },
   "Maps" : {
     "all-maps" : "All Maps",
