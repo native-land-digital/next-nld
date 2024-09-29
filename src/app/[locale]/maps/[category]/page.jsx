@@ -52,7 +52,7 @@ export default async function Page({ searchParams, params : { locale, category }
   return (
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={category} />
-      <div className="grid gap-5 grid-cols-3 min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black static-page">
+      <div className="grid gap-5 grid-cols-1 md:grid-cols-3 px-5 md:px-0 w-full md:w-2/3 min-h-screen m-auto -mt-12 text-black static-page">
         <Sidebar>
           <ol className="list-inside text-gray-400">
             <li className="mb-2.5"><Link href="/maps">{t('all-maps')}</Link></li>
@@ -75,7 +75,7 @@ export default async function Page({ searchParams, params : { locale, category }
             </div>
           </div>
           <p className="mb-2.5 text-sm">{totalPolygons} {category}.</p>
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2  gap-5">
             {polygons.map(polygon => {
               return <PolygonCard key={`polygon-${polygon.id}`} polygon={polygon} />
             })}

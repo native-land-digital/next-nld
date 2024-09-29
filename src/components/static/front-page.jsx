@@ -38,13 +38,13 @@ export default async function FrontPage() {
   return (
     <div className="font-[sans-serif] bg-white py-10 text-center">
       <div className="m-auto">
-        <section className="w-full md:w-3/4 m-auto my-5">
-          <h2 className="text-6xl font-bold"><span className="text-blue-600 underline underline-offset-2 decoration-yellow-600/30 decoration-[15px]">{t('welcome')}</span> <span className="text-black">{t('welcome-glad')}</span></h2>
+        <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-5">
+          <h2 className="text-4xl md:text-6xl font-bold leading-snug"><span className="text-blue-600 underline underline-offset-2 decoration-yellow-600/30 decoration-[15px]">{t('welcome')}</span> <span className="text-black">{t('welcome-glad')}</span></h2>
           <p className="text-xl text-gray-500 my-8">{t('welcome-blurb')}</p>
-          <p className="bg-blue-400/20 px-4 py-2.5 rounded inline font-bold text-blue-600"><span dangerouslySetInnerHTML={{ __html : t.raw('welcome-contact') }} /></p>
+          <div className="bg-blue-400/20 px-4 py-2.5 rounded"><p className="md:inline-block font-bold text-blue-600" dangerouslySetInnerHTML={{ __html : t.raw('welcome-contact') }}></p></div>
         </section>
-        <section className="w-full md:w-3/4 m-auto my-24">
-          <div className="grid grid-cols-2 gap-5">
+        <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="flex flex-col justify-center align-center text-black text-left p-2.5">
               <h3 className="text-4xl font-bold mb-5">{t('our-mission-header')}</h3>
               <p className="text-slate-400 mr-16 mb-5">{t('our-mission')}</p>
@@ -58,8 +58,8 @@ export default async function FrontPage() {
         <section>
           <div className="bg-blue-900 rounded">
             <h3 className="text-4xl font-bold py-16">{t('how-it-works-header')}</h3>
-            <div className="w-full md:w-3/4 m-auto">
-              <div className="grid grid-cols-3 gap-5 text-black">
+            <div className="w-full md:w-3/4 px-5 md:px-0 m-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-black">
                 <div className="bg-white rounded pb-2.5">
                   <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
                     <Image className="w-full" src={Mapping} alt="Mapping" />
@@ -86,9 +86,9 @@ export default async function FrontPage() {
             <p className="pt-12 pb-12"><span dangerouslySetInnerHTML={{ __html : t.raw('how-it-works-link') }} /></p>
           </div>
         </section>
-        <section className="w-full md:w-3/4 m-auto my-24">
+        <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
           <h3 className="text-black text-3xl font-bold pb-16">{t('partners-supporters')}</h3>
-          <div className="grid grid-cols-5 pad-5">
+          <div className="grid grid-cols-2 md:grid-cols-5 pad-5">
             <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
               <Link href="https://kalliopeia.org/"><Image className="w-full" src={Kalliopeia} alt="Kalliopeia logo" /></Link>
             </div>
@@ -106,9 +106,9 @@ export default async function FrontPage() {
             </div>
           </div>
         </section>
-        <section className="w-full md:w-3/4 m-auto my-24 text-black">
+        <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24 text-black">
           <h3 className="text-3xl font-bold pb-16">{t('latest-updates')}</h3>
-          <div className="grid grid-cols-5 pad-5">
+          <div className="grid grid-cols-1 md:grid-cols-5 pad-5">
             {latestUpdates.map(polygon => {
               return (
                 <div key={`polygon-${polygon.id}`}>
@@ -128,8 +128,8 @@ export default async function FrontPage() {
           </div>
         </section>
 
-        <section className="w-full md:w-3/4 m-auto my-24">
-          <div className="grid grid-cols-2 gap-5">
+        <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <Image src={Disclaimer} alt="disclaimer" className="w-full h-auto" />
             </div>
@@ -141,7 +141,7 @@ export default async function FrontPage() {
           </div>
         </section>
         <section className="w-full md:w-3/4 m-auto my-24">
-          <div className="grid grid-cols-3 gap-5 text-black text-left">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-black text-left">
             <div className="p-5">
               <div className="flex">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -204,9 +204,9 @@ export default async function FrontPage() {
             </div>
           </div>
         </section>
-        <section className="w-full md:w-3/4 m-auto my-24">
+        <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
           <Link href="/support-us" className="py-2.5 px-5 bg-blue-600 rounded mb-5 text-white">{t('support-button')}</Link>
-          <div className="grid grid-cols-2 gap-5 mt-12 text-black">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-12 text-black">
             <div className="grid grid-cols-2 rounded shadow-lg">
               <div className="flex flex-col justify-center text-left p-5">
                 <h5 className="text-xl font-bold mt-5">{t('patreon-header')}</h5>

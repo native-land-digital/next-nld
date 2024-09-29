@@ -49,23 +49,29 @@ export default async function Page({ params : { locale }, searchParams }) {
       <div className="min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
         <AdminMenu />
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
-          <div className="flex w-full mb-5 bg-gray-100 p-2.5 rounded">
-            <div className="w-1/2">
-              <form className="flex">
-                <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
-                <button className="border border-gray-300 px-4 py-3 rounded ml-2.5">{tCommon('search')}</button>
-                {search ?
-                  <Link className="border border-gray-300 px-4 py-3 rounded ml-2.5" href="/dashboard/research">{tCommon('clear')}</Link>
-                : false}
+          <div className="w-full mb-5 bg-gray-100 p-2.5 rounded">
+            <div className="grid grid-cols-4 gap-2.5">
+              <form className="grid grid-cols-4 col-span-4 md:col-span-3 gap-2.5">
+                <div className="col-span-3 md:col-span-2">
+                  <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
+                </div>
+                <div className="col-span-1">
+                  <button className="border border-gray-300 px-4 py-3 rounded ml-2.5 text-sm">{tCommon('search')}</button>
+                </div>
+                <div className="col-span-4 md:col-span-1">
+                  {search ?
+                    <Link className="block w-full border border-gray-300 px-4 py-3 rounded md:ml-2.5" href="/dashboard/research">{tCommon('clear')}</Link>
+                  : false}
+                </div>
               </form>
-            </div>
-            <div className="w-1/2 flex justify-end">
-              <CreatePolygon />
+              <div className="col-span-4 md:col-span-1 text-sm justify-end">
+                <CreatePolygon />
+              </div>
             </div>
           </div>
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
-              <tr>
+              <tr className="hidden md:block">
                 <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">{t('id')}</th>
                 <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">{t('name')}</th>
                 <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">{t('category')}</th>
@@ -75,11 +81,11 @@ export default async function Page({ params : { locale }, searchParams }) {
             <tbody className="divide-y divide-gray-200">
               {polygons.map(polygon => {
                 return (
-                  <tr className="odd:bg-white even:bg-gray-100" key={`user-row-${polygon.id}`}>
-                    <td className="px-6 py-4 text-sm font-medium text-black">{polygon.id}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black">{polygon.name}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black">{polygon.category}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black"><Link href={`/dashboard/research/${polygon.id}`}>➜</Link></td>
+                  <tr className="grid md:block grid-cols-1 bg-gray-100 m-2.5 md:m-0 md:odd:bg-white md:even:bg-gray-100" key={`user-row-${polygon.id}`}>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{polygon.id}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{polygon.name}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{polygon.category}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black"><Link href={`/dashboard/research/${polygon.id}`}>➜</Link></td>
                   </tr>
                 )
               })}

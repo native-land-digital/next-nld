@@ -20,11 +20,11 @@ export default function UpdateMapbox() {
   }
 
   return (
-    <div className="flex w-full mb-5">
-      <p>{t('mapbox-update')}</p>
-      <button className="border bg-gray-100 hover:bg-gray-300 border-gray-300 px-4 py-3 rounded ml-2.5" onClick={() => updateMapbox('territories')}>Update Territories</button>
-      <button className="border bg-gray-100 hover:bg-gray-300 border-gray-300 px-4 py-3 rounded ml-2.5" onClick={() => updateMapbox('languages')}>Update Languages</button>
-      <button className="border bg-gray-100 hover:bg-gray-300 border-gray-300 px-4 py-3 rounded ml-2.5" onClick={() => updateMapbox('treaties')}>Update Treaties</button>
+    <div className="grid grid-cols-1 md:grid-cols-7 w-full mb-5">
+      <p className="md:col-span-4">{t('mapbox-update')}</p>
+      <button className="mt-2.5 md:mt-0 md:col-span-1 border bg-gray-100 hover:bg-gray-300 border-gray-300 px-4 py-3 rounded md:ml-2.5" onClick={() => updateMapbox('territories')}>Update Territories</button>
+      <button className="mt-2.5 md:mt-0 md:col-span-1 border bg-gray-100 hover:bg-gray-300 border-gray-300 px-4 py-3 rounded md:ml-2.5" onClick={() => updateMapbox('languages')}>Update Languages</button>
+      <button className="mt-2.5 md:mt-0 md:col-span-1 border bg-gray-100 hover:bg-gray-300 border-gray-300 px-4 py-3 rounded md:ml-2.5" onClick={() => updateMapbox('treaties')}>Update Treaties</button>
     </div>
   );
 }

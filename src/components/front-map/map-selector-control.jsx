@@ -134,11 +134,11 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
           </div>
           <hr className="mt-1.5 border-slate-300" />
           <div>
-            <p className="text-xs text-black mt-2.5">{t('search-address')} <Link href="https://native-land.ca/teachers-guide/">{t('think-critically')}</Link>.</p>
+            <p className="hidden md:block text-xs text-black mt-2.5">{t('search-address')} <Link href="https://native-land.ca/teachers-guide/">{t('think-critically')}</Link>.</p>
             <div id="nld_geocoder" className="m-0" />
           </div>
         </div>
-        <div className="mt-2.5 text-black">
+        <div className="hidden md:block mt-2.5 text-black">
           <AsyncSelect
             instanceId="territories-select"
             placeholder={t('territories')}
@@ -147,7 +147,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
             cacheOptions
             loadOptions={loadTerritoryOptions} />
         </div>
-        <div className="mt-2.5 text-black">
+        <div className="hidden md:block mt-2.5 text-black">
           <AsyncSelect
             instanceId="languages-select"
             placeholder={t('languages')}
@@ -156,7 +156,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
             defaultOptions={languageOptions.map(language => { return { value : language.id, label : language.name }})}
             loadOptions={loadLanguageOptions} />
         </div>
-        <div className="mt-2.5 text-black">
+        <div className="hidden md:block mt-2.5 text-black">
           <AsyncSelect
             instanceId="treaties-select"
             placeholder={t('treaties')}

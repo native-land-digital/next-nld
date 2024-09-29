@@ -4,6 +4,7 @@ import { unstable_setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
 
 import SubHeader from '@/components/nav/sub-header'
+import Sidebar from '@/components/static/sidebar';
 import PolygonCard from '@/components/static/polygon-card';
 
 export default async function Page({ params : { locale }, searchParams }) {
@@ -50,8 +51,8 @@ export default async function Page({ params : { locale }, searchParams }) {
   return (
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title="Maps" />
-      <div className="grid gap-5 grid-cols-3 min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black static-page">
-        <div className="col-span-1 bg-white rounded-t shadow-lg p-4 mt-5">
+      <div className="grid gap-5 grid-cols-1 md:grid-cols-3 px-5 md:px-0 w-full md:w-2/3 min-h-screen m-auto -mt-12 text-black static-page">
+        <Sidebar>
           <ol className="list-inside text-gray-400">
             <li className="mb-2.5"><Link href="/maps">{t('all-maps')}</Link></li>
             <li className="mb-2.5"><Link href="/maps/territories">{t('territories-list')}</Link></li>
@@ -59,7 +60,7 @@ export default async function Page({ params : { locale }, searchParams }) {
             <li className="mb-2.5"><Link href="/maps/treaties">{t('treaties-list')}</Link></li>
           </ol>
           <hr className="mt-2.5 mb-5"/>
-        </div>
+        </Sidebar>
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
           <div className="flex w-full mb-5 bg-gray-100 p-2.5 rounded">
             <div className="w-full">
@@ -73,7 +74,7 @@ export default async function Page({ params : { locale }, searchParams }) {
             </div>
           </div>
           <p className="mb-2.5 text-sm">{totalPolygons} {t('total-all')}</p>
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {polygons.map(polygon => {
               return <PolygonCard key={`polygon-${polygon.id}`} polygon={polygon} />
             })}

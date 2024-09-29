@@ -28,7 +28,7 @@ export default async function Page({ params : { locale }}) {
         <AdminMenu />
         <div className="col-span-2 bg-white rounded-t h-screen shadow-lg p-4 mt-5">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead>
+            <thead className="hidden md:block">
               <tr>
                 <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">ID</th>
                 <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Name</th>
@@ -41,13 +41,13 @@ export default async function Page({ params : { locale }}) {
             <tbody className="divide-y divide-gray-200">
               {users.map(user => {
                 return (
-                  <tr className="odd:bg-white even:bg-gray-100" key={`user-row-${user.id}`}>
-                    <td className="px-6 py-4 text-sm font-medium text-black">{user.id}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black">{user.name}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black">{user.email}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black">{user.organization}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black">{user.permissions.join(', ')}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black"><Link href={`/dashboard/users/${user.id}`}>➜</Link></td>
+                  <tr className="grid md:block grid-cols-1 bg-gray-100 m-2.5 md:m-0 md:odd:bg-white md:even:bg-gray-100" key={`user-row-${user.id}`}>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.id}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.name}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.email}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.organization}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.permissions.join(', ')}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black"><Link href={`/dashboard/users/${user.id}`}>➜</Link></td>
                   </tr>
                 )
               })}

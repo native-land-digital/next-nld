@@ -24,7 +24,7 @@ export default async function Sidebar({ children = (<div></div>), picks = 5 }) {
   }
   const polygons = await prisma.polygon.findMany(query);
   return (
-    <div className="col-span-1 bg-white rounded-t shadow-lg p-4 mt-5">
+    <div className="col-span-1 bg-white rounded-t shadow-lg p-4 mt-5 order-last md:order-first">
       <div>
         {children}
       </div>
