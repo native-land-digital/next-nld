@@ -18,6 +18,15 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}));
 }
 
+export const getStaticPaths = () => {
+  return {
+    paths: [
+      { params: { locale : 'en' } },
+    ],
+    fallback: true,
+  }
+}
+
 export default async function RootLayout({children, params: { locale } }) {
 
   unstable_setRequestLocale(locale);

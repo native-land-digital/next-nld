@@ -108,7 +108,6 @@ Optimization:
 - Checking and removing duplicate research entries (requires collaboration with research team)
 - Providing more options to react select lists on front page? Is it necessary or 50 initial results is enough?
 - Getting language to reload on the current page
-- Avoiding prerendering all the language pages (super unnecessary)
 
 Aspirational:
 - Adding placenames
