@@ -1,10 +1,16 @@
 import prisma from "@/lib/db/prisma";
 import Link from 'next/link'
+import { unstable_setRequestLocale } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 
 import SubHeader from '@/components/nav/sub-header'
 import AdminMenu from '@/components/dashboard/menu'
 
-export default async function Page() {
+export default async function Page({ params : { locale }}) {
+
+  unstable_setRequestLocale(locale);
+  const t = await getTranslations('Dashboard');
+
   const users = await prisma.user.findMany({
     select : {
       id : true,
@@ -17,7 +23,7 @@ export default async function Page() {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={"User Management"} />
+      <SubHeader title={t('user-management')} />
       <div className="min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
         <AdminMenu />
         <div className="col-span-2 bg-white rounded-t h-screen shadow-lg p-4 mt-5">

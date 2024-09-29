@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
@@ -8,6 +9,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, currentLayers }) {
+
+  const t = useTranslations('FrontMap');
 
   const currentLayersRef = useRef(currentLayers);
   const [ popup, setPopup ] = useState(false);
@@ -83,6 +86,7 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
     const geocoder = new MapboxGeocoder({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
       mapboxgl: mapboxgl,
+      placeholder : t('search'),
       externalGeocoder : polygonQuery,
       flyTo : {
         maxDuration : 100,

@@ -1,15 +1,19 @@
 'use client'
 import { useState } from 'react'
 import { toast } from 'react-toastify';
+import { useTranslations } from 'next-intl';
 
 export default function FileUploader({ media, setMedia }) {
+
+  const t = useTranslations('Dashboard');
+
   const [file, setFile] = useState(null)
   const [uploading, setUploading] = useState(false)
 
   const handleSubmit = async () => {
 
     if (!file) {
-      toast('Please select a file to upload.')
+      toast(t('select-file'))
       return
     }
 
@@ -42,11 +46,11 @@ export default function FileUploader({ media, setMedia }) {
         newMedia.push({ url : `${url}${fields.key}`, title : '', caption : '' })
         setMedia(newMedia);
       } else {
-        toast('S3 Upload Error:', uploadResponse)
-        toast('Upload failed.')
+        toast(t('s3-error'), uploadResponse)
+        toast(t('upload-failed'))
       }
     } else {
-      toast('Failed to get pre-signed URL.')
+      toast(t('signed-upload-failed'))
     }
 
     setUploading(false)
@@ -70,7 +74,7 @@ export default function FileUploader({ media, setMedia }) {
       </div>
       {file ?
         <button className="mt-2.5 py-1 px-2.5 text-sm tracking-wide rounded-lg text-white bg-gray-500 hover:bg-gray-400 focus:outline-none" type="submit" disabled={uploading} onClick={() => handleSubmit()}>
-          Upload
+          {t('upload')}
         </button>
       : false}
     </div>

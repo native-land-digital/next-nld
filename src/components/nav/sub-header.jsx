@@ -1,7 +1,11 @@
 import { headers } from "next/headers";
+import { useTranslations } from 'next-intl';
 import Link from 'next/link'
 
 export default function SubHeader({ title }) {
+
+  const t = useTranslations('Navigation');
+
   const headerList = headers();
   const pathname = headerList.get("x-current-path");
   const locale = headerList.get("x-current-lang");
@@ -14,7 +18,7 @@ export default function SubHeader({ title }) {
       <div className="w-full md:w-2/3 m-auto capitalize">
         <h2 className="font-semibold text-3xl">{title}</h2>
         <div className="text-sm mt-1.5">
-          <Link className="text-white hover:text-slate-300" href="/">Home</Link>
+          <Link className="text-white hover:text-slate-300" href="/">{t('home')}</Link>
           {splitPath.map(path => {
             return (
               <span key={`crumb-${path}`}>

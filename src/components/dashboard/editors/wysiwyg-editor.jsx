@@ -5,6 +5,7 @@ import { Editor } from '@tinymce/tinymce-react';
 export default function WYSIWYGEditor({ sources, setSources }) {
 
   const editorRef = useRef(null);
+
   const TINY_MCE_KEY = process.env.NEXT_PUBLIC_TINYMCE_KEY;
 
   return (

@@ -1,7 +1,11 @@
-export default function Media({ media }) {
+import { getTranslations } from 'next-intl/server';
+
+export default async function Media({ media }) {
+
+  const t = await getTranslations('Maps');
 
   if(media.length === 0) {
-    return (<p>No media yet.</p>)
+    return (<p>{t('no-media')}</p>)
   }
 
   return (

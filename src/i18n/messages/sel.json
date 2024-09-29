@@ -31,7 +31,7 @@
     "jobs" : "Jobs",
     "volunteer" : "Volunteer",
     "fixes-adding-maps" : "Fixes & Adding Maps",
-    "languages" : "Languages",
+    "translations" : "Translations",
     "supporters-circle" : "Supporters Circle",
     "resources" : "Resources",
     "territory-acknowledgement" : "Territory Acknowledgement",
@@ -43,7 +43,6 @@
     "treaties-list" : "Treaties List",
     "contact" : "Contact",
     "support-us" : "Support Us",
-    "translations" : "Translations",
     "bukusu" : "Bukusu",
     "farsi" : "فارسی",
     "hindi" : "आधुनिक मानक हिन्दी",
@@ -55,6 +54,7 @@
     "selkup" : "чу́мэл шэ",
     "yoruba" : "Èdè Yorùbá",
     "chinese-simplified" : "汉语",
+    "language" : "Language",
     "english" : "English",
     "french" : "French",
     "spanish" : "Spanish",
@@ -71,9 +71,9 @@
     "one-time" : "One-Time Donation"
   },
   "DisclaimerModal" : {
-    "disclaimer-header" : "Native Land Disclaimer",
-    "disclaimer" : "<p>This map does not represent or intend to represent official or legal boundaries of any Indigenous nations. To learn about definitive boundaries, contact the nations in question.</p><p>Also, this map is not perfect -- it is a work in progress with tons of contributions from the community. Please send us fixes if you find errors.</p><p>If you would like to read more about the ideas behind Native Land or where we are going, check out the <a href=''>blog</a>. You can also see the <a href='/about/roadmap/'>roadmap</a>.</p>",
-    "disclaimer-close" : "Go to Map"
+    "disclaimer-header" : "Native Land:эт на́гэр",
+    "disclaimer" : "Native Land:эт тӓ́нлатӄо ӱӈӷолҗэнҗанд, арӄ ча́бэп манҗӧ́голлел. Най ва̄́ттодэлка́рдап маннымбле́л.",
+    "disclaimer-close" : "Ка́рдэӷэнд"
   },
   "FrontPage" : {
     "welcome" : "Welcome.",
@@ -117,17 +117,17 @@
     "supporters-circle-link" : "Learn more"
   },
   "FrontMap" : {
-    "territories" : "Territories",
-    "languages" : "Languages",
-    "treaties" : "Treaties",
-    "search" : "Search",
-    "search-address" : "Search your address, or toggle switches above to add shapes. Click around!",
-    "think-critically" : "Think critically about this map",
-    "contact-nations" : "Contact local nations to verify:",
+    "territories" : "Ҷвэҷ",
+    "languages" : "Шэ̄",
+    "treaties" : "Та́мдэр",
+    "search" : "Пе́ргу",
+    "search-address" : "О́нэнҗ ма̄́дэтҷвэ́ҷп перӷолле́л му э́ннэӷэл нэрлап шэ́лбэмбэд, ӄа́йӷош̈ ка́пшынп ҷо́ҷэгу. То̄ хыгыдэмбленд!",
+    "think-critically" : "На ка́рдэтӄо а́нҗэбэк тӓрбэ́ш",
+    "contact-nations" : "Та́мдэрҳе чвэ́дэгу",
     "zoom" : "Zoom",
     "print" : "Print",
-    "colors" : "Colors",
-    "osm" : "OpenStreetMap Labels"
+    "colors" : "Мыды́т",
+    "osm" : "Лэба́ла"
   },
   "Auth" : {
     "no-account" : "Don't have an account?",

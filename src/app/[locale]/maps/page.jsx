@@ -1,9 +1,16 @@
 import prisma from "@/lib/db/prisma";
 import Link from 'next/link';
+import { unstable_setRequestLocale } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 
 import SubHeader from '@/components/nav/sub-header'
+import PolygonCard from '@/components/static/polygon-card';
 
-export default async function Page({ searchParams }) {
+export default async function Page({ params : { locale }, searchParams }) {
+  
+  unstable_setRequestLocale(locale);
+  const t = await getTranslations('Maps');
+  const tCommon = await getTranslations('Common');
 
   let page = 0;
   let search = false;
@@ -46,10 +53,10 @@ export default async function Page({ searchParams }) {
       <div className="grid gap-5 grid-cols-3 min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black static-page">
         <div className="col-span-1 bg-white rounded-t shadow-lg p-4 mt-5">
           <ol className="list-inside text-gray-400">
-            <li className="mb-2.5"><Link href="/maps">All maps</Link></li>
-            <li className="mb-2.5"><Link href="/maps/territories">Territories list</Link></li>
-            <li className="mb-2.5"><Link href="/maps/languages">Languages list</Link></li>
-            <li className="mb-2.5"><Link href="/maps/treaties">Treaties list</Link></li>
+            <li className="mb-2.5"><Link href="/maps">{t('all-maps')}</Link></li>
+            <li className="mb-2.5"><Link href="/maps/territories">{t('territories-list')}</Link></li>
+            <li className="mb-2.5"><Link href="/maps/languages">{t('languages-list')}</Link></li>
+            <li className="mb-2.5"><Link href="/maps/treaties">{t('treaties-list')}</Link></li>
           </ol>
           <hr className="mt-2.5 mb-5"/>
         </div>
@@ -58,31 +65,17 @@ export default async function Page({ searchParams }) {
             <div className="w-full">
               <form className="flex">
                 <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
-                <button className="border border-gray-300 px-4 py-3 rounded ml-2.5">Search</button>
+                <button className="border border-gray-300 px-4 py-3 rounded ml-2.5">{tCommon('search')}</button>
                 {search ?
-                  <Link className="border border-gray-300 px-4 py-3 rounded ml-2.5 text-slate-600" href="/maps/territories">Clear</Link>
+                  <Link className="border border-gray-300 px-4 py-3 rounded ml-2.5 text-slate-600" href="/maps/territories">{tCommon('clear')}</Link>
                 : false}
               </form>
             </div>
           </div>
-          <p className="mb-2.5 text-sm">{totalPolygons} total territories, languages, and treaties found.</p>
+          <p className="mb-2.5 text-sm">{totalPolygons} {t('total-all')}</p>
           <div className="grid grid-cols-2 gap-5">
             {polygons.map(polygon => {
-              return (
-                <div key={`polygon-${polygon.id}`} className="h-40 w-full">
-                  <Link href={`/maps/${polygon.category}/${polygon.slug}`}>
-                    <div className="h-full w-full bg-cover rounded" style={{backgroundImage : polygon.media.length > 0 ? `url(${polygon.media[0].url})` : ''}}>
-                      <div className="h-full w-full bg-slate-600/80 rounded flex justify-items-center align-items-center place-items-center hover:bg-slate-600/75 hover:border-2 hover:border-white">
-                        <div className="text-center w-full">
-                          <p className="text-xs uppercase text-white font-bold">{polygon.category}</p>
-                          <h4 className="text-2xl font-bold text-white">{polygon.name}</h4>
-                          <p className="text-xs text-white">Last updated {new Date(polygon.updatedAt).toLocaleDateString()}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              )
+              return <PolygonCard key={`polygon-${polygon.id}`} polygon={polygon} />
             })}
             {polygons.length >= 24 ?
               <nav className="flex items-center mt-2.5" aria-label="Pagination">
@@ -93,14 +86,14 @@ export default async function Page({ searchParams }) {
                       <svg aria-hidden="true" className="hidden shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="m15 18-6-6 6-6"></path>
                       </svg>
-                      <span>Previous</span>
+                      <span>{tCommon('prev')}</span>
                     </button>
                   </form>
                 : false}
                 <form>
                   <input type="hidden" name="page" value={page + 1} />
                   <button type="submit" className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" aria-label="Next">
-                    <span>Next</span>
+                    <span>{tCommon('next')}</span>
                     <svg aria-hidden="true" className="hidden shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="m9 18 6-6-6-6"></path>
                     </svg>

@@ -52,7 +52,9 @@ export default chain([
   [intlMiddleware, { exclude : /^\/api|_next\/static|_next\/image|favicon.ico(\/.*)?$/ }],
   [authMiddleware, { include : /^\/dashboard(\/.*)?$/ }],
   [pathMiddleware]
-]);
+], {
+  logger : null
+});
 
 export const config = {
     matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],

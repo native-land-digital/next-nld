@@ -2,6 +2,7 @@
 
 import { navigate } from '@/lib/actions'
 import { toast } from 'react-toastify';
+import { useTranslations } from 'next-intl';
 
 const makeNewPolygon = () => {
   const name = window.prompt("Enter a name for the new polygon");
@@ -24,10 +25,13 @@ const makeNewPolygon = () => {
 }
 
 export default function CreatePolygon() {
+
+  const t = useTranslations('Dashboard');
+
   return (
     <>
       <button type="button" onClick={() => makeNewPolygon()} className="py-3 px-4 gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-basic-modal">
-        Create New Polygon
+        {t('create-polygon')}
       </button>
     </>
   )

@@ -1,7 +1,7 @@
 import prisma from "@/lib/db/prisma";
 import Image from "next/image";
 import { Link } from '@/i18n/routing';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
 import Mission from '@/public/images/front/mission.webp'
 import Mapping from '@/public/images/front/physical-world-map.webp'
@@ -18,7 +18,7 @@ import SupportersCircle from '@/public/images/front/black-circle.webp'
 
 export default async function FrontPage() {
 
-  const t = await useTranslations('FrontPage');
+  const t = await getTranslations('FrontPage');
 
   const latestUpdates = await prisma.polygon.findMany({
     select : {

@@ -73,15 +73,14 @@ Major:
 - Testing preview branch functionality
 
 Minor:
-- Migrate blog posts from Wordpress to an external blog site
 - Add login/signup button to menu
 - Integrating some kind of linter check akin to NextJS when merging
 - Prep fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 - Directly testing all exposed API endpoints
+- Publishing blog posts each day
 
 Junior:
 - Mobile layout
-- Replacing all common strings with internationalized strings
 - Adding Instagram feed (looks a bit complicated annoyingly)
 - Link somewhere front page or nav to main /maps directory
 - Reviewing API returning 400 vs 500 errors
@@ -110,8 +109,11 @@ Optimization:
 - Checking and removing duplicate research entries (requires collaboration with research team)
 - Providing more options to react select lists on front page? Is it necessary or 50 initial results is enough?
 - Getting language to reload on the current page
+- Avoiding prerendering all the language pages (super unnecessary)
 
 Aspirational:
+- Adding placenames
+- Adding language games and educational tools for learning territories
 - Adding a new API endpoint that requires API keys
 - Integrating researcher to-do list with the researcher dashboard section
 - Adding ability to load other polygons for researchers to draw with more context (perhaps just changing the underlying Style?)

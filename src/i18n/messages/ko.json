@@ -31,7 +31,7 @@
     "jobs" : "Jobs",
     "volunteer" : "Volunteer",
     "fixes-adding-maps" : "Fixes & Adding Maps",
-    "languages" : "Languages",
+    "translations" : "Translations",
     "supporters-circle" : "Supporters Circle",
     "resources" : "Resources",
     "territory-acknowledgement" : "Territory Acknowledgement",
@@ -43,7 +43,7 @@
     "treaties-list" : "Treaties List",
     "contact" : "Contact",
     "support-us" : "Support Us",
-    "translations" : "Translations",
+    "language" : "Language",
     "bukusu" : "Bukusu",
     "farsi" : "فارسی",
     "hindi" : "आधुनिक मानक हिन्दी",
@@ -117,17 +117,17 @@
     "supporters-circle-link" : "Learn more"
   },
   "FrontMap" : {
-    "territories" : "Territories",
-    "languages" : "Languages",
-    "treaties" : "Treaties",
-    "search" : "Search",
-    "search-address" : "Search your address, or toggle switches above to add shapes. Click around!",
+    "territories" : "영토",
+    "languages" : "언어",
+    "treaties" : "조약",
+    "search" : "검색",
+    "search-address" : "검색",
     "think-critically" : "Think critically about this map",
-    "contact-nations" : "Contact local nations to verify:",
+    "contact-nations" : "연락하다",
     "zoom" : "Zoom",
     "print" : "Print",
-    "colors" : "Colors",
-    "osm" : "OpenStreetMap Labels"
+    "colors" : "그림 물감",
+    "osm" : "OpenStreetMap 레이블"
   },
   "Auth" : {
     "no-account" : "Don't have an account?",

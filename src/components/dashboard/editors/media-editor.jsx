@@ -1,8 +1,11 @@
 'use client'
 import FileUploader from '@/components/dashboard/utils/file-uploader';
 import { toast } from 'react-toastify';
+import { useTranslations } from 'next-intl';
 
 export default function MediaEditor({ media, setMedia }) {
+
+  const t = useTranslations('Dashboard');
 
   const deleteObject = (e, url) => {
     e.preventDefault();
@@ -48,12 +51,12 @@ export default function MediaEditor({ media, setMedia }) {
               </a>
               <div className="ml-5 w-full">
                 <div className="mb-2.5">
-                  <label className="text-sm mb-2.5">Title</label>
-                  <input value={thisMedia.title} onChange={(e) => changeMedia(e.target.value, 'edit', 'title', i)} type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter title" />
+                  <label className="text-sm mb-2.5">{t('title')}</label>
+                  <input value={thisMedia.title} onChange={(e) => changeMedia(e.target.value, 'edit', 'title', i)} type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('title-placeholder')} />
                 </div>
                 <div>
-                  <label className="text-sm mb-2.5">Caption</label>
-                  <input value={thisMedia.caption} onChange={(e) => changeMedia(e.target.value, 'edit', 'caption', i)} type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter caption" />
+                  <label className="text-sm mb-2.5">{t('caption')}</label>
+                  <input value={thisMedia.caption} onChange={(e) => changeMedia(e.target.value, 'edit', 'caption', i)} type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('caption-placeholder')} />
                 </div>
               </div>
             </div>

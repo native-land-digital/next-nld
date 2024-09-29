@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
@@ -12,6 +13,8 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 
 export default function MapEditor({ geometry, setGeometry }) {
+
+  const t = useTranslations('Dashboard');
 
   const [ map, setMap ] = useState(false);
   const [ draw, setDraw ] = useState(false);
@@ -150,19 +153,19 @@ export default function MapEditor({ geometry, setGeometry }) {
                 finalPolygons.push({ type : "Feature", geometry : { type : "Polygon", coordinates : coordinateSet }});
               })
             })
-            toast("Succesfully uploaded")
-            if(window.confirm("Do you want to replace the polygons on the map? This will delete any existing polygons.")) {
+            toast(t('geojson-uploaded'))
+            if(window.confirm(t('want-replace'))) {
               draw.deleteAll();
               setMapFeatures(finalPolygons)
             }
           } else {
-            toast("You have non-polygons in the JSON. Please verify at at https://geojson.io")
+            toast(t('non-polygons'))
           }
         } else {
-          toast("The geoJSON seems empty. Please verify at at https://geojson.io")
+          toast(t('empty-geojson'))
         }
       } catch {
-        toast("There's an issue with the geoJSON. Please verify it at https://geojson.io")
+        toast(t('geojson-issue'))
       }
     };
     reader.readAsText(event.target.files[0]);
@@ -172,9 +175,9 @@ export default function MapEditor({ geometry, setGeometry }) {
     <div className="relative">
       <div id="nld-research-mapbox-map" className="w-full h-screen"></div>
       <div className="absolute flex right-0 top-0 m-2 text-xs z-100">
-        <div className="py-1 px-2 mr-2 bg-white rounded hover:bg-gray-200 cursor-pointer" onClick={() => downloadGeoJSON()}>Download GeoJSON</div>
+        <div className="py-1 px-2 mr-2 bg-white rounded hover:bg-gray-200 cursor-pointer" onClick={() => downloadGeoJSON()}>{t('download-geojson')}</div>
         <input type="file" className="hidden" id="geojson-upload-input" onChange={(e) => uploadGeoJSON(e)} />
-        <label htmlFor="geojson-upload-input" className="py-1 px-2 bg-white rounded hover:bg-gray-200 cursor-pointer">Upload GeoJSON</label>
+        <label htmlFor="geojson-upload-input" className="py-1 px-2 bg-white rounded hover:bg-gray-200 cursor-pointer">{t('upload-geojson')}</label>
       </div>
     </div>
   )

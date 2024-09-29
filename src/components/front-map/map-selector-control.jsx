@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import Switch from "react-switch";
 import AsyncSelect from 'react-select/async';
 import Link from 'next/link'
@@ -8,6 +9,8 @@ import { makeBoundsFromPoly } from '@/components/front-map/map-utils';
 import './map.geocoder.css';
 
 export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, territoryOptions, languageOptions, treatyOptions }) {
+
+    const t = useTranslations('FrontMap');
 
     const [ toggledFeatures, setToggledFeatures ] = useState([])
 
@@ -102,7 +105,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 uncheckedIcon={false}
                 checkedIcon={false}
                 handleDiameter={15} />
-              <p>Territories</p>
+              <p>{t('territories')}</p>
             </div>
             <div>
               <Switch
@@ -114,7 +117,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 uncheckedIcon={false}
                 checkedIcon={false}
                 handleDiameter={15} />
-              <p>Languages</p>
+              <p>{t('languages')}</p>
             </div>
             <div>
               <Switch
@@ -126,19 +129,19 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 uncheckedIcon={false}
                 checkedIcon={false}
                 handleDiameter={15} />
-              <p>Treaties</p>
+              <p>{t('treaties')}</p>
             </div>
           </div>
           <hr className="mt-1.5 border-slate-300" />
           <div>
-            <p className="text-xs text-black mt-2.5">Search your address, or toggle switches above to add shapes. Click around! <Link href="https://native-land.ca/teachers-guide/">Think critically about this map</Link>.</p>
+            <p className="text-xs text-black mt-2.5">{t('search-address')} <Link href="https://native-land.ca/teachers-guide/">{t('think-critically')}</Link>.</p>
             <div id="nld_geocoder" className="m-0" />
           </div>
         </div>
         <div className="mt-2.5 text-black">
           <AsyncSelect
             instanceId="territories-select"
-            placeholder="Territories"
+            placeholder={t('territories')}
             onChange={(e) => selectDropdown(e.value, 'territories')}
             defaultOptions={territoryOptions.map(territory => { return { value : territory.id, label : territory.name }})}
             cacheOptions
@@ -147,7 +150,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
         <div className="mt-2.5 text-black">
           <AsyncSelect
             instanceId="languages-select"
-            placeholder="Languages"
+            placeholder={t('languages')}
             cacheOptions
             onChange={(e) => selectDropdown(e.value, 'languages')}
             defaultOptions={languageOptions.map(language => { return { value : language.id, label : language.name }})}
@@ -156,7 +159,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
         <div className="mt-2.5 text-black">
           <AsyncSelect
             instanceId="treaties-select"
-            placeholder="Treaties"
+            placeholder={t('treaties')}
             cacheOptions
             onChange={(e) => selectDropdown(e.value, 'treaties')}
             defaultOptions={treatyOptions.map(treaty => { return { value : treaty.id, label : treaty.name }})}
@@ -164,7 +167,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
         </div>
         {selectedFeatures.length > 0 ?
           <div className="shadow-lg shadow-gray-500/40 bg-white rounded p-2.5 mt-2.5">
-            <p className="text-sm text-black mb-1.5">Contact local nations to verify:</p>
+            <p className="text-sm text-black mb-1.5">{t('contact-nations')}</p>
             <ul className="list-none">
               {selectedFeatures.map(feature => {
                 return (

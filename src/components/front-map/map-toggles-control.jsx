@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { exportMap } from '@/components/front-map/map-utils';
 
 export default function TogglesControl({ allLayers, map }) {
+
+    const t = useTranslations('FrontMap');
 
     const [ textZoomed, setTextZoomed ] = useState(false);
     const [ colorsOn, setColorsOn ] = useState(true);
@@ -65,10 +68,10 @@ export default function TogglesControl({ allLayers, map }) {
 
     return (
       <div className="flex absolute z-10 bottom-0 right-0 mr-10 mb-8">
-        <button onClick={() => zoomText()} className="bg-blue-900 px-4 py-2 text-sm rounded text-white mr-2.5 hover:bg-blue-600">Zoom</button>
-        <button onClick={() => exportMap(map)} className="bg-blue-900 px-4 py-2 text-sm rounded text-white mr-2.5 hover:bg-blue-600">Print</button>
-        <button onClick={() => toggleColors()} className="bg-blue-900 px-4 py-2 text-sm rounded text-white mr-2.5 hover:bg-blue-600">Colors</button>
-        <button onClick={() => toggleLabels()} className="bg-blue-900 px-4 py-2 text-sm rounded text-white mr-2.5 hover:bg-blue-600">OpenStreetMap Labels</button>
+        <button onClick={() => zoomText()} className="bg-blue-900 px-4 py-2 text-sm rounded text-white mr-2.5 hover:bg-blue-600">{t('zoom')}</button>
+        <button onClick={() => exportMap(map)} className="bg-blue-900 px-4 py-2 text-sm rounded text-white mr-2.5 hover:bg-blue-600">{t('print')}</button>
+        <button onClick={() => toggleColors()} className="bg-blue-900 px-4 py-2 text-sm rounded text-white mr-2.5 hover:bg-blue-600">{t('colors')}</button>
+        <button onClick={() => toggleLabels()} className="bg-blue-900 px-4 py-2 text-sm rounded text-white mr-2.5 hover:bg-blue-600">{t('osm')}</button>
       </div>
     )
 }

@@ -1,11 +1,12 @@
 import Image from "next/image";
 import { Link } from '@/i18n/routing';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
 import Logo from '@/public/images/general/nld-logo.png'
 
-export default function Footer() {
-  const t = useTranslations('Navigation');
+export default async function Footer() {
+
+  const t = await getTranslations('Navigation');
 
   return (
     <footer className="w-full bg-white">
@@ -42,7 +43,7 @@ export default function Footer() {
             <h4 className="text-lg text-gray-900 font-medium mb-7">{t('media')}</h4>
             <ul className="text-sm  transition-all duration-500">
               <li className="mb-3">
-                <a href="" className="text-gray-600 hover:text-gray-900">{t('community-blog')}</a>
+                <a href="https://medium.com/@native-land" className="text-gray-600 hover:text-gray-900">{t('community-blog')}</a>
               </li>
               <li className="mb-3">
                 <Link href="/media/media-coverage" className="text-gray-600 hover:text-gray-900">{t('media-coverage')}</Link>
@@ -62,7 +63,7 @@ export default function Footer() {
                 <Link href="/how-to-contribute/fixes-and-adding-maps" className="text-gray-600 hover:text-gray-900">{t('fixes-adding-maps')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/how-to-contribute/languages" className="text-gray-600 hover:text-gray-900">{t('languages')}</Link>
+                <Link href="/how-to-contribute/languages" className="text-gray-600 hover:text-gray-900">{t('translations')}</Link>
               </li>
               <li className="mb-3">
                 <Link href="/support/supporters-circle" className="text-gray-600 hover:text-gray-900">{t('supporters-circle')}</Link>

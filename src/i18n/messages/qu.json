@@ -1,7 +1,5 @@
 {
   "Common" : {
-    "site-title" : "Native-Land.ca | Our home on native land",
-    "site-description" : "Native Land is a resource to learn more about Indigenous territories, languages, lands, and ways of life. We welcome you to our site.",
     "prev" : "Previous",
     "next" : "Next",
     "search" : "Search",
@@ -31,7 +29,7 @@
     "jobs" : "Jobs",
     "volunteer" : "Volunteer",
     "fixes-adding-maps" : "Fixes & Adding Maps",
-    "languages" : "Languages",
+    "translations" : "Translations",
     "supporters-circle" : "Supporters Circle",
     "resources" : "Resources",
     "territory-acknowledgement" : "Territory Acknowledgement",
@@ -43,7 +41,7 @@
     "treaties-list" : "Treaties List",
     "contact" : "Contact",
     "support-us" : "Support Us",
-    "translations" : "Translations",
+    "language" : "Language",
     "bukusu" : "Bukusu",
     "farsi" : "فارسی",
     "hindi" : "आधुनिक मानक हिन्दी",
@@ -117,17 +115,17 @@
     "supporters-circle-link" : "Learn more"
   },
   "FrontMap" : {
-    "territories" : "Territories",
-    "languages" : "Languages",
-    "treaties" : "Treaties",
-    "search" : "Search",
-    "search-address" : "Search your address, or toggle switches above to add shapes. Click around!",
+    "territories" : "Allpa Suyukuna",
+    "languages" : "Mama Shimikuna",
+    "treaties" : "Killkashkakunata paktachina",
+    "search" : "Kaypi maskapay",
+    "search-address" : "Kaypi maskapay",
     "think-critically" : "Think critically about this map",
-    "contact-nations" : "Contact local nations to verify:",
+    "contact-nations" : "Allpamamata:",
     "zoom" : "Zoom",
-    "print" : "Print",
-    "colors" : "Colors",
-    "osm" : "OpenStreetMap Labels"
+    "print" : "Llamkashkata kachana",
+    "colors" : "Tullpukuna",
+    "osm" : "Riksichina"
   },
   "Auth" : {
     "no-account" : "Don't have an account?",

@@ -1,10 +1,13 @@
 'use client'
+import { useTranslations } from 'next-intl';
 import AsyncSelect from 'react-select/async';
 
 import AddButton from '@/components/dashboard/editors/common/add-button';
 import RemoveButton from '@/components/dashboard/editors/common/remove-button';
 
 export default function RelationEditor({ relatedTo, setRelatedTo }) {
+
+  const t = useTranslations('Dashboard');
 
   const loadOptions = (inputValue, callback) => {
     if(inputValue.length >= 2) {
@@ -37,9 +40,9 @@ export default function RelationEditor({ relatedTo, setRelatedTo }) {
         return (
           <div key={`website-${i}`} className="relative flex items-center gap-2 mb-2.5">
             <div className="w-1/3">
-              <AsyncSelect onChange={(e) => changeRelatedTo(e.value, 'edit', 'relatedToId', i)} cacheOptions loadOptions={loadOptions} placeholder="Type to search..." />
+              <AsyncSelect onChange={(e) => changeRelatedTo(e.value, 'edit', 'relatedToId', i)} cacheOptions loadOptions={loadOptions} placeholder={t('type-search')} />
             </div>
-            <input value={relation.description} onChange={(e) => changeRelatedTo(e.target.value, 'edit', 'description', i)} type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter description of relationship" />
+            <input value={relation.description} onChange={(e) => changeRelatedTo(e.target.value, 'edit', 'description', i)} type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('relation-placeholder')} />
             <RemoveButton removeFunction={() => changeRelatedTo(null, 'remove', null, i)} />
           </div>
         )

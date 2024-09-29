@@ -4,15 +4,15 @@ import SubHeader from '@/components/nav/sub-header'
 import AdminMenu from '@/components/dashboard/menu'
 import EditPolygon from '@/components/dashboard/edit-polygon'
 
-export default async function Page({ params }) {
+export default async function Page({ params : { id } }) {
 
   // Extra query because all the related fields are too hard to write in SQL
   const polygonShape = await prisma.$queryRaw`
     SELECT ST_AsGeoJSON(geometry) FROM "Polygon"
-    WHERE id = ${Number(params.id)}
+    WHERE id = ${Number(id)}
   `
   const polygon = await prisma.polygon.findUnique({
-    where : { id : Number(params.id) },
+    where : { id : Number(id) },
     select : {
       id : true,
       name : true,

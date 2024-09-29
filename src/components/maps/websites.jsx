@@ -1,7 +1,11 @@
-export default function Websites({ websites }) {
+import { getTranslations } from 'next-intl/server';
+
+export default async function Websites({ websites }) {
+
+  const t = await getTranslations('Maps');
 
   if(websites.length === 0) {
-    return (<p>No websites yet.</p>)
+    return (<p>{t('no-websites')}</p>)
   }
 
   return (

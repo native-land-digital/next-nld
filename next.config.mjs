@@ -23,6 +23,14 @@ const nextConfig = {
       destination: "/how-to-contribute/volunteer",
       permanent: true
     },{
+      source: "/category/community-blog/",
+      destination: "https://medium.com/@native-land",
+      permanent: true
+    },{
+      source: "/resources/api-docs",
+      destination: "https://victor-gerard-temprano.gitbook.io/native-land-digital-api",
+      permanent: true
+    },{
       source: "/resources",
       destination: "/resources/teachers-guide",
       permanent: true

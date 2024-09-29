@@ -1,14 +1,28 @@
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 
-export default function Related({ relatedTo, relatedFrom }) {
+export default async function Related({ relatedTo, relatedFrom }) {
+
+  const t = await getTranslations('Maps');
 
   if(relatedTo.length === 0 && relatedFrom.length === 0) {
-    return (<p>No related maps are currently entered.</p>)
+    return (<p>{t('no-related')}</p>)
   }
 
-  let singleRelationSet = relatedTo;
+  let singleRelationSet = [];
+  relatedTo.forEach(relation => {
+    singleRelationSet.push({
+      description : relation.description,
+      relationToShow : relation.relatedTo
+    })
+  })
   relatedFrom.forEach(relation => {
-    singleRelationSet.push(relation);
+    if(!singleRelationSet.find(thisRelation => thisRelation.relationToShow.id === relation.relatedFrom.id)) {
+      singleRelationSet.push({
+        description : relation.description,
+        relationToShow : relation.relatedFrom
+      })
+    }
   })
 
   return (
@@ -17,7 +31,7 @@ export default function Related({ relatedTo, relatedFrom }) {
         return (
           <div key={`relation-${i}`} className="mb-2.5">
             <p className="text-black">
-              <Link href={`/maps/${relation.relatedTo.category}/${relation.relatedTo.slug}`}>{relation.relatedTo.name}</Link> {relation.description ? `- ${relation.description}` : ''}
+              <Link href={`/maps/${relation.relationToShow.category}/${relation.relationToShow.slug}`}>{relation.relationToShow.name}</Link> {relation.description ? `- ${relation.description}` : ''}
             </p>
           </div>
         )

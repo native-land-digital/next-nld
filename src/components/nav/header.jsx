@@ -56,7 +56,7 @@ export default function Header() {
             </div>
             <div className={`${openNav === 'media' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <a href="#" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('community-blog')}</a>
+                <a href="https://medium.com/@native-land" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('community-blog')}</a>
                 <Link href="/media/media-coverage" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('media-coverage')}</Link>
               </div>
             </div>
@@ -76,7 +76,7 @@ export default function Header() {
                 <Link href="/how-to-contribute/jobs" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('jobs')}</Link>
                 <Link href="/how-to-contribute/volunteer" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('volunteer')}</Link>
                 <Link href="/how-to-contribute/fixes-and-adding-maps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('fixes-adding-maps')}</Link>
-                <Link href="/how-to-contribute/languages" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('languages')}</Link>
+                <Link href="/how-to-contribute/languages" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('translations')}</Link>
                 <Link href="/support/supporters-circle" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('supporters-circle')}</Link>
               </div>
             </div>
@@ -124,6 +124,17 @@ export default function Header() {
                 <Link href="/" locale="en" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('english')}</Link>
                 <Link href="/" locale="fr" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('french')}</Link>
                 <Link href="/" locale="es" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('spanish')}</Link>
+                <Link href="/" locale="hi" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('hindi')}</Link>
+                <Link href="/" locale="zn-CH" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('chinese-simplified')}</Link>
+                <Link href="/" locale="pt-br" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('portuguese-brazil')}</Link>
+                <Link href="/" locale="fa" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('farsi')}</Link>
+                <Link href="/" locale="ko" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('korean')}</Link>
+                <Link href="/" locale="bxk" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('bukusu')}</Link>
+                <Link href="/" locale="kbh" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('kamentsa-biya')}</Link>
+                <Link href="/" locale="pen" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('penobscot')}</Link>
+                <Link href="/" locale="qu" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('kichwa-shimi')}</Link>
+                <Link href="/" locale="sel" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('selkup')}</Link>
+                <Link href="/" locale="yo" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('yoruba')}</Link>
               </div>
             </div>
           </div>
