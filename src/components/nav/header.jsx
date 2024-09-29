@@ -46,7 +46,7 @@ export default function Header() {
           </div>
           <div onMouseLeave={() => setOpenNav(false)}>
             <div onMouseOver={() => setOpenNav('media')} className="cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">
-              <span className="pointer-events-none">{t('media')}</span>
+              <span className="pointer-events-none">Hey {t('media')}</span>
               <svg className="w-3 h-3 pointer-events-none mt-1.5 ml-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <title>chevron-down</title>
                 <g fill="none">
