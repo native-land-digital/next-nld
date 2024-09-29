@@ -74,7 +74,6 @@ Major:
 
 Minor:
 - Add login/signup button to menu
-- Integrating some kind of linter check akin to NextJS when merging
 - Prep fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 - Directly testing all exposed API endpoints
 - Publishing blog posts each day
@@ -89,11 +88,11 @@ Bugs:
 - Fixing up the raw sql in the polygon PUT (use index.php method)
 
 Before first deploy:
-- Connect Gitbook to Native Land URL
 - Doing logging to log drains
 - Ensuring database backups reliability
 
 After first deploy:
+- Setting up Github action to run npm run build on any PR to dev or main
 - Adding a protected Mapbox public token (only for main URL) for prod
 - Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
