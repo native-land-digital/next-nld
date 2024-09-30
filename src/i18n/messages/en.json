@@ -74,7 +74,7 @@
   },
   "DisclaimerModal" : {
     "disclaimer-header" : "Native Land Disclaimer",
-    "disclaimer" : "<p>This map does not represent or intend to represent official or legal boundaries of any Indigenous nations. To learn about definitive boundaries, contact the nations in question.</p><p>Also, this map is not perfect -- it is a work in progress with tons of contributions from the community. Please send us fixes if you find errors.</p><p>If you would like to read more about the ideas behind Native Land or where we are going, check out the <a href=''>blog</a>. You can also see the <a href='/about/roadmap/'>roadmap</a>.</p>",
+    "disclaimer" : "<p>Native Land Digital honors the sovereignty of all Indigenous nations, their lands, and their waters. We recognize that these boundaries and territories are representations of the sacred.</p><p>We respect the rights of Indigenous data sovereignty, and we are committed to an ongoing process of collaboration, growth, and learning.</p><p>We work to update and replace information that is a continuation of trauma caused by theft, injustice, misinformation, and ignorance.</p><p>The map is a living document, informed by the contributions of Indigenous communities, Indigenous knowledge holders and their stories. It does not claim to represent official or legal boundaries. We encourage you to connect directly with the Indigenous nations to learn more about their territories and histories.</p><p>This is an honouring of Indigenous resilience past, present and future.</p>",
     "disclaimer-close" : "Go to Map"
   },
   "FrontPage" : {
