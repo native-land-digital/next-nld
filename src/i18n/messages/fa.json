@@ -177,6 +177,7 @@
     "research" : "Research",
     "mapbox" : "Mapbox",
     "user-management" : "User Management",
+    "data-sov" : "Make sure to read our Data Sovereignty Treaty.",
     "api-key" : "API Key",
     "use-key" : "To use our API, please include this key along with all of your requests as detailed in our documentation.",
     "slug-finder" : "Slug finder",

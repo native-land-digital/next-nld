@@ -10,7 +10,8 @@
     "build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "postinstall": "prisma generate",
-    "lint": "next lint"
+    "lint": "next lint",
+    "email-dev": "email dev"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.654.0",
@@ -25,6 +26,7 @@
     "@next/third-parties": "^14.2.13",
     "@nimpl/middleware-chain": "^0.4.0",
     "@prisma/client": "^5.19.1",
+    "@react-email/components": "^0.0.25",
     "@tinymce/tinymce-react": "^5.1.1",
     "@turf/bbox": "^7.1.0",
     "@turf/combine": "^7.1.0",
@@ -43,11 +45,13 @@
     "react": "^18",
     "react-color": "^2.19.3",
     "react-dom": "^18",
+    "react-email": "^3.0.1",
     "react-map-gl": "^7.1.7",
     "react-select": "^5.8.1",
     "react-social-media-embed": "^2.5.14",
     "react-switch": "^7.0.0",
     "react-toastify": "^10.0.5",
+    "resend": "^4.0.0",
     "sharp": "^0.33.5",
     "slugify": "^1.6.6",
     "uuid": "^10.0.0",

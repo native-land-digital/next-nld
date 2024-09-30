@@ -35,11 +35,11 @@ export default function Login() {
       password : password,
       redirect : false
     });
-    if(!results) {
+;    if(!results) {
       toast(t('error-log'));
     } else {
       if(results.error) {
-        toast(results.error);
+        toast(<div dangerouslySetInnerHTML={{ __html : results.error }} />);
       } else {
         router.push('/dashboard');
       }

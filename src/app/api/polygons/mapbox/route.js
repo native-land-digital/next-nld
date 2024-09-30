@@ -58,8 +58,6 @@ export const GET = async (req) => {
           })
           const lineDelimitedGeoJSON = features.join('\n');
 
-          // console.log(lineDelimitedGeoJSON)
-
           // Do the MTS dance
           const mapbox_username = process.env.MAPBOX_USERNAME;
           const secret_access_token = process.env.MAPBOX_SECRET_TOKEN;
@@ -87,16 +85,12 @@ export const GET = async (req) => {
           // // FOR NEW TILESETS
           // // CREATES A NEW TILESET
           // try {
-          //   console.log(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`)
           //   const tilesetSourceCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
           //     method : "POST",
           //     body : formData
           //   });
           //   const tilesetSourceCallJSON = await tilesetSourceCall.json();
-          //   console.log("tileset source created");
-          //   console.log(tilesetSourceCallJSON);
           // } catch(err) {
-          //   console.log(err)
           //   return NextResponse.json({ error : `Error creating tileset source ${JSON.stringify(err)}` }, { status: 500 });
           // }
           //
@@ -119,10 +113,7 @@ export const GET = async (req) => {
           //     })
           //   });
           //   const tilesetCallJSON = await tilesetCall.json();
-          //   console.log("tileset with recipe created");
-          //   console.log(tilesetCallJSON);
           // } catch(err) {
-          //   console.log(err)
           //   return NextResponse.json({ error : `Error creating tileset ${JSON.stringify(err)}` }, { status: 500 });
           // }
           //
@@ -133,10 +124,7 @@ export const GET = async (req) => {
           //     method : "POST"
           //   });
           //   const tilesetPublishCallJSON = await tilesetPublishCall.json();
-          //   console.log("tileset published");
-          //   console.log(tilesetPublishCallJSON);
           // } catch(err) {
-          //   console.log(err)
           //   return NextResponse.json({ error : `Error publishing tileset ${JSON.stringify(err)}` }, { status: 500 });
           // }
 
@@ -149,10 +137,7 @@ export const GET = async (req) => {
               body : formData
             });
             const tilesetCallJSON = await tilesetCall.json();
-            console.log("tileset source updated");
-            console.log(tilesetCallJSON);
           } catch(err) {
-            console.log(err)
             return NextResponse.json({ error : `Error updating tileset source ${JSON.stringify(err)}` }, { status: 500 });
           }
 
@@ -161,10 +146,7 @@ export const GET = async (req) => {
               method : "POST"
             });
             const tilesetPublishCallJSON = await tilesetPublishCall.json();
-            console.log("tileset published");
-            console.log(tilesetPublishCallJSON);
           } catch(err) {
-            console.log(err)
             return NextResponse.json({ error : `Error publishing tileset ${JSON.stringify(err)}` }, { status: 500 });
           }
 

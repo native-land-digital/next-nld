@@ -49,14 +49,17 @@ model Relation {
 }
 
 model User {
-	id              Int @id @default(autoincrement())
-  createdAt       DateTime  @default(now())
-	email           String @unique
-  password        String
-	name            String?
-  permissions     String[] @default(["api", "profile"])
-  organization    String?
-  api_key         String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
+	id                Int @id @default(autoincrement())
+  createdAt         DateTime  @default(now())
+	email             String @unique
+  password          String
+	name              String?
+  permissions       String[] @default(["api", "profile"])
+  organization      String?
+  verification_key  String? @default(uuid())
+  email_verified    Boolean @default(false)
+  agreed_treaty     Boolean @default(false)
+  api_key           String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
 }
 
 model Polygon {

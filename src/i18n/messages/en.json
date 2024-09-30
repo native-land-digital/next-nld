@@ -134,6 +134,8 @@
   "Auth" : {
     "no-account" : "Don't have an account?",
     "register-here" : "Register here",
+    "verify-email" : "Verify Email",
+    "verification-placeholder" : "Enter verification key",
     "sign-in" : "Sign in",
     "sign-up" : "Sign up",
     "name" : "Name",
@@ -149,6 +151,9 @@
     "organization-note" : "If you are part of an organization using Native Land, please tell us here.",
     "have-account" : "Have an account already?",
     "log-here" : "Log in here",
+    "email-sent" : "Email sent!",
+    "verify-email-message" : "You should have recieved an email verification. Please enter the code here.",
+    "need-send" : "Can't find the email? Click here to have it sent again.",
     "error-log" : "Error logging in"
   },
   "Maps" : {
@@ -180,6 +185,8 @@
     "mapbox" : "Mapbox",
     "user-management" : "User Management",
     "api-key" : "API Key",
+    "data-sov" : "You must read and agree to our Data Sovereignty Treaty.",
+    "sign-agreement" : "Sign Agreement",
     "use-key" : "To use our API, please include this key along with all of your requests as detailed in our documentation.",
     "slug-finder" : "Slug finder",
     "use-slug-finder" : "Search for a slug here to do your GET requests for a particular polygon.",

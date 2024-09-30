@@ -19,7 +19,6 @@ export default function CreatePolygon() {
           name : name
         })
       }).then(resp => resp.json()).then(results => {
-        console.log(results)
         if(results.error) {
           toast(results.error)
         } else {

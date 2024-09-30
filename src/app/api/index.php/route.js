@@ -68,7 +68,6 @@ export const GET = async (req ) => {
           }
         })
       }
-			console.log(JSON.stringify(query))
       const polygons = await prisma.polygon.findMany(query)
       if(polygons.length > 0) {
   			const ids = polygons.map(polygon => polygon.id);
@@ -87,13 +86,11 @@ export const GET = async (req ) => {
   			})
       }
       if (featureList.length > 0) {
-				console.log(`API ${req.nextUrl.search} ${key ? key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
     		return NextResponse.json(featureList);
       } else {
         return NextResponse.json(featureList);
       }
     } catch (error) {
-      console.error(error);
       return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
     }
   }
@@ -141,13 +138,11 @@ export const POST = async (req) => {
 						featureList.push(feature);
 					}
 				})
-				console.log(`API ${req.nextUrl.search} ${body.key ? body.key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
 				return NextResponse.json(featureList);
 			} else {
 				return NextResponse.json({ error : "The polygon has no features" }, { status: 400 });
 			}
 		} catch (error) {
-			console.error(error);
 			return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
 		}
 }

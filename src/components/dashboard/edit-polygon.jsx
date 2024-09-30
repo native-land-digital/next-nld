@@ -53,7 +53,6 @@ export default function EditPolygon({ polygon }) {
         geometry : geometry
       })
     }).then(resp => resp.json()).then(results => {
-      console.log(results)
       if(results.error) {
         toast(results.error)
       } else {

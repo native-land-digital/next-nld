@@ -36,6 +36,7 @@ Technologies at use include:
 - Amazon S3 buckets
 - Mapbox MTS and Mapbox GL JS
 - i18n and json5
+- Datadog ingesting logs from Vercel
 
 We would love to have you involved if you have any fixes or additions you'd like to see on the site.
 
@@ -82,55 +83,33 @@ Current costs:
 ### Notes for current development to-dos
 
 Major:
+- Asking if they accept the data treaty
+- Doing email confirmation
+- Double password on signup
+- Close button to results in mobile
+- Re-import with latest data to production
+- Issue with Auckland showing almost no shapes? Not imported? What?
 
 Minor:
 - Adding Instagram feed (looks a bit complicated annoyingly)
-- Publishing blog posts each day
 - Prep fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
-- Sending live site preview to Tanya, doing a walkthrough
-
-Junior:
-- Mobile layout
-
-Bugs:
-
-Before first deploy:
-- Doing logging to log drains
 
 After first deploy:
 - Seeing if Google Analytics is logging correctly
 - Adding a protected Mapbox public token (only for main URL) for prod
 - Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
-- Adding tileset documentation to API 
-- Reviewing API returning 400 vs 500 errors
-- Setting up Github action to run npm run build on any PR to dev or main
-
-Optimization:
-- Add last updated date in Mapbox updating research section (for clarity)
-- Catch logs for API requests that are errors
-- Reading over SQL injection in Prisma docs
-- Adding a Mapbox updates table, with "Recent update" to help when emptying mapboxgl cache after tile update
-- Improving research updates (currently expensive deleteMany and createMany on any update)
-- Improving use of Typescript (pretty lazy right now)
-- Checking and removing duplicate research entries (requires collaboration with research team)
-- Providing more options to react select lists on front page? Is it necessary or 50 initial results is enough?
-- Getting language to reload on the current page
-- Ensuring front-page API endpoints (in `polygons/search`) only are valid when coming from the front page)
-- Use of `executeRawUnsafe` inside the protected polygon PATCH endpoint could be improved (needs to handle insertion of Multipolygons)
+- Keeping an eye on Datadog logs to see how many GBs we are sending (we will upgrade to Pro eventually)
 
 Aspirational:
 - Adding placenames
 - Adding language games and educational tools for learning territories
-- Adding a new API endpoint that requires API keys
-- Integrating researcher to-do list with the researcher dashboard section
-- Adding ability to load other polygons for researchers to draw with more context (perhaps just changing the underlying Style?)
-- Adding more refined permissions to enable external researchers to edit only certain polygons or sets of polygons
 
 Questions:
+- Mines and developments
+- At last tackling Africa?
 - Getting Patreon back into gear?
 - Doing more blog posts again?
 - Updating content?
 - Adding a new roadmap?
-- At last tackling Africa?
 - Redoing top links? Showing off maps more, special pages more

@@ -178,6 +178,7 @@
     "mapbox" : "Mapbox",
     "user-management" : "User Management",
     "api-key" : "API Key",
+    "data-sov" : "Make sure to read our Data Sovereignty Treaty.",
     "use-key" : "To use our API, please include this key along with all of your requests as detailed in our documentation.",
     "slug-finder" : "Slug finder",
     "use-slug-finder" : "Search for a slug here to do your GET requests for a particular polygon.",

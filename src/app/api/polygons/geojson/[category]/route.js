@@ -33,7 +33,6 @@ export const GET = async (req, route) => {
           })
         }
       })
-			console.log(`API ${req.nextUrl.search} ${key ? key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
       return NextResponse.json(featureCollection);
     } else {
       return NextResponse.json({ error : `Polygons not found` }, { status: 500 });

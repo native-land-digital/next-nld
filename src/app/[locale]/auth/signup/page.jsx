@@ -1,12 +1,14 @@
 "use client"
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from '@/i18n/routing';
 import { signIn } from "next-auth/react";
 import { toast } from 'react-toastify';
 
 export default function Signup() {
 
   const t = useTranslations('Auth');
+  const router = useRouter();
 
   const [ email, setEmail ] = useState("");
   const [ name, setName ] = useState("");
@@ -27,16 +29,8 @@ export default function Signup() {
       if(results.error) {
         toast(results.error)
       } else {
-        doSignIn();
+        router.push(`/verify-email?email=${email}`);
       }
-    });
-  }
-
-  const doSignIn = async () => {
-    await signIn('credentials', {
-      email : email,
-      password : password,
-      callbackUrl : '/dashboard'
     });
   }
 

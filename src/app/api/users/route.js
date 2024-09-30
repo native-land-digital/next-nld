@@ -1,7 +1,9 @@
-import { NextResponse } from "next/server";
-
-import { hashPassword } from '@/lib/auth/utils';
 import prisma from "@/lib/db/prisma";
+import { NextResponse } from "next/server";
+import VerificationTemplate from '@/root/emails/verification-template'
+import * as React from 'react'
+import { sendEmail } from '@/lib/auth/email-actions'
+import { hashPassword } from '@/lib/auth/utils';
 
 export const POST = async (req) => {
 
@@ -26,6 +28,11 @@ export const POST = async (req) => {
 					password: hashPassword(body.password)
 				}
 			});
+			await sendEmail({
+			   to: body.email,
+			   subject: 'Verify your email address',
+			   react: React.createElement(VerificationTemplate, { username: body.name, verification_key : user.verification_key }),
+		  })
 			return NextResponse.json({
 				id : user.id
 			});
