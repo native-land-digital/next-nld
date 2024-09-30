@@ -83,23 +83,27 @@ Current costs:
 ### Notes for current development to-dos
 
 Major:
-- Asking if they accept the data treaty
-- Doing email confirmation
 - Double password on signup
 - Close button to results in mobile
 - Re-import with latest data to production
-- Issue with Auckland showing almost no shapes? Not imported? What?
+- Add FB feed
 
 Minor:
 - Adding Instagram feed (looks a bit complicated annoyingly)
+- Doc update for agreeing to data treaty
 - Prep fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
+
+For first deploy:
+- Namecheap, change over DNS servers to Vercel
+- Add C name for docs, update links inside application
+-
 
 After first deploy:
 - Seeing if Google Analytics is logging correctly
 - Adding a protected Mapbox public token (only for main URL) for prod
 - Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
-- Keeping an eye on Datadog logs to see how many GBs we are sending (we will upgrade to Pro eventually)
+- Keeping an eye on Datadog logs to see how many GBs we are sending (we will upgrade to Pro eventually); creating some Dashboards
 
 Aspirational:
 - Adding placenames
