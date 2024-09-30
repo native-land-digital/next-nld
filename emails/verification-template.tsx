@@ -1,7 +1,7 @@
 import { Body, Container, Column, Head, Heading, Html, Img, Link, Preview, Row, Section, Text } from "@react-email/components";
 
 interface SlackConfirmEmailProps {
-  validationCode?: string;
+  verification_key?: string;
   email?: string;
 }
 

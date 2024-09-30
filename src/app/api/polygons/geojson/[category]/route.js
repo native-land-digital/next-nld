@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export const GET = async (req, route) => {
   const { category: category } = route.params;
-	const key = req.nextUrl.searchParams.get('key');
+	// const key = req.nextUrl.searchParams.get('key');
 
 	try {
     const polygons = await prisma.$queryRaw`

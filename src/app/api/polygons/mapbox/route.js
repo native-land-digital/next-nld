@@ -120,7 +120,7 @@ export const GET = async (req) => {
               method : "PUT",
               body : formData
             });
-            const tilesetCallJSON = await tilesetCall.json();
+            await tilesetCall.json();
           } catch(err) {
             return NextResponse.json({ error : `Error updating tileset source ${JSON.stringify(err)}` }, { status: 500 });
           }
@@ -129,7 +129,7 @@ export const GET = async (req) => {
             const tilesetPublishCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}/publish?access_token=${secret_access_token}`, {
               method : "POST"
             });
-            const tilesetPublishCallJSON = await tilesetPublishCall.json();
+            await tilesetPublishCall.json();
           } catch(err) {
             return NextResponse.json({ error : `Error publishing tileset ${JSON.stringify(err)}` }, { status: 500 });
           }

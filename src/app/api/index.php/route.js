@@ -9,7 +9,7 @@ export const GET = async (req ) => {
 	const maps = req.nextUrl.searchParams.get('maps');
 	const position = req.nextUrl.searchParams.get('position');
 	const name = req.nextUrl.searchParams.get('name');
-	const key = req.nextUrl.searchParams.get('key');
+	// const key = req.nextUrl.searchParams.get('key');
   if(!maps) {
     return NextResponse.json({ error : `You did not include a maps type with your request (territories, languages, and/or treaties)` }, { status: 500 });
   } else {

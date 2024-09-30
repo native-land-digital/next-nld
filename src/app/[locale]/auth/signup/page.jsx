@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/routing';
-import { signIn } from "next-auth/react";
 import { toast } from 'react-toastify';
 
 export default function Signup() {
