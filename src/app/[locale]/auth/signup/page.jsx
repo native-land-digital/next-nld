@@ -16,7 +16,7 @@ export default function Signup() {
   const [ passwordCheck, setPasswordCheck ] = useState("");
 
   const doSignUp = async () => {
-    if(password !== passwordCheck) {
+    if(password === passwordCheck) {
       fetch('/api/users', {
         method : "POST",
         headers : { 'Content-Type': 'application/json' },
