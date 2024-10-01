@@ -56,6 +56,8 @@ All polygons are stored in the PostGIS database as MultiPolygons. They can be fl
 
 Logs are generated when hitting the public API (`/api/index.php`) and stored in the `logs/` folder.
 
+To get the text editor working in the `/dashboard/research`, sign up for a TinyMCE key. It will automatically be enabled to work for localhost, and no CC is required.
+
 ## Deployment notes
 
 Deployment will run from the `dev` branch to a Preview in Vercel. In the Preview, comments and notes can be made.
@@ -72,7 +74,7 @@ Current costs:
 
 - Premium Supabase ($35 monthly)
 - Maximum budget of $100 in Vercel
-- Logging
+- Logging with Datadog, free tier
 
 ## Weird exceptions
 - Mapbox style has a bug fix in the `text-field` parameter to re-render the Osage name. Because the characters are registered as outside of standard Unicode and outside the range of 65535, it causes the map to error. As a result we use the following expression to allow things to render.
@@ -83,10 +85,8 @@ Current costs:
 ### Notes for current development to-dos
 
 Major:
-- Double password on signup
-- Close button to results in mobile
+- Resend set up pro version? Needed? Can I send to other emails??
 - Re-import with latest data to production
-- Add FB feed
 
 Minor:
 - Adding Instagram feed (looks a bit complicated annoyingly)
@@ -99,11 +99,13 @@ For first deploy:
 -
 
 After first deploy:
+- Deleting the test user once Tanya and Victor are created
 - Seeing if Google Analytics is logging correctly
 - Adding a protected Mapbox public token (only for main URL) for prod
 - Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
 - Keeping an eye on Datadog logs to see how many GBs we are sending (we will upgrade to Pro eventually); creating some Dashboards
+- Seeing if we are anywhere near going over 1TB a month; considering Cloudflare pages instead?
 
 Aspirational:
 - Adding placenames
