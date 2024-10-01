@@ -90,13 +90,11 @@ Major:
 
 Minor:
 - Adding Instagram feed (looks a bit complicated annoyingly)
-- Doc update for agreeing to data treaty
 - Prep fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 
 For first deploy:
 - Namecheap, change over DNS servers to Vercel
 - Add C name for docs, update links inside application
--
 
 After first deploy:
 - Deleting the test user once Tanya and Victor are created
