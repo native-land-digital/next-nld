@@ -61,6 +61,7 @@ async function main() {
         name : "Admin User",
         email : "test@native-land.ca",
         password : hashPassword("test"),
+        email_verified : true,
         permissions : ["profile", "api", "research", "manage_users", "update_mapbox"],
         organization : "Native Land Digital"
       }

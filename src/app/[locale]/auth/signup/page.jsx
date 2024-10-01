@@ -13,24 +13,29 @@ export default function Signup() {
   const [ name, setName ] = useState("");
   const [ organization, setOrganization ] = useState("");
   const [ password, setPassword ] = useState("");
+  const [ passwordCheck, setPasswordCheck ] = useState("");
 
   const doSignUp = async () => {
-    fetch('/api/users', {
-      method : "POST",
-      headers : { 'Content-Type': 'application/json' },
-      body : JSON.stringify({
-        email : email,
-        name : name,
-        organization : organization,
-        password : password
-      })
-    }).then(resp => resp.json()).then(results => {
-      if(results.error) {
-        toast(results.error)
-      } else {
-        router.push(`/verify-email?email=${email}`);
-      }
-    });
+    if(password !== passwordCheck) {
+      fetch('/api/users', {
+        method : "POST",
+        headers : { 'Content-Type': 'application/json' },
+        body : JSON.stringify({
+          email : email,
+          name : name,
+          organization : organization,
+          password : password
+        })
+      }).then(resp => resp.json()).then(results => {
+        if(results.error) {
+          toast(results.error)
+        } else {
+          router.push(`/verify-email?email=${email}`);
+        }
+      });
+    } else {
+      toast(t('need-match'))
+    }
   }
 
   return (
@@ -59,6 +64,13 @@ export default function Signup() {
               <label className="text-gray-800 text-sm mb-1.5 block mt-3">{t('password')}</label>
               <div className="relative flex items-center">
                 <input value={password} onChange={(e) => setPassword(e.target.value)} name="password" type="password" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('password-placeholder')} />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-gray-800 text-sm mb-1.5 block mt-3">{t('password-check')}</label>
+              <div className="relative flex items-center">
+                <input value={passwordCheck} onChange={(e) => setPasswordCheck(e.target.value)} name="password" type="password" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('password-placeholder')} />
               </div>
             </div>
 
