@@ -7,6 +7,8 @@ import RemoveButton from '@/components/dashboard/editors/common/remove-button';
 
 export default function RelationEditor({ relatedTo, setRelatedTo }) {
 
+  console.log(relatedTo)
+
   const t = useTranslations('Dashboard');
 
   const loadOptions = (inputValue, callback) => {
@@ -25,7 +27,7 @@ export default function RelationEditor({ relatedTo, setRelatedTo }) {
   const changeRelatedTo = (value, action, prop, index) => {
     const newRelatedTo = [...relatedTo];
     if(action === 'add') {
-      newRelatedTo.push({ relatedToId : null, description : "" })
+      newRelatedTo.push({ relatedTo : { id : null, name : "" }, description : "" })
     } else if(action === 'edit') {
       newRelatedTo[index][prop] = value;
     } else if (action === 'remove') {
@@ -40,7 +42,7 @@ export default function RelationEditor({ relatedTo, setRelatedTo }) {
         return (
           <div key={`website-${i}`} className="relative flex items-center gap-2 mb-2.5">
             <div className="w-1/3">
-              <AsyncSelect onChange={(e) => changeRelatedTo(e.value, 'edit', 'relatedToId', i)} cacheOptions loadOptions={loadOptions} placeholder={t('type-search')} />
+              <AsyncSelect value={{ value : relation.relatedTo.id, label : relation.relatedTo.name }} onChange={(e) => changeRelatedTo({ id : e.value, name : e.label }, 'edit', 'relatedTo', i)} cacheOptions loadOptions={loadOptions} placeholder={t('type-search')} />
             </div>
             <input value={relation.description} onChange={(e) => changeRelatedTo(e.target.value, 'edit', 'description', i)} type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('relation-placeholder')} />
             <RemoveButton removeFunction={() => changeRelatedTo(null, 'remove', null, i)} />

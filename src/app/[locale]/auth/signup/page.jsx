@@ -30,7 +30,7 @@ export default function Signup() {
         if(results.error) {
           toast(results.error)
         } else {
-          router.push(`/verify-email?email=${email}`);
+          router.push(`/auth/verify-email?email=${email}`);
         }
       });
     } else {
