@@ -49,7 +49,12 @@ export default function EditPolygon({ polygon }) {
         websites : websites,
         media : media,
         changelog : changelog,
-        relatedTo : relatedTo,
+        relatedTo : relatedTo.map(related => {
+          return {
+            relatedToId : related.relatedTo.id,
+            description : related.description
+          }
+        }),
         geometry : geometry
       })
     }).then(resp => resp.json()).then(results => {

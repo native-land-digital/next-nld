@@ -71,7 +71,7 @@ export default async function Page({ params : { locale }, searchParams }) {
           </div>
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
-              <tr className="hidden md:block">
+              <tr className="hidden md:table-row">
                 <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">{t('id')}</th>
                 <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">{t('name')}</th>
                 <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">{t('category')}</th>
@@ -81,7 +81,7 @@ export default async function Page({ params : { locale }, searchParams }) {
             <tbody className="divide-y divide-gray-200">
               {polygons.map(polygon => {
                 return (
-                  <tr className="grid md:block grid-cols-1 bg-gray-100 m-2.5 md:m-0 md:odd:bg-white md:even:bg-gray-100" key={`user-row-${polygon.id}`}>
+                  <tr className="grid md:table-row grid-cols-1 md:grid-cols-none bg-gray-100 m-2.5 md:m-0 md:odd:bg-white md:even:bg-gray-100" key={`polygon-row-${polygon.id}`}>
                     <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{polygon.id}</td>
                     <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{polygon.name}</td>
                     <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{polygon.category}</td>

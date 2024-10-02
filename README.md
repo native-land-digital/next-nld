@@ -27,7 +27,7 @@ You can find more about how to use the Native Land API at our documentation here
 
 Technologies at use include:
 
-- NextJS (app components)
+- NextJS (app directory)
 - Prisma
 - Typescript
 - TailwindCSS
@@ -46,7 +46,7 @@ To get set up, clone this repo to your local machine. `npm install` and ensure y
 
 The repo has a `compose.yml` file that will create and install a PostgreSQL database with PostGIS installed on your Docker. The references to this are already in the `.env` file. However, if you'd prefer to set this up with your own `psql` instance, just replace the `DATABASE_URL` in the `.env` to get things working. Otherwise, start docker and run `docker compose build` and `docker compose up` to get connected.
 
-You will need to run the Prisma migrations and the seed files in order to get a fully working local site. You will need to ask a member of the Native Land team for the `nld-export.json` seed file. Once you have this, place it in `prisma/seed/nld-export.json`. Then run `npx prisma migrate` and `npx prisma db seed`. The seed file is in the `prisma/seed` folder if you need to make any changes to it.
+You will need to run the Prisma migrations and the seed files in order to get a fully working local site. Run `npx prisma migrate deploy` and `npx prisma db seed`. The seed files are in AWS, with one for production and one that is substantial enough for most testing.
 
 It will also create a default user with full admin permissions. Login with `test@native-land.ca` and password `test`.
 
@@ -54,9 +54,7 @@ You may have trouble displaying the Mapbox map with our styles and tilesets with
 
 All polygons are stored in the PostGIS database as MultiPolygons. They can be flattened when retrieved, but this is to keep a single geography type while still allowing researchers to draw more complex shapes when necessary.
 
-Logs are generated when hitting the public API (`/api/index.php`) and stored in the `logs/` folder.
-
-To get the text editor working in the `/dashboard/research`, sign up for a TinyMCE key. It will automatically be enabled to work for localhost, and no CC is required.
+To get the text editor working in the `/dashboard/research`, sign up for a TinyMCE key. It will automatically be enabled to work for `localhost`, and no CC is required.
 
 ## Deployment notes
 
@@ -85,18 +83,19 @@ Current costs:
 ### Notes for current development to-dos
 
 Major:
-- Resend set up pro version? Needed? Can I send to other emails??
-- Re-import with latest data to production
+- Video for Emily
+- Prep fresh Expo app work using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 
 Minor:
 - Adding Instagram feed (looks a bit complicated annoyingly)
-- Prep fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 
 For first deploy:
+- Resend adding domain (DNS servers)
 - Namecheap, change over DNS servers to Vercel
 - Add C name for docs, update links inside application
 
 After first deploy:
+- Ensure any this-week edits are in the new platform
 - Deleting the test user once Tanya and Victor are created
 - Seeing if Google Analytics is logging correctly
 - Adding a protected Mapbox public token (only for main URL) for prod
@@ -104,13 +103,13 @@ After first deploy:
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
 - Keeping an eye on Datadog logs to see how many GBs we are sending (we will upgrade to Pro eventually); creating some Dashboards
 - Seeing if we are anywhere near going over 1TB a month; considering Cloudflare pages instead?
+- Deploying app changes
 
 Aspirational:
 - Adding placenames
 - Adding language games and educational tools for learning territories
 
 Questions:
-- Mines and developments
 - At last tackling Africa?
 - Getting Patreon back into gear?
 - Doing more blog posts again?

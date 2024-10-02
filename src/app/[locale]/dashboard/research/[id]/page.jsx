@@ -26,7 +26,17 @@ export default async function Page({ params : { id } }) {
       websites : true,
       changelog : true,
       relatedFrom : true,
-      relatedTo : true,
+      relatedTo : {
+        select : {
+          relatedTo : {
+            select : {
+              id : true,
+              name : true,
+            }
+          },
+          description : true
+        }
+      },
       createdAt : true,
       updatedAt : true
     }
