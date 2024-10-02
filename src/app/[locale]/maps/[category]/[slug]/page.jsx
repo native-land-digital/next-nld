@@ -10,6 +10,14 @@ import Related from '@/components/maps/related';
 import Media from '@/components/maps/media';
 import Changelog from '@/components/maps/changelog';
 
+export const generateStaticParams = () => {
+  return [
+    { locale : 'en', category : "territories", slug : 'oceti-sakowin-sioux' },
+    { locale : 'en', category : "languages", slug : 'anishinaabe'},
+    { locale : 'en', category : "treaties", slug : 'point-elliott-treaty'}
+  ]
+}
+
 export default async function Page({ params : { locale, slug }}) {
 
   unstable_setRequestLocale(locale);

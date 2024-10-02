@@ -22,7 +22,7 @@ export function generateStaticParams() {
 export const getStaticPaths = () => {
   return {
     paths: [
-      { params: { locale : 'en' } },
+      { params: { locale : 'en' } }
     ],
     fallback: true,
   }

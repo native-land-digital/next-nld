@@ -1,4 +1,5 @@
 import prisma from "@/lib/db/prisma";
+import { S3Client, HeadObjectCommand, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { FormData, File } from 'node-fetch';
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
@@ -36,13 +37,36 @@ export const GET = async (req) => {
                   },
                   geometry : geometry
                 }
-                features.push(JSON.stringify(feature));
+                features.push(feature);
               }
             }
           })
-          const lineDelimitedGeoJSON = features.join('\n');
+
+          // Uploading and replacing geoJSON in s3
+          const featureCollection = { type : "FeatureCollection", features : features }
+          const bucketParams = { Bucket: process.env.AWS_GEOJSON_BUCKET, Key: `${category}.geojson` };
+          const client = new S3Client({ region: process.env.AWS_REGION })
+          let fileExists = false;
+          try {
+            await client.send(new HeadObjectCommand(bucketParams));
+            fileExists = true;
+          } catch {
+            fileExists = false;
+          }
+
+          if(fileExists) {
+            await client.send(new DeleteObjectCommand(bucketParams));
+          }
+
+          await client.send(new PutObjectCommand({
+            Bucket : bucketParams.Bucket,
+            Key : bucketParams.Key,
+            Body : JSON.stringify(featureCollection)
+          }));
+
 
           // Do the MTS dance
+          const lineDelimitedGeoJSON = features.map(feature => { return JSON.stringify(feature) }).join('\n');
           const mapbox_username = process.env.MAPBOX_USERNAME;
           const secret_access_token = process.env.MAPBOX_SECRET_TOKEN;
           let tilesetName = "";

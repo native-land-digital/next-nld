@@ -67,7 +67,7 @@ export default function EditPolygon({ polygon }) {
   }
 
   const deletePolygon = () => {
-    if(window.confirm(t('deleted-polygon-confirm'))) {
+    if(window.confirm(t('delete-polygon-confirm'))) {
       fetch(`/api/polygons/${polygon.id}`, {
         method : "DELETE"
       }).then(resp => resp.json()).then(results => {

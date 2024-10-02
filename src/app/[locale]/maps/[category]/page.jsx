@@ -7,6 +7,14 @@ import SubHeader from '@/components/nav/sub-header';
 import Sidebar from '@/components/static/sidebar';
 import PolygonCard from '@/components/static/polygon-card';
 
+export const generateStaticParams = () => {
+  return [
+    { locale : 'en', category : 'territories' },
+    { locale : 'en', category : 'languages' },
+    { locale : 'en', category : 'treaties' }
+  ]
+}
+
 export default async function Page({ searchParams, params : { locale, category }}) {
 
   unstable_setRequestLocale(locale);

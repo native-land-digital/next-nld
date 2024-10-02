@@ -83,7 +83,7 @@ export default async function Footer() {
                 <Link href="/resources/mobile-apps" className="text-gray-600 hover:text-gray-900">{t('mobile-apps')}</Link>
               </li>
               <li className="mb-3">
-                <a href="https://victor-gerard-temprano.gitbook.io/native-land-digital-api" className="text-gray-600 hover:text-gray-900">{t('api')}</a>
+                <a href="https://api-docs.native-land.ca" className="text-gray-600 hover:text-gray-900">{t('api')}</a>
               </li>
               <li className="mb-3">
                 <Link href="/maps" className="text-gray-600 hover:text-gray-900">{t('all-maps')}</Link>

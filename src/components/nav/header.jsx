@@ -97,7 +97,7 @@ export default function Header() {
                 <Link onClick={() => setHamburgerToggled(false)} href="/resources/territory-acknowledgement" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('territory-acknowledgement')}</Link>
                 <Link onClick={() => setHamburgerToggled(false)} href="/resources/teachers-guide" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('teachers-guide')}</Link>
                 <Link onClick={() => setHamburgerToggled(false)} href="/resources/mobile-apps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('mobile-apps')}</Link>
-                <a href="https://victor-gerard-temprano.gitbook.io/native-land-digital-api" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('api')}</a>
+                <a href="https://api-docs.native-land.ca" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('api')}</a>
                 <Link onClick={() => setHamburgerToggled(false)} href="/maps/territories" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('territories-list')}</Link>
                 <Link onClick={() => setHamburgerToggled(false)} href="/maps/languages" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('languages-list')}</Link>
                 <Link onClick={() => setHamburgerToggled(false)} href="/maps/treaties" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('treaties-list')}</Link>
