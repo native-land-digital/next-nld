@@ -70,6 +70,7 @@ Notes:
 
 Current costs:
 
+- Cloudflare DNS and caching, $28 monthly
 - Premium Supabase ($35 monthly)
 - Maximum budget of $100 in Vercel
 - Logging with Datadog, free tier
@@ -83,18 +84,18 @@ Current costs:
 ### Notes for current development to-dos
 
 Major:
-- Video for Emily
 - Prep fresh Expo app work using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 
 Minor:
+- Minor layout fixes in research section with tables and stuff (on clear)
+- Resolving conflicts with main
 - Adding Instagram feed (looks a bit complicated annoyingly)
 
 For first deploy:
-- Resend adding domain (DNS servers)
-- Namecheap, change over DNS servers to Vercel
-- Add C name for docs, update links inside application
+- Cloudflare, point to Vercel
 
 After first deploy:
+- Regenerate tilesets to match native-land.ca URL
 - Ensure any this-week edits are in the new platform
 - Deleting the test user once Tanya and Victor are created
 - Seeing if Google Analytics is logging correctly
@@ -102,8 +103,11 @@ After first deploy:
 - Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
 - Keeping an eye on Datadog logs to see how many GBs we are sending (we will upgrade to Pro eventually); creating some Dashboards
-- Seeing if we are anywhere near going over 1TB a month; considering Cloudflare pages instead?
+- Watching over first day or two to see major sources of data usage, what's getting hit, are we going to hit any limits?
 - Deploying app changes
+- Potentially doing https://vercel.com/docs/integrations/external-platforms/cloudflare proxy in front of Vercel if bandwidth too high
+- Moving to free plan with Cloudflare, or getting rid of Cloudflare (just an extra account really) and using Namecheap directly
+- Removing all the extra CPanel-related DNS records
 
 Aspirational:
 - Adding placenames

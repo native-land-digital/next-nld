@@ -202,7 +202,6 @@
     "deleted-polygon" : "Polygon deleted successfully",
     "polygon-created" : "Polygon created",
     "polygon-updated" : "polygon updated",
-    "category" : "category",
     "none" : "none",
     "color" : "Color",
     "pick-color" : "Pick color",
