@@ -7,8 +7,6 @@ import RemoveButton from '@/components/dashboard/editors/common/remove-button';
 
 export default function RelationEditor({ relatedTo, setRelatedTo }) {
 
-  console.log(relatedTo)
-
   const t = useTranslations('Dashboard');
 
   const loadOptions = (inputValue, callback) => {

@@ -66,6 +66,18 @@ const nextConfig = {
       source: "/wp-content/themes/NLD-2021/files/indigenousTreaties.json",
       destination : "/api/polygons/geojson/treaties",
       permanent: true
+    },{
+      source: "/wp-json/nativeland/v1/coordinates/indigenousTerritories",
+      destination : "/api/polygons/geojson/territories",
+      permanent: true
+    },{
+      source: "/wp-json/nativeland/v1/coordinates/indigenousLanguages",
+      destination : "/api/polygons/geojson/languages",
+      permanent: true
+    },{
+      source: "/wp-json/nativeland/v1/coordinates/indigenousTreaties",
+      destination : "/api/polygons/geojson/treaties",
+      permanent: true
     }]
   },
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],

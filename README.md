@@ -84,8 +84,6 @@ Current costs:
 ### Notes for current development to-dos
 
 Major:
-- Test uploads in prod
-
 - Prep fresh Expo app work using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 
 Minor:

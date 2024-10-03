@@ -7,22 +7,23 @@ export default function MediaEditor({ media, setMedia }) {
 
   const t = useTranslations('Dashboard');
 
-  const deleteObject = (e, url) => {
+  const deleteObject = async (e, url) => {
     e.preventDefault();
     if(url) {
       const key = url.split('/')[url.split('/').length - 1];
-      fetch(`/api/upload?key=${key}`, {
+
+      const response = await fetch(`/api/upload?key=${key}`, {
         method : "DELETE",
         headers : { 'Content-Type': 'application/json' }
-      }).then(resp => resp.json()).then(response => {
-        if(response.error) {
-          toast(response.error);
-        } else {
-          const newMedia = JSON.parse(JSON.stringify(media))
-          newMedia.splice(newMedia.findIndex(thisMedia => thisMedia.url === url), 1);
-          setMedia(newMedia);
-        }
-      })
+      }).then(resp => resp.json());
+      
+      if(response.error) {
+        toast(response.error);
+      } else {
+        const newMedia = JSON.parse(JSON.stringify(media))
+        newMedia.splice(newMedia.findIndex(thisMedia => thisMedia.url === url), 1);
+        setMedia(newMedia);
+      }
     }
   }
 
