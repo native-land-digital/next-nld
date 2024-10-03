@@ -27,7 +27,7 @@ You can find more about how to use the Native Land API at our documentation here
 
 Technologies at use include:
 
-- NextJS (app components)
+- NextJS (app directory)
 - Prisma
 - Typescript
 - TailwindCSS
@@ -36,6 +36,7 @@ Technologies at use include:
 - Amazon S3 buckets
 - Mapbox MTS and Mapbox GL JS
 - i18n and json5
+- Datadog ingesting logs from Vercel
 
 We would love to have you involved if you have any fixes or additions you'd like to see on the site.
 
@@ -45,7 +46,7 @@ To get set up, clone this repo to your local machine. `npm install` and ensure y
 
 The repo has a `compose.yml` file that will create and install a PostgreSQL database with PostGIS installed on your Docker. The references to this are already in the `.env` file. However, if you'd prefer to set this up with your own `psql` instance, just replace the `DATABASE_URL` in the `.env` to get things working. Otherwise, start docker and run `docker compose build` and `docker compose up` to get connected.
 
-You will need to run the Prisma migrations and the seed files in order to get a fully working local site. You will need to ask a member of the Native Land team for the `nld-export.json` seed file. Once you have this, place it in `prisma/seed/nld-export.json`. Then run `npx prisma migrate` and `npx prisma db seed`. The seed file is in the `prisma/seed` folder if you need to make any changes to it.
+You will need to run the Prisma migrations and the seed files in order to get a fully working local site. Run `npx prisma migrate deploy` and `npx prisma db seed`. The seed files are in AWS, with one for production and one that is substantial enough for most testing.
 
 It will also create a default user with full admin permissions. Login with `test@native-land.ca` and password `test`.
 
@@ -53,13 +54,26 @@ You may have trouble displaying the Mapbox map with our styles and tilesets with
 
 All polygons are stored in the PostGIS database as MultiPolygons. They can be flattened when retrieved, but this is to keep a single geography type while still allowing researchers to draw more complex shapes when necessary.
 
-Logs are generated when hitting the public API (`/api/index.php`) and stored in the `logs/` folder.
+To get the text editor working in the `/dashboard/research`, sign up for a TinyMCE key. It will automatically be enabled to work for `localhost`, and no CC is required.
 
 ## Deployment notes
+
+Deployment will run from the `dev` branch to a Preview in Vercel. In the Preview, comments and notes can be made.
+
+From there, changes will be reviewed and the resulting PR assigned to main.
+
+Notes:
 
 - When generating a database with Supabase for Prisma, need to add `pgbouncer=true&connection_limit=1` to the Transaction DB URL
 - Builds will only run on pushes to `dev` (Preview) and `main` (Production)
 - Do seeding from local to avoid Vercel timeouts
+
+Current costs:
+
+- Cloudflare DNS and caching, $28 monthly
+- Premium Supabase ($35 monthly)
+- Maximum budget of $100 in Vercel
+- Logging with Datadog, free tier
 
 ## Weird exceptions
 - Mapbox style has a bug fix in the `text-field` parameter to re-render the Osage name. Because the characters are registered as outside of standard Unicode and outside the range of 65535, it causes the map to error. As a result we use the following expression to allow things to render.
@@ -70,56 +84,39 @@ Logs are generated when hitting the public API (`/api/index.php`) and stored in 
 ### Notes for current development to-dos
 
 Major:
-- Testing preview branch functionality
+- Prep fresh Expo app work using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 
 Minor:
-- Add login/signup button to menu
-- Integrating some kind of linter check akin to NextJS when merging
-- Prep fresh Expo app deploy using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
-- Directly testing all exposed API endpoints
-- Publishing blog posts each day
-
-Junior:
-- Mobile layout
+- Minor layout fixes in research section with tables and stuff (on clear)
+- Resolving conflicts with main
 - Adding Instagram feed (looks a bit complicated annoyingly)
-- Link somewhere front page or nav to main /maps directory
-- Reviewing API returning 400 vs 500 errors
 
-Bugs:
-- Fixing up the raw sql in the polygon PUT (use index.php method)
-
-Before first deploy:
-- Connect Gitbook to Native Land URL
-- Doing logging to log drains
-- Ensuring database backups reliability
+For first deploy:
+- Cloudflare, point to Vercel
 
 After first deploy:
+- Regenerate tilesets to match native-land.ca URL
+- Ensure any this-week edits are in the new platform
+- Deleting the test user once Tanya and Victor are created
+- Seeing if Google Analytics is logging correctly
 - Adding a protected Mapbox public token (only for main URL) for prod
 - Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
-
-Optimization:
-- Add last updated date in Mapbox updating research section (for clarity)
-- Properly do typescript in auth config files
-- Catch logs for API requests that are errors
-- Reading over SQL injection in Prisma docs
-- Adding a Mapbox updates table, with "Recent update" to help when emptying mapboxgl cache after tile update
-- Improving research updates (currently expensive deleteMany and createMany on any update)
-- Improving use of Typescript (pretty lazy right now)
-- Checking and removing duplicate research entries (requires collaboration with research team)
-- Providing more options to react select lists on front page? Is it necessary or 50 initial results is enough?
-- Getting language to reload on the current page
-- Avoiding prerendering all the language pages (super unnecessary)
+- Keeping an eye on Datadog logs to see how many GBs we are sending (we will upgrade to Pro eventually); creating some Dashboards
+- Watching over first day or two to see major sources of data usage, what's getting hit, are we going to hit any limits?
+- Deploying app changes
+- Potentially doing https://vercel.com/docs/integrations/external-platforms/cloudflare proxy in front of Vercel if bandwidth too high
+- Moving to free plan with Cloudflare, or getting rid of Cloudflare (just an extra account really) and using Namecheap directly
+- Removing all the extra CPanel-related DNS records
 
 Aspirational:
 - Adding placenames
 - Adding language games and educational tools for learning territories
-- Adding a new API endpoint that requires API keys
-- Integrating researcher to-do list with the researcher dashboard section
-- Adding ability to load other polygons for researchers to draw with more context (perhaps just changing the underlying Style?)
-- Adding more refined permissions to enable external researchers to edit only certain polygons or sets of polygons
 
 Questions:
-- Do we want contact forms? Or just list emails?
+- At last tackling Africa?
 - Getting Patreon back into gear?
-- Make color customizable?
+- Doing more blog posts again?
+- Updating content?
+- Adding a new roadmap?
+- Redoing top links? Showing off maps more, special pages more

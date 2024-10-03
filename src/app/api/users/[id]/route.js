@@ -1,11 +1,12 @@
 import prisma from "@/lib/db/prisma";
+import { getToken } from "next-auth/jwt"
 import { NextResponse } from "next/server";
 
 export const PATCH = async (req, route) => {
   const token = await getToken({ req })
-	if(token && token.permissions.includes('manage_users')) {
+  const { id: userId } = route.params;
+	if(token && (token.permissions.includes('manage_users') || parseInt(userId) === token.id)) {
 		const body = await req.json();
-		const { id: userId } = route.params;
 
 		try {
 			const user = await prisma.user.update({

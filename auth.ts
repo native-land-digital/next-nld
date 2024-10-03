@@ -27,6 +27,7 @@ async function getUser(email: string): Promise<User | undefined> {
         name : true,
         permissions : true,
         email : true,
+        email_verified : true,
         password : true
       }
     });
@@ -58,17 +59,19 @@ export const authOptions = {
 
           if(user) {
             if(user && user.password === hashPassword(password)) {
-              console.log(user)
+              if(!user.email_verified) {
+                throw new Error(`Email requires verification, visit <a href="/auth/verify-email?email=${email}">the email verification page here</a>`);
+              }
               delete user.password;
               return user;
             } else {
-              return { error: 'Password incorrect' };
+              throw new Error('Password incorrect');
             }
           } else {
-            return { error: 'User not found' };
+            throw new Error('User not found');
           }
         } else {
-          return { error: 'Parsing error. Please make sure your email and password are entered correctly.' };
+          throw new Error('Parsing error. Please make sure your email and password are entered correctly.');
         }
       }
     }),

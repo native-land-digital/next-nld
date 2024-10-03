@@ -1,5 +1,5 @@
 import prisma from "@/lib/db/prisma";
-import Link from 'next/link'
+import { Link } from '@/i18n/routing';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
 
@@ -29,7 +29,7 @@ export default async function Page({ params : { locale }}) {
         <div className="col-span-2 bg-white rounded-t h-screen shadow-lg p-4 mt-5">
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
-              <tr>
+              <tr className="hidden md:table-row">
                 <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">ID</th>
                 <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Name</th>
                 <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Email</th>
@@ -41,13 +41,13 @@ export default async function Page({ params : { locale }}) {
             <tbody className="divide-y divide-gray-200">
               {users.map(user => {
                 return (
-                  <tr className="odd:bg-white even:bg-gray-100" key={`user-row-${user.id}`}>
-                    <td className="px-6 py-4 text-sm font-medium text-black">{user.id}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black">{user.name}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black">{user.email}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black">{user.organization}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black">{user.permissions.join(', ')}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-black"><Link href={`/dashboard/users/${user.id}`}>➜</Link></td>
+                  <tr className="grid md:table-row grid-cols-1 md:grid-cols-none bg-gray-100 m-2.5 md:m-0 md:odd:bg-white md:even:bg-gray-100" key={`user-row-${user.id}`}>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.id}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.name}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.email}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.organization}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.permissions.join(', ')}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black"><Link href={`/dashboard/users/${user.id}`}>➜</Link></td>
                   </tr>
                 )
               })}

@@ -5,57 +5,63 @@ import slugify from 'slugify'
 import prisma from "@/lib/db/prisma";
 
 export const GET = async () => {
+	const secret = req.nextUrl.searchParams.get('secret');
 
-	try {
-    const territories = await prisma.polygon.findMany({
-      select : {
-        id : true,
-        name : true,
-        category : true
-      },
-      where : {
-        category : 'territories'
-      },
-      orderBy : {
-        name : 'asc'
-      },
-      take : 50
-    });
-    const languages = await prisma.polygon.findMany({
-      select : {
-        id : true,
-        name : true,
-        category : true
-      },
-      where : {
-        category : 'languages'
-      },
-      orderBy : {
-        name : 'asc'
-      },
-      take : 50
-    });
-    const treaties = await prisma.polygon.findMany({
-      select : {
-        id : true,
-        name : true,
-        category : true
-      },
-      where : {
-        category : 'treaties'
-      },
-      orderBy : {
-        name : 'asc'
-      },
-      take : 50
-    });
+	if(secret === process.env.MOBILE_APP_SECRET) {
 
-    return NextResponse.json({ territories, languages, treaties });
+		try {
+	    const territories = await prisma.polygon.findMany({
+	      select : {
+	        id : true,
+	        name : true,
+	        category : true
+	      },
+	      where : {
+	        category : 'territories'
+	      },
+	      orderBy : {
+	        name : 'asc'
+	      },
+	      take : 50
+	    });
+	    const languages = await prisma.polygon.findMany({
+	      select : {
+	        id : true,
+	        name : true,
+	        category : true
+	      },
+	      where : {
+	        category : 'languages'
+	      },
+	      orderBy : {
+	        name : 'asc'
+	      },
+	      take : 50
+	    });
+	    const treaties = await prisma.polygon.findMany({
+	      select : {
+	        id : true,
+	        name : true,
+	        category : true
+	      },
+	      where : {
+	        category : 'treaties'
+	      },
+	      orderBy : {
+	        name : 'asc'
+	      },
+	      take : 50
+	    });
 
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
-  }
+	    return NextResponse.json({ territories, languages, treaties });
+
+	  } catch (error) {
+	    console.error(error);
+	    return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
+	  }
+	} else {
+	 	return NextResponse.json({ error : `This is an endpoint only meant for the mobile app.` }, { status: 500 });
+	}
 }
 
 export const POST = async (req) => {

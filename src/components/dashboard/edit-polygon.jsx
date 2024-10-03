@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
 import { navigate } from '@/lib/actions'
 import { SwatchesPicker } from 'react-color';
-import Link from 'next/link'
+import { Link } from '@/i18n/routing';
 
 import MainMap from '@/components/dashboard/editors/map-editor';
 import WYSIWYGEDitor from '@/components/dashboard/editors/wysiwyg-editor';
@@ -49,11 +49,15 @@ export default function EditPolygon({ polygon }) {
         websites : websites,
         media : media,
         changelog : changelog,
-        relatedTo : relatedTo,
+        relatedTo : relatedTo.map(related => {
+          return {
+            relatedToId : related.relatedTo.id,
+            description : related.description
+          }
+        }),
         geometry : geometry
       })
     }).then(resp => resp.json()).then(results => {
-      console.log(results)
       if(results.error) {
         toast(results.error)
       } else {
@@ -63,7 +67,7 @@ export default function EditPolygon({ polygon }) {
   }
 
   const deletePolygon = () => {
-    if(window.confirm(t('deleted-polygon-confirm'))) {
+    if(window.confirm(t('delete-polygon-confirm'))) {
       fetch(`/api/polygons/${polygon.id}`, {
         method : "DELETE"
       }).then(resp => resp.json()).then(results => {

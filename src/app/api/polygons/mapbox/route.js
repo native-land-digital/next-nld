@@ -1,4 +1,5 @@
 import prisma from "@/lib/db/prisma";
+import { S3Client, HeadObjectCommand, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { FormData, File } from 'node-fetch';
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
@@ -12,7 +13,7 @@ export const GET = async (req) => {
 
       try {
     	  const polygons = await prisma.$queryRaw`
-    	    SELECT id, name, color, category, slug, ST_AsGeoJSON(geometry) as geojson, ST_AsGeoJSON(ST_Centroid(geometry)) as centroid
+    	    SELECT id, name, color, category, slug, ST_AsGeoJSON(geometry) as geojson
     			FROM "Polygon"
     	    WHERE category = ${category}
     	  `
@@ -34,33 +35,38 @@ export const GET = async (req) => {
                     color : polygon.color,
                     description : process.env.NEXTAUTH_URL + `/maps/${polygon.category}/${polygon.slug}`
                   },
-                  geometry : {
-                    type : geometry.coordinates[0].length === 1 ? "Polygon" : "MultiPolygon",
-                    coordinates : geometry.coordinates[0].length === 1 ? geometry.coordinates[0] : geometry.coordinates
-                  }
+                  geometry : geometry
                 }
-                features.push(JSON.stringify(feature));
-                // let centroid = JSON.parse(polygon.centroid)
-                // let centroidFeature = {
-                //   type : "Feature",
-                //   id : polygon.id,
-                //   properties : {
-                //     Name : polygon.name,
-                //   },
-                //   geometry : {
-                //     type : "Point",
-                //     coordinates : centroid.coordinates
-                //   }
-                // }
-                // features.push(JSON.stringify(centroidFeature));
+                features.push(feature);
               }
             }
           })
-          const lineDelimitedGeoJSON = features.join('\n');
 
-          // console.log(lineDelimitedGeoJSON)
+          // Uploading and replacing geoJSON in s3
+          const featureCollection = { type : "FeatureCollection", features : features }
+          const bucketParams = { Bucket: process.env.AWS_GEOJSON_BUCKET, Key: `${category}.geojson` };
+          const client = new S3Client({ region: process.env.AWS_REGION })
+          let fileExists = false;
+          try {
+            await client.send(new HeadObjectCommand(bucketParams));
+            fileExists = true;
+          } catch {
+            fileExists = false;
+          }
+
+          if(fileExists) {
+            await client.send(new DeleteObjectCommand(bucketParams));
+          }
+
+          await client.send(new PutObjectCommand({
+            Bucket : bucketParams.Bucket,
+            Key : bucketParams.Key,
+            Body : JSON.stringify(featureCollection)
+          }));
+
 
           // Do the MTS dance
+          const lineDelimitedGeoJSON = features.map(feature => { return JSON.stringify(feature) }).join('\n');
           const mapbox_username = process.env.MAPBOX_USERNAME;
           const secret_access_token = process.env.MAPBOX_SECRET_TOKEN;
           let tilesetName = "";
@@ -81,22 +87,18 @@ export const GET = async (req) => {
           const file = new File([buffer], 'upload.json')
           formData.set('file', file, 'upload.json')
 
-          // // Only activate one of the below methods at a time.
-          // // They are both here in case, in the future, you need to create a new tileset this way.
-          //
+          // Only activate one of the below methods at a time.
+          // They are both here in case, in the future, you need to create a new tileset this way.
+
           // // FOR NEW TILESETS
           // // CREATES A NEW TILESET
           // try {
-          //   console.log(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`)
           //   const tilesetSourceCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
           //     method : "POST",
           //     body : formData
           //   });
           //   const tilesetSourceCallJSON = await tilesetSourceCall.json();
-          //   console.log("tileset source created");
-          //   console.log(tilesetSourceCallJSON);
           // } catch(err) {
-          //   console.log(err)
           //   return NextResponse.json({ error : `Error creating tileset source ${JSON.stringify(err)}` }, { status: 500 });
           // }
           //
@@ -119,10 +121,7 @@ export const GET = async (req) => {
           //     })
           //   });
           //   const tilesetCallJSON = await tilesetCall.json();
-          //   console.log("tileset with recipe created");
-          //   console.log(tilesetCallJSON);
           // } catch(err) {
-          //   console.log(err)
           //   return NextResponse.json({ error : `Error creating tileset ${JSON.stringify(err)}` }, { status: 500 });
           // }
           //
@@ -133,10 +132,7 @@ export const GET = async (req) => {
           //     method : "POST"
           //   });
           //   const tilesetPublishCallJSON = await tilesetPublishCall.json();
-          //   console.log("tileset published");
-          //   console.log(tilesetPublishCallJSON);
           // } catch(err) {
-          //   console.log(err)
           //   return NextResponse.json({ error : `Error publishing tileset ${JSON.stringify(err)}` }, { status: 500 });
           // }
 
@@ -148,11 +144,8 @@ export const GET = async (req) => {
               method : "PUT",
               body : formData
             });
-            const tilesetCallJSON = await tilesetCall.json();
-            console.log("tileset source updated");
-            console.log(tilesetCallJSON);
+            await tilesetCall.json();
           } catch(err) {
-            console.log(err)
             return NextResponse.json({ error : `Error updating tileset source ${JSON.stringify(err)}` }, { status: 500 });
           }
 
@@ -160,11 +153,8 @@ export const GET = async (req) => {
             const tilesetPublishCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}/publish?access_token=${secret_access_token}`, {
               method : "POST"
             });
-            const tilesetPublishCallJSON = await tilesetPublishCall.json();
-            console.log("tileset published");
-            console.log(tilesetPublishCallJSON);
+            await tilesetPublishCall.json();
           } catch(err) {
-            console.log(err)
             return NextResponse.json({ error : `Error publishing tileset ${JSON.stringify(err)}` }, { status: 500 });
           }
 

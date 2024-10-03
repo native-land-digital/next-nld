@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -16,6 +17,15 @@ export const metadata = {
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}));
+}
+
+export const getStaticPaths = () => {
+  return {
+    paths: [
+      { params: { locale : 'en' } }
+    ],
+    fallback: true,
+  }
 }
 
 export default async function RootLayout({children, params: { locale } }) {
@@ -36,6 +46,7 @@ export default async function RootLayout({children, params: { locale } }) {
             <ToastContainer />
           </div>
         </NextIntlClientProvider>
+        <GoogleAnalytics gaId="UA-61451694-1" />
       </body>
     </html>
   );

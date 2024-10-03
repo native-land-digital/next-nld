@@ -9,7 +9,7 @@ export const GET = async (req ) => {
 	const maps = req.nextUrl.searchParams.get('maps');
 	const position = req.nextUrl.searchParams.get('position');
 	const name = req.nextUrl.searchParams.get('name');
-	const key = req.nextUrl.searchParams.get('key');
+	// const key = req.nextUrl.searchParams.get('key');
   if(!maps) {
     return NextResponse.json({ error : `You did not include a maps type with your request (territories, languages, and/or treaties)` }, { status: 500 });
   } else {
@@ -68,8 +68,10 @@ export const GET = async (req ) => {
           }
         })
       }
-			console.log(JSON.stringify(query))
       const polygons = await prisma.polygon.findMany(query)
+			if(polygons.length > 500) {
+				return NextResponse.json({ error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" }, { status: 400 });
+			}
       if(polygons.length > 0) {
   			const ids = polygons.map(polygon => polygon.id);
   		  const polygonShapes = await prisma.$queryRaw`
@@ -87,13 +89,11 @@ export const GET = async (req ) => {
   			})
       }
       if (featureList.length > 0) {
-				console.log(`API ${req.nextUrl.search} ${key ? key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
     		return NextResponse.json(featureList);
       } else {
         return NextResponse.json(featureList);
       }
     } catch (error) {
-      console.error(error);
       return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
     }
   }
@@ -135,19 +135,20 @@ export const POST = async (req) => {
 				// ${geometryAsString}
 				// WHERE ST_Contains(geometry, ST_GeomFromText(format('POINT(%s %s)', ${parseFloat(latlngString[1])}, ${parseFloat(latlngString[0])}), 4326))
 				const featureList = []
+				if(polygonShapes.length > 500) {
+					return NextResponse.json({ error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" }, { status: 400 });
+				}
 				polygonShapes.forEach(polygon => {
 					let feature = constructFeature(polygon);
 					if(feature) {
 						featureList.push(feature);
 					}
 				})
-				console.log(`API ${req.nextUrl.search} ${body.key ? body.key : "no_key"} ${req.ip ? req.ip : "no_ip"}`)
 				return NextResponse.json(featureList);
 			} else {
 				return NextResponse.json({ error : "The polygon has no features" }, { status: 400 });
 			}
 		} catch (error) {
-			console.error(error);
 			return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
 		}
 }

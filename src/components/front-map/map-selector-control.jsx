@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Switch from "react-switch";
 import AsyncSelect from 'react-select/async';
-import Link from 'next/link'
+import { Link } from '@/i18n/routing';
 
 import { makeBoundsFromPoly } from '@/components/front-map/map-utils';
 
 import './map.geocoder.css';
 
-export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, territoryOptions, languageOptions, treatyOptions }) {
+export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, territoryOptions, languageOptions, treatyOptions }) {
 
     const t = useTranslations('FrontMap');
 
@@ -134,11 +134,11 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
           </div>
           <hr className="mt-1.5 border-slate-300" />
           <div>
-            <p className="text-xs text-black mt-2.5">{t('search-address')} <Link href="https://native-land.ca/teachers-guide/">{t('think-critically')}</Link>.</p>
+            <p className="hidden md:block text-xs text-black mt-2.5">{t('search-address')} <Link href="https://native-land.ca/teachers-guide/">{t('think-critically')}</Link>.</p>
             <div id="nld_geocoder" className="m-0" />
           </div>
         </div>
-        <div className="mt-2.5 text-black">
+        <div className="hidden md:block mt-2.5 text-black">
           <AsyncSelect
             instanceId="territories-select"
             placeholder={t('territories')}
@@ -147,7 +147,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
             cacheOptions
             loadOptions={loadTerritoryOptions} />
         </div>
-        <div className="mt-2.5 text-black">
+        <div className="hidden md:block mt-2.5 text-black">
           <AsyncSelect
             instanceId="languages-select"
             placeholder={t('languages')}
@@ -156,7 +156,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
             defaultOptions={languageOptions.map(language => { return { value : language.id, label : language.name }})}
             loadOptions={loadLanguageOptions} />
         </div>
-        <div className="mt-2.5 text-black">
+        <div className="hidden md:block mt-2.5 text-black">
           <AsyncSelect
             instanceId="treaties-select"
             placeholder={t('treaties')}
@@ -166,14 +166,19 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
             loadOptions={loadTreatyOptions} />
         </div>
         {selectedFeatures.length > 0 ?
-          <div className="shadow-lg shadow-gray-500/40 bg-white rounded p-2.5 mt-2.5">
+          <div className="shadow-lg shadow-gray-500/40 bg-white rounded p-2.5 mt-2.5 relative">
+            <div className="absolute top-0 right-0 block md:hidden p-1" onClick={() => setSelectedFeatures([])}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000" className="bi bi-x" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+              </svg>
+            </div>
             <p className="text-sm text-black mb-1.5">{t('contact-nations')}</p>
             <ul className="list-none">
               {selectedFeatures.map(feature => {
                 return (
                   <li key={`selected-features-${feature.properties.Slug}`}>
                     <input type="checkbox" checked={toggledFeatures.indexOf(feature.properties.Slug) === -1} className="mr-1.5" onChange={() => nationToggle(feature.properties.Slug)} />
-                    <Link href={feature.properties.description} target="_blank">{feature.properties.Name} ↗</Link>
+                    <Link href={process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'preview' ? feature.properties.description.substring(feature.properties.description.indexOf('/')) : feature.properties.description} target="_blank">{feature.properties.Name} ↗</Link>
                   </li>)
               })}
             </ul>

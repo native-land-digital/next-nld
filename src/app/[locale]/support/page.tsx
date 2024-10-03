@@ -26,7 +26,7 @@ export default async function Page({ params : { locale }} : { params : { locale:
   return (
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={t('support-native-land')} />
-      <div className="grid gap-5 grid-cols-3 min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black static-page">
+      <div className="grid gap-5 grid-cols-1 md:grid-cols-3 px-5 md:px-0 w-full md:w-2/3 min-h-screen m-auto -mt-12 text-black static-page">
         <Sidebar picks={3}>
           <div>
             <a href="https://www.patreon.com/nativeland">
@@ -63,7 +63,7 @@ export default async function Page({ params : { locale }} : { params : { locale:
           <div className="w-full max-h-[200px] overflow-hidden rounded-t">
             <Image src={SupportTop} alt="Support Header Image" className="object-cover object-center rounded-t" />
           </div>
-          <div className="px-4 pb-4">
+          <div className="px-4 pb-4 break-words">
             <Content />
           </div>
         </div>

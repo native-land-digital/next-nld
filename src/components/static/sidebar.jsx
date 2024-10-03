@@ -1,5 +1,5 @@
 import prisma from "@/lib/db/prisma";
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { getTranslations } from 'next-intl/server';
 
 import PolygonCard from '@/components/static/polygon-card';
@@ -24,10 +24,11 @@ export default async function Sidebar({ children = (<div></div>), picks = 5 }) {
   }
   const polygons = await prisma.polygon.findMany(query);
   return (
-    <div className="col-span-1 bg-white rounded-t shadow-lg p-4 mt-5">
+    <div className="col-span-1 bg-white rounded-t shadow-lg p-4 mt-5 order-last md:order-first">
       <div>
         {children}
       </div>
+      <hr className="my-2.5" />
       <h3 className="pt-0 !mt-0 font-bold text-xl">{picks} {t('random')}</h3>
       <p className="text-sm mb-2.5 !mt-2.5"><Link href="/maps">{t('visit-maps')}</Link>.</p>
       <div className="grid gap-5">

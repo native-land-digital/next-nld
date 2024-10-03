@@ -28,7 +28,7 @@ const nextConfig = {
       permanent: true
     },{
       source: "/resources/api-docs",
-      destination: "https://victor-gerard-temprano.gitbook.io/native-land-digital-api",
+      destination: "https://api-docs.native-land.ca",
       permanent: true
     },{
       source: "/resources",
@@ -53,6 +53,30 @@ const nextConfig = {
     },{
       source: "/wp-json/nativeland/v1/api/index.php",
       destination : "/api/index.php",
+      permanent: true
+    },{
+      source: "/wp-content/themes/NLD-2021/files/indigenousTerritories.json",
+      destination : "/api/polygons/geojson/territories",
+      permanent: true
+    },{
+      source: "/wp-content/themes/NLD-2021/files/indigenousLanguages.json",
+      destination : "/api/polygons/geojson/languages",
+      permanent: true
+    },{
+      source: "/wp-content/themes/NLD-2021/files/indigenousTreaties.json",
+      destination : "/api/polygons/geojson/treaties",
+      permanent: true
+    },{
+      source: "/wp-json/nativeland/v1/coordinates/indigenousTerritories",
+      destination : "/api/polygons/geojson/territories",
+      permanent: true
+    },{
+      source: "/wp-json/nativeland/v1/coordinates/indigenousLanguages",
+      destination : "/api/polygons/geojson/languages",
+      permanent: true
+    },{
+      source: "/wp-json/nativeland/v1/coordinates/indigenousTreaties",
+      destination : "/api/polygons/geojson/treaties",
       permanent: true
     }]
   },

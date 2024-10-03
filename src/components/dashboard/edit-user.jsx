@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { possiblePermissions } from '@/lib/auth/permissions';
 import { toast } from 'react-toastify';
-import Link from 'next/link'
+import { Link } from '@/i18n/routing';
 
 export default function EditUser({ user, isAdmin }) {
 
@@ -38,7 +38,6 @@ export default function EditUser({ user, isAdmin }) {
         permissions : permissions
       })
     }).then(resp => resp.json()).then(results => {
-      console.log(results)
       if(results.error) {
         toast(results.error)
       } else {

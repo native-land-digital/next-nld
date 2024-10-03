@@ -27,6 +27,7 @@ export default function MapContainer({
         currentLayers={currentLayers}
         setCurrentLayers={setCurrentLayers}
         selectedFeatures={selectedFeatures}
+        setSelectedFeatures={setSelectedFeatures}
         territoryOptions={territoryOptions}
         languageOptions={languageOptions}
         treatyOptions={treatyOptions}

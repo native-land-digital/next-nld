@@ -1,10 +1,14 @@
 "use client"
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { signIn } from "next-auth/react";
-import { navigate } from '@/lib/actions'
+import { useRouter } from '@/i18n/routing';
 import { toast } from 'react-toastify';
 
 export default function Login() {
+
+  const t = useTranslations('Auth');
+  const router = useRouter();
 
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
@@ -31,13 +35,13 @@ export default function Login() {
       password : password,
       redirect : false
     });
-    if(!results) {
-      toast("Error logging in");
+;    if(!results) {
+      toast(t('error-log'));
     } else {
       if(results.error) {
-        toast(results.error);
+        toast(<div dangerouslySetInnerHTML={{ __html : results.error }} />);
       } else {
-        navigate('/dashboard')
+        router.push('/dashboard');
       }
     }
   }
@@ -47,18 +51,18 @@ export default function Login() {
       <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
         <div className="max-w-md w-full">
           <div className="p-8 rounded-2xl bg-white shadow">
-            <h2 className="text-gray-800 text-center text-2xl font-bold">Sign in</h2>
+            <h2 className="text-gray-800 text-center text-2xl font-bold">{t('sign-in')}</h2>
             <div>
-              <label className="text-gray-800 text-sm mb-2 block">Email</label>
+              <label className="text-gray-800 text-sm mb-2 block">{t('email')}</label>
               <div className="relative flex items-center">
-                <input value={email} onChange={(e) => setEmail(e.target.value)} name="email" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter email" />
+                <input value={email} onChange={(e) => setEmail(e.target.value)} name="email" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('email-placeholder')} />
               </div>
             </div>
 
             <div>
-              <label className="text-gray-800 text-sm mb-2 block mt-2.5">Password</label>
+              <label className="text-gray-800 text-sm mb-2 block mt-2.5">{t('password')}</label>
               <div className="relative flex items-center">
-                <input value={password} onChange={(e) => setPassword(e.target.value)} name="password" type="password" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter password" />
+                <input value={password} onChange={(e) => setPassword(e.target.value)} name="password" type="password" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('password-placeholder')} />
               </div>
             </div>
 
@@ -66,18 +70,18 @@ export default function Login() {
               <div className="flex items-center">
                 <input checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
                 <label htmlFor="remember-me" className="ml-3 block text-sm text-gray-800">
-                  Remember me
+                  {t('remember-me')}
                 </label>
               </div>
             </div>
 
             <div className="!mt-8">
               <button onClick={() => doSignIn()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
-                Sign in
+                {t('sign-in')}
               </button>
             </div>
 
-            <p className="text-gray-800 text-sm !mt-8 text-center">No account? <a href="/auth/signup" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">Register here</a></p>
+            <p className="text-gray-800 text-sm !mt-8 text-center">{t('no-account')} <a href="/auth/signup" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">{t('register-here')}</a></p>
           </div>
         </div>
       </div>

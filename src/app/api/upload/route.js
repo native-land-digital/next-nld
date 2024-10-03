@@ -3,15 +3,15 @@ import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { getToken } from "next-auth/jwt"
 import { v4 as uuidv4 } from 'uuid'
 
-export async function POST(request) {
+export async function POST(req) {
   const token = await getToken({ req })
 	if(token && token.permissions.includes('research')) {
-    const { contentType } = await request.json()
+    const { contentType } = await req.json()
 
     try {
       const client = new S3Client({ region: process.env.AWS_REGION })
       const { url, fields } = await createPresignedPost(client, {
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: process.env.AWS_NEXT_BUCKET_NAME,
         Key: uuidv4(),
         Conditions: [
           ['content-length-range', 0, 10485760], // up to 10 MB
@@ -38,7 +38,7 @@ export async function DELETE(req) {
 	if(token && token.permissions.includes('research')) {
   	const key = req.nextUrl.searchParams.get('key');
     if(key) {
-      const bucketParams = { Bucket: process.env.AWS_BUCKET_NAME, Key: key };
+      const bucketParams = { Bucket: process.env.AWS_NEXT_BUCKET_NAME, Key: key };
       try {
         const client = new S3Client({ region: process.env.AWS_REGION })
         await client.send(new DeleteObjectCommand(bucketParams));

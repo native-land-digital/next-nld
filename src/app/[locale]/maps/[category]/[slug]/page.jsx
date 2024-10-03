@@ -10,6 +10,14 @@ import Related from '@/components/maps/related';
 import Media from '@/components/maps/media';
 import Changelog from '@/components/maps/changelog';
 
+export const generateStaticParams = () => {
+  return [
+    { locale : 'en', category : "territories", slug : 'oceti-sakowin-sioux' },
+    { locale : 'en', category : "languages", slug : 'anishinaabe'},
+    { locale : 'en', category : "treaties", slug : 'point-elliott-treaty'}
+  ]
+}
+
 export default async function Page({ params : { locale, slug }}) {
 
   unstable_setRequestLocale(locale);
@@ -78,9 +86,9 @@ export default async function Page({ params : { locale, slug }}) {
   return (
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={polygon.name} />
-      <div className="grid gap-5 grid-cols-3 min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
+      <div className="grid gap-5 grid-cols-1 md:grid-cols-3 min-h-screen w-full md:w-2/3 px-5 md:px-0 m-auto -mt-12 text-black">
         <Sidebar picks={3}>
-          <ol className="list-inside text-gray-400">
+          <ol className="hidden md:block list-inside text-gray-400">
             <li className="mb-2.5"><a href="#map">{t('map')}</a></li>
             <li className="mb-2.5"><a href="#websites">{t('websites')}</a></li>
             <li className="mb-2.5"><a href="#media">{t('media')}</a></li>
@@ -89,7 +97,7 @@ export default async function Page({ params : { locale, slug }}) {
             <li className="mb-2.5"><a href="#changelog">{t('changelog')}</a></li>
             <li className="mb-2.5"><a href="#send-correction">{t('correction')}</a></li>
           </ol>
-          <hr className="mt-2.5 mb-5"/>
+          <hr className="hidden md:block mt-2.5 mb-5"/>
         </Sidebar>
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
           <Map geometry={polygon.geometry} />

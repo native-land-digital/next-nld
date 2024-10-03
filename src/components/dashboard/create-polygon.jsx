@@ -1,32 +1,32 @@
 'use client'
 
-import { navigate } from '@/lib/actions'
+import { useRouter } from '@/i18n/routing';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
-
-const makeNewPolygon = () => {
-  const name = window.prompt("Enter a name for the new polygon");
-  if(name) {
-    fetch('/api/polygons', {
-      method : "POST",
-      headers : { 'Content-Type': 'application/json' },
-      body : JSON.stringify({
-        name : name
-      })
-    }).then(resp => resp.json()).then(results => {
-      console.log(results)
-      if(results.error) {
-        toast(results.error)
-      } else {
-        navigate(`/dashboard/research/${results.id}`);
-      }
-    });
-  }
-}
 
 export default function CreatePolygon() {
 
   const t = useTranslations('Dashboard');
+  const router = useRouter();
+
+  const makeNewPolygon = () => {
+    const name = window.prompt("Enter a name for the new polygon");
+    if(name) {
+      fetch('/api/polygons', {
+        method : "POST",
+        headers : { 'Content-Type': 'application/json' },
+        body : JSON.stringify({
+          name : name
+        })
+      }).then(resp => resp.json()).then(results => {
+        if(results.error) {
+          toast(results.error)
+        } else {
+          router.push(`/dashboard/research/${results.id}`);
+        }
+      });
+    }
+  }
 
   return (
     <>

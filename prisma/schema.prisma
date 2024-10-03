@@ -29,6 +29,8 @@ model Website {
   title           String?
   polygonId       Int
   polygon         Polygon @relation(fields: [polygonId], references: [id], onDelete: Cascade)
+
+  @@index([id])
 }
 
 model Change {
@@ -37,6 +39,8 @@ model Change {
   description     String?
   polygonId       Int
   polygon         Polygon @relation(fields: [polygonId], references: [id], onDelete: Cascade)
+
+  @@index([id])
 }
 
 model Relation {
@@ -46,17 +50,24 @@ model Relation {
   relatedTo       Polygon @relation("related_to", fields: [relatedToId], references: [id])
   relatedFromId   Int
   relatedFrom     Polygon @relation("related_from", fields: [relatedFromId], references: [id])
+
+  @@index([id])
 }
 
 model User {
-	id              Int @id @default(autoincrement())
-  createdAt       DateTime  @default(now())
-	email           String @unique
-  password        String
-	name            String?
-  permissions     String[] @default(["api", "profile"])
-  organization    String?
-  api_key         String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
+	id                Int @id @default(autoincrement())
+  createdAt         DateTime  @default(now())
+	email             String @unique
+  password          String
+	name              String?
+  permissions       String[] @default(["api", "profile"])
+  organization      String?
+  verification_key  String? @default(uuid())
+  email_verified    Boolean @default(false)
+  agreed_treaty     Boolean @default(false)
+  api_key           String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
+
+  @@index([id, email])
 }
 
 model Polygon {
@@ -76,4 +87,7 @@ model Polygon {
   geometry        Unsupported("geometry(MultiPolygon, 4326)")?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+
+  @@index([id])
+  @@index([slug])
 }

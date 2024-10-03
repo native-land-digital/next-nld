@@ -1,16 +1,17 @@
 import prisma from "@/lib/db/prisma";
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { getServerSession } from "next-auth/next"
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
 
 import SubHeader from '@/components/nav/sub-header'
 import AdminMenu from '@/components/dashboard/menu'
+import ViewAPI from '@/components/dashboard/view-api'
 import { authOptions } from "@/root/auth";
 
 export default async function Page({ params : { locale }, searchParams }) {
   const session = await getServerSession(authOptions);
-  
+
   unstable_setRequestLocale(locale);
   const tNav = await getTranslations('Navigation');
   const tCommon = await getTranslations('Common');
@@ -20,7 +21,8 @@ export default async function Page({ params : { locale }, searchParams }) {
     where : { id : session.user.id },
     select : {
       id : true,
-      api_key : true
+      api_key : true,
+      agreed_treaty : true
     }
   });
 
@@ -60,33 +62,32 @@ export default async function Page({ params : { locale }, searchParams }) {
           <h2 className="font-semibold text-3xl">{t('api-key')}</h2>
           <p className="my-2.5">{t('use-key')}</p>
           <div className="w-full md:w-1/2">
-            <div className="mt-2.5">
-              <label className="text-gray-800 text-sm mb-1 block">{t('api-key')}</label>
-              <div className="relative flex items-center">
-                <input value={user.api_key} name="api_key" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" disabled={true} />
-              </div>
-            </div>
+            <ViewAPI user={user} />
           </div>
           <h2 className="font-semibold text-3xl mt-5">{t('slug-finder')}</h2>
           <p className="my-2.5">{t('use-slug-finder')}</p>
-          <div className="flex w-full mb-5 bg-gray-100 p-2.5 rounded">
-            <div className="w-1/2">
-              <form className="flex">
+          <div className="w-full mb-5 bg-gray-100 p-2.5 rounded">
+            <form className="grid grid-cols-4 gap-2.5">
+              <div className="col-span-3 md:col-span-2">
                 <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
-                <button className="border border-gray-300 px-4 py-3 rounded ml-2.5">{tCommon('search')}</button>
-                {search ?
-                  <Link className="border border-gray-300 px-4 py-3 rounded ml-2.5" href="/dashboard/api">{tCommon('clear')}</Link>
-                : false}
-              </form>
-            </div>
+              </div>
+              <div className="col-span-1">
+                <button className="w-full border border-gray-300 px-4 py-3 rounded text-sm">{tCommon('search')}</button>
+              </div>
+              <div className="col-span-4 md:col-span-1">
+              {search ?
+                <Link className="block w-full text-center border border-gray-300 px-4 py-3 text-sm rounded" href="/dashboard/api">{tCommon('clear')}</Link>
+              : false}
+              </div>
+            </form>
           </div>
           {polygons.map(polygon => {
             return (
-              <div key={`api-${polygon.id}`} className="mb-5 text-black">
-                <p className="text-xl font-bold">{polygon.name} ({polygon.category}) <Link href={`/maps/${polygon.category}/${polygon.slug}`}>➜</Link></p>
-                <pre>{polygon.slug}</pre>
-                <p>{t('sample-request')}</p>
-                <pre>https://native-land.ca/api/index.php?maps={polygon.category}&name={polygon.slug}</pre>
+              <div key={`api-${polygon.id}`} className="mb-5 text-black break-words">
+                <p className="text-xl font-bold mb-2.5">{polygon.name} ({polygon.category}) <Link href={`/maps/${polygon.category}/${polygon.slug}`}>➜</Link></p>
+                <p className="italic mb-2.5">{polygon.slug}</p>
+                <p className="mb-2.5">{t('sample-request')}</p>
+                <p className="italic">https://native-land.ca/api/index.php?maps={polygon.category}&name={polygon.slug}</p>
               </div>
             )
           })}

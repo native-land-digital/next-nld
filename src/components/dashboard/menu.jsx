@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth/next"
 import { getTranslations } from 'next-intl/server';
-import Link from 'next/link'
+import { Link } from '@/i18n/routing';
 
 import { authOptions } from "@/root/auth";
 
@@ -11,7 +11,7 @@ export default async function AdminMenu() {
 
   return (
     <div className="col-span-1 bg-white rounded shadow-lg p-1.5">
-      <div className="flex w-full">
+      <div className="grid md:flex w-full">
         {session.user.permissions.indexOf('profile') > -1 ?
           <Link href="/dashboard" className="border-r-2 p-2.5 hover:bg-slate-100">{t('profile')}</Link>
         : false }
