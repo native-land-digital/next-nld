@@ -82,6 +82,7 @@ export default function Login() {
             </div>
 
             <p className="text-gray-800 text-sm !mt-8 text-center">{t('no-account')} <a href="/auth/signup" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">{t('register-here')}</a></p>
+            <p className="text-gray-800 text-sm !mt-2.5 text-center"><a href="/auth/reset-password" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">{t('reset-password')}</a></p>
           </div>
         </div>
       </div>

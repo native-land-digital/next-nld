@@ -134,7 +134,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
           </div>
           <hr className="mt-1.5 border-slate-300" />
           <div>
-            <p className="hidden md:block text-xs text-black mt-2.5">{t('search-address')} <Link href="https://native-land.ca/teachers-guide/">{t('think-critically')}</Link>.</p>
+            <p className="hidden md:block text-xs text-black mt-2.5">{t('search-address')} <Link prefetch={false} href="https://native-land.ca/teachers-guide/">{t('think-critically')}</Link>.</p>
             <div id="nld_geocoder" className="m-0" />
           </div>
         </div>
@@ -178,7 +178,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 return (
                   <li key={`selected-features-${feature.properties.Slug}`}>
                     <input type="checkbox" checked={toggledFeatures.indexOf(feature.properties.Slug) === -1} className="mr-1.5" onChange={() => nationToggle(feature.properties.Slug)} />
-                    <Link href={process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'preview' ? feature.properties.description.substring(feature.properties.description.indexOf('/')) : feature.properties.description} target="_blank">{feature.properties.Name} ↗</Link>
+                    <Link prefetch={false} href={process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'preview' ? feature.properties.description.substring(feature.properties.description.indexOf('/')) : feature.properties.description} target="_blank">{feature.properties.Name} ↗</Link>
                   </li>)
               })}
             </ul>

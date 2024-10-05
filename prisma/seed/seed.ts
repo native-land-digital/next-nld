@@ -132,7 +132,7 @@ async function main() {
             createMany : {
               data : entry.media.map(thisMedia => {
                 return {
-                  url : `https://${process.env.AWS_WP_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${thisMedia.url}`,
+                  url : `https://d309zx38sewmgu.cloudfront.net/${thisMedia.url}`,
                   title : thisMedia.title,
                   caption : thisMedia.caption
                 }

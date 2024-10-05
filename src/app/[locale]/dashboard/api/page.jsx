@@ -55,7 +55,7 @@ export default async function Page({ params : { locale }, searchParams }) {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={tNav('api')} />
+      <SubHeader title={tNav('api')} crumbs={[{ url : "/dashboard", title : "Dashboard" }]} />
       <div className="min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
         <AdminMenu />
         <div className="col-span-2 bg-white rounded-t min-h-screen shadow-lg p-4 mt-5">
@@ -76,7 +76,7 @@ export default async function Page({ params : { locale }, searchParams }) {
               </div>
               <div className="col-span-4 md:col-span-1">
               {search ?
-                <Link className="block w-full text-center border border-gray-300 px-4 py-3 text-sm rounded" href="/dashboard/api">{tCommon('clear')}</Link>
+                <Link prefetch={false} className="block w-full text-center border border-gray-300 px-4 py-3 text-sm rounded" href="/dashboard/api">{tCommon('clear')}</Link>
               : false}
               </div>
             </form>
@@ -84,7 +84,7 @@ export default async function Page({ params : { locale }, searchParams }) {
           {polygons.map(polygon => {
             return (
               <div key={`api-${polygon.id}`} className="mb-5 text-black break-words">
-                <p className="text-xl font-bold mb-2.5">{polygon.name} ({polygon.category}) <Link href={`/maps/${polygon.category}/${polygon.slug}`}>➜</Link></p>
+                <p className="text-xl font-bold mb-2.5">{polygon.name} ({polygon.category}) <Link prefetch={false} href={`/maps/${polygon.category}/${polygon.slug}`}>➜</Link></p>
                 <p className="italic mb-2.5">{polygon.slug}</p>
                 <p className="mb-2.5">{t('sample-request')}</p>
                 <p className="italic">https://native-land.ca/api/index.php?maps={polygon.category}&name={polygon.slug}</p>
