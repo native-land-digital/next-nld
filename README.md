@@ -84,18 +84,19 @@ Current costs:
 ### Notes for current development to-dos
 
 Major:
+- Adding password reset
+- Protecting backend with checking for IDs before checking for permissions 
 - Prep fresh Expo app work using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 
 Minor:
 - Minor layout fixes in research section with tables and stuff (on clear)
-- Resolving conflicts with main
 - Adding Instagram feed (looks a bit complicated annoyingly)
 
 For first deploy:
 - Cloudflare, point to Vercel
 
 After first deploy:
-- Regenerate tilesets to match native-land.ca URL
+- Regenerate tilesets to match native-land.ca URL (and geojsons)
 - Ensure any this-week edits are in the new platform
 - Deleting the test user once Tanya and Victor are created
 - Seeing if Google Analytics is logging correctly

@@ -67,50 +67,60 @@ export const GET = async () => {
 export const POST = async (req) => {
   const token = await getToken({ req })
 
-	if(token && token.permissions.includes('research')) {
-  	const body = await req.json();
+	if(token && token.id) {
+		const user = await prisma.user.findUnique({
+			where : { id : parseInt(token.id) },
+			select : {
+				permissions : true
+			}
+		});
+		if(user.permissions.includes('research')) {
+			const body = await req.json();
 
-  	if (!body.name) {
-  		return NextResponse.json({ error : "Please provide a name" }, { status: 400 });
-  	}
+	  	if (!body.name) {
+	  		return NextResponse.json({ error : "Please provide a name" }, { status: 400 });
+	  	}
 
-  	try {
-      // Creating unique slug
-      let slug = slugify(body.name, { lower : true });
-      const slugSuffix = "-";
-      let slugNumber = 1;
-      let slugIsUnique = false;
-      while(!slugIsUnique) {
-        const currentSlug = slug + (slugNumber > 1 ? (slugSuffix + slugNumber.toString()) : "")
-        const foundSlug = await prisma.polygon.findUnique({
-          where : {
-            slug : currentSlug
-          }
-        })
-        if(!foundSlug) {
-          slugIsUnique = true;
-          slug = currentSlug;
-        } else {
-          slugNumber = slugNumber + 1;
-        }
-      }
+	  	try {
+	      // Creating unique slug
+	      let slug = slugify(body.name, { lower : true });
+	      const slugSuffix = "-";
+	      let slugNumber = 1;
+	      let slugIsUnique = false;
+	      while(!slugIsUnique) {
+	        const currentSlug = slug + (slugNumber > 1 ? (slugSuffix + slugNumber.toString()) : "")
+	        const foundSlug = await prisma.polygon.findUnique({
+	          where : {
+	            slug : currentSlug
+	          }
+	        })
+	        if(!foundSlug) {
+	          slugIsUnique = true;
+	          slug = currentSlug;
+	        } else {
+	          slugNumber = slugNumber + 1;
+	        }
+	      }
 
-      // Inserting into db
-  		const polygon = await prisma.polygon.create({
-  			data: {
-  				name: body.name,
-          slug : slug,
-					color : randomHslToHex()
-  			}
-  		});
-  		return NextResponse.json({
-  			id : polygon.id
-  		});
-  	} catch (error) {
-  		console.error(error);
-  		return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
-  	}
-  } else {
+	      // Inserting into db
+	  		const polygon = await prisma.polygon.create({
+	  			data: {
+	  				name: body.name,
+	          slug : slug,
+						color : randomHslToHex()
+	  			}
+	  		});
+	  		return NextResponse.json({
+	  			id : polygon.id
+	  		});
+	  	} catch (error) {
+	  		console.error(error);
+	  		return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
+	  	}
+		} else {
+	    return NextResponse.json({ error : `You do not have permission to access this endpoint` }, { status: 500 });
+		}
+	} else {
     return NextResponse.json({ error : `You do not have permission to access this endpoint` }, { status: 500 });
   }
 }
