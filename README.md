@@ -84,18 +84,17 @@ Current costs:
 ### Notes for current development to-dos
 
 Major:
+- Adding Instagram feed (looks a bit complicated annoyingly)
+
 - Prep fresh Expo app work using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
 
 Minor:
-- Minor layout fixes in research section with tables and stuff (on clear)
-- Resolving conflicts with main
-- Adding Instagram feed (looks a bit complicated annoyingly)
 
 For first deploy:
-- Cloudflare, point to Vercel
+- Cloudflare, point at Vercel to reduce requests
 
 After first deploy:
-- Regenerate tilesets to match native-land.ca URL
+- Regenerate tilesets to match native-land.ca URL (and geojsons)
 - Ensure any this-week edits are in the new platform
 - Deleting the test user once Tanya and Victor are created
 - Seeing if Google Analytics is logging correctly
@@ -108,6 +107,11 @@ After first deploy:
 - Potentially doing https://vercel.com/docs/integrations/external-platforms/cloudflare proxy in front of Vercel if bandwidth too high
 - Moving to free plan with Cloudflare, or getting rid of Cloudflare (just an extra account really) and using Namecheap directly
 - Removing all the extra CPanel-related DNS records
+
+Optimizing:
+- Ensuring Cloudfront CDN is written for uploaded images
+- Reducing geocode endpoint to 3 characters needed
+- User pagination
 
 Aspirational:
 - Adding placenames

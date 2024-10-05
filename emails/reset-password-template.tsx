@@ -1,15 +1,14 @@
 import { Body, Container, Column, Head, Heading, Html, Img, Link, Preview, Row, Section, Text } from "@react-email/components";
 
-interface ConfirmEmailProps {
-  verification_key?: string;
-  email?: string;
+interface ResetPasswordProps {
+  token?: string;
 }
 
 const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "";
 
-export const ConfirmEmail = ({
-  verification_key, email
-}: ConfirmEmailProps) => (
+export const ResetPassword = ({
+  token
+}: ResetPasswordProps) => (
   <Html>
     <Head />
     <Preview>Confirm your email address</Preview>
@@ -23,21 +22,13 @@ export const ConfirmEmail = ({
             alt="Native Land Digital"
           />
         </Section>
-        <Heading style={h1}>Confirm your email address</Heading>
-        <Text style={heroText}>
-          Welcome to Native Land Digital!
-        </Text>
+        <Heading style={h1}>Reset your password</Heading>
         <Text style={heroText2}>
-          Your confirmation code is below - enter it in your open browser window
-          and we'll help you get signed in.
+          Click on the link below to reset your Native Land Digital password.
         </Text>
         <Text>
-          <a href={`${baseUrl}/auth/verify-email?email=${email}`}>Visit this link to verify, if you've closed the browser.</a>
+          <a href={`${baseUrl}/auth/reset-password?token=${token}`}>Visit this link to reset your password.</a>
         </Text>
-
-        <Section style={codeBox}>
-          <Text style={confirmationCodeText}>{verification_key}</Text>
-        </Section>
 
         <Text style={text}>
           If you didn't request this email, there's nothing to worry about, you
@@ -49,7 +40,7 @@ export const ConfirmEmail = ({
   </Html>
 );
 
-export default ConfirmEmail;
+export default ResetPassword;
 
 const main = {
   backgroundColor: "#ffffff",

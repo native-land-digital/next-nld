@@ -1,20 +1,6 @@
 import prisma from "@/lib/db/prisma";
-import Image from "next/image";
 import { Link } from '@/i18n/routing';
 import { getTranslations } from 'next-intl/server';
-
-import Mission from '@/public/images/front/mission.webp'
-import Mapping from '@/public/images/front/physical-world-map.webp'
-import Education from '@/public/images/front/stacked-paper-sheets.webp'
-import Community from '@/public/images/front/wildflower.webp'
-import Kalliopeia from '@/public/images/front/kalliopeia-logo.webp'
-import Mapbox from '@/public/images/front/mapbox-logo.webp'
-import DigitalDemocracy from '@/public/images/front/Digital-Democracy.webp'
-import Mapster from '@/public/images/front/mapster-tech-logo.webp'
-import Vancity from '@/public/images/front/vancity-logo.webp'
-import Disclaimer from '@/public/images/front/disclaimer-3.webp'
-import Patreon from '@/public/images/front/patreon.webp'
-import SupportersCircle from '@/public/images/front/black-circle.webp'
 
 export default async function FrontPage() {
 
@@ -41,17 +27,17 @@ export default async function FrontPage() {
         <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-5">
           <h2 className="text-4xl md:text-6xl font-bold leading-snug"><span className="text-blue-600 underline underline-offset-2 decoration-yellow-600/30 decoration-[15px]">{t('welcome')}</span> <span className="text-black">{t('welcome-glad')}</span></h2>
           <p className="text-xl text-gray-500 my-8">{t('welcome-blurb')}</p>
-          <div className="bg-blue-400/20 px-4 py-2.5 rounded"><p className="md:inline-block font-bold text-blue-600" dangerouslySetInnerHTML={{ __html : t.raw('welcome-contact') }}></p></div>
+          <div className="md:inline-block bg-blue-400/20 px-4 py-2.5 rounded"><p className="font-bold text-blue-600" dangerouslySetInnerHTML={{ __html : t.raw('welcome-contact') }}></p></div>
         </section>
         <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="flex flex-col justify-center align-center text-black text-left p-2.5">
               <h3 className="text-4xl font-bold mb-5">{t('our-mission-header')}</h3>
               <p className="text-slate-400 mr-16 mb-5">{t('our-mission')}</p>
-              <Link className="text-blue-600" href="/about/why-it-matters">{t('our-mission-link')}</Link>
+              <Link prefetch={false} className="text-blue-600" href="/about/why-it-matters">{t('our-mission-link')}</Link>
             </div>
             <div>
-              <Image src={Mission} alt="Mission" className="w-full h-auto" />
+              <img src="https://d75cfcm8x0ifj.cloudfront.net/mission.webp" alt="Mission" className="w-full h-auto" />
             </div>
           </div>
         </section>
@@ -62,21 +48,21 @@ export default async function FrontPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-black">
                 <div className="bg-white rounded pb-2.5">
                   <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-                    <Image className="w-full" src={Mapping} alt="Mapping" />
+                    <img className="w-full" src="https://d75cfcm8x0ifj.cloudfront.net/physical-world-map.webp" alt="Mapping" />
                   </div>
                   <h4 className="text-xl font-bold mb-2.5 mt-5">{t('mapping-header')}</h4>
                   <p className="p-5 text-slate-500"><span dangerouslySetInnerHTML={{ __html : t.raw('mapping') }} /></p>
                 </div>
                 <div className="bg-white rounded pb-2.5">
                   <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-                    <Image src={Education} alt="Education" />
+                    <img src="https://d75cfcm8x0ifj.cloudfront.net/stacked-paper-sheets.webp" alt="Education" />
                   </div>
                   <h4 className="text-xl font-bold mb-2.5 mt-5">{t('education-header')}</h4>
                   <p className="p-5 text-slate-500"><span dangerouslySetInnerHTML={{ __html : t.raw('education') }} /></p>
                 </div>
                 <div className="bg-white rounded pb-2.5">
                   <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-                    <Image src={Community} alt="Community" />
+                    <img src="https://d75cfcm8x0ifj.cloudfront.net/wildflower-4083864_1280.webp" alt="Community" />
                   </div>
                   <h4 className="text-xl font-bold mb-2.5 mt-5">{t('community-header')}</h4>
                   <p className="p-5 text-slate-500"><span dangerouslySetInnerHTML={{ __html : t.raw('community') }} /></p>
@@ -90,19 +76,29 @@ export default async function FrontPage() {
           <h3 className="text-black text-3xl font-bold pb-16">{t('partners-supporters')}</h3>
           <div className="grid grid-cols-2 md:grid-cols-5 pad-5">
             <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-              <Link href="https://kalliopeia.org/"><Image className="w-full" src={Kalliopeia} alt="Kalliopeia logo" /></Link>
+              <a href="https://kalliopeia.org/">
+                <img className="w-full" src="https://d75cfcm8x0ifj.cloudfront.net/kalliopeia-logo.webp" alt="Kalliopeia logo" />
+              </a>
             </div>
             <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-              <Link href="https://mapbox.com/"><Image src={Mapbox} alt="Mapbox logo" /></Link>
+              <a href="https://mapbox.com/">
+                <img src="https://d75cfcm8x0ifj.cloudfront.net/mapbox-logo.webp" alt="Mapbox logo" />
+              </a>
             </div>
             <div className="place-center w-1/2 m-auto mt-5 h-30 overflow-hidden pt-5">
-              <Link href="https://www.digital-democracy.org/"><Image src={DigitalDemocracy} alt="Digital Democracy logo" /></Link>
+              <a href="https://www.digital-democracy.org/">
+                <img src="https://d75cfcm8x0ifj.cloudfront.net/Digital-Democracy.webp" alt="Digital Democracy logo" />
+              </a>
             </div>
             <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-              <Link href="https://mapster.me/"><Image src={Mapster} alt="Mapster Technology Inc logo" /></Link>
+              <a href="https://mapster.me/">
+                <img src="https://d75cfcm8x0ifj.cloudfront.net/mapster-tech-logo.webp" alt="Mapster Technology Inc logo" />
+              </a>
             </div>
             <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-              <Link href="https://www.vancity.com/"><Image src={Vancity} alt="Vancity logo" /></Link>
+              <a href="https://www.vancity.com/">
+                <img src="https://d75cfcm8x0ifj.cloudfront.net/vancity-logo.webp" alt="Vancity logo" />
+              </a>
             </div>
           </div>
         </section>
@@ -113,12 +109,12 @@ export default async function FrontPage() {
               return (
                 <div key={`polygon-${polygon.id}`}>
                   {polygon.media.length > 0 ?
-                    <Link href={`maps/${polygon.category}/${polygon.slug}`}>
+                    <Link prefetch={false} href={`maps/${polygon.category}/${polygon.slug}`}>
                       <div className="w-1/2 m-auto mt-5 h-[100px] bg-cover mb-2.5" style={{backgroundImage : `url(${polygon.media[0].url})`}}></div>
                     </Link>
                   : false}
                   <p className="uppercase text-gray-300 text-xs pb-2.5">{polygon.category}</p>
-                  <Link href={`maps/${polygon.category}/${polygon.slug}`}>
+                  <Link prefetch={false} href={`maps/${polygon.category}/${polygon.slug}`}>
                     <h5 className="text-xl font-bold">{polygon.name}</h5>
                   </Link>
                   <p className="text-sm pt-2.5">{new Date(polygon.updatedAt).toLocaleDateString()}</p>
@@ -131,12 +127,12 @@ export default async function FrontPage() {
         <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <Image src={Disclaimer} alt="disclaimer" className="w-full h-auto" />
+              <img src="https://d75cfcm8x0ifj.cloudfront.net/disclaimer-3.webp" alt="disclaimer" className="w-full h-auto" />
             </div>
             <div className="flex flex-col justify-center align-center text-black text-left p-2.5">
               <h3 className="text-4xl font-bold mb-5">{t('disclaimer-header')}</h3>
               <p className="text-slate-400 mr-16 mb-5">{t('disclaimer')}</p>
-              <Link className="text-blue-600" href="/contact">{t('disclaimer-link')}</Link>
+              <Link prefetch={false} className="text-blue-600" href="/contact">{t('disclaimer-link')}</Link>
             </div>
           </div>
         </section>
@@ -205,26 +201,26 @@ export default async function FrontPage() {
           </div>
         </section>
         <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
-          <Link href="/support-us" className="py-2.5 px-5 bg-blue-600 rounded mb-5 text-white">{t('support-button')}</Link>
+          <Link prefetch={false} href="/support-us" className="py-2.5 px-5 bg-blue-600 rounded mb-5 text-white">{t('support-button')}</Link>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-12 text-black">
             <div className="grid grid-cols-2 rounded shadow-lg">
               <div className="flex flex-col justify-center text-left p-5">
                 <h5 className="text-xl font-bold mt-5">{t('patreon-header')}</h5>
                 <p className="mt-5 mb-5 text-slate-500">{t('patreon')}</p>
-                <Link href="">{t('patreon-link')}</Link>
+                <Link prefetch={false} href="https://www.patreon.com/nativeland">{t('patreon-link')}</Link>
               </div>
               <div>
-                <Image className="w-full h-auto p-7" src={Patreon} alt="patreon" />
+                <img className="w-full h-auto p-7" src="https://d75cfcm8x0ifj.cloudfront.net/patreon.webp" alt="patreon" />
               </div>
             </div>
             <div className="grid grid-cols-2 rounded shadow-lg">
               <div className="flex flex-col justify-center text-left p-5">
                 <h5 className="text-xl font-bold mt-5">{t('supporters-circle-header')}</h5>
                 <p className="mt-5 mb-5 text-slate-500">{t('supporters-circle')}</p>
-                <Link href="">{t('supporters-circle-link')}</Link>
+                <Link prefetch={false} href="/support/supporters-circle">{t('supporters-circle-link')}</Link>
               </div>
               <div>
-                <Image src={SupportersCircle} alt="supporters-circle" />
+                <img src="https://d75cfcm8x0ifj.cloudfront.net/768px-Circle_-_black_simple.svg_.webp" alt="supporters-circle" />
               </div>
             </div>
           </div>

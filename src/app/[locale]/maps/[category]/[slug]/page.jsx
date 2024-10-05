@@ -85,7 +85,7 @@ export default async function Page({ params : { locale, slug }}) {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={polygon.name} />
+      <SubHeader title={polygon.name} crumbs={[{ url : "/maps", title : "Maps" }, { url : `/${polygon.category}`, title : polygon.category }]} />
       <div className="grid gap-5 grid-cols-1 md:grid-cols-3 min-h-screen w-full md:w-2/3 px-5 md:px-0 m-auto -mt-12 text-black">
         <Sidebar picks={3}>
           <ol className="hidden md:block list-inside text-gray-400">

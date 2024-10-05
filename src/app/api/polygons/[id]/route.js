@@ -56,81 +56,92 @@ export const GET = async (req, route) => {
 
 export const PATCH = async (req, route) => {
   const token = await getToken({ req })
-	if(token && token.permissions.includes('research')) {
 
-		const body = await req.json();
-		const { id: polygonId } = route.params;
+	if(token && token.id) {
+		const user = await prisma.user.findUnique({
+			where : { id : parseInt(token.id) },
+			select : {
+				permissions : true
+			}
+		});
+		if(user.permissions.includes('research')) {
 
-		try {
-			if(body.geometry && body.geometry !== "null") {
-				const featureGeometry = body.geometry;
-				try {
-					const geometryAsString = JSON.stringify(featureGeometry);
-					await prisma.$executeRawUnsafe(`
-				    UPDATE "Polygon"
-						SET geometry = ST_GeomFromGeoJSON('${geometryAsString}')
-				    WHERE id = ${Number(polygonId)}
-				  `)
-				} catch(error) {
-					console.error(error)
-					return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
-				}
-			} else if(body.geometry === "null") {
-				await prisma.$executeRawUnsafe(`
-					UPDATE "Polygon"
-					SET geometry = NULL
-					WHERE id = ${Number(polygonId)}
-				`)
-			}
-			delete body.geometry;
-			// Formatting queries
-			// Not the most efficient in the world, but it works
-			// Prevents having to find which ones exist on the data and then delete, update, create etc
-			// To be revised later
-			// Should only be sent if anything actually changed, really. Well, it's inefficient, so what?
-			const websites = body.websites;
-			body.websites = {
-				deleteMany : {},
-				createMany : {
-					data : websites.map(website => { return { url : website.url, title : website.title }})
-				}
-			}
-			const changelog = body.changelog;
-			body.changelog = {
-				deleteMany : {},
-				createMany : {
-					data : changelog.map(change => { return { createdAt : new Date(change.createdAt), description : change.description }})
-				}
-			}
-			const media = body.media;
-			body.media = {
-				deleteMany : {},
-				createMany : {
-					data : media.map(thisMedia => { return { url : thisMedia.url, caption : thisMedia.caption, title : thisMedia.title }})
-				}
-			}
-			const relatedTo = body.relatedTo;
-			body.relatedTo = {
-				deleteMany : {},
-				createMany : {
-					data : relatedTo.map(thisRelation => { return {
-						description : thisRelation.description,
-						relatedToId : thisRelation.relatedToId
-					}})
-				}
-			}
+  		const body = await req.json();
+  		const { id: polygonId } = route.params;
 
-			const polygon = await prisma.polygon.update({
-				where: { id: parseInt(polygonId) },
-				data: { ...body },
-			});
+  		try {
+  			if(body.geometry && body.geometry !== "null") {
+  				const featureGeometry = body.geometry;
+  				try {
+  					const geometryAsString = JSON.stringify(featureGeometry);
+  					await prisma.$executeRawUnsafe(`
+  				    UPDATE "Polygon"
+  						SET geometry = ST_GeomFromGeoJSON('${geometryAsString}')
+  				    WHERE id = ${Number(polygonId)}
+  				  `)
+  				} catch(error) {
+  					console.error(error)
+  					return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
+  				}
+  			} else if(body.geometry === "null") {
+  				await prisma.$executeRawUnsafe(`
+  					UPDATE "Polygon"
+  					SET geometry = NULL
+  					WHERE id = ${Number(polygonId)}
+  				`)
+  			}
+  			delete body.geometry;
+  			// Formatting queries
+  			// Not the most efficient in the world, but it works
+  			// Prevents having to find which ones exist on the data and then delete, update, create etc
+  			// To be revised later
+  			// Should only be sent if anything actually changed, really. Well, it's inefficient, so what?
+  			const websites = body.websites;
+  			body.websites = {
+  				deleteMany : {},
+  				createMany : {
+  					data : websites.map(website => { return { url : website.url, title : website.title }})
+  				}
+  			}
+  			const changelog = body.changelog;
+  			body.changelog = {
+  				deleteMany : {},
+  				createMany : {
+  					data : changelog.map(change => { return { createdAt : new Date(change.createdAt), description : change.description }})
+  				}
+  			}
+  			const media = body.media;
+  			body.media = {
+  				deleteMany : {},
+  				createMany : {
+  					data : media.map(thisMedia => { return { url : thisMedia.url, caption : thisMedia.caption, title : thisMedia.title }})
+  				}
+  			}
+  			const relatedTo = body.relatedTo;
+  			body.relatedTo = {
+  				deleteMany : {},
+  				createMany : {
+  					data : relatedTo.map(thisRelation => { return {
+  						description : thisRelation.description,
+  						relatedToId : thisRelation.relatedToId
+  					}})
+  				}
+  			}
 
-			return NextResponse.json({ polygon });
-		} catch (error) {
-			console.error(error);
+  			const polygon = await prisma.polygon.update({
+  				where: { id: parseInt(polygonId) },
+  				data: { ...body },
+  			});
 
-			return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
-		}
+  			return NextResponse.json({ polygon });
+  		} catch (error) {
+  			console.error(error);
+
+  			return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
+  		}
+  	} else {
+      return NextResponse.json({ error : `You do not have permission to access this endpoint` }, { status: 500 });
+  	}
 	} else {
     return NextResponse.json({ error : `You do not have permission to access this endpoint` }, { status: 500 });
 	}
@@ -138,20 +149,31 @@ export const PATCH = async (req, route) => {
 
 export const DELETE = async (req, route) => {
   const token = await getToken({ req })
-	if(token && token.permissions.includes('research')) {
-		const { id: polygonId } = route.params;
 
-		try {
-			const polygon = await prisma.polygon.delete({
-				where: { id: parseInt(polygonId) },
-			});
+	if(token && token.id) {
+		const user = await prisma.user.findUnique({
+			where : { id : parseInt(token.id) },
+			select : {
+				permissions : true
+			}
+		});
+		if(user.permissions.includes('research')) {
+  		const { id: polygonId } = route.params;
 
-			return NextResponse.json({ polygon });
-		} catch (error) {
-			console.error(error);
+  		try {
+  			const polygon = await prisma.polygon.delete({
+  				where: { id: parseInt(polygonId) },
+  			});
 
-			return NextResponse.json({ error : "Something went wrong deleting the polygon" }, { status: 500 });
-		}
+  			return NextResponse.json({ polygon });
+  		} catch (error) {
+  			console.error(error);
+
+  			return NextResponse.json({ error : "Something went wrong deleting the polygon" }, { status: 500 });
+  		}
+  	} else {
+      return NextResponse.json({ error : `You do not have permission to access this endpoint` }, { status: 500 });
+  	}
 	} else {
     return NextResponse.json({ error : `You do not have permission to access this endpoint` }, { status: 500 });
 	}

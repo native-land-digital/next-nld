@@ -156,7 +156,10 @@
     "email-sent" : "Email sent!",
     "verify-email-message" : "You should have recieved an email verification. Please enter the code here.",
     "need-send" : "Can't find the email? Click here to have it sent again.",
-    "error-log" : "Error logging in"
+    "error-log" : "Error logging in",
+    "reset-password" : "Reset Password",
+    "reset-password-message" : "Forgot your password? Enter your email and check the link to reset your password.",
+    "reset-password-message-reset" : "Type your new password and click the button to reset."
   },
   "Maps" : {
     "all-maps" : "All Maps",

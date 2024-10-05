@@ -10,11 +10,11 @@ export default function EditUser({ user, isAdmin }) {
   const t = useTranslations('Dashboard');
   const tCommon = useTranslations('Common');
 
-  const [ name, setName ] = useState(user.name);
-  const [ email, setEmail ] = useState(user.email);
+  const [ name, setName ] = useState(user.name ? user.name : '');
+  const [ email, setEmail ] = useState(user.email ? user.email : '');
   const [ password, setPassword ] = useState('');
   const [ permissions, setPermissions ] = useState(user.permissions);
-  const [ organization, setOrganization ] = useState(user.organization);
+  const [ organization, setOrganization ] = useState(user.organization ? user.organization : '');
 
   const savePermissions = (checked, permission) => {
     const newPermissions = JSON.parse(JSON.stringify(permissions));
@@ -66,7 +66,7 @@ export default function EditUser({ user, isAdmin }) {
   return (
     <div>
       {isAdmin ?
-        <Link href="/dashboard/users"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>{tCommon('back')}</Link>
+        <Link prefetch={false} href="/dashboard/users"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>{tCommon('back')}</Link>
       : false}
       <h2 className="font-semibold text-3xl">{user.name}</h2>
       <p className="text-xs mt-1" suppressHydrationWarning>{t('user-created')} {new Date(user.createdAt).toLocaleString()}</p>
