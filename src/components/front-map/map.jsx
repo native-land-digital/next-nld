@@ -64,20 +64,24 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
   }, [currentLayers])
 
   const polygonQuery = async (query) => {
-    return fetch(`/api/polygons/search?s=${query}&geosearch=true`)
-      .then(resp => resp.json())
-      .then(response => {
-        const features = response.map((polygon, i) => {
-          return {
-            type : "Feature",
-            id : `feature-from-db-${i}`,
-            place_name : polygon.name + ` (${polygon.category})`,
-            center : polygon.centroid.coordinates,
-            bbox : makeBoundsFromPoly(polygon)
-          }
+    if(query && query.length > 3) {
+      return fetch(`/api/polygons/search?s=${query}&geosearch=true`)
+        .then(resp => resp.json())
+        .then(response => {
+          const features = response.map((polygon, i) => {
+            return {
+              type : "Feature",
+              id : `feature-from-db-${i}`,
+              place_name : polygon.name + ` (${polygon.category})`,
+              center : polygon.centroid.coordinates,
+              bbox : makeBoundsFromPoly(polygon)
+            }
+          })
+          return Promise.resolve(features);
         })
-        return Promise.resolve(features);
-      })
+    } else {
+      return []
+    }
   }
 
   const addControls = () => {

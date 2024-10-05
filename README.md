@@ -84,16 +84,16 @@ Current costs:
 ### Notes for current development to-dos
 
 Major:
-- Adding password reset
-- Protecting backend with checking for IDs before checking for permissions 
-- Prep fresh Expo app work using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
-
-Minor:
+- Move front page images out of Vercel, make logo an SVG,
 - Minor layout fixes in research section with tables and stuff (on clear)
 - Adding Instagram feed (looks a bit complicated annoyingly)
 
+- Prep fresh Expo app work using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
+
+Minor:
+
 For first deploy:
-- Cloudflare, point to Vercel
+- Cloudflare, point at Vercel to reduce requests
 
 After first deploy:
 - Regenerate tilesets to match native-land.ca URL (and geojsons)
