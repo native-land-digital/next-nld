@@ -60,7 +60,7 @@ export default async function Page({ params : { locale }, searchParams }) {
                 </div>
                 <div className="col-span-4 md:col-span-1">
                   {search ?
-                    <Link className="block w-full border border-gray-300 px-4 py-3 rounded md:ml-2.5" href="/dashboard/research">{tCommon('clear')}</Link>
+                    <Link prefetch={false} className="block w-full border border-gray-300 px-4 py-3 rounded md:ml-2.5" href="/dashboard/research">{tCommon('clear')}</Link>
                   : false}
                 </div>
               </form>
@@ -85,7 +85,7 @@ export default async function Page({ params : { locale }, searchParams }) {
                     <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{polygon.id}</td>
                     <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{polygon.name}</td>
                     <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{polygon.category}</td>
-                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black"><Link href={`/dashboard/research/${polygon.id}`}>➜</Link></td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black"><Link prefetch={false} href={`/dashboard/research/${polygon.id}`}>➜</Link></td>
                   </tr>
                 )
               })}

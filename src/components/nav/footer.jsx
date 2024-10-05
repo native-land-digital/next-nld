@@ -15,7 +15,7 @@ export default async function Footer() {
           <div className="col-span-full mb-10 lg:col-span-2 lg:mb-0">
               <Image className="m-auto md:m-0" src={Logo} alt="Native Land Digital logo" width="38" height="60" />
               <p className="py-8 text-sm text-gray-500 lg:max-w-xs text-center lg:text-left">{t('about-blurb')}</p>
-              <Link href="/contact"  className="py-2.5 px-5 h-9 block w-fit bg-indigo-600 rounded-full shadow-sm text-xs text-white mx-auto transition-all  duration-500 hover:bg-indigo-700 lg:mx-0">
+              <Link prefetch={false} href="/contact"  className="py-2.5 px-5 h-9 block w-fit bg-indigo-600 rounded-full shadow-sm text-xs text-white mx-auto transition-all  duration-500 hover:bg-indigo-700 lg:mx-0">
                 {t('contact')}
               </Link>
           </div>
@@ -23,19 +23,19 @@ export default async function Footer() {
             <h4 className="text-lg text-gray-900 font-medium mb-7">{t('about')}</h4>
             <ul className="text-sm  transition-all duration-500">
               <li className="mb-3">
-                <Link href="/about/our-team" className="text-gray-600 hover:text-gray-900">{t('our-team')}</Link>
+                <Link prefetch={false} href="/about/our-team" className="text-gray-600 hover:text-gray-900">{t('our-team')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/about/why-it-matters" className="text-gray-600 hover:text-gray-900">{t('why-it-matters')}</Link>
+                <Link prefetch={false} href="/about/why-it-matters" className="text-gray-600 hover:text-gray-900">{t('why-it-matters')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/about/how-it-works" className="text-gray-600 hover:text-gray-900">{t('how-it-works')}</Link>
+                <Link prefetch={false} href="/about/how-it-works" className="text-gray-600 hover:text-gray-900">{t('how-it-works')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/about/partners-and-contributors" className="text-gray-600 hover:text-gray-900">{t('partners-contributors')}</Link>
+                <Link prefetch={false} href="/about/partners-and-contributors" className="text-gray-600 hover:text-gray-900">{t('partners-contributors')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/about/roadmap" className="text-gray-600 hover:text-gray-900">{t('roadmap')}</Link>
+                <Link prefetch={false} href="/about/roadmap" className="text-gray-600 hover:text-gray-900">{t('roadmap')}</Link>
               </li>
             </ul>
           </div>
@@ -46,7 +46,7 @@ export default async function Footer() {
                 <a href="https://medium.com/@native-land" className="text-gray-600 hover:text-gray-900">{t('community-blog')}</a>
               </li>
               <li className="mb-3">
-                <Link href="/media/media-coverage" className="text-gray-600 hover:text-gray-900">{t('media-coverage')}</Link>
+                <Link prefetch={false} href="/media/media-coverage" className="text-gray-600 hover:text-gray-900">{t('media-coverage')}</Link>
               </li>
             </ul>
           </div>
@@ -54,19 +54,19 @@ export default async function Footer() {
             <h4 className="text-lg text-gray-900 font-medium mb-7">{t('contribute')}</h4>
             <ul className="text-sm  transition-all duration-500">
               <li className="mb-3">
-                <Link href="/how-to-contribute/jobs" className="text-gray-600 hover:text-gray-900">{t('jobs')}</Link>
+                <Link prefetch={false} href="/how-to-contribute/jobs" className="text-gray-600 hover:text-gray-900">{t('jobs')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/how-to-contribute/volunteer" className="text-gray-600 hover:text-gray-900">{t('volunteer')}</Link>
+                <Link prefetch={false} href="/how-to-contribute/volunteer" className="text-gray-600 hover:text-gray-900">{t('volunteer')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/how-to-contribute/fixes-and-adding-maps" className="text-gray-600 hover:text-gray-900">{t('fixes-adding-maps')}</Link>
+                <Link prefetch={false} href="/how-to-contribute/fixes-and-adding-maps" className="text-gray-600 hover:text-gray-900">{t('fixes-adding-maps')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/how-to-contribute/languages" className="text-gray-600 hover:text-gray-900">{t('translations')}</Link>
+                <Link prefetch={false} href="/how-to-contribute/languages" className="text-gray-600 hover:text-gray-900">{t('translations')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/support/supporters-circle" className="text-gray-600 hover:text-gray-900">{t('supporters-circle')}</Link>
+                <Link prefetch={false} href="/support/supporters-circle" className="text-gray-600 hover:text-gray-900">{t('supporters-circle')}</Link>
               </li>
             </ul>
           </div>
@@ -74,28 +74,28 @@ export default async function Footer() {
             <h4 className="text-lg text-gray-900 font-medium mb-7">{t('resources')}</h4>
             <ul className="text-sm  transition-all duration-500">
               <li className="mb-3">
-                <Link href="/resources/territory-acknowledgement" className="text-gray-600 hover:text-gray-900">{t('territory-acknowledgement')}</Link>
+                <Link prefetch={false} href="/resources/territory-acknowledgement" className="text-gray-600 hover:text-gray-900">{t('territory-acknowledgement')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/resources/teachers-guide" className="text-gray-600 hover:text-gray-900">{t('teachers-guide')}</Link>
+                <Link prefetch={false} href="/resources/teachers-guide" className="text-gray-600 hover:text-gray-900">{t('teachers-guide')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/resources/mobile-apps" className="text-gray-600 hover:text-gray-900">{t('mobile-apps')}</Link>
+                <Link prefetch={false} href="/resources/mobile-apps" className="text-gray-600 hover:text-gray-900">{t('mobile-apps')}</Link>
               </li>
               <li className="mb-3">
                 <a href="https://api-docs.native-land.ca" className="text-gray-600 hover:text-gray-900">{t('api')}</a>
               </li>
               <li className="mb-3">
-                <Link href="/maps" className="text-gray-600 hover:text-gray-900">{t('all-maps')}</Link>
+                <Link prefetch={false} href="/maps" className="text-gray-600 hover:text-gray-900">{t('all-maps')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/resources/territories-list" className="text-gray-600 hover:text-gray-900">{t('territories-list')}</Link>
+                <Link prefetch={false} href="/resources/territories-list" className="text-gray-600 hover:text-gray-900">{t('territories-list')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/resources/languages-list" className="text-gray-600 hover:text-gray-900">{t('languages-list')}</Link>
+                <Link prefetch={false} href="/resources/languages-list" className="text-gray-600 hover:text-gray-900">{t('languages-list')}</Link>
               </li>
               <li className="mb-3">
-                <Link href="/resources/treaties-list" className="text-gray-600 hover:text-gray-900">{t('treaties-list')}</Link>
+                <Link prefetch={false} href="/resources/treaties-list" className="text-gray-600 hover:text-gray-900">{t('treaties-list')}</Link>
               </li>
             </ul>
           </div>
@@ -104,7 +104,7 @@ export default async function Footer() {
           <div className="flex items-center justify-center flex-col lg:justify-between lg:flex-row">
             <span className="text-sm text-gray-500">©<Link className="ml-1" href="https://native-land.ca/">{t('native-land')}</Link> {t('copyright')}</span>
             <div className="flex mt-4 space-x-4 sm:justify-center lg:mt-0 ">
-              <Link href="/auth/login" className="text-gray-600 justify-self-center self-center hover:text-gray-900">{t('login')}</Link>
+              <Link prefetch={false} href="/auth/login" className="text-gray-600 justify-self-center self-center hover:text-gray-900">{t('login')}</Link>
               <a href="https://www.facebook.com/nativelandnet/"  className="w-9 h-9 rounded-full bg-gray-700 flex justify-center items-center hover:bg-indigo-600">
                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#FFF" viewBox="0 0 16 16">
                   <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>

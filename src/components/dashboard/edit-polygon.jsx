@@ -85,8 +85,8 @@ export default function EditPolygon({ polygon }) {
 
   return (
     <div>
-      <Link href="/dashboard/research"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>{tCommon('back')}</Link>
-      <h2 className="font-semibold text-3xl">{polygon.name}</h2>
+      <Link prefetch={false} href="/dashboard/research"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>{tCommon('back')}</Link>
+      <h2 clas sName="font-semibold text-3xl">{polygon.name}</h2>
       <p className="text-xs mt-1" suppressHydrationWarning>{t('polygon-created')} {new Date(polygon.createdAt).toLocaleString()}, {t('polygon-updated')} {new Date(polygon.updatedAt).toLocaleString()}</p>
       <hr className="mt-3 mb-3" />
 

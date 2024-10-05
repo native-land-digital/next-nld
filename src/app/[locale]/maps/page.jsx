@@ -54,10 +54,10 @@ export default async function Page({ params : { locale }, searchParams }) {
       <div className="grid gap-5 grid-cols-1 md:grid-cols-3 px-5 md:px-0 w-full md:w-2/3 min-h-screen m-auto -mt-12 text-black static-page">
         <Sidebar>
           <ol className="list-inside text-gray-400">
-            <li className="mb-2.5"><Link href="/maps">{t('all-maps')}</Link></li>
-            <li className="mb-2.5"><Link href="/maps/territories">{t('territories-list')}</Link></li>
-            <li className="mb-2.5"><Link href="/maps/languages">{t('languages-list')}</Link></li>
-            <li className="mb-2.5"><Link href="/maps/treaties">{t('treaties-list')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/maps">{t('all-maps')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/maps/territories">{t('territories-list')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/maps/languages">{t('languages-list')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/maps/treaties">{t('treaties-list')}</Link></li>
           </ol>
           <hr className="mt-2.5 mb-5"/>
         </Sidebar>
@@ -68,7 +68,7 @@ export default async function Page({ params : { locale }, searchParams }) {
                 <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
                 <button className="border border-gray-300 px-4 py-3 rounded ml-2.5">{tCommon('search')}</button>
                 {search ?
-                  <Link className="border border-gray-300 px-4 py-3 rounded ml-2.5 text-slate-600" href="/maps/territories">{tCommon('clear')}</Link>
+                  <Link prefetch={false} className="border border-gray-300 px-4 py-3 rounded ml-2.5 text-slate-600" href="/maps/territories">{tCommon('clear')}</Link>
                 : false}
               </form>
             </div>

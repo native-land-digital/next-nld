@@ -18,12 +18,12 @@ export default function SubHeader({ title }) {
       <div className="w-full md:w-2/3 m-auto capitalize">
         <h2 className="font-semibold text-3xl">{title}</h2>
         <div className="text-sm mt-1.5">
-          <Link className="text-white hover:text-slate-300" href="/">{t('home')}</Link>
+          <Link prefetch={false} className="text-white hover:text-slate-300" href="/">{t('home')}</Link>
           {splitPath.map(path => {
             return (
               <span key={`crumb-${path}`}>
                 <span className="ml-2 mr-2">/</span>
-                <Link className="capitalize text-white hover:text-slate-300" href={pathname.slice(0, pathname.indexOf(`/${path}`) + path.length + 1)}>
+                <Link prefetch={false} className="capitalize text-white hover:text-slate-300" href={pathname.slice(0, pathname.indexOf(`/${path}`) + path.length + 1)}>
                   {decodeURIComponent(path.replace(/-/g, ' '))}
                 </Link>
               </span>

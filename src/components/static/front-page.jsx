@@ -48,7 +48,7 @@ export default async function FrontPage() {
             <div className="flex flex-col justify-center align-center text-black text-left p-2.5">
               <h3 className="text-4xl font-bold mb-5">{t('our-mission-header')}</h3>
               <p className="text-slate-400 mr-16 mb-5">{t('our-mission')}</p>
-              <Link className="text-blue-600" href="/about/why-it-matters">{t('our-mission-link')}</Link>
+              <Link prefetch={false} className="text-blue-600" href="/about/why-it-matters">{t('our-mission-link')}</Link>
             </div>
             <div>
               <Image src={Mission} alt="Mission" className="w-full h-auto" />
@@ -90,19 +90,19 @@ export default async function FrontPage() {
           <h3 className="text-black text-3xl font-bold pb-16">{t('partners-supporters')}</h3>
           <div className="grid grid-cols-2 md:grid-cols-5 pad-5">
             <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-              <Link href="https://kalliopeia.org/"><Image className="w-full" src={Kalliopeia} alt="Kalliopeia logo" /></Link>
+              <Link prefetch={false} href="https://kalliopeia.org/"><Image className="w-full" src={Kalliopeia} alt="Kalliopeia logo" /></Link>
             </div>
             <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-              <Link href="https://mapbox.com/"><Image src={Mapbox} alt="Mapbox logo" /></Link>
+              <Link prefetch={false} href="https://mapbox.com/"><Image src={Mapbox} alt="Mapbox logo" /></Link>
             </div>
             <div className="place-center w-1/2 m-auto mt-5 h-30 overflow-hidden pt-5">
-              <Link href="https://www.digital-democracy.org/"><Image src={DigitalDemocracy} alt="Digital Democracy logo" /></Link>
+              <Link prefetch={false} href="https://www.digital-democracy.org/"><Image src={DigitalDemocracy} alt="Digital Democracy logo" /></Link>
             </div>
             <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-              <Link href="https://mapster.me/"><Image src={Mapster} alt="Mapster Technology Inc logo" /></Link>
+              <Link prefetch={false} href="https://mapster.me/"><Image src={Mapster} alt="Mapster Technology Inc logo" /></Link>
             </div>
             <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
-              <Link href="https://www.vancity.com/"><Image src={Vancity} alt="Vancity logo" /></Link>
+              <Link prefetch={false} href="https://www.vancity.com/"><Image src={Vancity} alt="Vancity logo" /></Link>
             </div>
           </div>
         </section>
@@ -113,12 +113,12 @@ export default async function FrontPage() {
               return (
                 <div key={`polygon-${polygon.id}`}>
                   {polygon.media.length > 0 ?
-                    <Link href={`maps/${polygon.category}/${polygon.slug}`}>
+                    <Link prefetch={false} href={`maps/${polygon.category}/${polygon.slug}`}>
                       <div className="w-1/2 m-auto mt-5 h-[100px] bg-cover mb-2.5" style={{backgroundImage : `url(${polygon.media[0].url})`}}></div>
                     </Link>
                   : false}
                   <p className="uppercase text-gray-300 text-xs pb-2.5">{polygon.category}</p>
-                  <Link href={`maps/${polygon.category}/${polygon.slug}`}>
+                  <Link prefetch={false} href={`maps/${polygon.category}/${polygon.slug}`}>
                     <h5 className="text-xl font-bold">{polygon.name}</h5>
                   </Link>
                   <p className="text-sm pt-2.5">{new Date(polygon.updatedAt).toLocaleDateString()}</p>
@@ -136,7 +136,7 @@ export default async function FrontPage() {
             <div className="flex flex-col justify-center align-center text-black text-left p-2.5">
               <h3 className="text-4xl font-bold mb-5">{t('disclaimer-header')}</h3>
               <p className="text-slate-400 mr-16 mb-5">{t('disclaimer')}</p>
-              <Link className="text-blue-600" href="/contact">{t('disclaimer-link')}</Link>
+              <Link prefetch={false} className="text-blue-600" href="/contact">{t('disclaimer-link')}</Link>
             </div>
           </div>
         </section>
@@ -205,13 +205,13 @@ export default async function FrontPage() {
           </div>
         </section>
         <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
-          <Link href="/support-us" className="py-2.5 px-5 bg-blue-600 rounded mb-5 text-white">{t('support-button')}</Link>
+          <Link prefetch={false} href="/support-us" className="py-2.5 px-5 bg-blue-600 rounded mb-5 text-white">{t('support-button')}</Link>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-12 text-black">
             <div className="grid grid-cols-2 rounded shadow-lg">
               <div className="flex flex-col justify-center text-left p-5">
                 <h5 className="text-xl font-bold mt-5">{t('patreon-header')}</h5>
                 <p className="mt-5 mb-5 text-slate-500">{t('patreon')}</p>
-                <Link href="">{t('patreon-link')}</Link>
+                <Link prefetch={false} href="https://www.patreon.com/nativeland">{t('patreon-link')}</Link>
               </div>
               <div>
                 <Image className="w-full h-auto p-7" src={Patreon} alt="patreon" />
@@ -221,7 +221,7 @@ export default async function FrontPage() {
               <div className="flex flex-col justify-center text-left p-5">
                 <h5 className="text-xl font-bold mt-5">{t('supporters-circle-header')}</h5>
                 <p className="mt-5 mb-5 text-slate-500">{t('supporters-circle')}</p>
-                <Link href="">{t('supporters-circle-link')}</Link>
+                <Link prefetch={false} href="/support/supporters-circle">{t('supporters-circle-link')}</Link>
               </div>
               <div>
                 <Image src={SupportersCircle} alt="supporters-circle" />
