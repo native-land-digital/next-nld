@@ -15,7 +15,7 @@ export const PATCH = async (req, route) => {
 
     const { id: userId } = route.params;
 
-		if(user.permissions.includes('manage_users') || parseInt(userId) === token.id)) {
+		if(user.permissions.includes('manage_users') || parseInt(userId) === token.id) {
   		const body = await req.json();
 
   		try {

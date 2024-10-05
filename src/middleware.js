@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware"
 import createMiddleware from 'next-intl/middleware';
 import { chain } from "@nimpl/middleware-chain";

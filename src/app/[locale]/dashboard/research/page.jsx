@@ -51,16 +51,14 @@ export default async function Page({ params : { locale }, searchParams }) {
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
           <div className="w-full mb-5 bg-gray-100 p-2.5 rounded">
             <div className="grid grid-cols-4 gap-2.5">
-              <form className="grid grid-cols-4 col-span-4 md:col-span-3 gap-2.5">
+              <form className="grid grid-cols-4 md:grid-cols-5 col-span-4 md:col-span-3 gap-2.5">
                 <div className="col-span-3 md:col-span-2">
                   <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
                 </div>
-                <div className="col-span-1">
-                  <button className="border border-gray-300 px-4 py-3 rounded ml-2.5 text-sm">{tCommon('search')}</button>
-                </div>
-                <div className="col-span-4 md:col-span-1">
+                <div className="col-span-3 md:col-span-2">
+                  <button className="border border-gray-300 px-4 py-3 rounded md:ml-2.5 mr-2.5 text-sm">{tCommon('search')}</button>
                   {search ?
-                    <Link prefetch={false} className="block w-full border border-gray-300 px-4 py-3 rounded md:ml-2.5" href="/dashboard/research">{tCommon('clear')}</Link>
+                    <Link prefetch={false} className="inline-block border border-gray-300 px-4 py-3 rounded" href="/dashboard/research">{tCommon('clear')}</Link>
                   : false}
                 </div>
               </form>

@@ -1,5 +1,4 @@
 import prisma from "@/lib/db/prisma";
-import Image from "next/image";
 import { Link } from '@/i18n/routing';
 import { getTranslations } from 'next-intl/server';
 
@@ -28,7 +27,7 @@ export default async function FrontPage() {
         <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-5">
           <h2 className="text-4xl md:text-6xl font-bold leading-snug"><span className="text-blue-600 underline underline-offset-2 decoration-yellow-600/30 decoration-[15px]">{t('welcome')}</span> <span className="text-black">{t('welcome-glad')}</span></h2>
           <p className="text-xl text-gray-500 my-8">{t('welcome-blurb')}</p>
-          <div className="bg-blue-400/20 px-4 py-2.5 rounded"><p className="md:inline-block font-bold text-blue-600" dangerouslySetInnerHTML={{ __html : t.raw('welcome-contact') }}></p></div>
+          <div className="md:inline-block bg-blue-400/20 px-4 py-2.5 rounded"><p className="font-bold text-blue-600" dangerouslySetInnerHTML={{ __html : t.raw('welcome-contact') }}></p></div>
         </section>
         <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

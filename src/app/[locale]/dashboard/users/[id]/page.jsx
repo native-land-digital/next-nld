@@ -1,15 +1,10 @@
 import prisma from "@/lib/db/prisma";
-import { unstable_setRequestLocale } from 'next-intl/server';
-import { getTranslations } from 'next-intl/server';
 
 import SubHeader from '@/components/nav/sub-header'
 import AdminMenu from '@/components/dashboard/menu'
 import EditUser from '@/components/dashboard/edit-user'
 
-export default async function Page({ params : { id, locale }}) {
-
-  unstable_setRequestLocale(locale);
-  const t = await getTranslations('Dashboard');
+export default async function Page({ params : { id }}) {
 
   const user = await prisma.user.findUnique({
     where : { id : Number(id) },

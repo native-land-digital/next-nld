@@ -84,12 +84,6 @@ Current costs:
 ### Notes for current development to-dos
 
 Major:
-- Minor layout fixes in research section with tables and stuff (on clear)
-- trying to resolve various hydration errors?
-
-- Running with Vercel at the start, keeping a close eye, and being willing to switch to Heroku if things look scary
-
-
 - Adding Instagram feed (looks a bit complicated annoyingly)
 
 - Prep fresh Expo app work using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
@@ -117,6 +111,7 @@ After first deploy:
 Optimizing:
 - Ensuring Cloudfront CDN is written for uploaded images
 - Reducing geocode endpoint to 3 characters needed
+- User pagination
 
 Aspirational:
 - Adding placenames
