@@ -55,7 +55,7 @@ export default async function Page({ params : { locale }, searchParams }) {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={tNav('api')} />
+      <SubHeader title={tNav('api')} crumbs={[{ url : "/dashboard", title : "Dashboard" }]} />
       <div className="min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
         <AdminMenu />
         <div className="col-span-2 bg-white rounded-t min-h-screen shadow-lg p-4 mt-5">

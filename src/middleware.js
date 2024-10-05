@@ -6,18 +6,6 @@ import { routing } from '@/i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
 
-const pathMiddleware = (req) => {
-  const headers = new Headers(req.headers);
-  headers.set("x-current-path", req.nextUrl.pathname);
-  headers.set("x-current-lang", routing.defaultLocale);
-  routing.locales.forEach(locale => {
-    if(req.nextUrl.pathname.indexOf(`/${locale}/`) > -1) {
-      headers.set("x-current-lang", locale);
-    }
-  })
-  return NextResponse.next({ headers });
-}
-
 const authMiddleware = withAuth({
   callbacks: {
     authorized: ({ req, token }) => {
@@ -50,8 +38,7 @@ const authMiddleware = withAuth({
 
 export default chain([
   [intlMiddleware, { exclude : /^\/api|_next\/static|_next\/image|favicon.ico(\/.*)?$/ }],
-  [authMiddleware, { include : /^\/dashboard(\/.*)?$/ }],
-  [pathMiddleware, { exclude : /^\/api|_next\/static|_next\/image|favicon.ico(\/.*)?$/ }]
+  [authMiddleware, { include : /^\/dashboard(\/.*)?$/ }]
 ], {
   logger : null
 });

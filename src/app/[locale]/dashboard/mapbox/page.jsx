@@ -12,7 +12,7 @@ export default async function Page({ params : { locale }}) {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={t('mapbox')} />
+      <SubHeader title={t('mapbox')} crumbs={[{ url : "/dashboard", title : "Dashboard" }]} />
       <div className="min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
         <AdminMenu />
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">

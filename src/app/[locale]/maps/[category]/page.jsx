@@ -59,7 +59,7 @@ export default async function Page({ searchParams, params : { locale, category }
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={category} />
+      <SubHeader title={category} crumbs={[{ url : "/maps", title : "Maps" }]} />
       <div className="grid gap-5 grid-cols-1 md:grid-cols-3 px-5 md:px-0 w-full md:w-2/3 min-h-screen m-auto -mt-12 text-black static-page">
         <Sidebar>
           <ol className="list-inside text-gray-400">

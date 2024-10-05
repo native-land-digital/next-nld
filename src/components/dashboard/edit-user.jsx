@@ -10,11 +10,11 @@ export default function EditUser({ user, isAdmin }) {
   const t = useTranslations('Dashboard');
   const tCommon = useTranslations('Common');
 
-  const [ name, setName ] = useState(user.name);
-  const [ email, setEmail ] = useState(user.email);
+  const [ name, setName ] = useState(user.name ? user.name : '');
+  const [ email, setEmail ] = useState(user.email ? user.email : '');
   const [ password, setPassword ] = useState('');
   const [ permissions, setPermissions ] = useState(user.permissions);
-  const [ organization, setOrganization ] = useState(user.organization);
+  const [ organization, setOrganization ] = useState(user.organization ? user.organization : '');
 
   const savePermissions = (checked, permission) => {
     const newPermissions = JSON.parse(JSON.stringify(permissions));
