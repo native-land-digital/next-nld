@@ -20,7 +20,7 @@ export const metadata = {
   description: "Native Land is a resource to learn more about Indigenous territories, languages, lands, and ways of life. We welcome you to our site.",
   icons : {
     icon : '/images/favicon.ico'
-  } 
+  }
 };
 
 export function generateStaticParams() {

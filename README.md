@@ -128,3 +128,10 @@ Questions:
 - Updating content?
 - Adding a new roadmap?
 - Redoing top links? Showing off maps more, special pages more
+
+
+Big issues:
+- The site is almost totally static, EXCEPT
+  - Researcher and user management
+  - Front page geocoder and typeahead
+  - Public API

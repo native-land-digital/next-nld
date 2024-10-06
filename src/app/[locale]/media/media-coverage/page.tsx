@@ -6,6 +6,10 @@ import Sidebar from '@/components/static/sidebar';
 
 import defaultContent from "./en.mdx"
 
+export const revalidate = false;
+export const dynamic = 'force-static';
+export const dynamicParams = false; // -> disables ISR
+
 export default async function Page({ params : { locale }} : { params : { locale: string }; }) {
 
   unstable_setRequestLocale(locale);
