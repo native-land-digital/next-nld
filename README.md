@@ -83,20 +83,14 @@ Current costs:
 
 ### Notes for current development to-dos
 
-- Invalidate cache immediately research pages (dynamic)
 - Add middleware to redirect away from language sub-pages
-- Implement published hcecking
 
 During first deploy:
 - Download and store backups from Pressable
-- Seeing if Google Analytics is logging correctly
 - Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
 - Keeping an eye on Datadog logs to see how many GBs we are sending (we will upgrade to Pro eventually); creating some Dashboards
-- Watching over first day or two to see major sources of data usage, what's getting hit, are we going to hit any limits?
-- Potentially doing https://vercel.com/docs/integrations/external-platforms/cloudflare proxy in front of Vercel if bandwidth too high
 - Moving to free plan with Cloudflare?
 - Removing all the extra CPanel-related DNS records
-- Possibly loading from CDN https://www.rodyvansambeek.com/blog/optimizing-costs-and-performance-of-vercel-edge-request-pricing if Edge are too high
 
 After first deploy:
 - Regenerate tilesets to match native-land.ca URL (and geojsons)
@@ -106,6 +100,7 @@ After things are confirmed and comfy:
 - Deploying app changes
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
 - Testing editing shapes, seeing how quickly the changes appear in frontend with cache
+- re adding Google Analytics?
 
 Optimizing:
 - Should the site open stuff in a new window? Or open in the same window?

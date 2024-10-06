@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-import { randomStartingPosition, createSetFeatureCollection, makeBoundsFromPoly, getUniqueFeatures } from '@/components/front-map/map-utils';
+import { randomStartingPosition, createSetFeatureCollection, getUniqueFeatures } from '@/components/front-map/map-utils';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -63,26 +63,26 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
     }
   }, [currentLayers])
 
-  const polygonQuery = async (query) => {
-    if(query && query.length > 3) {
-      return fetch(`/api/polygons/search?s=${query}&geosearch=true`)
-        .then(resp => resp.json())
-        .then(response => {
-          const features = response.map((polygon, i) => {
-            return {
-              type : "Feature",
-              id : `feature-from-db-${i}`,
-              place_name : polygon.name + ` (${polygon.category})`,
-              center : polygon.centroid.coordinates,
-              bbox : makeBoundsFromPoly(polygon)
-            }
-          })
-          return Promise.resolve(features);
-        })
-    } else {
-      return []
-    }
-  }
+  // const polygonQuery = async (query) => {
+  //   if(query && query.length > 3) {
+  //     return fetch(`/api/polygons/search?s=${query}&geosearch=true`)
+  //       .then(resp => resp.json())
+  //       .then(response => {
+  //         const features = response.map((polygon, i) => {
+  //           return {
+  //             type : "Feature",
+  //             id : `feature-from-db-${i}`,
+  //             place_name : polygon.name + ` (${polygon.category})`,
+  //             center : polygon.centroid.coordinates,
+  //             bbox : makeBoundsFromPoly(polygon)
+  //           }
+  //         })
+  //         return Promise.resolve(features);
+  //       })
+  //   } else {
+  //     return []
+  //   }
+  // }
 
   const addControls = () => {
     const nav = new mapboxgl.NavigationControl();
@@ -91,7 +91,7 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
       mapboxgl: mapboxgl,
       placeholder : t('search'),
-      externalGeocoder : polygonQuery,
+      // externalGeocoder : polygonQuery,
       flyTo : {
         maxDuration : 100,
         maxZoom : 12

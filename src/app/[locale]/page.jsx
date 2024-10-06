@@ -4,6 +4,10 @@ import MapContainer from '@/components/front-map/map-container';
 import MapModal from '@/components/front-map/modal';
 import FrontPage from '@/components/static/front-page';
 
+export const revalidate = false;
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+
 export default async function Home() {
 
   // Querying for select2 list initial options

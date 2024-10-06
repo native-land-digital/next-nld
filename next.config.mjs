@@ -77,6 +77,10 @@ const nextConfig = {
       source: "/wp-json/nativeland/v1/coordinates/indigenousTreaties",
       destination : "/api/polygons/geojson/treaties",
       permanent: true
+    },{
+      source: "/maps-old/:path*",
+      destination : "/maps/:path*",
+      permanent: true
     }]
   },
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],

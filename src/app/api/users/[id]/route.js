@@ -1,4 +1,5 @@
 import prisma from "@/lib/db/prisma";
+import { revalidatePath } from 'next/cache'
 import { getToken } from "next-auth/jwt"
 import { NextResponse } from "next/server";
 
@@ -31,6 +32,8 @@ export const PATCH = async (req, route) => {
   				where: { id: parseInt(userId) },
   				data: { ...body }
   			});
+
+        revalidatePath(`/dashboard/users/${userId}`);
 
   			return NextResponse.json({ user });
   		} catch (error) {
