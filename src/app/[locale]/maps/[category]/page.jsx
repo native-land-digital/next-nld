@@ -30,23 +30,25 @@ export default async function Page({ searchParams, params : { locale, category }
     search = searchParams.search;
   }
 
-  const totalPolygons = await db.selectFrom('Polygon')
+  let totalQuery = db.selectFrom('Polygon')
     .where('category', '=', category)
     .select((eb) => eb.fn.count('id').as('num_polygons'))
-    .execute();
 
   let query = db.selectFrom('Polygon')
     .where('category', '=', category)
-    .innerJoin('Media', 'Media.polygonId', 'Polygon.id')
+    .leftJoin('Media', 'Media.polygonId', 'Polygon.id')
     .select(['Polygon.id as id', 'Polygon.name as name', 'Polygon.category as category', 'Polygon.slug as slug', 'Polygon.updatedAt as updatedAt', 'Media.url as media_url'])
+    .distinctOn('id')
     .limit(24)
     .offset(24 * page)
 
   if(searchParams.search) {
     query = query.where((eb) => eb(eb.fn('lower', 'Polygon.name'), 'like', `%${searchParams.search.toLowerCase()}%`));
+    totalQuery = totalQuery.where((eb) => eb(eb.fn('lower', 'Polygon.name'), 'like', `%${searchParams.search.toLowerCase()}%`));
   }
 
   const polygons = await query.execute()
+  const totalPolygons = await totalQuery.execute()
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
