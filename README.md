@@ -84,7 +84,8 @@ Current costs:
 ### Notes for current development to-dos
 
 - / Testing the invalidation on the live site, does it work?
-- Add middleware to redirect away from language sub-pages
+- Remove translation middleware for the route, switch to a cookie setting; move auth out of middleware
+- Check out 404s
 
 During first deploy:
 - Download and store backups from Pressable

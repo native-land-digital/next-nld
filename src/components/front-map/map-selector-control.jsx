@@ -106,7 +106,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 uncheckedIcon={false}
                 checkedIcon={false}
                 handleDiameter={15} />
-              <p>{t('search-territories')}</p>
+              <p>{t('territories')}</p>
             </div>
             <div>
               <Switch
@@ -118,7 +118,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 uncheckedIcon={false}
                 checkedIcon={false}
                 handleDiameter={15} />
-              <p>{t('search-languages')}</p>
+              <p>{t('languages')}</p>
             </div>
             <div>
               <Switch
@@ -130,7 +130,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 uncheckedIcon={false}
                 checkedIcon={false}
                 handleDiameter={15} />
-              <p>{t('search-treaties')}</p>
+              <p>{t('treaties')}</p>
             </div>
           </div>
           <hr className="mt-1.5 border-slate-300" />
@@ -150,7 +150,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
         <div className={`${showLists ? 'block' : 'hidden'} md:block mt-2.5 text-black`}>
           <AsyncSelect
             instanceId="territories-select"
-            placeholder={t('territories')}
+            placeholder={t('search-territories')}
             onChange={(e) => selectDropdown(e.value, 'territories')}
             defaultOptions={territoryOptions.map(territory => { return { value : territory.id, label : territory.name }})}
             cacheOptions
@@ -159,7 +159,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
         <div className={`${showLists ? 'block' : 'hidden'} md:block mt-2.5 text-black`}>
           <AsyncSelect
             instanceId="languages-select"
-            placeholder={t('languages')}
+            placeholder={t('search-languages')}
             cacheOptions
             onChange={(e) => selectDropdown(e.value, 'languages')}
             defaultOptions={languageOptions.map(language => { return { value : language.id, label : language.name }})}
@@ -168,7 +168,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
         <div className={`${showLists ? 'block' : 'hidden'} md:block mt-2.5 text-black`}>
           <AsyncSelect
             instanceId="treaties-select"
-            placeholder={t('treaties')}
+            placeholder={t('search-treaties')}
             cacheOptions
             onChange={(e) => selectDropdown(e.value, 'treaties')}
             defaultOptions={treatyOptions.map(treaty => { return { value : treaty.id, label : treaty.name }})}
