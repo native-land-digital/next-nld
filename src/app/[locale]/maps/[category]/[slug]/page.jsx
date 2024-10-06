@@ -45,14 +45,7 @@ export default async function Page({ params : { locale, slug }}) {
       changelog : true,
       relatedFrom : {
         select : {
-          relatedTo : true,
-          relatedFrom : true,
-          description : true
-        }
-      },
-      relatedTo : {
-        select : {
-          relatedTo : {
+          relatedFrom : {
             select : {
               id : true,
               name : true,
@@ -60,7 +53,12 @@ export default async function Page({ params : { locale, slug }}) {
               slug : true
             }
           },
-          relatedFrom : {
+          description : true
+        }
+      },
+      relatedTo : {
+        select : {
+          relatedTo : {
             select : {
               id : true,
               name : true,
