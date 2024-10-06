@@ -10,7 +10,8 @@ export const GET = async (req, route) => {
   	  const polygons = await prisma.$queryRaw`
   	    SELECT id, name, category, ST_AsGeoJSON(ST_Envelope(geometry)) as bounds
   			FROM "Polygon"
-  	    WHERE id = ${Number(polygonId)}
+        WHERE published = true
+  	    AND id = ${Number(polygonId)}
   	  `
       if(polygons.length > 0) {
         const polygon = polygons[0]
