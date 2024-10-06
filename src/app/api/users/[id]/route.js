@@ -20,16 +20,6 @@ export const PATCH = async (req, route) => {
 
   		try {
 
-        if(body.password) {
-          if(body.password === "") {
-            delete body.password;
-          }
-          if(body.password.length < 4) {
-            delete body.password;
-      			return NextResponse.json({ error : `The password should be more than 4 characters long`}, { status: 500 });
-          }
-        }
-
         if(body.permissions) {
           if(!token.permissions.includes('manage_users')) {
             delete body.permissions;

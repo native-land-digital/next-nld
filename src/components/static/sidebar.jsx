@@ -15,9 +15,9 @@ export default async function Sidebar({ children = (<div></div>), picks = 5 }) {
   const randomIndex = Math.floor(Math.random() * (totalPolygons[0].num_polygons - picks));
 
   let polygons = await db.selectFrom('Polygon')
-    .innerJoin('Media', 'Media.polygonId', 'Polygon.id')
+    .leftJoin('Media', 'Media.polygonId', 'Polygon.id')
     .select(['Polygon.id as id', 'Polygon.name as name', 'Polygon.category as category', 'Polygon.slug as slug', 'Polygon.updatedAt as updatedAt', 'Media.url as media_url'])
-    .orderBy('color')
+    .orderBy('color', 'asc')
     .limit(picks)
     .offset(randomIndex)
     .execute()

@@ -12,7 +12,6 @@ export default function EditUser({ user, isAdmin }) {
 
   const [ name, setName ] = useState(user.name ? user.name : '');
   const [ email, setEmail ] = useState(user.email ? user.email : '');
-  const [ password, setPassword ] = useState('');
   const [ permissions, setPermissions ] = useState(user.permissions);
   const [ organization, setOrganization ] = useState(user.organization ? user.organization : '');
 
@@ -34,7 +33,6 @@ export default function EditUser({ user, isAdmin }) {
         email : email,
         name : name,
         organization : organization,
-        password : password,
         permissions : permissions
       })
     }).then(resp => resp.json()).then(results => {
@@ -84,13 +82,6 @@ export default function EditUser({ user, isAdmin }) {
           <label className="text-gray-800 text-sm mb-1 block">{t('email')}</label>
           <div className="relative flex items-center">
             <input value={email} onChange={(e) => setEmail(e.target.value)} name="email" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('enter-email')} />
-          </div>
-        </div>
-
-        <div className="mt-2.5">
-          <label className="text-gray-800 text-sm mb-1 block">{t('password')}</label>
-          <div className="relative flex items-center">
-            <input value={password} onChange={(e) => setPassword(e.target.value)} name="password" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('enter-password')} />
           </div>
         </div>
 
