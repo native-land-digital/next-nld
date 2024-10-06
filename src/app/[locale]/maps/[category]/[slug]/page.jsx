@@ -1,8 +1,10 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
+import { jsonArrayFrom } from 'kysely/helpers/postgres'
 import SubHeader from '@/components/nav/sub-header'
 import Sidebar from '@/components/static/sidebar';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 
 import Map from '@/components/maps/map';
 import Websites from '@/components/maps/websites';
@@ -18,72 +20,65 @@ export const generateStaticParams = () => {
   ]
 }
 
-export default async function Page({ params : { locale, slug }}) {
+export default async function Page({ params : { locale, category, slug }}) {
 
   unstable_setRequestLocale(locale);
   const t = await getTranslations('Maps');
 
-  // Extra query because all the related fields are too hard to write in SQL
-  const polygonShape = await prisma.$queryRaw`
-    SELECT ST_AsGeoJSON(geometry) FROM "Polygon"
-    WHERE slug = ${slug.toLowerCase()}
-  `
-  const polygon = await prisma.polygon.findUnique({
-    where : {
-      slug : slug.toLowerCase(),
-      published : true
-    },
-    select : {
-      id : true,
-      name : true,
-      category : true,
-      slug : true,
-      sources : true,
-      pronunciation : true,
-      media : true,
-      websites : true,
-      changelog : true,
-      relatedFrom : {
-        select : {
-          relatedFrom : {
-            select : {
-              id : true,
-              name : true,
-              category : true,
-              slug : true
-            }
-          },
-          description : true
-        }
-      },
-      relatedTo : {
-        select : {
-          relatedTo : {
-            select : {
-              id : true,
-              name : true,
-              category : true,
-              slug : true
-            }
-          },
-          description : true
-        }
-      },
-      createdAt : true,
-      updatedAt : true
-    }
-  });
+  const polygon = await db.selectFrom('Polygon')
+    .where('slug', '=', slug.toLowerCase())
+    .where('category', '=', category)
+    .where('published', '=', true)
+    .select((eb) => [
+      'id', 'name', 'category', 'slug', 'sources', 'pronunciation', 'createdAt', 'updatedAt',
+      eb.fn('ST_AsGeoJSON', 'geometry').as('geometry'),
+      jsonArrayFrom(
+        eb.selectFrom('Media')
+          .select(['url', 'caption', 'title'])
+          .whereRef('Media.polygonId', '=', 'Polygon.id')
+      ).as('media'),
+      jsonArrayFrom(
+        eb.selectFrom('Website')
+          .select(['url', 'title'])
+          .whereRef('Website.polygonId', '=', 'Polygon.id')
+      ).as('websites'),
+      jsonArrayFrom(
+        eb.selectFrom('Change')
+          .select(['createdAt', 'description'])
+          .whereRef('Change.polygonId', '=', 'Polygon.id')
+      ).as('changelog'),
+      jsonArrayFrom(
+        eb.selectFrom('Relation')
+          .innerJoin('Polygon as RelatedPolygon', 'RelatedPolygon.id', 'Relation.relatedFromId')
+          .select([
+            'Relation.description as description',
+            'RelatedPolygon.name as name', 'RelatedPolygon.category as category', 'RelatedPolygon.slug as slug'
+          ])
+          .whereRef('Relation.relatedToId', '=', 'Polygon.id')
+      ).as('relatedFrom'),
+      jsonArrayFrom(
+        eb.selectFrom('Relation')
+          .innerJoin('Polygon as RelatedPolygon', 'RelatedPolygon.id', 'Relation.relatedToId')
+          .select([
+            'Relation.description as description',
+            'RelatedPolygon.name as name', 'RelatedPolygon.category as category', 'RelatedPolygon.slug as slug'
+          ])
+          .whereRef('Relation.relatedFromId', '=', 'Polygon.id')
+      ).as('relatedTo')
+    ])
+    .executeTakeFirst()
 
   if(polygon) {
-    polygon.geometry = null;
-    if(polygonShape && polygonShape[0] && polygonShape[0].st_asgeojson) {
-      polygon.geometry = JSON.parse(polygonShape[0].st_asgeojson)
+    if(polygon.geometry) {
+      polygon.geometry = JSON.parse(polygon.geometry)
     }
+  } else {
+    notFound();
   }
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={polygon.name} crumbs={[{ url : "/maps", title : "Maps" }, { url : `/${polygon.category}`, title : polygon.category }]} />
+      <SubHeader title={polygon.name} crumbs={[{ url : "/maps", title : "Maps" }, { url : `/maps/${polygon.category}`, title : polygon.category }]} />
       <div className="grid gap-5 grid-cols-1 md:grid-cols-3 min-h-screen w-full md:w-2/3 px-5 md:px-0 m-auto -mt-12 text-black">
         <Sidebar picks={3}>
           <ol className="hidden md:block list-inside text-gray-400">
@@ -95,7 +90,7 @@ export default async function Page({ params : { locale, slug }}) {
             <li className="mb-2.5"><a href="#changelog">{t('changelog')}</a></li>
             <li className="mb-2.5"><a href="#send-correction">{t('correction')}</a></li>
           </ol>
-          <hr className="hidden md:block mt-2.5 mb-5"/>
+          <span />
         </Sidebar>
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
           <Map geometry={polygon.geometry} />

@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import { Link } from '@/i18n/routing';
 import { getTranslations } from 'next-intl/server';
 
@@ -7,22 +7,22 @@ import PolygonCard from '@/components/static/polygon-card';
 export default async function Sidebar({ children = (<div></div>), picks = 5 }) {
 
   const t = await getTranslations('Sidebar');
-  const totalPolygons = await prisma.polygon.count()
-  const randomIndex = Math.floor(Math.random() * (totalPolygons - picks));
-  const query = {
-    select : {
-      id : true,
-      name : true,
-      category : true,
-      slug : true,
-      media : true,
-      updatedAt : true
-    },
-    orderBy: { color : 'asc' },
-    skip : randomIndex,
-    take : picks
-  }
-  const polygons = await prisma.polygon.findMany(query);
+
+  const totalPolygons = await db.selectFrom('Polygon')
+    .select((eb) => eb.fn.count('id').as('num_polygons'))
+    .execute();
+
+  const randomIndex = Math.floor(Math.random() * (totalPolygons[0].num_polygons - picks));
+
+  let polygons = await db.selectFrom('Polygon')
+    .innerJoin('Media', 'Media.polygonId', 'Polygon.id')
+    .select(['Polygon.id as id', 'Polygon.name as name', 'Polygon.category as category', 'Polygon.slug as slug', 'Polygon.updatedAt as updatedAt', 'Media.url as media_url'])
+    .orderBy('color')
+    .limit(picks)
+    .offset(randomIndex)
+    .execute()
+
+
   return (
     <div className="col-span-1 bg-white rounded-t shadow-lg p-4 mt-5 order-last md:order-first">
       <div>
