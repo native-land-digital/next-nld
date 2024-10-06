@@ -100,6 +100,8 @@ After first deploy:
 - Possibly loading from CDN https://www.rodyvansambeek.com/blog/optimizing-costs-and-performance-of-vercel-edge-request-pricing if Edge are too high
 
 Optimizing:
+- showing the right number of search results in territories and maps 
+- Doing ISR for all 4k pages!?
 - Cleanups in Kysely connection, moving more fully to Kysely
 - Ensuring Cloudfront CDN is written for uploaded images
 - Reducing geocode endpoint to 3 characters needed
