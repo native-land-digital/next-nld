@@ -22,7 +22,7 @@ export const GET = async (req ) => {
 			await sendEmail({
 				 to: email,
 				 subject: 'Verify your email address',
-				 react: React.createElement(VerificationTemplate, { username: user.name, verification_key : user.verification_key }),
+				 react: React.createElement(VerificationTemplate, { email: email, verification_key : user.verification_key }),
 			})
 	    return NextResponse.json({ user });
 		}

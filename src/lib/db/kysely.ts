@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import fs from 'fs'
 import { DB } from '@/root/prisma/kysely/types'
 import { Pool } from 'pg'
 import { Kysely, PostgresDialect } from 'kysely'
@@ -12,10 +11,10 @@ if(!process || !process.env || !process.env.DATABASE_URL) {
 const dialect = new PostgresDialect({
   pool: new Pool({
     connectionString : process.env.DATABASE_URL.replace('sslmode=require&', ''),
-    ssl : process.env.NEXTAUTH_URL && process.env.NEXTAUTH_URL === 'http://localhost:3000' ? false : {
+    ssl : process.env.DATABASE_CERT ? {
       require : true,
-      ca : fs.readFileSync('prisma/kysely/prod-ca-2021.crt').toString()
-    }
+      ca : process.env.DATABASE_CERT
+    } : false
   })
 })
 
