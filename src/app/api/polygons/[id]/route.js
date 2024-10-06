@@ -1,5 +1,5 @@
 import prisma from "@/lib/db/prisma";
-import { revalidatePath } from 'next/cache'
+import { submitRevalidation } from '@/lib/actions'
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
 
@@ -164,9 +164,9 @@ export const PATCH = async (req, route) => {
     		});
 
         // Ensure associated paths are now invalidated for next load
-        revalidatePath(`/dashboard/research`);
-        revalidatePath(`/dashboard/research/${polygonId}`);
-        revalidatePath(`/maps/${polygon.category}/${polygon.slug}`);
+        submitRevalidation(`/dashboard/research`);
+        submitRevalidation(`/dashboard/research/${polygonId}`);
+        submitRevalidation(`/maps/${polygon.category}/${polygon.slug}`);
 
   			return NextResponse.json({ polygon });
   		} catch (error) {
