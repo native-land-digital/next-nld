@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-import json5 from 'json5';
 import createNextIntlPlugin from 'next-intl/plugin';
 import createMDX from '@next/mdx'
 
@@ -81,16 +80,6 @@ const nextConfig = {
     }]
   },
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-  webpack: (config, options) => {
-    config.module.rules.push({
-      test: /\.json5$/,
-      type: "json",
-      parser: {
-        parse: json5.parse
-      }
-    });
-    return config;
-  },
   experimental: {
     mdxRs: true,
   },

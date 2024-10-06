@@ -1,8 +1,10 @@
 import prisma from "@/lib/db/prisma";
+import { headers } from 'next/headers'
 import { NextResponse } from "next/server";
 
 export const GET = async (req, route) => {
-  if(req.nextUrl.origin === process.env.NEXTAUTH_URL) {
+  const referer = headers().get('referer');
+  if(referer && referer.indexOf(process.env.NEXTAUTH_URL) > -1) {
     const { id: polygonId } = route.params;
     try {
   	  const polygons = await prisma.$queryRaw`
@@ -31,6 +33,6 @@ export const GET = async (req, route) => {
       return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
     }
 	} else {
-		return NextResponse.json({ error : `This is a private endpoint for Native Land` }, { status: 500 });
+		return NextResponse.json({ error : `This is a endpoint restricted to Native Land only` }, { status: 500 });
 	}
 }
