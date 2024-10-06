@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import fs from 'fs'
 import { DB } from '@/root/prisma/kysely/types'
 import { Pool } from 'pg'
 import { Kysely, PostgresDialect } from 'kysely'
