@@ -10,50 +10,18 @@ export const GET = async () => {
 	if(secret === process.env.MOBILE_APP_SECRET) {
 
 		try {
-	    const territories = await prisma.polygon.findMany({
+	    const polygons = await prisma.polygon.findMany({
 	      select : {
 	        id : true,
 	        name : true,
 	        category : true
 	      },
-	      where : {
-	        category : 'territories'
-	      },
 	      orderBy : {
 	        name : 'asc'
-	      },
-	      take : 50
-	    });
-	    const languages = await prisma.polygon.findMany({
-	      select : {
-	        id : true,
-	        name : true,
-	        category : true
-	      },
-	      where : {
-	        category : 'languages'
-	      },
-	      orderBy : {
-	        name : 'asc'
-	      },
-	      take : 50
-	    });
-	    const treaties = await prisma.polygon.findMany({
-	      select : {
-	        id : true,
-	        name : true,
-	        category : true
-	      },
-	      where : {
-	        category : 'treaties'
-	      },
-	      orderBy : {
-	        name : 'asc'
-	      },
-	      take : 50
+	      }
 	    });
 
-	    return NextResponse.json({ territories, languages, treaties });
+	    return NextResponse.json(polygons);
 
 	  } catch (error) {
 	    console.error(error);
