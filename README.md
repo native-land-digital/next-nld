@@ -83,9 +83,6 @@ Current costs:
 
 ### Notes for current development to-dos
 
-Major:
-- Prep fresh Expo app work using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
-
 After first deploy:
 - Regenerate tilesets to match native-land.ca URL (and geojsons)
 - Ensure any this-week edits are in the new platform

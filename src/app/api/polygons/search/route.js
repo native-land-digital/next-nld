@@ -1,4 +1,5 @@
 import prisma from "@/lib/db/prisma";
+import { headers } from 'next/headers'
 import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 
@@ -6,7 +7,8 @@ export const GET = async (req ) => {
 	const search = req.nextUrl.searchParams.get('s');
 	const category = req.nextUrl.searchParams.get('category');
 	const geosearch = req.nextUrl.searchParams.get('geosearch');
-	if(req.nextUrl.origin === process.env.NEXTAUTH_URL) {
+	const referer = headers().get('referer');
+	if(referer && referer.indexOf(process.env.NEXTAUTH_URL) > -1) {
 	  try {
 			const query = {
 	      where : {
@@ -59,6 +61,6 @@ export const GET = async (req ) => {
 	    return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
 	  }
 	} else {
-		return NextResponse.json({ error : `This is a private endpoint for Native Land` }, { status: 500 });
+		return NextResponse.json({ error : `This is a endpoint restricted to Native Land only` }, { status: 500 });
 	}
 }

@@ -22,11 +22,8 @@ export const GET = async (req, route) => {
           name : true,
           category : true,
           slug : true,
-          sources : true,
-          pronunciation : true,
           media : true,
           websites : true,
-          changelog : true,
           relatedFrom : {
             select : {
               relatedTo : true,
@@ -54,9 +51,7 @@ export const GET = async (req, route) => {
               },
               description : true
             }
-          },
-          createdAt : true,
-          updatedAt : true
+          }
         }
       });
 
