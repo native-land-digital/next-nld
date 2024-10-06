@@ -35,7 +35,7 @@ Technologies at use include:
 - Next Auth
 - Amazon S3 buckets
 - Mapbox MTS and Mapbox GL JS
-- i18n and json5
+- i18n, next-intl
 - Datadog ingesting logs from Vercel
 
 We would love to have you involved if you have any fixes or additions you'd like to see on the site.
@@ -72,7 +72,7 @@ Current costs:
 
 - Cloudflare DNS and caching, $28 monthly
 - Premium Supabase ($35 monthly)
-- Maximum budget of $100 in Vercel
+- Maximum budget of $100 in Vercel ($20 base + $10 for logs)
 - Logging with Datadog, free tier
 
 ## Weird exceptions
@@ -84,14 +84,7 @@ Current costs:
 ### Notes for current development to-dos
 
 Major:
-- Adding Instagram feed (looks a bit complicated annoyingly)
-
 - Prep fresh Expo app work using the modified endpoints (map list and map page to `polygons` GET and `polygons/[slug]` GET)
-
-Minor:
-
-For first deploy:
-- Cloudflare, point at Vercel to reduce requests
 
 After first deploy:
 - Regenerate tilesets to match native-land.ca URL (and geojsons)
@@ -105,8 +98,9 @@ After first deploy:
 - Watching over first day or two to see major sources of data usage, what's getting hit, are we going to hit any limits?
 - Deploying app changes
 - Potentially doing https://vercel.com/docs/integrations/external-platforms/cloudflare proxy in front of Vercel if bandwidth too high
-- Moving to free plan with Cloudflare, or getting rid of Cloudflare (just an extra account really) and using Namecheap directly
+- Moving to free plan with Cloudflare?
 - Removing all the extra CPanel-related DNS records
+- Possibly loading from CDN https://www.rodyvansambeek.com/blog/optimizing-costs-and-performance-of-vercel-edge-request-pricing if Edge are too high
 
 Optimizing:
 - Ensuring Cloudfront CDN is written for uploaded images
@@ -114,6 +108,7 @@ Optimizing:
 - User pagination
 
 Aspirational:
+- Adding an instagram feed, WOW they made this a nightmarish pain
 - Adding placenames
 - Adding language games and educational tools for learning territories
 

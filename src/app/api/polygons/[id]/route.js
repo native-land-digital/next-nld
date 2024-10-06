@@ -3,18 +3,18 @@ import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
 
 export const GET = async (req, route) => {
-  const { slug: slug } = route.params;
+  const { id: polygonId } = route.params;
 	const secret = req.nextUrl.searchParams.get('secret');
 
   if(secret === process.env.MOBILE_APP_SECRET) {
   	try {
       const polygonShape = await prisma.$queryRaw`
         SELECT ST_AsGeoJSON(geometry) FROM "Polygon"
-        WHERE slug = ${slug}
+        WHERE id = ${polygonId}
       `
       const polygon = await prisma.polygon.findUnique({
         where : {
-          slug : slug,
+          id : parseInt(polygonId),
           published : true
         },
         select : {
@@ -27,8 +27,34 @@ export const GET = async (req, route) => {
           media : true,
           websites : true,
           changelog : true,
-          relatedFrom : true,
-          relatedTo : true,
+          relatedFrom : {
+            select : {
+              relatedTo : true,
+              relatedFrom : true,
+              description : true
+            }
+          },
+          relatedTo : {
+            select : {
+              relatedTo : {
+                select : {
+                  id : true,
+                  name : true,
+                  category : true,
+                  slug : true
+                }
+              },
+              relatedFrom : {
+                select : {
+                  id : true,
+                  name : true,
+                  category : true,
+                  slug : true
+                }
+              },
+              description : true
+            }
+          },
           createdAt : true,
           updatedAt : true
         }
