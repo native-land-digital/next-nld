@@ -4,7 +4,7 @@ import slugify from 'slugify'
 
 import prisma from "@/lib/db/prisma";
 
-export const GET = async () => {
+export const GET = async (req) => {
 	const secret = req.nextUrl.searchParams.get('secret');
 
 	if(secret === process.env.MOBILE_APP_SECRET) {
