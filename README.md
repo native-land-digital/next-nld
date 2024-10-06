@@ -83,8 +83,6 @@ Current costs:
 
 ### Notes for current development to-dos
 
-- Sitemap
-
 After first deploy:
 - Download and store backups from Pressable
 - Regenerate tilesets to match native-land.ca URL (and geojsons)

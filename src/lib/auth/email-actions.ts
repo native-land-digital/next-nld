@@ -15,7 +15,7 @@ interface Email {
 
 export const sendEmail = async (payload: Email) => {
     const { error } = await resend.emails.send({
-        from: 'Native Land Tech <onboarding@resend.dev>', // Defines the sender's address.
+        from: 'Native Land Tech <tech@native-land.ca>', // Defines the sender's address.
         ...payload, // Expands the contents of 'payload' to include 'to', 'subject', and 'react'.
     })
 
