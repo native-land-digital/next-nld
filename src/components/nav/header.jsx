@@ -126,24 +126,6 @@ export default function Header() {
                 </g>
               </svg>
             </div>
-            <div className={`${openNav === 'language' ? '' : 'hidden'} absolute w-48 z-30`}>
-              <div className="mt-[23px] border-t-4 border-l border-b border-r md:border-l-0 md:border-b-0 md:border-r-0 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="en" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('english')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="fr" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('french')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="es" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('spanish')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="hi" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('hindi')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="zn-CH" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('chinese-simplified')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="pt-br" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('portuguese-brazil')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="fa" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('farsi')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="ko" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('korean')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="bxk" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('bukusu')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="kbh" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('kamentsa-biya')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="pen" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('penobscot')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="qu" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('kichwa-shimi')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="sel" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('selkup')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="yo" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('yoruba')}</Link>
-              </div>
-            </div>
           </div>
         </div>
         <div>
@@ -153,3 +135,21 @@ export default function Header() {
     </nav>
   );
 }
+// <div className={`${openNav === 'language' ? '' : 'hidden'} absolute w-48 z-30`}>
+//   <div className="mt-[23px] border-t-4 border-l border-b border-r md:border-l-0 md:border-b-0 md:border-r-0 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="en" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('english')}</Link>
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="fr" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('french')}</Link>
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="es" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('spanish')}</Link>
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="hi" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('hindi')}</Link>
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="zn-CH" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('chinese-simplified')}</Link>
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="pt-br" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('portuguese-brazil')}</Link>
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="fa" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('farsi')}</Link>
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="ko" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('korean')}</Link>
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="bxk" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('bukusu')}</Link>
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="kbh" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('kamentsa-biya')}</Link>
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="pen" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('penobscot')}</Link>
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="qu" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('kichwa-shimi')}</Link>
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="sel" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('selkup')}</Link>
+//     <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="yo" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('yoruba')}</Link>
+//   </div>
+// </div>

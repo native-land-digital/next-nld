@@ -17,6 +17,8 @@ export const GET = async (req ) => {
 		          contains : search,
 		          mode: 'insensitive'
 		        }
+					},{
+						published : true
 					}]
 	      },
 	      select : {
@@ -37,7 +39,8 @@ export const GET = async (req ) => {
 			  const polygonShapes = await prisma.$queryRaw`
 			    SELECT id, ST_AsGeoJSON(ST_Centroid(geometry)) as centroid, ST_AsGeoJSON(ST_Envelope(geometry)) as bounds
 					FROM "Polygon"
-			    WHERE id IN (${Prisma.join(ids)})
+					WHERE published = true
+			    AND id IN (${Prisma.join(ids)})
 			  `
 				polygons.forEach(polygon => {
 					const thisPolygonShape = polygonShapes.find(shape => shape.id === polygon.id);

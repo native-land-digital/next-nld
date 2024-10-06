@@ -83,6 +83,10 @@ Current costs:
 
 ### Notes for current development to-dos
 
+- Invalidate cache immediately research pages (dynamic)
+- Add middleware to redirect away from language sub-pages
+- Implement published hcecking
+
 During first deploy:
 - Download and store backups from Pressable
 - Seeing if Google Analytics is logging correctly
@@ -96,12 +100,12 @@ During first deploy:
 
 After first deploy:
 - Regenerate tilesets to match native-land.ca URL (and geojsons)
-- Adding a protected Mapbox public token (only for main URL) for prod
 - Deleting the test user once Tanya and Victor are created
 
 After things are confirmed and comfy:
 - Deploying app changes
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
+- Testing editing shapes, seeing how quickly the changes appear in frontend with cache
 
 Optimizing:
 - Should the site open stuff in a new window? Or open in the same window?

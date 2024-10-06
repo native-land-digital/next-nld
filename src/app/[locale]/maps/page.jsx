@@ -23,9 +23,11 @@ export default async function Page({ params : { locale }, searchParams }) {
   }
 
   let totalQuery = db.selectFrom('Polygon')
+    .where('published', true)
     .select((eb) => eb.fn.count('id').as('num_polygons'))
 
   let query = db.selectFrom('Polygon')
+    .where('published', '=', true)
     .leftJoin('Media', 'Media.polygonId', 'Polygon.id')
     .select(['Polygon.id', 'Polygon.name', 'Polygon.category', 'Polygon.slug', 'Polygon.updatedAt', 'Media.url as media_url'])
     .distinctOn('Polygon.id')

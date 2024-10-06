@@ -15,6 +15,7 @@ import Changelog from '@/components/maps/changelog';
 export const generateStaticParams = async () => {
   if(process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'production') {
     const polygon = await db.selectFrom('Polygon')
+      .where('published', '=', true)
       .select(['id', 'category', 'slug'])
       .distinctOn('id')
       .execute();
@@ -31,7 +32,7 @@ export const generateStaticParams = async () => {
   }
 }
 
-export const revalidate = 60;
+export const revalidate = 7200;
 
 export default async function Page({ params : { locale, category, slug }}) {
 

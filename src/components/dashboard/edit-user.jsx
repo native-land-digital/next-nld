@@ -46,7 +46,7 @@ export default function EditUser({ user, isAdmin }) {
 
   const deleteUser = () => {
     if(window.confirm(t('delete-user-confirm'))) {
-      fetch(`/api/users/${polygon.id}`, {
+      fetch(`/api/users/${user.id}`, {
         method : "DELETE"
       }).then(resp => resp.json()).then(results => {
         if(results.error) {

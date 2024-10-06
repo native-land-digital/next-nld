@@ -31,10 +31,12 @@ export default async function Page({ searchParams, params : { locale, category }
   }
 
   let totalQuery = db.selectFrom('Polygon')
+    .where('published', true)
     .where('category', '=', category)
     .select((eb) => eb.fn.count('id').as('num_polygons'))
 
   let query = db.selectFrom('Polygon')
+    .where('published', '=', true)
     .where('category', '=', category)
     .leftJoin('Media', 'Media.polygonId', 'Polygon.id')
     .select(['Polygon.id as id', 'Polygon.name as name', 'Polygon.category as category', 'Polygon.slug as slug', 'Polygon.updatedAt as updatedAt', 'Media.url as media_url'])

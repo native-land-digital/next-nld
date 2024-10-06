@@ -24,7 +24,8 @@ export const GET = async (req ) => {
           const polygonShapes = await prisma.$queryRaw`
             SELECT id
             FROM "Polygon"
-            WHERE ST_Contains(geometry, ST_GeomFromText(format('POINT(%s %s)', ${parseFloat(latlngString[1])}, ${parseFloat(latlngString[0])}), 4326))
+            WHERE published = true
+            AND ST_Contains(geometry, ST_GeomFromText(format('POINT(%s %s)', ${parseFloat(latlngString[1])}, ${parseFloat(latlngString[0])}), 4326))
           `
           matchingShapeIDs = polygonShapes.map(shape => shape.id);
         } catch (err) {
@@ -45,7 +46,9 @@ export const GET = async (req ) => {
             category : {
               in : mapCategories
             }
-          }]
+          },{
+						published : true
+					}]
         }
       }
       if(name) {
@@ -77,7 +80,8 @@ export const GET = async (req ) => {
   		  const polygonShapes = await prisma.$queryRaw`
   		    SELECT id, ST_AsGeoJSON(geometry) as geojson
   				FROM "Polygon"
-  		    WHERE id IN (${Prisma.join(ids)})
+					WHERE published = true
+  		    AND id IN (${Prisma.join(ids)})
   		  `
   			polygons.forEach(polygon => {
   				const thisPolygonShape = polygonShapes.find(shape => shape.id === polygon.id);
@@ -129,7 +133,8 @@ export const POST = async (req) => {
 				const polygonShapes = await prisma.$queryRaw`
 					SELECT id, name, category, color, slug, ST_AsGeoJSON(geometry) as geojson
 					FROM "Polygon"
-					WHERE category = ${body.maps}
+					WHERE published = true
+					AND category = ${body.maps}
 					${Prisma.join(sqlArray)}
 				`
 				// ${geometryAsString}
