@@ -28,15 +28,12 @@ export default async function Page({ params : { locale }, searchParams }) {
 
   let query = db.selectFrom('Polygon')
     .innerJoin('Media', 'Media.polygonId', 'Polygon.id')
-    .select((eb) => [
-      'Polygon.id', 'Polygon.name', 'Polygon.category', 'Polygon.slug', 'Polygon.updatedAt', 'Media.url as media_url',
-      eb.fn('lower', 'name').as('lower_name')
-    ])
+    .select(['Polygon.id', 'Polygon.name', 'Polygon.category', 'Polygon.slug', 'Polygon.updatedAt', 'Media.url as media_url'])
     .limit(24)
     .offset(24 * page)
 
   if(searchParams.search) {
-    query = query.where('lower_name', 'like', `%${searchParams.search.toLowerCase()}%`)
+    query = query.where((eb) => eb(eb.fn('lower', 'Polygon.name'), 'like', `%${searchParams.search.toLowerCase()}%`));
   }
 
   const polygons = await query.execute()
