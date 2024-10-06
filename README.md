@@ -106,6 +106,7 @@ Optimizing:
 - Ensuring Cloudfront CDN is written for uploaded images
 - Reducing geocode endpoint to 3 characters needed
 - User pagination
+- Use all images from Cloudfront, not Vercel
 - Improving mobile app fetch for resources (endpoint provides ALL data which is too much)
 
 Aspirational:
