@@ -2,6 +2,10 @@ import prisma from "@/lib/db/prisma";
 import { Link } from '@/i18n/routing';
 import { getTranslations } from 'next-intl/server';
 
+export const revalidate = false;
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+
 export default async function FrontPage() {
 
   const t = await getTranslations('FrontPage');

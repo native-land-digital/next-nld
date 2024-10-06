@@ -3,7 +3,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
-import { GoogleAnalytics } from '@next/third-parties/google'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -54,7 +53,6 @@ export default async function RootLayout({children, params: { locale } }) {
             <ToastContainer />
           </div>
         </NextIntlClientProvider>
-        <GoogleAnalytics gaId="UA-61451694-1" />
       </body>
     </html>
   );

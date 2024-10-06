@@ -15,6 +15,8 @@ export const generateStaticParams = () => {
   ]
 }
 
+export const revalidate = false;
+
 export default async function Page({ searchParams, params : { locale, category }}) {
 
   unstable_setRequestLocale(locale);

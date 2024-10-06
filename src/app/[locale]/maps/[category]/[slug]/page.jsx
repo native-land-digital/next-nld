@@ -32,7 +32,7 @@ export const generateStaticParams = async () => {
   }
 }
 
-export const revalidate = 7200;
+export const revalidate = false;
 
 export default async function Page({ params : { locale, category, slug }}) {
 

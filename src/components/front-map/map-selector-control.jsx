@@ -13,6 +13,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
     const t = useTranslations('FrontMap');
 
     const [ toggledFeatures, setToggledFeatures ] = useState([])
+    const [ showLists, setShowLists ] = useState(false)
 
     const adjustCurrentLayers = (checked, layer) => {
       const newCurrentLayers = JSON.parse(JSON.stringify(currentLayers));
@@ -53,7 +54,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
     }
 
     const loadTerritoryOptions = (inputValue, callback) => {
-      if(inputValue.length >= 2) {
+      if(inputValue.length >=32) {
         fetch(`/api/polygons/search?s=${inputValue}&category=territories`).then(resp => resp.json()).then(response => {
           callback(response.map(polygon => {
             return {
@@ -66,7 +67,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
     };
 
     const loadLanguageOptions = (inputValue, callback) => {
-      if(inputValue.length >= 2) {
+      if(inputValue.length >= 3) {
         fetch(`/api/polygons/search?s=${inputValue}&category=languages`).then(resp => resp.json()).then(response => {
           callback(response.map(polygon => {
             return {
@@ -79,7 +80,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
     };
 
     const loadTreatyOptions = (inputValue, callback) => {
-      if(inputValue.length >= 2) {
+      if(inputValue.length >= 3) {
         fetch(`/api/polygons/search?s=${inputValue}&category=treaties`).then(resp => resp.json()).then(response => {
           callback(response.map(polygon => {
             return {
@@ -137,8 +138,16 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
             <p className="hidden md:block text-xs text-black mt-2.5">{t('search-address')} <Link prefetch={false} href="https://native-land.ca/teachers-guide/">{t('think-critically')}</Link>.</p>
             <div id="nld_geocoder" className="m-0" />
           </div>
+          <div className="block md:hidden mt-1 rounded bg-slate-100 p-1" onClick={() => setShowLists(!showLists)}>
+            <p>
+              <svg className={`inline-block transition ${showLists ? '' : '-rotate-90'}`} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+              </svg>
+              <span className="ml-1 text-xs text-black">Click here to search Indigenous nations</span>
+            </p>
+          </div>
         </div>
-        <div className="hidden md:block mt-2.5 text-black">
+        <div className={`${showLists ? 'block' : 'hidden'} md:block mt-2.5 text-black`}>
           <AsyncSelect
             instanceId="territories-select"
             placeholder={t('territories')}
@@ -147,7 +156,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
             cacheOptions
             loadOptions={loadTerritoryOptions} />
         </div>
-        <div className="hidden md:block mt-2.5 text-black">
+        <div className={`${showLists ? 'block' : 'hidden'} md:block mt-2.5 text-black`}>
           <AsyncSelect
             instanceId="languages-select"
             placeholder={t('languages')}
@@ -156,7 +165,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
             defaultOptions={languageOptions.map(language => { return { value : language.id, label : language.name }})}
             loadOptions={loadLanguageOptions} />
         </div>
-        <div className="hidden md:block mt-2.5 text-black">
+        <div className={`${showLists ? 'block' : 'hidden'} md:block mt-2.5 text-black`}>
           <AsyncSelect
             instanceId="treaties-select"
             placeholder={t('treaties')}

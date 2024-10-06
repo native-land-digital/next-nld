@@ -7,6 +7,8 @@ import SubHeader from '@/components/nav/sub-header'
 import Sidebar from '@/components/static/sidebar';
 import PolygonCard from '@/components/static/polygon-card';
 
+export const revalidate = false;
+
 export default async function Page({ params : { locale }, searchParams }) {
 
   unstable_setRequestLocale(locale);
