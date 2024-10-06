@@ -31,7 +31,7 @@ export const POST = async (req) => {
 			await sendEmail({
 			   to: body.email,
 			   subject: 'Verify your email address',
-			   react: React.createElement(VerificationTemplate, { username: body.name, verification_key : user.verification_key }),
+			   react: React.createElement(VerificationTemplate, { email: body.email, verification_key : user.verification_key }),
 		  })
 			return NextResponse.json({
 				id : user.id
