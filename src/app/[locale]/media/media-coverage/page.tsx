@@ -1,11 +1,9 @@
-import Image from "next/image";
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
 
 import SubHeader from '@/components/nav/sub-header'
 import Sidebar from '@/components/static/sidebar';
 
-import MediaTop from '@/public/images/pages/media-top.webp'
 import defaultContent from "./en.mdx"
 
 export default async function Page({ params : { locale }} : { params : { locale: string }; }) {
@@ -28,7 +26,7 @@ export default async function Page({ params : { locale }} : { params : { locale:
         <Sidebar />
         <div className="col-span-2 bg-white rounded-t shadow-lg mt-5">
           <div className="w-full max-h-[200px] overflow-hidden rounded-t">
-            <Image src={MediaTop} alt="Media Coverage Header Image" className="object-cover object-center rounded-t" />
+            <img src="https://d75cfcm8x0ifj.cloudfront.net/media-top.webp" alt="Media Coverage Header Image" className="object-cover object-center rounded-t" />
           </div>
           <div className="px-4 pb-4 break-words">
             <Content />

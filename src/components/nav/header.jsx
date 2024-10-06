@@ -82,7 +82,7 @@ export default function Header() {
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/how-to-contribute/jobs" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('jobs')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/how-to-contribute/volunteer" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('volunteer')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/how-to-contribute/fixes-and-adding-maps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('fixes-adding-maps')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/how-to-contribute/languages" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('translations')}</Link>
+                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/how-to-contribute/translations" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('translations')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/support/supporters-circle" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('supporters-circle')}</Link>
               </div>
             </div>
