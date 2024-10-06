@@ -61,3 +61,19 @@ body {
 .static-page hr {
   @apply mt-4;
 }
+
+/* on HTML sections on maps */
+.sources-text h5 {
+  @apply text-base;
+  @apply font-bold;
+  @apply mt-5;
+}
+.sources-text p {
+  @apply mt-4;
+}
+.sources-text ul {
+  @apply mt-4;
+  @apply ml-6;
+  @apply list-disc;
+  @apply list-outside;
+}

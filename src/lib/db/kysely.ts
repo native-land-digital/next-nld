@@ -1,15 +1,21 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import fs from 'fs'
 import { DB } from '@/root/prisma/kysely/types'
 import { Pool } from 'pg'
 import { Kysely, PostgresDialect } from 'kysely'
 
+if(!process || !process.env || !process.env.DATABASE_URL) {
+  throw new Error("Kysely setup error");
+}
+
 const dialect = new PostgresDialect({
   pool: new Pool({
-    database: 'postgres',
-    host: 'aws-0-us-west-1.pooler.supabase.com',
-    user: 'postgres.pwyuqqwvcpqieizmchxa',
-    password: 'VerNlAa9IburR1Ag',
-    port: 6543,
-    max: 10,
+    connectionString : process.env.DATABASE_URL.replace('sslmode=require&', ''),
+    ssl : process.env.NEXTAUTH_URL && process.env.NEXTAUTH_URL === 'http://localhost:3000' ? false : {
+      require : true,
+      ca : fs.readFileSync('prisma/kysely/prod-ca-2021.crt').toString()
+    }
   })
 })
 

@@ -22,21 +22,23 @@ export default async function Page({ params : { locale }, searchParams }) {
     search = searchParams.search;
   }
 
-  const totalPolygons = await db.selectFrom('Polygon')
+  let totalQuery = db.selectFrom('Polygon')
     .select((eb) => eb.fn.count('id').as('num_polygons'))
-    .execute();
 
   let query = db.selectFrom('Polygon')
-    .innerJoin('Media', 'Media.polygonId', 'Polygon.id')
+    .leftJoin('Media', 'Media.polygonId', 'Polygon.id')
     .select(['Polygon.id', 'Polygon.name', 'Polygon.category', 'Polygon.slug', 'Polygon.updatedAt', 'Media.url as media_url'])
+    .distinctOn('Polygon.id')
     .limit(24)
     .offset(24 * page)
 
   if(searchParams.search) {
     query = query.where((eb) => eb(eb.fn('lower', 'Polygon.name'), 'like', `%${searchParams.search.toLowerCase()}%`));
+    totalQuery = totalQuery.where((eb) => eb(eb.fn('lower', 'Polygon.name'), 'like', `%${searchParams.search.toLowerCase()}%`));
   }
 
   const polygons = await query.execute()
+  const totalPolygons = await totalQuery.execute()
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">

@@ -12,13 +12,27 @@ import Related from '@/components/maps/related';
 import Media from '@/components/maps/media';
 import Changelog from '@/components/maps/changelog';
 
-export const generateStaticParams = () => {
-  return [
-    { locale : 'en', category : "territories", slug : 'oceti-sakowin-sioux' },
-    { locale : 'en', category : "languages", slug : 'anishinaabe'},
-    { locale : 'en', category : "treaties", slug : 'point-elliott-treaty'}
-  ]
+export const generateStaticParams = async () => {
+  if(process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'production') {
+    const polygon = await db.selectFrom('Polygon')
+      .where('category', '=', "territories")
+      .select(['id', 'category', 'slug'])
+      .distinctOn('id')
+      .execute();
+
+    return polygon.map(thisPolygon => {
+      return {
+        locale : 'en',
+        category : thisPolygon.category,
+        slug : thisPolygon.slug
+      }
+    })
+  } else {
+    return [];
+  }
 }
+
+export const revalidate = 60;
 
 export default async function Page({ params : { locale, category, slug }}) {
 
@@ -108,7 +122,7 @@ export default async function Page({ params : { locale, category, slug }}) {
           </section>
           <section className="mt-5">
             <h3 className="text-xl font-bold mb-3" id="sources">{t('sources')}</h3>
-            <div dangerouslySetInnerHTML={{ __html : polygon.sources }} />
+            <div className="sources-text" dangerouslySetInnerHTML={{ __html : polygon.sources }} />
           </section>
           <section className="mt-5">
             <h3 className="text-xl font-bold mb-3" id="changelog">{t('changelog')}</h3>
