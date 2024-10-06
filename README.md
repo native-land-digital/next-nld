@@ -84,8 +84,8 @@ Current costs:
 ### Notes for current development to-dos
 
 After first deploy:
+- Download and store backups from Pressable
 - Regenerate tilesets to match native-land.ca URL (and geojsons)
-- Ensure any this-week edits are in the new platform
 - Deleting the test user once Tanya and Victor are created
 - Seeing if Google Analytics is logging correctly
 - Adding a protected Mapbox public token (only for main URL) for prod
@@ -100,6 +100,7 @@ After first deploy:
 - Possibly loading from CDN https://www.rodyvansambeek.com/blog/optimizing-costs-and-performance-of-vercel-edge-request-pricing if Edge are too high
 
 Optimizing:
+- Cleanups in Kysely connection, moving more fully to Kysely
 - Ensuring Cloudfront CDN is written for uploaded images
 - Reducing geocode endpoint to 3 characters needed
 - User pagination
