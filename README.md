@@ -106,6 +106,7 @@ Optimizing:
 - Ensuring Cloudfront CDN is written for uploaded images
 - Reducing geocode endpoint to 3 characters needed
 - User pagination
+- Improving mobile app fetch for resources (endpoint provides ALL data which is too much)
 
 Aspirational:
 - Adding an instagram feed, WOW they made this a nightmarish pain
@@ -113,6 +114,7 @@ Aspirational:
 - Adding language games and educational tools for learning territories
 
 Questions:
+- Overall general app review for improvements
 - At last tackling Africa?
 - Getting Patreon back into gear?
 - Doing more blog posts again?
