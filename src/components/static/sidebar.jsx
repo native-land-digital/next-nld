@@ -28,7 +28,7 @@ export default async function Sidebar({ children = (<div></div>), picks = 5 }) {
       <div>
         {children}
       </div>
-      <hr className="my-2.5" />
+      {children.length > 0 ? <hr className="my-2.5" /> : false }
       <h3 className="pt-0 !mt-0 font-bold text-xl">{picks} {t('random')}</h3>
       <p className="text-sm mb-2.5 !mt-2.5"><Link prefetch={false} href="/maps">{t('visit-maps')}</Link>.</p>
       <div className="grid gap-5">
