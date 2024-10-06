@@ -83,16 +83,16 @@ Current costs:
 
 ### Notes for current development to-dos
 
+- / Testing the invalidation on the live site, does it work?
 - Add middleware to redirect away from language sub-pages
 
 During first deploy:
 - Download and store backups from Pressable
 - Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
 - Keeping an eye on Datadog logs to see how many GBs we are sending (we will upgrade to Pro eventually); creating some Dashboards
-- Moving to free plan with Cloudflare?
-- Removing all the extra CPanel-related DNS records
 
 After first deploy:
+- Improving the 404 page to give some suggestions
 - Regenerate tilesets to match native-land.ca URL (and geojsons)
 - Deleting the test user once Tanya and Victor are created
 
@@ -101,6 +101,8 @@ After things are confirmed and comfy:
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
 - Testing editing shapes, seeing how quickly the changes appear in frontend with cache
 - re adding Google Analytics?
+- Moving to free plan with Cloudflare?
+- Removing all the extra CPanel-related DNS records
 
 Optimizing:
 - Should the site open stuff in a new window? Or open in the same window?

@@ -22,7 +22,7 @@ export default async function Home() {
     orderBy : {
       name : 'asc'
     },
-    take : 50
+    take : 25
   });
   const languageOptions = await prisma.polygon.findMany({
     select : {
@@ -35,7 +35,7 @@ export default async function Home() {
     orderBy : {
       name : 'asc'
     },
-    take : 50
+    take : 25
   });
   const treatyOptions = await prisma.polygon.findMany({
     select : {
@@ -48,7 +48,7 @@ export default async function Home() {
     orderBy : {
       name : 'asc'
     },
-    take : 50
+    take : 25
   });
 
   return (

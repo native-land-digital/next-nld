@@ -54,7 +54,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
     }
 
     const loadTerritoryOptions = (inputValue, callback) => {
-      if(inputValue.length >=32) {
+      if(inputValue.length >= 3) {
         fetch(`/api/polygons/search?s=${inputValue}&category=territories`).then(resp => resp.json()).then(response => {
           callback(response.map(polygon => {
             return {
@@ -106,7 +106,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 uncheckedIcon={false}
                 checkedIcon={false}
                 handleDiameter={15} />
-              <p>{t('territories')}</p>
+              <p>{t('search-territories')}</p>
             </div>
             <div>
               <Switch
@@ -118,7 +118,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 uncheckedIcon={false}
                 checkedIcon={false}
                 handleDiameter={15} />
-              <p>{t('languages')}</p>
+              <p>{t('search-languages')}</p>
             </div>
             <div>
               <Switch
@@ -130,7 +130,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 uncheckedIcon={false}
                 checkedIcon={false}
                 handleDiameter={15} />
-              <p>{t('treaties')}</p>
+              <p>{t('search-treaties')}</p>
             </div>
           </div>
           <hr className="mt-1.5 border-slate-300" />
