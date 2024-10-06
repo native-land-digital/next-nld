@@ -31,7 +31,7 @@ export default async function Page({ searchParams, params : { locale, category }
   }
 
   let totalQuery = db.selectFrom('Polygon')
-    .where('published', true)
+    .where('published', '=', true)
     .where('category', '=', category)
     .select((eb) => eb.fn.count('id').as('num_polygons'))
 
