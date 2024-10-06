@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import { Link } from '@/i18n/routing';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
@@ -24,38 +24,32 @@ export default async function Page({ searchParams, params : { locale, category }
   let page = 0;
   let search = false;
   if(searchParams.page) {
-    page = Number(searchParams.page);
+    page = parseInt(searchParams.page);
   }
   if(searchParams.search) {
     search = searchParams.search;
   }
-  const query = {
-    where : {
-      category : category
-    },
-    select : {
-      id : true,
-      name : true,
-      category : true,
-      slug : true,
-      media : true,
-      updatedAt : true
-    },
-    orderBy : {
-      updatedAt : 'desc'
-    },
-    skip : page * 24,
-    take : 24
+
+  const totalPolygons = await db.selectFrom('Polygon')
+    .where('category', '=', category)
+    .select((eb) => eb.fn.count('id').as('num_polygons'))
+    .execute();
+
+  let query = db.selectFrom('Polygon')
+    .where('category', '=', category)
+    .innerJoin('Media', 'Media.polygonId', 'Polygon.id')
+    .select((eb) => [
+      'Polygon.id as id', 'Polygon.name as name', 'Polygon.category as category', 'Polygon.slug as slug', 'Polygon.updatedAt as updatedAt', 'Media.url as media_url',
+      eb.fn('lower', 'name').as('lower_name')
+    ])
+    .limit(24)
+    .offset(24 * page)
+
+  if(searchParams.search) {
+    query = query.where('lower_name', 'like', `%${searchParams.search.toLowerCase()}%`)
   }
-  if(search) {
-    query['where']['name'] = {
-      contains : search,
-      mode: 'insensitive'
-    }
-  }
-  const polygons = await prisma.polygon.findMany(query);
-  let countQuery = { where : query.where }
-  const totalPolygons = await prisma.polygon.count(countQuery)
+
+  const polygons = await query.execute()
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
@@ -68,7 +62,7 @@ export default async function Page({ searchParams, params : { locale, category }
             <li className="mb-2.5"><Link prefetch={false} href="/maps/languages">{t('languages-list')}</Link></li>
             <li className="mb-2.5"><Link prefetch={false} href="/maps/treaties">{t('treaties-list')}</Link></li>
           </ol>
-          <hr className="mt-2.5 mb-5"/>
+          <span />
         </Sidebar>
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
           <div className="flex w-full mb-5 bg-gray-100 p-2.5 rounded">
@@ -82,7 +76,7 @@ export default async function Page({ searchParams, params : { locale, category }
               </form>
             </div>
           </div>
-          <p className="mb-2.5 text-sm">{totalPolygons} {category}.</p>
+          <p className="mb-2.5 text-sm">{totalPolygons[0].num_polygons} {category}.</p>
           <div className="grid grid-cols-1 md:grid-cols-2  gap-5">
             {polygons.map(polygon => {
               return <PolygonCard key={`polygon-${polygon.id}`} polygon={polygon} />

@@ -11,17 +11,11 @@ export default async function Related({ relatedTo, relatedFrom }) {
 
   let singleRelationSet = [];
   relatedTo.forEach(relation => {
-    singleRelationSet.push({
-      description : relation.description,
-      relationToShow : relation.relatedTo
-    })
+    singleRelationSet.push(relation)
   })
   relatedFrom.forEach(relation => {
-    if(!singleRelationSet.find(thisRelation => thisRelation.relationToShow.id === relation.relatedFrom.id)) {
-      singleRelationSet.push({
-        description : relation.description,
-        relationToShow : relation.relatedFrom
-      })
+    if(!singleRelationSet.find(thisRelation => thisRelation.slug === relation.slug)) {
+      singleRelationSet.push(relation)
     }
   })
 
@@ -31,7 +25,7 @@ export default async function Related({ relatedTo, relatedFrom }) {
         return (
           <div key={`relation-${i}`} className="mb-2.5">
             <p className="text-black">
-              <Link prefetch={false} href={`/maps/${relation.relationToShow.category}/${relation.relationToShow.slug}`}>{relation.relationToShow.name}</Link> {relation.description ? `- ${relation.description}` : ''}
+              <Link prefetch={false} href={`/maps/${relation.category}/${relation.slug}`}>{relation.name} ({relation.category})</Link> {relation.description ? `- ${relation.description}` : ''}
             </p>
           </div>
         )
