@@ -83,30 +83,32 @@ Current costs:
 
 ### Notes for current development to-dos
 
-After first deploy:
+During first deploy:
 - Download and store backups from Pressable
-- Regenerate tilesets to match native-land.ca URL (and geojsons)
-- Deleting the test user once Tanya and Victor are created
 - Seeing if Google Analytics is logging correctly
-- Adding a protected Mapbox public token (only for main URL) for prod
 - Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
-- Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
 - Keeping an eye on Datadog logs to see how many GBs we are sending (we will upgrade to Pro eventually); creating some Dashboards
 - Watching over first day or two to see major sources of data usage, what's getting hit, are we going to hit any limits?
-- Deploying app changes
 - Potentially doing https://vercel.com/docs/integrations/external-platforms/cloudflare proxy in front of Vercel if bandwidth too high
 - Moving to free plan with Cloudflare?
 - Removing all the extra CPanel-related DNS records
 - Possibly loading from CDN https://www.rodyvansambeek.com/blog/optimizing-costs-and-performance-of-vercel-edge-request-pricing if Edge are too high
 
+After first deploy:
+- Regenerate tilesets to match native-land.ca URL (and geojsons)
+- Adding a protected Mapbox public token (only for main URL) for prod
+- Deleting the test user once Tanya and Victor are created
+
+After things are confirmed and comfy:
+- Deploying app changes
+- Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
+
 Optimizing:
-- showing the right number of search results in territories and maps
-- Doing ISR for all 4k pages!?
+- Should the site open stuff in a new window? Or open in the same window?
 - Cleanups in Kysely connection, moving more fully to Kysely
 - Ensuring Cloudfront CDN is written for uploaded images
 - Reducing geocode endpoint to 3 characters needed
 - User pagination
-- Use all images from Cloudfront, not Vercel
 - Improving mobile app fetch for resources (endpoint provides ALL data which is too much)
 
 Aspirational:

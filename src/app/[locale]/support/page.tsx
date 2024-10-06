@@ -1,13 +1,9 @@
-import Image from "next/image";
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
 
 import SubHeader from '@/components/nav/sub-header'
 import Sidebar from '@/components/static/sidebar';
 
-import SupportTop from '@/public/images/pages/support-top.webp'
-import Patreon from '@/public/images/pages/patreon.png'
-import Paypal from '@/public/images/pages/paypal.png'
 import defaultContent from "./en.mdx"
 
 export default async function Page({ params : { locale }} : { params : { locale: string }; }) {
@@ -30,11 +26,11 @@ export default async function Page({ params : { locale }} : { params : { locale:
         <Sidebar picks={3}>
           <div>
             <a href="https://www.patreon.com/nativeland">
-              <Image src={Patreon} alt="Patreon Image" />
+              <img src="https://d75cfcm8x0ifj.cloudfront.net/patreon.png" alt="Patreon Image" />
             </a>
             <p className="text-center"><a href="https://www.patreon.com/nativeland">https://www.patreon.com/nativeland</a></p>
             <hr />
-            <Image src={Paypal} alt="Paypal Image" />
+            <img src="https://d75cfcm8x0ifj.cloudfront.net/paypal.png" alt="Paypal Image" />
             <form className="text-center" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                <input name="cmd" type="hidden" value="_s-xclick" />
                <input name="hosted_button_id" type="hidden" value="Y88A8B6GCV6S2" />
@@ -61,7 +57,7 @@ export default async function Page({ params : { locale }} : { params : { locale:
         </Sidebar>
         <div className="col-span-2 bg-white rounded-t shadow-lg mt-5">
           <div className="w-full max-h-[200px] overflow-hidden rounded-t">
-            <Image src={SupportTop} alt="Support Header Image" className="object-cover object-center rounded-t" />
+            <img src="https://d75cfcm8x0ifj.cloudfront.net/support-top.webp" alt="Support Header Image" className="object-cover object-center rounded-t" />
           </div>
           <div className="px-4 pb-4 break-words">
             <Content />
