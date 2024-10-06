@@ -10,7 +10,7 @@ export const GET = async (req, route) => {
   	try {
       const polygonShape = await prisma.$queryRaw`
         SELECT ST_AsGeoJSON(geometry) FROM "Polygon"
-        WHERE id = ${polygonId}
+        WHERE id = ${parseInt(polygonId)}
       `
       const polygon = await prisma.polygon.findUnique({
         where : {
