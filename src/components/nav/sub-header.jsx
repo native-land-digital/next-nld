@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/routing';
+import Link from 'next/link'
 
 export default function SubHeader({ title, crumbs = [] }) {
 

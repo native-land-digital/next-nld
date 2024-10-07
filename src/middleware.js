@@ -1,9 +1,5 @@
 import { withAuth } from "next-auth/middleware"
-import createMiddleware from 'next-intl/middleware';
 import { chain } from "@nimpl/middleware-chain";
-import { routing } from '@/i18n/routing';
-
-const intlMiddleware = createMiddleware(routing);
 
 const authMiddleware = withAuth({
   callbacks: {
@@ -36,12 +32,11 @@ const authMiddleware = withAuth({
 })
 
 export default chain([
-  [intlMiddleware, { exclude : /^\/api|_next\/static|_next\/image|favicon.ico(\/.*)?$/ }],
   [authMiddleware, { include : /^\/dashboard(\/.*)?$/ }]
 ], {
   logger : null
 });
 
 export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+    matcher: ["/dashboard/:path*", "/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

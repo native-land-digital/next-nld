@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { possiblePermissions } from '@/lib/auth/permissions';
 import { toast } from 'react-toastify';
-import { Link } from '@/i18n/routing';
+import Link from 'next/link'
 
 export default function EditUser({ user, isAdmin }) {
 

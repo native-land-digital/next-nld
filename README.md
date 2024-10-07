@@ -35,7 +35,7 @@ Technologies at use include:
 - Next Auth
 - Amazon S3 buckets
 - Mapbox MTS and Mapbox GL JS
-- i18n, next-intl
+- i18n, next-intl (Note: had to remove due to middleware costs)
 - Datadog ingesting logs from Vercel
 
 We would love to have you involved if you have any fixes or additions you'd like to see on the site.
@@ -84,8 +84,7 @@ Current costs:
 ### Notes for current development to-dos
 
 - / Testing the invalidation on the live site, does it work?
-- Remove translation middleware for the route, switch to a cookie setting; move auth out of middleware
-- Check out 404s
+- Check out 404s, review logs
 
 During first deploy:
 - Download and store backups from Pressable

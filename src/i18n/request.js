@@ -1,16 +1,17 @@
-import { notFound } from 'next/navigation';
 import { getRequestConfig } from 'next-intl/server';
-import { routing } from './routing';
-import deepmerge from 'deepmerge';
+// import deepmerge from 'deepmerge';
 
-export default getRequestConfig(async ({locale}) => {
-  // Validate that the incoming `locale` parameter is valid
-  if (!routing.locales.includes(locale)) notFound();
+export default getRequestConfig(async () => {
+  // const availableLocales = ['bxk', 'en', 'es', 'fa', 'fr', 'hi', 'kbh', 'ko', 'pen', 'pt-br', 'qu', 'sel', 'sw', 'yo', 'zh-CN'];
 
-  const translatedMessages = (await import(`./messages/${locale}.json`)).default;
+  const locale = "en";
+
+  // const translatedMessages = (await import(`./messages/${locale}.json`)).default;
   const defaultMessages = (await import(`./messages/en.json`)).default;
 
   return {
-    messages: deepmerge(defaultMessages, translatedMessages)
+    locale : locale,
+    messages : defaultMessages
+    // messages: deepmerge(defaultMessages, translatedMessages)
   };
 });

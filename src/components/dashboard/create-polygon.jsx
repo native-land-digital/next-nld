@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from '@/i18n/routing';
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
 

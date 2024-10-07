@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Switch from "react-switch";
 import AsyncSelect from 'react-select/async';
-import { Link } from '@/i18n/routing';
+import Link from 'next/link'
 
 import { makeBoundsFromPoly } from '@/components/front-map/map-utils';
 
@@ -11,6 +11,8 @@ import './map.geocoder.css';
 export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, territoryOptions, languageOptions, treatyOptions }) {
 
     const t = useTranslations('FrontMap');
+
+    console.log(t('territories'))
 
     const [ toggledFeatures, setToggledFeatures ] = useState([])
     const [ showLists, setShowLists ] = useState(false)

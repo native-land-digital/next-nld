@@ -1,5 +1,5 @@
 import prisma from "@/lib/db/prisma";
-import { Link } from '@/i18n/routing';
+import Link from 'next/link'
 import { getTranslations } from 'next-intl/server';
 
 export const revalidate = false;
