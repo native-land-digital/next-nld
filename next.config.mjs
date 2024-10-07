@@ -81,6 +81,10 @@ const nextConfig = {
       source: "/maps-old/:path*",
       destination : "/maps/:path*",
       permanent: true
+    },{
+      source: "/mobile-app",
+      destination : "/resources/mobile-apps",
+      permanent: true
     }]
   },
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
