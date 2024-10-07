@@ -1,5 +1,5 @@
 import { db } from '@/lib/db/kysely'
-import { Link } from '@/i18n/routing';
+import Link from 'next/link'
 import { getTranslations } from 'next-intl/server';
 
 import PolygonCard from '@/components/static/polygon-card';
