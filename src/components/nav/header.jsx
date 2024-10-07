@@ -3,9 +3,10 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link'
 
-export default function Header() {
+export default function Header({ session }) {
 
   const t = useTranslations('Navigation');
+  const tDash = useTranslations('Dashboard');
 
   const [ hamburgerToggled, setHamburgerToggled ] = useState(false)
   const [ openNav, setOpenNav ] = useState(false);
@@ -109,7 +110,11 @@ export default function Header() {
               </div>
             </div>
           </div>
-          <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/auth/login" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{t('login')}</Link>
+          {session ?
+            <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/dashboard" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{tDash('dashboard')}</Link>
+          :
+            <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/auth/login" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{t('login')}</Link>
+          }
           <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/contact" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{t('contact')}</Link>
         </div>
         <div>

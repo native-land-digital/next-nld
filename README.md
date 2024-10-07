@@ -95,6 +95,7 @@ After things are confirmed and comfy:
 - Moving to free plan with Cloudflare?
 - Removing all the extra CPanel-related DNS records
 - Playing with Datadog
+- How to handle long term log storage?
 
 Optimizing:
 - Should the site open stuff in a new window? Or open in the same window?
