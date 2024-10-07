@@ -83,21 +83,16 @@ Current costs:
 
 ### Notes for current development to-dos
 
-- Check out 404s, review logs
 - Adding refresh router during editing
+- Improving the 404 page to give some suggestions
+- User pagination
 
 During first deploy:
 - Download and store backups from Pressable
 - Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
 
-After first deploy:
-- Improving the 404 page to give some suggestions
-- Deleting the test user once Tanya and Victor are created
-
 After things are confirmed and comfy:
-- Deploying app changes
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
-- Testing editing shapes, seeing how quickly the changes appear in frontend with cache
 - re adding Google Analytics?
 - Moving to free plan with Cloudflare?
 - Removing all the extra CPanel-related DNS records
@@ -105,10 +100,8 @@ After things are confirmed and comfy:
 
 Optimizing:
 - Should the site open stuff in a new window? Or open in the same window?
-- Cleanups in Kysely connection, moving more fully to Kysely
+- Cleanups in Kysely connection, moving more fully to Kysely for cleaner queries
 - Ensuring Cloudfront CDN is written for uploaded images
-- Reducing geocode endpoint to 3 characters needed
-- User pagination
 - Improving mobile app fetch for resources (endpoint provides ALL data which is too much)
 
 Aspirational:
@@ -124,10 +117,3 @@ Questions:
 - Updating content?
 - Adding a new roadmap?
 - Redoing top links? Showing off maps more, special pages more
-
-
-Big issues:
-- The site is almost totally static, EXCEPT
-  - Researcher and user management
-  - Front page geocoder and typeahead
-  - Public API

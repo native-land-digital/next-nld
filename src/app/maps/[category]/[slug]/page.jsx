@@ -13,17 +13,16 @@ import Changelog from '@/components/maps/changelog';
 
 export const generateStaticParams = async () => {
   if(process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'production') {
-    const polygon = await db.selectFrom('Polygon')
+    const polygons = await db.selectFrom('Polygon')
       .where('published', '=', true)
       .select(['id', 'category', 'slug'])
       .distinctOn('id')
       .execute();
 
-    return polygon.map(thisPolygon => {
+    return polygons.map(polygon => {
       return {
-        locale : 'en',
-        category : thisPolygon.category,
-        slug : thisPolygon.slug
+        category : polygon.category,
+        slug : polygon.slug.toLowerCase()
       }
     })
   } else {
