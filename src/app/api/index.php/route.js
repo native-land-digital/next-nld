@@ -64,7 +64,7 @@ export const GET = async (req ) => {
           })
         })
       }
-      if(matchingShapeIDs && matchingShapeIDs.length > 0) {
+      if(position) {
         query.where['AND'].push({
           id : {
             in : matchingShapeIDs
@@ -72,9 +72,6 @@ export const GET = async (req ) => {
         })
       }
       const polygons = await prisma.polygon.findMany(query)
-			if(polygons.length > 500) {
-				return NextResponse.json({ error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" }, { status: 400 });
-			}
       if(polygons.length > 0) {
   			const ids = polygons.map(polygon => polygon.id);
   		  const polygonShapes = await prisma.$queryRaw`
@@ -93,7 +90,11 @@ export const GET = async (req ) => {
   			})
       }
       if (featureList.length > 0) {
-    		return NextResponse.json(featureList);
+				if(featureList.length > 500) {
+					return NextResponse.json({ error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" }, { status: 400 });
+				} else {
+    			return NextResponse.json(featureList);
+				}
       } else {
         return NextResponse.json(featureList);
       }

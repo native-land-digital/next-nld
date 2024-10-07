@@ -83,17 +83,15 @@ Current costs:
 
 ### Notes for current development to-dos
 
-- / Testing the invalidation on the live site, does it work?
 - Check out 404s, review logs
+- Adding refresh router during editing
 
 During first deploy:
 - Download and store backups from Pressable
 - Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
-- Keeping an eye on Datadog logs to see how many GBs we are sending (we will upgrade to Pro eventually); creating some Dashboards
 
 After first deploy:
 - Improving the 404 page to give some suggestions
-- Regenerate tilesets to match native-land.ca URL (and geojsons)
 - Deleting the test user once Tanya and Victor are created
 
 After things are confirmed and comfy:
@@ -103,6 +101,7 @@ After things are confirmed and comfy:
 - re adding Google Analytics?
 - Moving to free plan with Cloudflare?
 - Removing all the extra CPanel-related DNS records
+- Playing with Datadog
 
 Optimizing:
 - Should the site open stuff in a new window? Or open in the same window?
