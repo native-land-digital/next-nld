@@ -141,15 +141,15 @@ export const POST = async (req) => {
 				// ${geometryAsString}
 				// WHERE ST_Contains(geometry, ST_GeomFromText(format('POINT(%s %s)', ${parseFloat(latlngString[1])}, ${parseFloat(latlngString[0])}), 4326))
 				const featureList = []
-				if(polygonShapes.length > 500) {
-					return NextResponse.json({ error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" }, { status: 400 });
-				}
 				polygonShapes.forEach(polygon => {
 					let feature = constructFeature(polygon);
 					if(feature) {
 						featureList.push(feature);
 					}
 				})
+				if(featureList.length > 500) {
+					return NextResponse.json({ error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" }, { status: 400 });
+				}
 				return NextResponse.json(featureList);
 			} else {
 				return NextResponse.json({ error : "The polygon has no features" }, { status: 400 });
