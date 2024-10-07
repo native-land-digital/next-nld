@@ -22,7 +22,7 @@ export const generateStaticParams = async () => {
     return polygons.map(polygon => {
       return {
         category : polygon.category,
-        slug : polygon.slug.toLowerCase()
+        slug : encodeURIComponent(polygon.slug).toLowerCase()
       }
     })
   } else {
