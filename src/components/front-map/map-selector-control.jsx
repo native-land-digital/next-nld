@@ -12,8 +12,6 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
 
     const t = useTranslations('FrontMap');
 
-    console.log(t('territories'))
-
     const [ toggledFeatures, setToggledFeatures ] = useState([])
     const [ showLists, setShowLists ] = useState(false)
 
