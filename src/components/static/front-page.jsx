@@ -20,7 +20,7 @@ export default async function FrontPage() {
       updatedAt : true
     },
     orderBy : {
-      updatedAt : 'asc'
+      updatedAt : 'desc'
     },
     take : 5
   });
@@ -79,27 +79,27 @@ export default async function FrontPage() {
         <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
           <h3 className="text-black text-3xl font-bold pb-16">{t('partners-supporters')}</h3>
           <div className="grid grid-cols-2 md:grid-cols-5 pad-5">
-            <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
+            <div className="w-1/2 m-auto mt-5 h-32 overflow-hidden">
               <a href="https://kalliopeia.org/">
                 <img className="w-full" src="https://d75cfcm8x0ifj.cloudfront.net/kalliopeia-logo.webp" alt="Kalliopeia logo" />
               </a>
             </div>
-            <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
+            <div className="w-1/2 m-auto mt-5 h-32 overflow-hidden">
               <a href="https://mapbox.com/">
                 <img src="https://d75cfcm8x0ifj.cloudfront.net/mapbox-logo.webp" alt="Mapbox logo" />
               </a>
             </div>
-            <div className="place-center w-1/2 m-auto mt-5 h-30 overflow-hidden pt-5">
-              <a href="https://www.digital-democracy.org/">
-                <img src="https://d75cfcm8x0ifj.cloudfront.net/Digital-Democracy.webp" alt="Digital Democracy logo" />
+            <div className="w-1/2 m-auto mt-5 h-32 overflow-hidden flex items-center">
+              <a href="https://awana.digital/">
+                <img src="https://d75cfcm8x0ifj.cloudfront.net/awana-digital-logo.png" alt="Awana Digital logo" />
               </a>
             </div>
-            <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
+            <div className="w-1/2 m-auto mt-5 h-32 overflow-hidden">
               <a href="https://mapster.me/">
                 <img src="https://d75cfcm8x0ifj.cloudfront.net/mapster-tech-logo.webp" alt="Mapster Technology Inc logo" />
               </a>
             </div>
-            <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
+            <div className="w-1/2 m-auto mt-5 h-32 overflow-hidden">
               <a href="https://www.vancity.com/">
                 <img src="https://d75cfcm8x0ifj.cloudfront.net/vancity-logo.webp" alt="Vancity logo" />
               </a>
@@ -112,11 +112,20 @@ export default async function FrontPage() {
             {latestUpdates.map(polygon => {
               return (
                 <div key={`polygon-${polygon.id}`}>
-                  {polygon.media.length > 0 ?
-                    <Link prefetch={false} href={`maps/${polygon.category}/${polygon.slug}`}>
+                  <Link prefetch={false} href={`maps/${polygon.category}/${polygon.slug}`}>
+                    {polygon.media.length > 0 ?
                       <div className="w-1/2 m-auto mt-5 h-[100px] bg-cover mb-2.5" style={{backgroundImage : `url(${polygon.media[0].url})`}}></div>
-                    </Link>
-                  : false}
+                    :
+                      <div className="w-1/2 m-auto mt-5 h-[100px] bg-cover mb-2.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 504 504" width="100px" height="100px">
+                          <g><path fill="#fefefe" d="M -0.5,-0.5 C 167.5,-0.5 335.5,-0.5 503.5,-0.5C 503.5,167.5 503.5,335.5 503.5,503.5C 335.5,503.5 167.5,503.5 -0.5,503.5C -0.5,335.5 -0.5,167.5 -0.5,-0.5 Z"/></g>
+                          <g><path fill="#474955" d="M 237.5,382.5 C 236.306,381.223 234.64,380.556 232.5,380.5C 230.631,380.507 228.964,380.84 227.5,381.5C 201.487,382.501 176.487,388.001 152.5,398C 147.107,400.726 142.274,404.226 138,408.5C 136.517,411.702 136.183,415.036 137,418.5C 143.503,426.313 151.669,431.813 161.5,435C 198.254,446.909 235.92,451.243 274.5,448C 302.141,446.742 328.474,440.408 353.5,429C 359.788,425.881 364.121,421.048 366.5,414.5C 364.121,407.952 359.788,403.119 353.5,400C 334.192,390.756 313.859,385.089 292.5,383C 295.294,377.912 297.961,372.745 300.5,367.5C 327.734,368.522 352.4,377.022 374.5,393C 387.759,407.335 387.759,421.668 374.5,436C 358.099,448.037 339.766,456.037 319.5,460C 267.085,470.102 215.085,468.436 163.5,455C 147.719,450.53 134.219,442.363 123,430.5C 115.571,416.308 117.405,403.475 128.5,392C 148.092,378.575 169.759,370.242 193.5,367C 204.768,365.128 216.102,363.961 227.5,363.5C 201.166,307.831 173.999,252.497 146,197.5C 125.741,141.974 138.241,95.4744 183.5,58C 224.24,31.5327 266.24,29.5327 309.5,52C 340.732,71.2563 359.232,99.0896 365,135.5C 367.097,154.313 365.097,172.646 359,190.5C 323.225,263.716 287.225,336.716 251,409.5C 246.487,400.473 241.987,391.473 237.5,382.5 Z"/></g>
+                          <g><path fill="#fdfdfd" d="M 243.5,88.5 C 272.254,87.1119 290.754,100.112 299,127.5C 301.985,155.706 290.151,174.539 263.5,184C 233.632,188.77 213.799,176.937 204,148.5C 199.905,117.002 213.072,97.0018 243.5,88.5 Z"/></g>
+                          <g><path fill="#adb1b4" d="M 227.5,381.5 C 228.964,380.84 230.631,380.507 232.5,380.5C 234.64,380.556 236.306,381.223 237.5,382.5C 234.272,381.586 230.939,381.253 227.5,381.5 Z"/></g>
+                        </svg>
+                      </div>
+                    }
+                  </Link>
                   <p className="uppercase text-gray-300 text-xs pb-2.5">{polygon.category}</p>
                   <Link prefetch={false} href={`maps/${polygon.category}/${polygon.slug}`}>
                     <h5 className="text-xl font-bold">{polygon.name}</h5>

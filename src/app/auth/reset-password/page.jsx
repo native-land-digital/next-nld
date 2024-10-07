@@ -51,33 +51,26 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="bg-blue-900 font-[sans-serif]">
-      <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
-        <div className="max-w-md w-full">
-
-          <div className="p-8 rounded-2xl bg-white shadow">
-            <h2 className="text-gray-800 text-center text-2xl font-bold">{t('reset-password')}</h2>
-            <p className="text-black text-sm my-2.5">{token ? t('reset-password-message-reset') : t('reset-password-message')}</p>
-            <div className="mt-4">
-              {token ?
-                <div>
-                  <input value={password} onChange={(e) => setPassword(e.target.value)} name="password" type="password" className="w-full mb-2.5 text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('password-placeholder')} />
-                  <button onClick={() => resetPassword()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
-                    {t('reset-password')}
-                  </button>
-                </div>
-              :
-                <div>
-                  <input value={email} onChange={(e) => setEmail(e.target.value)} name="email" type="text" className="w-full mb-2.5 text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('email-placeholder')} />
-                  <button onClick={() => sendToken()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
-                    {t('reset-password')}
-                  </button>
-                </div>
-              }
-              <p className="text-gray-800 text-sm !mt-8 text-center"><a href="/auth/login" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">{t('sign-in')}</a></p>
-            </div>
+    <div>
+      <h2 className="text-gray-800 text-center text-2xl font-bold">{t('reset-password')}</h2>
+      <p className="text-black text-sm my-2.5">{token ? t('reset-password-message-reset') : t('reset-password-message')}</p>
+      <div className="mt-4">
+        {token ?
+          <div>
+            <input value={password} onChange={(e) => setPassword(e.target.value)} name="password" type="password" className="w-full mb-2.5 text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('password-placeholder')} />
+            <button onClick={() => resetPassword()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+              {t('reset-password')}
+            </button>
           </div>
-        </div>
+        :
+          <div>
+            <input value={email} onChange={(e) => setEmail(e.target.value)} name="email" type="text" className="w-full mb-2.5 text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('email-placeholder')} />
+            <button onClick={() => sendToken()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+              {t('reset-password')}
+            </button>
+          </div>
+        }
+        <p className="text-gray-800 text-sm !mt-8 text-center"><a href="/auth/login" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">{t('sign-in')}</a></p>
       </div>
     </div>
   );
