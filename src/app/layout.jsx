@@ -1,9 +1,11 @@
 import "./globals.css";
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
+import { getServerSession } from "next-auth"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { authOptions } from "@/root/auth";
 import Header from '@/components/nav/header';
 import Footer from '@/components/nav/footer';
 
@@ -22,6 +24,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
 
+  const session = await getServerSession(authOptions);
   const locale = await getLocale();
   const messages = await getMessages();
 
@@ -30,7 +33,7 @@ export default async function RootLayout({ children }) {
       <body className="antialiased">
         <NextIntlClientProvider messages={messages}>
           <div>
-            <Header />
+            <Header session={session} />
             <div>
               {children}
             </div>
