@@ -21,7 +21,7 @@ export default function ViewAPI({ user }) {
   return (
     <div>
       <div className="w-full py-4 px-2 bg-blue-200 rounded">
-        <input type="checkbox" checked={agreement ? true : false}  onChange={(e) => saveAgreement(e.target.checked)}/> <a className="ml-2.5 underline" href="https://api-docs.native-land.ca/data-sovereignty-treaty">{t('data-sov')} ➜</a>
+        <input type="checkbox" checked={agreement ? true : false}  onChange={(e) => saveAgreement(e.target.checked)}/> <a className="ml-2.5 underline" href="https://api-docs.native-land.ca/data-sovereignty-treaty" target="_blank">{t('data-sov')} ➜</a>
       </div>
       {agreement !== user.agreed_treaty ?
         <button onClick={() => agreeToTreaty()} className="mt-2.5 md:col-span-1 border bg-gray-100 hover:bg-gray-300 border-gray-300 px-4 py-3 rounded">{t('sign-agreement')}</button>
