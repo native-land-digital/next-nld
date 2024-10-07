@@ -83,8 +83,6 @@ Current costs:
 
 ### Notes for current development to-dos
 
-- Adding refresh router during editing
-- Improving the 404 page to give some suggestions
 - User pagination
 
 During first deploy:

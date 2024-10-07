@@ -1,6 +1,7 @@
 import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 
 import SubHeader from '@/components/nav/sub-header';
 import Sidebar from '@/components/static/sidebar';
@@ -17,6 +18,11 @@ export const generateStaticParams = () => {
 export const revalidate = false;
 
 export default async function Page({ searchParams, params : { category }}) {
+
+  let allowedCategories = ["territories","languages","treaties"]
+  if(!allowedCategories.includes(category)) {
+    notFound()
+  }
 
   const t = await getTranslations('Maps');
   const tCommon = await getTranslations('Common');
