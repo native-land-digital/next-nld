@@ -20,22 +20,29 @@ export const POST = async (req) => {
 		}
 
 		try {
-			const user = await prisma.user.create({
-				data: {
-					email: body.email,
-					name: body.name,
-					organization : body.organization,
-					password: hashPassword(body.password)
-				}
+			const userExists = await prisma.user.findUnique({
+				where : { email : body.email }
 			});
-			await sendEmail({
-			   to: body.email,
-			   subject: 'Verify your email address',
-			   react: React.createElement(VerificationTemplate, { email: body.email, verification_key : user.verification_key }),
-		  })
-			return NextResponse.json({
-				id : user.id
-			});
+			if(userExists) {
+				return NextResponse.json({ error : "An account with this email already exists" }, { status: 400 });
+			} else {
+				const user = await prisma.user.create({
+					data: {
+						email: body.email,
+						name: body.name,
+						organization : body.organization,
+						password: hashPassword(body.password)
+					}
+				});
+				await sendEmail({
+				   to: body.email,
+				   subject: 'Verify your email address',
+				   react: React.createElement(VerificationTemplate, { email: body.email, verification_key : user.verification_key }),
+			  })
+				return NextResponse.json({
+					id : user.id
+				});
+			}
 		} catch (error) {
 			console.error(error);
 			return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}` }, { status: 500 });
