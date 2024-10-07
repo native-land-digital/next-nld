@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { possiblePermissions } from '@/lib/auth/permissions';
 import { toast } from 'react-toastify';
-import { Link } from '@/i18n/routing';
+import Link from 'next/link'
 
 export default function EditUser({ user, isAdmin }) {
 
@@ -46,7 +46,7 @@ export default function EditUser({ user, isAdmin }) {
 
   const deleteUser = () => {
     if(window.confirm(t('delete-user-confirm'))) {
-      fetch(`/api/users/${polygon.id}`, {
+      fetch(`/api/users/${user.id}`, {
         method : "DELETE"
       }).then(resp => resp.json()).then(results => {
         if(results.error) {

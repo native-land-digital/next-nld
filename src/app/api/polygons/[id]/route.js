@@ -1,4 +1,5 @@
 import prisma from "@/lib/db/prisma";
+import { submitRevalidation } from '@/lib/actions'
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
 
@@ -149,10 +150,23 @@ export const PATCH = async (req, route) => {
   				}
   			}
 
-  			const polygon = await prisma.polygon.update({
+  			await prisma.polygon.update({
   				where: { id: parseInt(polygonId) },
   				data: { ...body },
   			});
+
+  			const polygon = await prisma.polygon.findUnique({
+    			where : { id : parseInt(polygonId) },
+    			select : {
+    				category : true,
+            slug : true
+    			}
+    		});
+
+        // Ensure associated paths are now invalidated for next load
+        submitRevalidation(`/dashboard/research`);
+        submitRevalidation(`/dashboard/research/${polygonId}`);
+        submitRevalidation(`/maps/${polygon.category}/${encodeURIComponent(polygon.slug).toLowerCase()}`);
 
   			return NextResponse.json({ polygon });
   		} catch (error) {

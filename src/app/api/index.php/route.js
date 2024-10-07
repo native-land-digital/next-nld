@@ -2,6 +2,7 @@
   Legacy Native-Land.ca API. Set at this URL because that's where it was for an awfully long time so far.
 */
 import prisma from "@/lib/db/prisma";
+import { redirect } from 'next/navigation'
 import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 
@@ -13,9 +14,22 @@ export const GET = async (req ) => {
   if(!maps) {
     return NextResponse.json({ error : `You did not include a maps type with your request (territories, languages, and/or treaties)` }, { status: 500 });
   } else {
+		// If only requesting one big shape, redirect to big geojson
+		const mapCategories = maps.split(',');
+		if(mapCategories.length === 1 && !position && !name) {
+			if(mapCategories[0] === 'territories') {
+				redirect('https://d2u5ssx9zi93qh.cloudfront.net/territories.geojson')
+				return;
+			} else if (mapCategories[0] === 'languages') {
+				redirect('https://d2u5ssx9zi93qh.cloudfront.net/languages.geojson')
+				return;
+			} else if (mapCategories[0] === 'treaties') {
+				redirect('https://d2u5ssx9zi93qh.cloudfront.net/treaties.geojson')
+				return;
+			}
+		}
     try {
       const featureList = [];
-      const mapCategories = maps.split(',');
       // Check point in polygons
       let matchingShapeIDs = [];
       if(position) {
@@ -24,7 +38,8 @@ export const GET = async (req ) => {
           const polygonShapes = await prisma.$queryRaw`
             SELECT id
             FROM "Polygon"
-            WHERE ST_Contains(geometry, ST_GeomFromText(format('POINT(%s %s)', ${parseFloat(latlngString[1])}, ${parseFloat(latlngString[0])}), 4326))
+            WHERE published = true
+            AND ST_Contains(geometry, ST_GeomFromText(format('POINT(%s %s)', ${parseFloat(latlngString[1])}, ${parseFloat(latlngString[0])}), 4326))
           `
           matchingShapeIDs = polygonShapes.map(shape => shape.id);
         } catch (err) {
@@ -45,7 +60,9 @@ export const GET = async (req ) => {
             category : {
               in : mapCategories
             }
-          }]
+          },{
+						published : true
+					}]
         }
       }
       if(name) {
@@ -61,7 +78,7 @@ export const GET = async (req ) => {
           })
         })
       }
-      if(matchingShapeIDs && matchingShapeIDs.length > 0) {
+      if(position) {
         query.where['AND'].push({
           id : {
             in : matchingShapeIDs
@@ -69,15 +86,13 @@ export const GET = async (req ) => {
         })
       }
       const polygons = await prisma.polygon.findMany(query)
-			if(polygons.length > 500) {
-				return NextResponse.json({ error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" }, { status: 400 });
-			}
       if(polygons.length > 0) {
   			const ids = polygons.map(polygon => polygon.id);
   		  const polygonShapes = await prisma.$queryRaw`
   		    SELECT id, ST_AsGeoJSON(geometry) as geojson
   				FROM "Polygon"
-  		    WHERE id IN (${Prisma.join(ids)})
+					WHERE published = true
+  		    AND id IN (${Prisma.join(ids)})
   		  `
   			polygons.forEach(polygon => {
   				const thisPolygonShape = polygonShapes.find(shape => shape.id === polygon.id);
@@ -89,7 +104,11 @@ export const GET = async (req ) => {
   			})
       }
       if (featureList.length > 0) {
-    		return NextResponse.json(featureList);
+				if(featureList.length > 500) {
+					return NextResponse.json({ error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" }, { status: 400 });
+				} else {
+    			return NextResponse.json(featureList);
+				}
       } else {
         return NextResponse.json(featureList);
       }
@@ -129,21 +148,22 @@ export const POST = async (req) => {
 				const polygonShapes = await prisma.$queryRaw`
 					SELECT id, name, category, color, slug, ST_AsGeoJSON(geometry) as geojson
 					FROM "Polygon"
-					WHERE category = ${body.maps}
+					WHERE published = true
+					AND category = ${body.maps}
 					${Prisma.join(sqlArray)}
 				`
 				// ${geometryAsString}
 				// WHERE ST_Contains(geometry, ST_GeomFromText(format('POINT(%s %s)', ${parseFloat(latlngString[1])}, ${parseFloat(latlngString[0])}), 4326))
 				const featureList = []
-				if(polygonShapes.length > 500) {
-					return NextResponse.json({ error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" }, { status: 400 });
-				}
 				polygonShapes.forEach(polygon => {
 					let feature = constructFeature(polygon);
 					if(feature) {
 						featureList.push(feature);
 					}
 				})
+				if(featureList.length > 500) {
+					return NextResponse.json({ error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" }, { status: 400 });
+				}
 				return NextResponse.json(featureList);
 			} else {
 				return NextResponse.json({ error : "The polygon has no features" }, { status: 400 });

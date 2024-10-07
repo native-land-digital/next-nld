@@ -35,7 +35,7 @@ Technologies at use include:
 - Next Auth
 - Amazon S3 buckets
 - Mapbox MTS and Mapbox GL JS
-- i18n, next-intl
+- i18n, next-intl (Note: had to remove due to middleware costs)
 - Datadog ingesting logs from Vercel
 
 We would love to have you involved if you have any fixes or additions you'd like to see on the site.
@@ -83,32 +83,24 @@ Current costs:
 
 ### Notes for current development to-dos
 
+- User pagination
+
 During first deploy:
 - Download and store backups from Pressable
-- Seeing if Google Analytics is logging correctly
 - Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
-- Keeping an eye on Datadog logs to see how many GBs we are sending (we will upgrade to Pro eventually); creating some Dashboards
-- Watching over first day or two to see major sources of data usage, what's getting hit, are we going to hit any limits?
-- Potentially doing https://vercel.com/docs/integrations/external-platforms/cloudflare proxy in front of Vercel if bandwidth too high
-- Moving to free plan with Cloudflare?
-- Removing all the extra CPanel-related DNS records
-- Possibly loading from CDN https://www.rodyvansambeek.com/blog/optimizing-costs-and-performance-of-vercel-edge-request-pricing if Edge are too high
-
-After first deploy:
-- Regenerate tilesets to match native-land.ca URL (and geojsons)
-- Adding a protected Mapbox public token (only for main URL) for prod
-- Deleting the test user once Tanya and Victor are created
 
 After things are confirmed and comfy:
-- Deploying app changes
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
+- re adding Google Analytics?
+- Moving to free plan with Cloudflare?
+- Removing all the extra CPanel-related DNS records
+- Playing with Datadog
+- How to handle long term log storage?
 
 Optimizing:
 - Should the site open stuff in a new window? Or open in the same window?
-- Cleanups in Kysely connection, moving more fully to Kysely
+- Cleanups in Kysely connection, moving more fully to Kysely for cleaner queries
 - Ensuring Cloudfront CDN is written for uploaded images
-- Reducing geocode endpoint to 3 characters needed
-- User pagination
 - Improving mobile app fetch for resources (endpoint provides ALL data which is too much)
 
 Aspirational:

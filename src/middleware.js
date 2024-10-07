@@ -1,9 +1,19 @@
+import { NextResponse } from 'next/server'
 import { withAuth } from "next-auth/middleware"
-import createMiddleware from 'next-intl/middleware';
+import { getToken } from "next-auth/jwt";
 import { chain } from "@nimpl/middleware-chain";
-import { routing } from '@/i18n/routing';
 
-const intlMiddleware = createMiddleware(routing);
+const redirectMiddleware = async (req) => {
+  const path = req.nextUrl.pathname;
+  const token = await getToken({ req })
+  // Redirects user to dashboard if they are already logged in
+  if(path.startsWith('/auth/login') || path.startsWith('/auth/signup') || path.startsWith('/auth/reset-password') || path.startsWith('/auth/verify-email')) {
+    if(token && token.permissions.includes('profile')) {
+      return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
+    }
+  }
+  return NextResponse.next()
+}
 
 const authMiddleware = withAuth({
   callbacks: {
@@ -36,12 +46,12 @@ const authMiddleware = withAuth({
 })
 
 export default chain([
-  [intlMiddleware, { exclude : /^\/api|_next\/static|_next\/image|favicon.ico(\/.*)?$/ }],
+  [redirectMiddleware, { include : /^\/auth(\/.*)?$/ }],
   [authMiddleware, { include : /^\/dashboard(\/.*)?$/ }]
 ], {
   logger : null
 });
 
 export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+    matcher: ["/dashboard/:path*", "/auth/:path*"],
 };

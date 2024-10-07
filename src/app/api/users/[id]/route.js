@@ -1,4 +1,5 @@
 import prisma from "@/lib/db/prisma";
+import { submitRevalidation } from '@/lib/actions'
 import { getToken } from "next-auth/jwt"
 import { NextResponse } from "next/server";
 
@@ -31,6 +32,8 @@ export const PATCH = async (req, route) => {
   				where: { id: parseInt(userId) },
   				data: { ...body }
   			});
+
+        submitRevalidation(`/dashboard/users/${userId}`);
 
   			return NextResponse.json({ user });
   		} catch (error) {

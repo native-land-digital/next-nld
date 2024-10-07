@@ -1,11 +1,12 @@
 "use client"
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/routing';
+import Link from 'next/link'
 
-export default function Header() {
+export default function Header({ session }) {
 
   const t = useTranslations('Navigation');
+  const tDash = useTranslations('Dashboard');
 
   const [ hamburgerToggled, setHamburgerToggled ] = useState(false)
   const [ openNav, setOpenNav ] = useState(false);
@@ -109,42 +110,12 @@ export default function Header() {
               </div>
             </div>
           </div>
-          <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/auth/login" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{t('login')}</Link>
+          {session ?
+            <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/dashboard" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{tDash('dashboard')}</Link>
+          :
+            <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/auth/login" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{t('login')}</Link>
+          }
           <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/contact" className="block mt-4 lg:inline-block lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">{t('contact')}</Link>
-          <div onMouseLeave={() => setOpenNav(false)}>
-            <div onMouseOver={() => setOpenNav('language')} onClick={() => setOpenNav(openNav === 'language' ? false : 'language')} className="cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">
-              <span className="pointer-events-none">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-translate m-1" viewBox="0 0 16 16">
-                  <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z"/>
-                  <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31"/>
-                </svg>
-              </span>
-              <svg className="w-3 h-3 pointer-events-none mt-1.5 ml-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <title>chevron-down</title>
-                <g fill="none">
-                  <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                </g>
-              </svg>
-            </div>
-            <div className={`${openNav === 'language' ? '' : 'hidden'} absolute w-48 z-30`}>
-              <div className="mt-[23px] border-t-4 border-l border-b border-r md:border-l-0 md:border-b-0 md:border-r-0 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="en" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('english')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="fr" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('french')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="es" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('spanish')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="hi" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('hindi')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="zn-CH" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('chinese-simplified')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="pt-br" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('portuguese-brazil')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="fa" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('farsi')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="ko" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('korean')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="bxk" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('bukusu')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="kbh" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('kamentsa-biya')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="pen" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('penobscot')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="qu" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('kichwa-shimi')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="sel" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('selkup')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" locale="yo" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('yoruba')}</Link>
-              </div>
-            </div>
-          </div>
         </div>
         <div>
           <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/support" className="inline-block text-sm px-4 py-2 leading-none rounded text-white bg-blue-900 hover:text-teal-00 hover:bg-blue-600 mt-4 lg:mt-0">{t('support-us')}</Link>
@@ -153,3 +124,41 @@ export default function Header() {
     </nav>
   );
 }
+
+// One day, maybe we can add translation back again
+// When the middleware costs aren't exorbitant
+
+// <div onMouseLeave={() => setOpenNav(false)}>
+//   <div onMouseOver={() => setOpenNav('language')} onClick={() => setOpenNav(openNav === 'language' ? false : 'language')} className="cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">
+//     <span className="pointer-events-none">
+//       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-translate m-1" viewBox="0 0 16 16">
+//         <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z"/>
+//         <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31"/>
+//       </svg>
+//     </span>
+//     <svg className="w-3 h-3 pointer-events-none mt-1.5 ml-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+//       <title>chevron-down</title>
+//       <g fill="none">
+//         <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+//       </g>
+//     </svg>
+//   </div>
+//   <div className={`${openNav === 'language' ? '' : 'hidden'} absolute w-48 z-30`}>
+//     <div className="mt-[23px] border-t-4 border-l border-b border-r md:border-l-0 md:border-b-0 md:border-r-0 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('en')} locale="en" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('english')}</Link>
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('fr')} locale="fr" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('french')}</Link>
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('es')} locale="es" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('spanish')}</Link>
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('hi')} locale="hi" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('hindi')}</Link>
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('zn-CH')} locale="zn-CH" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('chinese-simplified')}</Link>
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('pt-br')} locale="pt-br" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('portuguese-brazil')}</Link>
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('fa')}  locale="fa" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('farsi')}</Link>
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('ko')}  locale="ko" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('korean')}</Link>
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('bxk')} locale="bxk" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('bukusu')}</Link>
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('kbh')}  locale="kbh" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('kamentsa-biya')}</Link>
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('pen')}  locale="pen" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('penobscot')}</Link>
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('qu')}  locale="qu" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('kichwa-shimi')}</Link>
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('sel')}  locale="sel" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('selkup')}</Link>
+//       <Link href="#" prefetch={false} onClick={() => setNewLanguage('yo')}  locale="yo" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('yoruba')}</Link>
+//     </div>
+//   </div>
+// </div>
