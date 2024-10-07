@@ -166,7 +166,7 @@ export const PATCH = async (req, route) => {
         // Ensure associated paths are now invalidated for next load
         submitRevalidation(`/dashboard/research`);
         submitRevalidation(`/dashboard/research/${polygonId}`);
-        submitRevalidation(`/maps/${polygon.category}/${polygon.slug}`);
+        submitRevalidation(`/maps/${polygon.category}/${encodeURIComponent(polygon.slug).toLowerCase()}`);
 
   			return NextResponse.json({ polygon });
   		} catch (error) {

@@ -2,6 +2,7 @@
   Legacy Native-Land.ca API. Set at this URL because that's where it was for an awfully long time so far.
 */
 import prisma from "@/lib/db/prisma";
+import { redirect } from 'next/navigation'
 import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 
@@ -13,9 +14,22 @@ export const GET = async (req ) => {
   if(!maps) {
     return NextResponse.json({ error : `You did not include a maps type with your request (territories, languages, and/or treaties)` }, { status: 500 });
   } else {
+		// If only requesting one big shape, redirect to big geojson
+		const mapCategories = maps.split(',');
+		if(mapCategories.length === 1 && !position && !name) {
+			if(mapCategories[0] === 'territories') {
+				redirect('https://d2u5ssx9zi93qh.cloudfront.net/territories.geojson')
+				return;
+			} else if (mapCategories[0] === 'languages') {
+				redirect('https://d2u5ssx9zi93qh.cloudfront.net/languages.geojson')
+				return;
+			} else if (mapCategories[0] === 'treaties') {
+				redirect('https://d2u5ssx9zi93qh.cloudfront.net/treaties.geojson')
+				return;
+			}
+		}
     try {
       const featureList = [];
-      const mapCategories = maps.split(',');
       // Check point in polygons
       let matchingShapeIDs = [];
       if(position) {

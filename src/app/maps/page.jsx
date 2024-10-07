@@ -35,8 +35,14 @@ export default async function Page({ searchParams }) {
     .offset(24 * page)
 
   if(searchParams.search) {
-    query = query.where((eb) => eb(eb.fn('lower', 'Polygon.name'), 'like', `%${searchParams.search.toLowerCase()}%`));
-    totalQuery = totalQuery.where((eb) => eb(eb.fn('lower', 'Polygon.name'), 'like', `%${searchParams.search.toLowerCase()}%`));
+    query = query.where((eb) => eb.or([
+      eb(eb.fn('lower', 'Polygon.name'), 'like', `%${searchParams.search.toLowerCase()}%`),
+      eb(eb.fn('lower', 'Polygon.slug'), 'like', `%${searchParams.search.toLowerCase()}%`),
+    ]));
+    totalQuery = totalQuery.where((eb) => eb.or([
+      eb(eb.fn('lower', 'Polygon.name'), 'like', `%${searchParams.search.toLowerCase()}%`),
+      eb(eb.fn('lower', 'Polygon.slug'), 'like', `%${searchParams.search.toLowerCase()}%`),
+    ]));
   }
 
   const polygons = await query.execute()
