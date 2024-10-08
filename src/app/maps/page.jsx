@@ -78,7 +78,7 @@ export default async function Page({ searchParams }) {
             {polygons.map(polygon => {
               return <PolygonCard key={`polygon-${polygon.id}`} polygon={polygon} />
             })}
-            {polygons.length >= 24 ?
+            {polygons.length >= 24 || page > 0 ?
               <nav className="flex items-center mt-2.5" aria-label="Pagination">
                 {page > 0 ?
                   <form>
@@ -91,15 +91,17 @@ export default async function Page({ searchParams }) {
                     </button>
                   </form>
                 : false}
-                <form>
-                  <input type="hidden" name="page" value={page + 1} />
-                  <button type="submit" className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" aria-label="Next">
-                    <span>{tCommon('next')}</span>
-                    <svg aria-hidden="true" className="hidden shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                  </button>
-                </form>
+                {polygons.length >= 24 ?
+                  <form>
+                    <input type="hidden" name="page" value={page + 1} />
+                    <button type="submit" className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" aria-label="Next">
+                      <span>{tCommon('next')}</span>
+                      <svg aria-hidden="true" className="hidden shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m9 18 6-6-6-6"></path>
+                      </svg>
+                    </button>
+                  </form>
+                : false}
               </nav>
             : false}
           </div>
