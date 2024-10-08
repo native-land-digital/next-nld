@@ -5,26 +5,66 @@ import { getTranslations } from 'next-intl/server';
 import SubHeader from '@/components/nav/sub-header'
 import AdminMenu from '@/components/dashboard/menu'
 
-export default async function Page() {
+export default async function Page({ searchParams }) {
 
+  const tCommon = await getTranslations('Common');
   const t = await getTranslations('Dashboard');
 
-  const users = await prisma.user.findMany({
+  let page = 0;
+  let search = false;
+  if(searchParams.page) {
+    page = Number(searchParams.page);
+  }
+  if(searchParams.search) {
+    search = searchParams.search;
+  }
+  const query = {
     select : {
       id : true,
       name : true,
       email : true,
       organization : true,
       permissions : true
+    },
+    orderBy : {
+      createdAt : 'desc'
+    },
+    skip : page * 25,
+    take : 25
+  }
+  if(search) {
+    query['where'] = {
+      name : {
+        contains : search,
+        mode: 'insensitive'
+      }
     }
-  });
+  }
+  const users = await prisma.user.findMany(query);
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={t('user-management')} crumbs={[{ url : "/dashboard", title : "Dashboard" }]} />
       <div className="min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
         <AdminMenu />
-        <div className="col-span-2 bg-white rounded-t h-screen shadow-lg p-4 mt-5">
+        <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
+          <div className="w-full mb-5 bg-gray-100 p-2.5 rounded">
+            <div className="grid grid-cols-4 gap-2.5">
+              <form className="grid grid-cols-4 md:grid-cols-5 col-span-4 md:col-span-3 gap-2.5">
+                <div className="col-span-3 md:col-span-2">
+                  <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
+                </div>
+                <div className="col-span-3 md:col-span-2">
+                  <button className="border border-gray-300 px-4 py-3 rounded md:ml-2.5 mr-2.5 text-sm">{tCommon('search')}</button>
+                  {search ?
+                    <Link prefetch={false} className="inline-block border border-gray-300 px-4 py-3 rounded" href="/dashboard/users">{tCommon('clear')}</Link>
+                  : false}
+                </div>
+              </form>
+              <div className="col-span-4 md:col-span-1 text-sm justify-end">
+              </div>
+            </div>
+          </div>
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
               <tr className="hidden md:table-row">
@@ -51,6 +91,32 @@ export default async function Page() {
               })}
             </tbody>
           </table>
+          {users.length >= 25 || page > 0 ?
+            <nav className="flex items-center mt-2.5" aria-label="Pagination">
+              {page > 0 ?
+                <form>
+                  <input type="hidden" name="page" value={page - 1} />
+                  <button type="submit" className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" aria-label="Previous">
+                    <svg aria-hidden="true" className="hidden shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="m15 18-6-6 6-6"></path>
+                    </svg>
+                    <span>{tCommon('prev')}</span>
+                  </button>
+                </form>
+              : false}
+              {users.length >= 25 ?
+                <form>
+                  <input type="hidden" name="page" value={page + 1} />
+                  <button type="submit" className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" aria-label="Next">
+                    <span>{tCommon('next')}</span>
+                    <svg aria-hidden="true" className="hidden shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="m9 18 6-6-6-6"></path>
+                    </svg>
+                  </button>
+                </form>
+              : false}
+            </nav>
+          : false}
         </div>
       </div>
     </div>
