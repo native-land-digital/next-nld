@@ -22,7 +22,7 @@ const nextConfig = {
       destination: "/how-to-contribute/volunteer",
       permanent: true
     },{
-      source: "/category/community-blog/",
+      source: "/category/community-blog",
       destination: "https://medium.com/@native-land",
       permanent: true
     },{

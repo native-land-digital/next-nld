@@ -83,32 +83,26 @@ Current costs:
 
 ### Notes for current development to-dos
 
-- User pagination
-
-During first deploy:
-- Download and store backups from Pressable
-- Setting up regular backups for Supabase (beyond 7 day standard, once per month or so dump it somewhere)
-
 After things are confirmed and comfy:
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
 - re adding Google Analytics?
-- Moving to free plan with Cloudflare?
+- Moving to free plan with Cloudflare (we aren't using most services; keep DNS and basic CDN routing)
 - Removing all the extra CPanel-related DNS records
 - Playing with Datadog
 - How to handle long term log storage?
 
 Optimizing:
-- Should the site open stuff in a new window? Or open in the same window?
 - Cleanups in Kysely connection, moving more fully to Kysely for cleaner queries
 - Ensuring Cloudfront CDN is written for uploaded images
 - Improving mobile app fetch for resources (endpoint provides ALL data which is too much)
 
 Aspirational:
-- Adding an instagram feed, WOW they made this a nightmarish pain
+- Adding a social feed (Instagram)
 - Adding placenames
 - Adding language games and educational tools for learning territories
 
 Questions:
+- Should the site open stuff in a new window? Or open in the same window?
 - Overall general app review for improvements
 - At last tackling Africa?
 - Getting Patreon back into gear?
