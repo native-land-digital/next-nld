@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/i18n/client-i18n';
 import { possiblePermissions } from '@/lib/auth/permissions';
 import { toast } from 'react-toastify';
 import Link from 'next/link'

@@ -1,15 +1,29 @@
 /** @type {import('next').NextConfig} */
-import createNextIntlPlugin from 'next-intl/plugin';
-import createMDX from '@next/mdx'
+import { availableLocales, rootDirectories } from './src/i18n/config.js';
+import createMDX from '@next/mdx';
 
-const withNextIntl = createNextIntlPlugin();
 const withMDX = createMDX();
 
 const nextConfig = {
   output: "standalone",
   reactStrictMode: false,
+  rewrites: () => {
+    // This rewrites any sub-pages to point to the /en version that actually exists
+    let allRewrites = rootDirectories.map(directory => {
+      return {
+        source: `/${directory}/:path*`,
+        destination : `/en/${directory}/:path*`,
+      }
+    })
+    // This makes sure the root homepage renders the /en version by default
+    allRewrites.push({
+      source: "/",
+      destination : "/en",
+    })
+    return allRewrites
+  },
   redirects: () => {
-    return [{
+    let allRedirects = [{
       source: "/about",
       destination: "/about/our-team",
       permanent: true
@@ -86,6 +100,17 @@ const nextConfig = {
       destination : "/resources/mobile-apps",
       permanent: true
     }]
+    // This ensures that any internationalized path with at least one sub-path redirects to the /en version (avoiding page generation for non-translated pages)
+    // There's a way to regex it, but I got tired of it
+    const modifiedLocales = availableLocales.slice(1);
+    modifiedLocales.forEach(locale => {
+      allRedirects.push({
+        source: `/${locale}/:path+`,
+        destination: "/:path+",
+        permanent: true
+      })
+    })
+    return allRedirects;
   },
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   experimental: {
@@ -93,4 +118,4 @@ const nextConfig = {
   },
 };
 
-export default withNextIntl(withMDX(nextConfig));
+export default withMDX(nextConfig);

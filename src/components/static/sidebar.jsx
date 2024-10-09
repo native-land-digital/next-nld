@@ -1,6 +1,6 @@
 import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
-import { getTranslations } from 'next-intl/server';
+import { getTranslations } from '@/i18n/server-i18n';
 
 import PolygonCard from '@/components/static/polygon-card';
 

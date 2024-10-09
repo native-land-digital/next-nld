@@ -1,7 +1,7 @@
 'use client'
 import FileUploader from '@/components/dashboard/utils/file-uploader';
 import { toast } from 'react-toastify';
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/i18n/client-i18n';
 
 export default function MediaEditor({ media, setMedia }) {
 
@@ -16,7 +16,7 @@ export default function MediaEditor({ media, setMedia }) {
         method : "DELETE",
         headers : { 'Content-Type': 'application/json' }
       }).then(resp => resp.json());
-      
+
       if(response.error) {
         toast(response.error);
       } else {
