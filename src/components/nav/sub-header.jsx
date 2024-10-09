@@ -1,9 +1,9 @@
-import { useTranslations } from 'next-intl';
+import { getTranslations } from '@/i18n/server-i18n';
 import Link from 'next/link'
 
-export default function SubHeader({ title, crumbs = [] }) {
+export default async function SubHeader({ title, crumbs = [] }) {
 
-  const t = useTranslations('Navigation');
+  const t = await getTranslations('Navigation');
 
   return (
     <div className="bg-blue-900 h-60 flex items-center py-6 px-10 md:px-0">

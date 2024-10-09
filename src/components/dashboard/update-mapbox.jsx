@@ -1,6 +1,6 @@
 'use client';
 import { toast } from 'react-toastify';
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/i18n/client-i18n';
 
 export default function UpdateMapbox() {
 

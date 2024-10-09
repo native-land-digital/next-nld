@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { toast } from 'react-toastify';
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/i18n/client-i18n';
 
 export default function FileUploader({ media, setMedia }) {
 

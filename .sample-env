@@ -1,0 +1,34 @@
+# Environment variables declared in this file are automatically made available to Prisma.
+# See the documentation for more detail: https://pris.ly/d/prisma-schema#accessing-environment-variables-from-the-schema
+
+# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
+# See the documentation for all the connection string options: https://pris.ly/d/connection-strings
+
+MOBILE_APP_SECRET="random_string"
+
+DATABASE_URL="postgresql://nld_db_user:nld_db_pass@localhost:6543/nld_dev_db?schema=public"
+DIRECT_URL="postgresql://nld_db_user:nld_db_pass@localhost:6543/nld_dev_db?schema=public"
+NEXTAUTH_SECRET="another_random_string"
+NEXTAUTH_URL="http://localhost:3000"
+
+AWS_ACCESS_KEY_ID=""
+AWS_SECRET_ACCESS_KEY=""
+AWS_REGION=""
+AWS_NEXT_BUCKET_NAME=""
+AWS_WP_BUCKET_NAME="nld-wp-prod"
+AWS_SEED_BUCKET_NAME="nld-seeds"
+AWS_SEED_FILE="nld-export-sep2024.json"
+AWS_GEOJSON_BUCKET=""
+
+NEXT_PUBLIC_TINYMCE_KEY=""
+NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN=""
+NEXT_PUBLIC_MAPBOX_STYLE=""
+NEXT_PUBLIC_MAPBOX_STYLE_RESEARCH=""
+
+MAPBOX_USERNAME=""
+MAPBOX_SECRET_TOKEN=""
+TERRITORIES_TILESET_NAME="nld_local_terr_tilset"
+LANGUAGES_TILESET_NAME="nld_local_terr_tilset"
+TREATIES_TILESET_NAME="nld_local_terr_tilset"
+
+RESEND_API_KEY=""

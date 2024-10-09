@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/i18n/client-i18n';
 import Switch from "react-switch";
 import AsyncSelect from 'react-select/async';
 import Link from 'next/link'
