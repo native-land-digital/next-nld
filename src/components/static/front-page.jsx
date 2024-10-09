@@ -1,6 +1,6 @@
 import prisma from "@/lib/db/prisma";
 import Link from 'next/link'
-import { getTranslations } from 'next-intl/server';
+import { getTranslations } from '@/i18n/server-i18n';
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -31,7 +31,7 @@ export default async function FrontPage() {
         <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-5">
           <h2 className="text-4xl md:text-6xl font-bold leading-snug"><span className="text-blue-600 underline underline-offset-2 decoration-yellow-600/30 decoration-[15px]">{t('welcome')}</span> <span className="text-black">{t('welcome-glad')}</span></h2>
           <p className="text-xl text-gray-500 my-8">{t('welcome-blurb')}</p>
-          <div className="md:inline-block bg-blue-400/20 px-4 py-2.5 rounded"><p className="font-bold text-blue-600" dangerouslySetInnerHTML={{ __html : t.raw('welcome-contact') }}></p></div>
+          <div className="md:inline-block bg-blue-400/20 px-4 py-2.5 rounded"><p className="font-bold text-blue-600" dangerouslySetInnerHTML={{ __html : t('welcome-contact') }}></p></div>
         </section>
         <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -55,25 +55,25 @@ export default async function FrontPage() {
                     <img className="w-full" src="https://d75cfcm8x0ifj.cloudfront.net/physical-world-map.webp" alt="Mapping" />
                   </div>
                   <h4 className="text-xl font-bold mb-2.5 mt-5">{t('mapping-header')}</h4>
-                  <p className="p-5 text-slate-500"><span dangerouslySetInnerHTML={{ __html : t.raw('mapping') }} /></p>
+                  <p className="p-5 text-slate-500"><span dangerouslySetInnerHTML={{ __html : t('mapping') }} /></p>
                 </div>
                 <div className="bg-white rounded pb-2.5">
                   <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
                     <img src="https://d75cfcm8x0ifj.cloudfront.net/stacked-paper-sheets.webp" alt="Education" />
                   </div>
                   <h4 className="text-xl font-bold mb-2.5 mt-5">{t('education-header')}</h4>
-                  <p className="p-5 text-slate-500"><span dangerouslySetInnerHTML={{ __html : t.raw('education') }} /></p>
+                  <p className="p-5 text-slate-500"><span dangerouslySetInnerHTML={{ __html : t('education') }} /></p>
                 </div>
                 <div className="bg-white rounded pb-2.5">
                   <div className="w-1/2 m-auto mt-5 h-30 overflow-hidden">
                     <img src="https://d75cfcm8x0ifj.cloudfront.net/wildflower-4083864_1280.webp" alt="Community" />
                   </div>
                   <h4 className="text-xl font-bold mb-2.5 mt-5">{t('community-header')}</h4>
-                  <p className="p-5 text-slate-500"><span dangerouslySetInnerHTML={{ __html : t.raw('community') }} /></p>
+                  <p className="p-5 text-slate-500"><span dangerouslySetInnerHTML={{ __html : t('community') }} /></p>
                 </div>
               </div>
             </div>
-            <p className="pt-12 pb-12"><span dangerouslySetInnerHTML={{ __html : t.raw('how-it-works-link') }} /></p>
+            <p className="pt-12 pb-12"><span dangerouslySetInnerHTML={{ __html : t('how-it-works-link') }} /></p>
           </div>
         </section>
         <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
@@ -159,7 +159,7 @@ export default async function FrontPage() {
                 </svg>
                 <h5 className="text-lg font-bold mb-2.5 ml-2.5">{t('mobile-apps-header')}</h5>
               </div>
-              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t.raw('mobile-apps') }} /></p>
+              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t('mobile-apps') }} /></p>
             </div>
             <div className="p-5">
               <div className="flex">
@@ -169,7 +169,7 @@ export default async function FrontPage() {
                 </svg>
                 <h5 className="text-lg font-bold mb-2.5 ml-2.5">{t('open-data-header')}</h5>
               </div>
-              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t.raw('open-data') }} /></p>
+              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t('open-data') }} /></p>
             </div>
             <div className="p-5">
               <div className="flex">
@@ -179,7 +179,7 @@ export default async function FrontPage() {
                 </svg>
                 <h5 className="text-lg font-bold mb-2.5 ml-2.5">{t('education-header')}</h5>
               </div>
-              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t.raw('education') }} /></p>
+              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t('education') }} /></p>
             </div>
             <div className="p-5">
               <div className="flex">
@@ -189,7 +189,7 @@ export default async function FrontPage() {
                 </svg>
                 <h5 className="text-lg font-bold mb-2.5 ml-2.5">{t('land-acknowledgement-header')}</h5>
               </div>
-              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t.raw('land-acknowledgement') }} /></p>
+              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t('land-acknowledgement') }} /></p>
             </div>
             <div className="p-5">
               <div className="flex">
@@ -199,7 +199,7 @@ export default async function FrontPage() {
                 </svg>
                 <h5 className="text-lg font-bold mb-2.5 ml-2.5">{t('research-header')}</h5>
               </div>
-              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t.raw('research') }} /></p>
+              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t('research') }} /></p>
             </div>
             <div className="p-5">
               <div className="flex">
@@ -209,7 +209,7 @@ export default async function FrontPage() {
                 </svg>
                 <h5 className="text-lg font-bold mb-2.5 ml-2.5">{t('blogs-header')}</h5>
               </div>
-              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t.raw('blogs') }} /></p>
+              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t('blogs') }} /></p>
             </div>
           </div>
         </section>

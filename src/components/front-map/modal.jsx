@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/i18n/client-i18n';
 
 export default function MapModal() {
 
@@ -25,7 +25,7 @@ export default function MapModal() {
             </button>
           </div>
           <div className="p-4 overflow-y-auto">
-            <div className="text-black" dangerouslySetInnerHTML={{ __html : t.raw('disclaimer')}} />
+            <div className="text-black" dangerouslySetInnerHTML={{ __html : t('disclaimer')}} />
           </div>
           <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
             <button onClick={() => setModalOpen(false)} type="button" className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">

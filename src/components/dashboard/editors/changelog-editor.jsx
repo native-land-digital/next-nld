@@ -1,5 +1,5 @@
 'use client'
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/i18n/client-i18n';
 
 import AddButton from '@/components/dashboard/editors/common/add-button';
 import RemoveButton from '@/components/dashboard/editors/common/remove-button';

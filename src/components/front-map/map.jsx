@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/i18n/client-i18n';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 

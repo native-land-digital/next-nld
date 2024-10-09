@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth/next"
-import { getTranslations } from 'next-intl/server';
+import { getTranslations } from '@/i18n/server-i18n';
 import Link from 'next/link'
 
 import { authOptions } from "@/root/auth";

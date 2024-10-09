@@ -21,6 +21,7 @@
       "@/root/*": ["./*"],
       "@/components/*": ["./src/components/*"],
       "@/i18n/*": ["./src/i18n/*"],
+      "@/providers/*": ["./src/providers/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/public/*": ["./public/*"],
       "@/prisma-generated/*": ["./src/prisma/*"]
