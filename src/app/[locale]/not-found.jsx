@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation'
 import { useTranslations } from '@/i18n/client-i18n';
 import Link from 'next/link'
 
-import SubHeader from '@/components/nav/sub-header'
+import SubHeaderClient from '@/components/nav/sub-header-client'
 
 export default function NotFound() {
   const t = useTranslations('Common');
@@ -20,7 +20,7 @@ export default function NotFound() {
   return (
     <div>
       <div className="font-[sans-serif] bg-white pb-5">
-        <SubHeader title={t('not-found')} />
+        <SubHeaderClient title={t('not-found')} />
         <div className="grid gap-5 grid-cols-1 md:grid-cols-3 px-5 md:px-0 w-full md:w-2/3 min-h-screen m-auto -mt-12 text-black static-page">
           <div className="col-span-3 bg-white rounded-t shadow-lg mt-5">
             <div className="px-4 pb-4 break-words">

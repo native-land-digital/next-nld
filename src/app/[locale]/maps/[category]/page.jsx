@@ -1,6 +1,6 @@
 import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
-import { getTranslations } from '@/i18n/server-i18n';
+import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 import { notFound } from 'next/navigation';
 
 import SubHeader from '@/components/nav/sub-header';

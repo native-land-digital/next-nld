@@ -2,7 +2,7 @@ import { db } from '@/lib/db/kysely'
 import { jsonArrayFrom } from 'kysely/helpers/postgres'
 import SubHeader from '@/components/nav/sub-header'
 import Sidebar from '@/components/static/sidebar';
-import { getTranslations } from '@/i18n/server-i18n';
+import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 import { notFound } from 'next/navigation';
 
 import Map from '@/components/maps/map';
