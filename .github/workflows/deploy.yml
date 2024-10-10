@@ -16,7 +16,7 @@ jobs:
         with:
           registry-url: https://npm.pkg.github.com/
       - name: Install dependencies, Build application and Zip dist folder contents
-        run: cd lambdas/GET_nld_api && npm install && zip -qq ./bundle.zip ./*
+        run: cd lambdas/GET_nld_api && npm install && zip -qq -r ./bundle.zip ./*
       - name: deploy zip to aws lambda
         uses: appleboy/lambda-action@v0.2.0
         with:
