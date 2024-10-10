@@ -15,6 +15,7 @@ export const handler = async (event) => {
   }
 
   if(event.headers) {
+    console.log(JSON.stringify(event.headers))
     const headers = event.headers;
     if(headers.referer) {
       if(headers.referer.indexOf('https://native-land.ca') === -1 && headers.referer.indexOf('nld-projects.vercel.app') === -1 && headers.referer.indexOf('http://localhost') === -1) {
