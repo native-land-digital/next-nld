@@ -13,6 +13,9 @@ export const handlePostRequest = async(event) => {
     maps = body.maps;
     polygon_geojson = body.polygon_geojson;
   }
+  if(event.headers) {
+    console.log(JSON.stringify(event.headers))
+  }
 
   if(!maps || maps.trim() === "") {
     const response = {

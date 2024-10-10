@@ -15,6 +15,9 @@ export const handleGetRequest = async(event) => {
     names = event.queryStringParameters.name;
     position = event.queryStringParameters.position;
   }
+  if(event.headers) {
+    console.log(JSON.stringify(event.headers))
+  }
 
   if(!maps || maps.trim() === "") {
     const response = {
