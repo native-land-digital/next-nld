@@ -15,7 +15,10 @@ export const handler = async (event) => {
   if(!maps || maps.trim() === "") {
     const response = {
       statusCode: 400,
-      body: "You did not include a maps type with your request (territories, languages, and/or treaties)",
+      headers: {
+        "Content-Type" : "application/json"
+      }
+      body: JSON.stringify({ error : "You did not include a maps type with your request (territories, languages, and/or treaties)" })
     };
     return response;
   } else {
@@ -94,14 +97,20 @@ export const handler = async (event) => {
       `
       const response = {
         statusCode: 200,
-        body: res,
+        headers: {
+          "Content-Type" : "application/json"
+        }
+        body: JSON.stringify(res)
       };
       return response;
     } catch (err) {
       // await pool.end();
       const response = {
         statusCode: 400,
-        body: err,
+        headers: {
+          "Content-Type" : "application/json"
+        }
+        body: JSON.stringify(err),
       };
       return response;
     }
