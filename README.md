@@ -33,10 +33,12 @@ Technologies at use include:
 - TailwindCSS
 - PostgreSQL with PostGIS
 - Next Auth
-- Amazon S3 buckets
+- AWS S3 buckets for assets fronted with Cloudfront
+- AWS Lambdas for API and geocode searcher, via API Gateway
 - Mapbox MTS and Mapbox GL JS
-- i18n, next-intl (Note: had to remove due to middleware costs)
-- Datadog ingesting logs from Vercel
+- i18n custom solution with rewrites and redirects to avoid middleware costs
+- Logs with CloudWatch for API gateways
+- Google Analytics for general website analytics
 
 We would love to have you involved if you have any fixes or additions you'd like to see on the site.
 
@@ -65,11 +67,12 @@ To get set up:
 You will need to populate the `.env` with your own values.
 
 - AWS variables. Because this app stores data in S3, you'll need to set up a bucket for uploads (`AWS_NEXT_BUCKET_NAME`) and geoJSONs (`AWS_GEOJSON_BUCKET`). Then, create an IAM user with appropriate permissions for those buckets and enter the required values (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`).
+- You also need to create Lambdas to fully test the NLD API (`/api/index.php` or `/api/polygon/searcher`). Create test lambdas named `nld_api_dev` and `nld_search_dev`, and prod lambdas named `nld_api` and `nld_search`. Hook them up to API Gateway and enter the appropriate URLs in your `.env` (`AWS_API_ENDPOINT` and `AWS_GEOCODE_ENDPOINT`)
 - To get the text editor working in the `/dashboard/research`, sign up for a TinyMCE key. It will automatically be enabled to work for `localhost`, and no CC is required.
 - Create a Mapbox account and get a public token (`NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN`), and you can use the same style for both `NEXT_PUBLIC_MAPBOX_STYLE` and `NEXT_PUBLIC_MAPBOX_STYLE_RESEARCH`. You'll also need a secret token to generate tilesets into your account (`MAPBOX_SECRET_TOKEN` and `MAPBOX_USERNAME`)
 - Add a Resend API key to test user signup (`RESEND_API_KEY`)
 
-Please let us know if you have trouble doing this setup.
+Please let us know if you have trouble doing this setup. It's not easy!
 
 ### Tech Notes
 
@@ -94,13 +97,14 @@ Notes:
 - When generating a database with Supabase for Prisma, need to add `pgbouncer=true&connection_limit=1` to the Transaction DB URL
 - Builds will only run on pushes to `dev` (Preview) and `main` (Production)
 - Do seeding from local to avoid Vercel timeouts
+- Github actions will push lambdas to `dev` Lambdas on pushes to `dev`, and prod Lambdas on pushes to `main`
 
 Current costs:
 
 - Cloudflare DNS and caching, $28 monthly
 - Premium Supabase ($35 monthly)
-- Maximum budget of $100 in Vercel ($20 base + $10 for logs)
-- Logging with Datadog, free tier
+- Maximum budget of $100 in Vercel ($20 base)
+- Lambdas, S3, Cloudfront with AWS
 
 ## Weird exceptions
 
@@ -111,18 +115,12 @@ Current costs:
 
 ## Notes for current development to-dos
 
-- Fixing up header wrapping in session provider?
-- Adding link to researcher to see the front-end page
 - Figuring out logging in Cloudwatch to see errors reliably
-- Writing out dev notes for Lambdas
 
 After things are confirmed and comfy:
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
-- re adding Google Analytics?
 - Moving to free plan with Cloudflare (we aren't using most services; keep DNS and basic CDN routing)
 - Removing all the extra CPanel-related DNS records
-- Playing with Datadog
-- How to handle long term log storage?
 
 Optimizing:
 - Ensuring Cloudfront CDN is written for uploaded images
