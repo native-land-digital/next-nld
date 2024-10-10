@@ -12,7 +12,7 @@ jobs:
       - name: checkout source code
         uses: actions/checkout@v3
       - name: Install dependencies, Build application and Zip dist folder contents
-        run: cd lambdas/GET_nld_api && npm install && zip -qq -r -j ./bundle.zip ./lambdas/GET_nld_api/*
+        run: cd lambdas/GET_nld_api && npm install && zip -qq -r -j ./bundle.zip . -i ./lambdas/GET_nld_api/*
       - name: deploy zip to aws lambda
         uses: appleboy/lambda-action@v0.2.0
         with:
