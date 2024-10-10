@@ -1,0 +1,23 @@
+name: deploy to lambda dev
+
+on:
+  push:
+    branches: lambda-test
+
+jobs:
+  deploy_source:
+    name: deploy lambda from source
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@v3
+      - name: Install dependencies, Build application and Zip dist folder contents
+        run: cd lambdas/GET_nld_api && npm install && zip -qq -r -j ./bundle.zip ./*
+      - name: deploy zip to aws lambda
+        uses: appleboy/lambda-action@v0.2.0
+        with:
+          aws_access_key_id: ${{ secrets.AWS_LAMBDA_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_LAMBDA_SECRET_KEY }}
+          aws_region: ${{ secrets.AWS_LAMBDA_REGION }}
+          function_name: GET_nld_api_dev
+          zip_file: ./lambdas/GET_nld_api/bundle.zip

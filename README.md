@@ -111,7 +111,10 @@ Current costs:
 
 ## Notes for current development to-dos
 
+- Fixing up header wrapping in session provider?
 - Adding link to researcher to see the front-end page
+- Moving API to a Lambda
+- Moving front-page geocoding to a Lambda
 
 After things are confirmed and comfy:
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
