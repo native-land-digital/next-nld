@@ -47,6 +47,8 @@ export const handler = async (event) => {
     searchWhere = sql`lower(name) LIKE ${`%${search}%`}`
   }
 
+  console.log(search)
+
   // Execute query
   try {
     const res = await sql`
@@ -75,6 +77,12 @@ export const handler = async (event) => {
           name : row.name,
           centroid : JSON.parse(row.centroid),
           bounds : JSON.parse(row.bounds)
+        })
+      } else {
+        responseList.push({
+          id : row.id,
+          category : row.category,
+          name : row.name
         })
       }
     })

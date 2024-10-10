@@ -90,7 +90,7 @@ let search_response = await search({
   queryStringParameters : {
     s : 'pomo',
     category : "territories",
-    geosearch : true
+    // geosearch : true
   }
 });
 const searchResponseBody = JSON.parse(search_response.body);
@@ -98,7 +98,7 @@ console.log("--- START SEARCH RESPONSE TEST ---");
 if(searchResponseBody.error) {
   console.log(searchResponseBody.error)
 } else {
-  console.log(searchResponseBody)
+  // console.log(searchResponseBody)
   console.log(searchResponseBody.map(row => row.name));
   console.log(searchResponseBody.length);
 }
