@@ -14,7 +14,7 @@ jobs:
       - name: set up node
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          registry-url: https://npm.pkg.github.com/
       - name: Install dependencies, Build application and Zip dist folder contents
         run: cd lambdas/GET_nld_api && npm install && zip -qq ./bundle.zip ./*
       - name: deploy zip to aws lambda
