@@ -2,7 +2,6 @@ import "./globals.css";
 import { getMessages } from '@/i18n/server-i18n';
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { ToastContainer } from 'react-toastify';
-import { SessionProvider } from "next-auth/react"
 import 'react-toastify/dist/ReactToastify.css';
 
 import { LocaleProvider } from '@/i18n/locale-provider';
