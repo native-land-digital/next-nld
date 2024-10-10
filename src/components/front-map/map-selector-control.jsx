@@ -55,7 +55,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
 
     const loadTerritoryOptions = (inputValue, callback) => {
       if(inputValue.length >= 3) {
-        fetch(`/api/polygons/search?s=${inputValue}&category=territories`).then(resp => resp.json()).then(response => {
+        fetch(`/api/polygons/searcher?s=${inputValue}&category=territories`).then(resp => resp.json()).then(response => {
           callback(response.map(polygon => {
             return {
               value : polygon.id,
@@ -68,7 +68,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
 
     const loadLanguageOptions = (inputValue, callback) => {
       if(inputValue.length >= 3) {
-        fetch(`/api/polygons/search?s=${inputValue}&category=languages`).then(resp => resp.json()).then(response => {
+        fetch(`/api/polygons/searcher?s=${inputValue}&category=languages`).then(resp => resp.json()).then(response => {
           callback(response.map(polygon => {
             return {
               value : polygon.id,
@@ -81,7 +81,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
 
     const loadTreatyOptions = (inputValue, callback) => {
       if(inputValue.length >= 3) {
-        fetch(`/api/polygons/search?s=${inputValue}&category=treaties`).then(resp => resp.json()).then(response => {
+        fetch(`/api/polygons/searcher?s=${inputValue}&category=treaties`).then(resp => resp.json()).then(response => {
           callback(response.map(polygon => {
             return {
               value : polygon.id,

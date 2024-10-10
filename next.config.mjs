@@ -65,7 +65,15 @@ const nextConfig = {
       permanent: true
     },{
       source: "/wp-json/nativeland/v1/api/index.php",
-      destination : "/api/index.php",
+      destination : process.env.AWS_API_ENDPOINT,
+      permanent: true
+    },{
+      source: "/api/index.php",
+      destination : process.env.AWS_API_ENDPOINT,
+      permanent: true
+    },{
+      source: "/api/polygons/searcher",
+      destination : process.env.AWS_GEOCODE_ENDPOINT,
       permanent: true
     },{
       source: "/wp-content/themes/NLD-2021/files/indigenousTerritories.json",
