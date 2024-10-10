@@ -1,11 +1,11 @@
 import "./globals.css";
 import { getMessages } from '@/i18n/server-i18n';
-import { getServerSession } from "next-auth"
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { LocaleProvider } from '@/i18n/locale-provider';
-import { authOptions } from "@/root/auth";
+import { HeaderSessionProvider } from '@/lib/auth/session-provider'
 import Header from '@/components/nav/header';
 import Footer from '@/components/nav/footer';
 
@@ -29,14 +29,15 @@ export function generateStaticParams() {
 export default async function RootLayout({ children, params : { locale }}) {
 
   const messages = await getMessages(locale);
-  const session = await getServerSession(authOptions);
 
   return (
     <html lang={locale}>
       <body className="antialiased">
         <LocaleProvider messages={messages}>
           <div>
-            <Header session={session} />
+            <HeaderSessionProvider>
+              <Header />
+            </HeaderSessionProvider>
             <div>
               {children}
             </div>
@@ -44,6 +45,7 @@ export default async function RootLayout({ children, params : { locale }}) {
             <ToastContainer />
           </div>
         </LocaleProvider>
+        <GoogleAnalytics gaId="UA-61451694-1" />
       </body>
     </html>
   );
