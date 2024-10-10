@@ -17,7 +17,7 @@ export const handler = async (event) => {
       statusCode: 400,
       headers: {
         "Content-Type" : "application/json"
-      }
+      },
       body: JSON.stringify({ error : "You did not include a maps type with your request (territories, languages, and/or treaties)" })
     };
     return response;
@@ -99,7 +99,7 @@ export const handler = async (event) => {
         statusCode: 200,
         headers: {
           "Content-Type" : "application/json"
-        }
+        },
         body: JSON.stringify(res)
       };
       return response;
@@ -109,7 +109,7 @@ export const handler = async (event) => {
         statusCode: 400,
         headers: {
           "Content-Type" : "application/json"
-        }
+        },
         body: JSON.stringify(err),
       };
       return response;
