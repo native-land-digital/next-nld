@@ -19,12 +19,14 @@ export const handleGetRequest = async(event, sql) => {
   }
 
   if(!maps || maps.trim() === "") {
+    const error = { error : "You did not include a maps type with your request (territories, languages, and/or treaties)" }
+    console.log(error)
     const response = {
       statusCode: 400,
       headers: {
         "Content-Type" : "application/json"
       },
-      body: JSON.stringify({ error : "You did not include a maps type with your request (territories, languages, and/or treaties)" })
+      body: JSON.stringify({ error })
     };
     return response;
   } else {
@@ -100,15 +102,18 @@ export const handleGetRequest = async(event, sql) => {
       const featureList = assembleFeatures(res);
 
       if(featureList.length > 500) {
+        const error = { error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" }
+        console.log(error)
         const response = {
           statusCode: 400,
           headers: {
             "Content-Type" : "application/json"
           },
-          body: JSON.stringify({ error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" })
+          body: JSON.stringify({ error })
         };
         return response;
       } else {
+        console.log({ success : featureList.length })
         const response = {
           statusCode: 200,
           headers: {
@@ -120,12 +125,14 @@ export const handleGetRequest = async(event, sql) => {
       }
 
     } catch (err) {
+      const error = { error : `Something went wrong. Here is the error message: ${JSON.stringify(err)}` }
+      console.log(error)
       const response = {
         statusCode: 400,
         headers: {
           "Content-Type" : "application/json"
         },
-        body: JSON.stringify({ error : `Something went wrong. Here is the error message: ${JSON.stringify(err)}` }),
+        body: JSON.stringify({ error }),
       };
       return response;
     }
