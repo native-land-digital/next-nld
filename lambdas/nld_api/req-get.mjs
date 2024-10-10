@@ -1,4 +1,5 @@
 import postgres from 'postgres'
+import 'dotenv/config'
 
 import { assembleFeatures } from './common.mjs'
 
@@ -47,7 +48,7 @@ export const handleGetRequest = async(event) => {
       }
     }
     // Connect to DB
-    const sql = postgres(DATABASE_URL)
+    const sql = postgres(process.env.DATABASE_URL.replace('?schema=public', ''))
     // Otherwise start the main query
     let topSelect = sql`SELECT id, name, color, slug, category, ST_AsGeoJSON(geometry) as geojson FROM "Polygon"`
 

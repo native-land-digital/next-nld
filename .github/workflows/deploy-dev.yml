@@ -14,8 +14,6 @@ jobs:
       # API
       - name: Install dependencies, Build application and Zip dist folder contents
         run: cd lambdas/nld_api && npm install && zip -qq -r ./bundle.zip ./*
-        env:
-          DATABASE_URL: ${{secrets.DEV_DATABASE_URL}}
       - name: deploy zip to aws lambda
         uses: appleboy/lambda-action@v0.2.0
         with:
