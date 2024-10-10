@@ -42,7 +42,7 @@ export const GET = async (req) => {
                       Slug : polygon.slug,
                       Name : polygon.name,
                       color : polygon.color,
-                      description : process.env.NEXTAUTH_URL + `/maps/${polygon.category}/${encodeURIComponent(polygon.slug).toLowerCase()}`
+                      description : process.env.NEXTAUTH_URL + `/maps/${polygon.category}/${polygon.slug}`
                     },
                     geometry : geometry
                   }
