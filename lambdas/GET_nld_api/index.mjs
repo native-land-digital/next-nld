@@ -49,7 +49,6 @@ export const handler = async (event) => {
       ssl : false
     })
     // Otherwise start the main query
-    // const featureList = [];
     let topSelect = sql`SELECT id, name, color, slug, category, ST_AsGeoJSON(geometry) as geojson FROM "Polygon"`
 
     let categoryWhere = false;
@@ -65,7 +64,6 @@ export const handler = async (event) => {
       const splitPosition = position.split(',');
       const latitude = parseFloat(splitPosition[0]);
       const longitude = parseFloat(splitPosition[1]);
-      const point = sql`POINT(${longitude} ${latitude})`
       const geometry = JSON.stringify({ type : "Point", coordinates : [ longitude, latitude ] });
       positionSelect.push(sql`ST_Contains(geometry, ST_GeomFromGeoJSON(${geometry}))`)
     }
@@ -95,22 +93,57 @@ export const handler = async (event) => {
           ${nameSelects}
         )` : sql``}
       `
-      const response = {
-        statusCode: 200,
-        headers: {
-          "Content-Type" : "application/json"
-        },
-        body: JSON.stringify(res)
-      };
-      return response;
+
+      // Putting together list
+      const featureList = []
+      res.forEach(row => {
+      	const geometry = JSON.parse(row.geojson)
+      	if(geometry) {
+      		const feature = {
+      			type : "Feature",
+      			properties : {
+      				"Name" : row.name,
+      				"ID" : row.id,
+      				"Slug" : row.slug,
+      				"description" : `https://native-land.ca/maps/${row.category}/${row.slug}`,
+      				"color" : row.color,
+      			},
+      			geometry : {
+      				type : geometry.coordinates[0].length === 1 ? "Polygon" : "MultiPolygon",
+      				coordinates : geometry.coordinates[0].length === 1 ? geometry.coordinates[0] : geometry.coordinates
+      			}
+      		}
+          featureList.push(feature)
+        }
+      })
+
+      if(featureList.length > 500) {
+        const response = {
+          statusCode: 400,
+          headers: {
+            "Content-Type" : "application/json"
+          },
+          body: JSON.stringify({ error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" })
+        };
+        return response;
+      } else {
+        const response = {
+          statusCode: 200,
+          headers: {
+            "Content-Type" : "application/json"
+          },
+          body: JSON.stringify(featureList)
+        };
+        return response;
+      }
+
     } catch (err) {
-      // await pool.end();
       const response = {
         statusCode: 400,
         headers: {
           "Content-Type" : "application/json"
         },
-        body: JSON.stringify(err),
+        body: JSON.stringify({ error : `Something went wrong. Here is the error message: ${JSON.stringify(err)}` }),
       };
       return response;
     }

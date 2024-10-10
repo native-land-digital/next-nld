@@ -9,6 +9,7 @@
     "dev": "next dev",
     "build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
+    "lambda" : "node ./lambdas/testHandler.mjs",
     "postinstall": "prisma generate",
     "lint": "next lint",
     "email-dev": "email dev"

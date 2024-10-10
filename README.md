@@ -116,6 +116,8 @@ Current costs:
 - Moving API to a Lambda
 - Moving front-page geocoding to a Lambda
 
+- Figuring out logging in Cloudwatch to reduce and trim any costs
+
 After things are confirmed and comfy:
 - Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
 - re adding Google Analytics?

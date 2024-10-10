@@ -68,6 +68,10 @@ const nextConfig = {
       destination : "/api/index.php",
       permanent: true
     },{
+      source: "/api/index.php",
+      destination : "https://v7gk2vlwqd.execute-api.us-west-2.amazonaws.com/default/GET_nld_api_dev",
+      permanent: true
+    },{
       source: "/wp-content/themes/NLD-2021/files/indigenousTerritories.json",
       destination : "/api/polygons/geojson/territories",
       permanent: true
