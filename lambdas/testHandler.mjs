@@ -1,7 +1,7 @@
-import { handler as get_api } from './GET_nld_api/index.mjs';
-import { handler as post_api } from './POST_nld_api/index.mjs';
+import { handler as api } from './nld_api/index.mjs';
 
-let get_api_response = await get_api({
+let get_api_response = await api({
+  httpMethod : "GET",
   queryStringParameters : {
     maps : 'territories',
     // name : 'nʉmʉnʉʉ-comanche'
@@ -18,7 +18,8 @@ if(getAPIResponseBody.error) {
 }
 console.log("--- END GET API RESPONSE TEST ---");
 
-let post_api_response = await post_api({
+let post_api_response = await api({
+  httpMethod : "POST",
   body : JSON.stringify({
     maps : "territories",
     polygon_geojson : {
