@@ -11,7 +11,7 @@ export default function RelationEditor({ relatedTo, setRelatedTo }) {
 
   const loadOptions = (inputValue, callback) => {
     if(inputValue.length >= 2) {
-      fetch(`/api/polygons/search?s=${inputValue}`).then(resp => resp.json()).then(response => {
+      fetch(`/api/polygons/searcher?s=${inputValue}`).then(resp => resp.json()).then(response => {
         callback(response.map(polygon => {
           return {
             value : polygon.id,
