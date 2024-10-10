@@ -8,6 +8,7 @@ export const handlePostRequest = async(event) => {
   let polygon_geojson = false;
 
   if(event && event.body) {
+    console.log(JSON.stringify(event.body))
     let body = JSON.parse(event.body);
     maps = body.maps;
     polygon_geojson = body.polygon_geojson;

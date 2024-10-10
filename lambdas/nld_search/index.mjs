@@ -8,6 +8,7 @@ export const handler = async (event) => {
   let geosearch = false;
 
   if(event && event.queryStringParameters) {
+    console.log(JSON.stringify(event.queryStringParameters))
     search = event.queryStringParameters.s;
     category = event.queryStringParameters.category;
     geosearch = event.queryStringParameters.geosearch;
