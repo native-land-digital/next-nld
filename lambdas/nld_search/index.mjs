@@ -1,4 +1,5 @@
 import postgres from 'postgres'
+import 'dotenv/config'
 
 export const handler = async (event) => {
 
@@ -29,7 +30,7 @@ export const handler = async (event) => {
   }
 
   // Connect to DB
-  const sql = postgres(DATABASE_URL)
+  const sql = postgres(process.env.DATABASE_URL.replace('?schema=public', ''))
   // Otherwise start the main query
   let topSelect = sql`SELECT id, name, category FROM "Polygon"`
 
