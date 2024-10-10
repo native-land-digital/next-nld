@@ -20,6 +20,51 @@ const nextConfig = {
       source: "/",
       destination : "/en",
     })
+    // API rewrites
+    allRewrites.push({
+      source: "/api/index.php",
+      destination : process.env.AWS_API_ENDPOINT,
+    })
+    allRewrites.push({
+      source: "/wp-json/nativeland/v1/api/index.php",
+      destination : process.env.AWS_API_ENDPOINT,
+    })
+    allRewrites.push({
+      source: "/api/polygons/geojson/territories",
+      destination : "https://d2u5ssx9zi93qh.cloudfront.net/territories.geojson"
+    })
+    allRewrites.push({
+      source: "/api/polygons/geojson/languages",
+      destination : "https://d2u5ssx9zi93qh.cloudfront.net/languages.geojson"
+    })
+    allRewrites.push({
+      source: "/api/polygons/geojson/treaties",
+      destination : "https://d2u5ssx9zi93qh.cloudfront.net/treaties.geojson"
+    })
+    allRewrites.push({
+      source: "/wp-content/themes/NLD-2021/files/indigenousTerritories.json",
+      destination : "https://d2u5ssx9zi93qh.cloudfront.net/territories.geojson"
+    })
+    allRewrites.push({
+      source: "/wp-content/themes/NLD-2021/files/indigenousLanguages.json",
+      destination : "https://d2u5ssx9zi93qh.cloudfront.net/languages.geojson"
+    })
+    allRewrites.push({
+      source: "/wp-content/themes/NLD-2021/files/indigenousTreaties.json",
+      destination : "https://d2u5ssx9zi93qh.cloudfront.net/treaties.geojson"
+    })
+    allRewrites.push({
+      source: "/wp-content/themes/NLD-2021/files/indigenousTerritories",
+      destination : "https://d2u5ssx9zi93qh.cloudfront.net/territories.geojson"
+    })
+    allRewrites.push({
+      source: "/wp-content/themes/NLD-2021/files/indigenousLanguages",
+      destination : "https://d2u5ssx9zi93qh.cloudfront.net/languages.geojson"
+    })
+    allRewrites.push({
+      source: "/wp-content/themes/NLD-2021/files/indigenousTreaties",
+      destination : "https://d2u5ssx9zi93qh.cloudfront.net/treaties.geojson"
+    })
     return allRewrites
   },
   redirects: () => {
@@ -64,40 +109,8 @@ const nextConfig = {
       destination: "/maps/treaties",
       permanent: true
     },{
-      source: "/wp-json/nativeland/v1/api/index.php",
-      destination : process.env.AWS_API_ENDPOINT,
-      permanent: true
-    },{
-      source: "/api/index.php",
-      destination : process.env.AWS_API_ENDPOINT,
-      permanent: true
-    },{
       source: "/api/polygons/searcher",
       destination : process.env.AWS_GEOCODE_ENDPOINT,
-      permanent: true
-    },{
-      source: "/wp-content/themes/NLD-2021/files/indigenousTerritories.json",
-      destination : "/api/polygons/geojson/territories",
-      permanent: true
-    },{
-      source: "/wp-content/themes/NLD-2021/files/indigenousLanguages.json",
-      destination : "/api/polygons/geojson/languages",
-      permanent: true
-    },{
-      source: "/wp-content/themes/NLD-2021/files/indigenousTreaties.json",
-      destination : "/api/polygons/geojson/treaties",
-      permanent: true
-    },{
-      source: "/wp-json/nativeland/v1/coordinates/indigenousTerritories",
-      destination : "/api/polygons/geojson/territories",
-      permanent: true
-    },{
-      source: "/wp-json/nativeland/v1/coordinates/indigenousLanguages",
-      destination : "/api/polygons/geojson/languages",
-      permanent: true
-    },{
-      source: "/wp-json/nativeland/v1/coordinates/indigenousTreaties",
-      destination : "/api/polygons/geojson/treaties",
       permanent: true
     },{
       source: "/maps-old/:path*",
