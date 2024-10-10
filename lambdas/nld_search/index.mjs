@@ -29,7 +29,7 @@ export const handler = async (event) => {
   }
 
   // Connect to DB
-  const sql = postgres('postgres://postgres.qdsobbmoufhgbmmgxgsn:je4BgGlw5HnAFhQQ@aws-0-us-west-1.pooler.supabase.com:6543/postgres?sslmode=require&supa=base-pooler.x&pgbouncer=true&connection_limit=1')
+  const sql = postgres(DATABASE_URL)
   // Otherwise start the main query
   let topSelect = sql`SELECT id, name, category FROM "Polygon"`
 
