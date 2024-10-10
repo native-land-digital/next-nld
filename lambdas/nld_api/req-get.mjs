@@ -8,25 +8,44 @@ export const handleGetRequest = async(event, sql) => {
   let names = false;
   let position = false;
 
+  const log = {
+    type : '',
+    headers : {
+      ip : '',
+      ref : ''
+    },
+    query : '',
+    success : '',
+    redirect : '',
+    error : ''
+  };
+
   if(event && event.queryStringParameters) {
-    console.log(JSON.stringify(event.queryStringParameters))
+    log.type = 'GET';
+    log.query = JSON.stringify(event.queryStringParameters)
     maps = event.queryStringParameters.maps;
     names = event.queryStringParameters.name;
     position = event.queryStringParameters.position;
   }
+
   if(event.headers) {
-    console.log(JSON.stringify(event.headers))
+    if(event.headers['X-Real-IP']) {
+      log.headers.ip = event.headers['X-Real-IP'];
+    }
+    if(event.headers['referer']) {
+      log.headers.ref = event.headers['referer'];
+    }
   }
 
   if(!maps || maps.trim() === "") {
-    const error = { error : "You did not include a maps type with your request (territories, languages, and/or treaties)" }
-    console.log(error)
+    log.error = "You did not include a maps type with your request (territories, languages, and/or treaties)";
+    console.log(log)
     const response = {
       statusCode: 400,
       headers: {
         "Content-Type" : "application/json"
       },
-      body: JSON.stringify({ error })
+      body: JSON.stringify({ error : log.error })
     };
     return response;
   } else {
@@ -36,13 +55,17 @@ export const handleGetRequest = async(event, sql) => {
 		if(mapCategories.length === 1 && !position && !names) {
       let urlLocation = false;
 			if(mapCategories[0] === 'territories') {
+        log.redirect = 'territories';
 				urlLocation = 'https://d2u5ssx9zi93qh.cloudfront.net/territories.geojson';
 			} else if (mapCategories[0] === 'languages') {
+        log.redirect = 'languages';
 				urlLocation = 'https://d2u5ssx9zi93qh.cloudfront.net/languages.geojson';
 			} else if (mapCategories[0] === 'treaties') {
+        log.redirect = 'treaties';
 				urlLocation = 'https://d2u5ssx9zi93qh.cloudfront.net/treaties.geojson';
 			}
       if(urlLocation) {
+        console.log(log);
         const response = {
           statusCode: 301,
           headers: {
@@ -102,18 +125,19 @@ export const handleGetRequest = async(event, sql) => {
       const featureList = assembleFeatures(res);
 
       if(featureList.length > 500) {
-        const error = { error : "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons" }
-        console.log(error)
+        log.error = "Your request had over 500 results. It's probably best to get our full GeoJSON directly! See https://api-docs.native-land.ca/full-geojsons";
+        console.log(log)
         const response = {
           statusCode: 400,
           headers: {
             "Content-Type" : "application/json"
           },
-          body: JSON.stringify({ error })
+          body: JSON.stringify({ error : log.error })
         };
         return response;
       } else {
-        console.log({ success : featureList.length })
+        log.success = featureList.length;
+        console.log(log)
         const response = {
           statusCode: 200,
           headers: {
@@ -125,14 +149,14 @@ export const handleGetRequest = async(event, sql) => {
       }
 
     } catch (err) {
-      const error = { error : `Something went wrong. Here is the error message: ${JSON.stringify(err)}` }
-      console.log(error)
+      log.error = `Something went wrong. Here is the error message: ${JSON.stringify(err)}`;
+      console.log(log)
       const response = {
         statusCode: 400,
         headers: {
           "Content-Type" : "application/json"
         },
-        body: JSON.stringify({ error }),
+        body: JSON.stringify({ error : log.error}),
       };
       return response;
     }

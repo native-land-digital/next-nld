@@ -1,10 +1,12 @@
 "use client"
 import { useState } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
+import { useSession } from "next-auth/react";
 import Link from 'next/link'
 
-export default function Header({ session }) {
+export default function Header() {
 
+  const { data : session } = useSession();
   const t = useTranslations('Navigation');
   const tDash = useTranslations('Dashboard');
 
