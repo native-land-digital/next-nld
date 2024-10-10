@@ -10,6 +10,7 @@ export const handleGetRequest = async(event) => {
   let position = false;
 
   if(event && event.queryStringParameters) {
+    console.log(JSON.stringify(event.queryStringParameters))
     maps = event.queryStringParameters.maps;
     names = event.queryStringParameters.name;
     position = event.queryStringParameters.position;
