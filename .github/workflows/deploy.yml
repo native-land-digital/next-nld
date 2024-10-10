@@ -1,4 +1,4 @@
-name: deploy to lambda dev
+name: deploy to lambda
 
 on:
   push:
@@ -22,3 +22,14 @@ jobs:
           aws_region: ${{ secrets.AWS_LAMBDA_REGION }}
           function_name: nld_api_dev
           zip_file: ./lambdas/nld_api/bundle.zip
+      # Search
+      - name: Install dependencies, Build application and Zip dist folder contents
+        run: cd lambdas/nld_search && npm install && zip -qq -r ./bundle.zip ./*
+      - name: deploy zip to aws lambda
+        uses: appleboy/lambda-action@v0.2.0
+        with:
+          aws_access_key_id: ${{ secrets.AWS_LAMBDA_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_LAMBDA_SECRET_KEY }}
+          aws_region: ${{ secrets.AWS_LAMBDA_REGION }}
+          function_name: nld_search_dev
+          zip_file: ./lambdas/nld_search/bundle.zip

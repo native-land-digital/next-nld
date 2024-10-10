@@ -60,9 +60,7 @@ export const handlePostRequest = async(event) => {
 
     if(polygon_geojson.features.length > 0) {
       // Connect to DB
-      const sql = postgres('postgres://postgres.pwyuqqwvcpqieizmchxa:VerNlAa9IburR1Ag@aws-0-us-west-1.pooler.supabase.com:6543/postgres?supa=base-pooler.x&pgbouncer=true&connection_limit=1', {
-        ssl : false
-      })
+      const sql = postgres('postgres://postgres.qdsobbmoufhgbmmgxgsn:je4BgGlw5HnAFhQQ@aws-0-us-west-1.pooler.supabase.com:6543/postgres?sslmode=require&supa=base-pooler.x&pgbouncer=true&connection_limit=1')
       // Otherwise start the main query
       let topSelect = sql`SELECT id, name, color, slug, category, ST_AsGeoJSON(geometry) as geojson FROM "Polygon"`
 

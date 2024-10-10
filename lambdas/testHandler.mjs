@@ -1,4 +1,5 @@
 import { handler as api } from './nld_api/index.mjs';
+import { handler as search } from './nld_search/index.mjs';
 
 let get_api_response = await api({
   httpMethod : "GET",
@@ -82,3 +83,23 @@ if(postAPIResponseBody.error) {
   console.log(postAPIResponseBody.length);
 }
 console.log("--- END POST API RESPONSE TEST ---");
+
+
+let search_response = await search({
+  httpMethod : "GET",
+  queryStringParameters : {
+    s : 'pomo',
+    category : "territories",
+    geosearch : true
+  }
+});
+const searchResponseBody = JSON.parse(search_response.body);
+console.log("--- START SEARCH RESPONSE TEST ---");
+if(searchResponseBody.error) {
+  console.log(searchResponseBody.error)
+} else {
+  console.log(searchResponseBody)
+  console.log(searchResponseBody.map(row => row.name));
+  console.log(searchResponseBody.length);
+}
+console.log("--- END SEARCH RESPONSE TEST ---");
