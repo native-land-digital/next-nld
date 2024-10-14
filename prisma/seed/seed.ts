@@ -47,11 +47,10 @@ async function main() {
   const client = new S3Client({ region: process.env.AWS_REGION })
   const seedBucketParams = { Bucket: process.env.AWS_SEED_BUCKET_NAME, Key: process.env.AWS_SEED_FILE };
   const data = await client.send(new GetObjectCommand(seedBucketParams));
-  // const readStream = data.Body as Readable;
+
   if(data && data.Body) {
     const importString = await data.Body.transformToString();
     let importJSON = <Entry[]>JSON.parse(importString)
-    // console.log(importJSON)
 
     // importJSON.splice(10); // For import testing
 
@@ -132,7 +131,7 @@ async function main() {
             createMany : {
               data : entry.media.map(thisMedia => {
                 return {
-                  url : `https://d309zx38sewmgu.cloudfront.net/${thisMedia.url}`,
+                  url : `${process.env.AWS_WP_CLOUDFRONT}/${thisMedia.url}`,
                   title : thisMedia.title,
                   caption : thisMedia.caption
                 }

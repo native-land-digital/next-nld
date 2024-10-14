@@ -43,7 +43,9 @@ export default function FileUploader({ media, setMedia }) {
 
       if (uploadResponse.ok) {
         const newMedia = JSON.parse(JSON.stringify(media))
-        newMedia.push({ url : `${url}${fields.key}`, title : '', caption : '' })
+        console.log(url);
+        console.log(process.env.NEXT_PUBLIC_AWS_NEXT_CLOUDFRONT)
+        newMedia.push({ url : `${process.env.NEXT_PUBLIC_AWS_NEXT_CLOUDFRONT}/${fields.key}`, title : '', caption : '' })
         setMedia(newMedia);
       } else {
         toast(t('s3-error'), uploadResponse)
