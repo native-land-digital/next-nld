@@ -1,27 +1,6 @@
 # Native Land 2.0
 
-Welcome to Native Land 2.0! This is a NextJS and PostGIS rebuild of Native-Land.ca.
-
-## History
-
-Native Land was created as a hobby project by Victor Temprano (http://victortemprano.com) in 2015, as a way to help learn more Indigenous territories and the history of colonialism. Since then, it has grown substantially, becoming a non-profit (Native Land Digital) a few years later as the site grew in popularity. Now, it has a small team and a board of directors, which you can read about more on the website itself, and we are always trying to add more and bring knowledge of Indigenous ways of being with the land to more people.
-
-On the tech side, the site has gone through a number of iterations:
-
-- Google Maps stored in JSON files
-- Leaflet JS with a Wordpress blog
-- A Wordpress backend while still serving from static JSONs
-- Partnership with Mapbox and use of Mapbox tilesets
-- Custom Wordpress plugin developed by Mapster Technology Inc. (https://mapster.me)
-- Fully integrated Wordpress site hosting GIS files, pushing to Mapbox
-
-With this latest build, we are moving away from Wordpress into a leaner, more directly developed tech stack customized for Native Land's needs.
-
-## Native Land API
-
-The Native Land API is in the process (as of September 2024) of moving over to an API key model instead of being completely open. This is to help manage excessive requests and to keep better track of how people are using the data that we curate from Indigenous communities.
-
-You can find more about how to use the Native Land API at our documentation at https://api-docs.native-land.ca/.
+Welcome to Native Land 2.0! This is a NextJS and PostGIS rebuild of Native-Land.ca. If you want to help out with the site on a technical or design level, you're very welcome here!
 
 ## This Repo
 
@@ -42,7 +21,7 @@ Technologies at use include:
 
 We would love to have you involved if you have any fixes or additions you'd like to see on the site.
 
-### Dev Environment
+## Dev Environment
 
 To get set up:
 
@@ -62,19 +41,19 @@ To get set up:
 - `npm run dev` will fire up the dev project, and you can visit `http://localhost:3000` to view the site.
 - To login, use `test@native-land.ca` and password `test`.
 
-### Independent Local Setup
+## Independent Local Setup
 
 You will need to populate the `.env` with your own values.
 
 - AWS variables. Because this app stores data in S3, you'll need to set up a bucket for uploads (`AWS_NEXT_BUCKET_NAME`) and geoJSONs (`AWS_GEOJSON_BUCKET`). Then, create an IAM user with appropriate permissions for those buckets and enter the required values (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`).
-- You also need to create Lambdas to fully test the NLD API (`/api/index.php` or `/api/polygon/searcher`). Create test lambdas named `nld_api_dev` and `nld_search_dev`, and prod lambdas named `nld_api` and `nld_search`. Hook them up to API Gateway and enter the appropriate URLs in your `.env` (`AWS_API_ENDPOINT` and `AWS_GEOCODE_ENDPOINT`)
+- You also need to create Lambdas to fully re-create the NLD API (`/api/index.php` or `/api/polygon/searcher`). If you're just working locally, this doesn't apply. Create test lambdas named `nld_api_dev` and `nld_search_dev`, and prod lambdas named `nld_api` and `nld_search`. Hook them up to API Gateway and enter the appropriate URLs in your `.env` (`AWS_API_ENDPOINT` and `AWS_GEOCODE_ENDPOINT`). If you're forking this, you'll need to add Github secrets as well for the YML files.
 - To get the text editor working in the `/dashboard/research`, sign up for a TinyMCE key. It will automatically be enabled to work for `localhost`, and no CC is required.
 - Create a Mapbox account and get a public token (`NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN`), and you can use the same style for both `NEXT_PUBLIC_MAPBOX_STYLE` and `NEXT_PUBLIC_MAPBOX_STYLE_RESEARCH`. You'll also need a secret token to generate tilesets into your account (`MAPBOX_SECRET_TOKEN` and `MAPBOX_USERNAME`)
 - Add a Resend API key to test user signup (`RESEND_API_KEY`)
 
 Please let us know if you have trouble doing this setup. It's not easy!
 
-### Tech Notes
+## Tech Notes
 
 All polygons are stored in the PostGIS database as MultiPolygons. They can be flattened when retrieved, but this is to keep a single geography type while still allowing researchers to draw more complex shapes when necessary.
 
@@ -87,6 +66,8 @@ We have built a rather complicated redirection and rewrite system to handle inte
 - Only the root page serves properly internationalized content (since we don't have translations across the site anyway)
 
 All this is set as redirects and rewrites inside `next.config.mjs`. As a result, anytime a new language is added or a new directory from the root is added, you must add the language code in `src/i18n/config.js`.
+
+To test lambdas locally, run `npm run lambda` with your database connected to run the test suite.
 
 ## Deployment notes
 
@@ -113,23 +94,20 @@ Current costs:
 [ "case", [ "in", "Osage", [ "to-string", ["get", "Name"] ] ], "Osage", [ "to-string", ["get", "Name"] ] ]
 ```
 
+## Logs and Analytics
+
+- Logs in Cloudflare give some basic information on API usage sorted into graphs
+- CloudWatch Analytics Dashboards give us a good sense of the major referers, data usage, and so on
+- Google Analytics for deep diving and longer data retention than Cloudflare
+
 ## Notes for current development to-dos
 
-- Figuring out logging in Cloudwatch to see errors reliably
-
-After things are confirmed and comfy:
-- Switch over Prod tilesets to existing tilesets (since those are part of shared Mapbox tilesets?)
-- Moving to free plan with Cloudflare (we aren't using most services; keep DNS and basic CDN routing)
-- Removing all the extra CPanel-related DNS records
-
-Optimizing:
-- Ensuring Cloudfront CDN is written for uploaded images
-- Improving mobile app fetch for resources (endpoint provides ALL data which is too much)
+- Changing so there is a basic seed file in the repo, and otherwise we'll do dumps for new devs
+- Twilio NFP signup
 
 Aspirational:
 - Adding placenames
 - Adding language games and educational tools for learning territories
-- Sorting out how to share seed file effectively without sharing IAM
 
 Questions:
 - Should the site open stuff in a new window? Or open in the same window?
@@ -140,3 +118,24 @@ Questions:
 - Updating content?
 - Adding a new roadmap?
 - Redoing top links? Showing off maps more, special pages more
+
+## History
+
+Native Land was created as a hobby project by Victor Temprano (http://victortemprano.com) in 2015, as a way to help learn more Indigenous territories and the history of colonialism. Since then, it has grown substantially, becoming a non-profit (Native Land Digital) a few years later as the site grew in popularity. Now, it has a small team and a board of directors, which you can read about more on the website itself, and we are always trying to add more and bring knowledge of Indigenous ways of being with the land to more people.
+
+On the tech side, the site has gone through a number of iterations:
+
+- Google Maps stored in JSON files
+- Leaflet JS with a Wordpress blog
+- A Wordpress backend while still serving from static JSONs
+- Partnership with Mapbox and use of Mapbox tilesets
+- Custom Wordpress plugin developed by Mapster Technology Inc. (https://mapster.me)
+- Fully integrated Wordpress site hosting GIS files, pushing to Mapbox
+
+With this latest build, we are moving away from Wordpress into a leaner, more directly developed tech stack customized for Native Land's needs.
+
+## Native Land API
+
+The Native Land API is in the process (as of September 2024) of moving over to an API key model instead of being completely open. This is to help manage excessive requests and to keep better track of how people are using the data that we curate from Indigenous communities.
+
+You can find more about how to use the Native Land API at our documentation at https://api-docs.native-land.ca/.
