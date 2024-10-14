@@ -1,3 +1,4 @@
+import prisma from "@/lib/db/prisma";
 import { createPresignedPost } from '@aws-sdk/s3-presigned-post'
 import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { getToken } from "next-auth/jwt"
