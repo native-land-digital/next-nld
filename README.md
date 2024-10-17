@@ -103,7 +103,6 @@ Current costs:
 ## Notes for current development to-dos
 
 - Changing so there is a basic seed file in the repo, and otherwise we'll do dumps for new devs
-- Twilio NFP signup
 
 Aspirational:
 - Adding placenames
