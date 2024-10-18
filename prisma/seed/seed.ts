@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client'
-import { Polygon, User } from "@prisma/client";
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
 import { Readable } from 'stream'
 
@@ -25,7 +24,12 @@ interface Changelog {
   description : string;
 }
 
-interface Entry {
+interface Geometry {
+  type: string;
+  coordinates: Array<number>;
+}
+
+interface Row {
   createdAt : string;
   updatedAt : string;
   name : string;
@@ -38,7 +42,7 @@ interface Entry {
   changelog : Changelog[],
   related : Relation[],
   media : Media[],
-  geometry : string;
+  geometry : Geometry;
 }
 
 async function main() {
@@ -50,7 +54,7 @@ async function main() {
 
   if(data && data.Body) {
     const importString = await data.Body.transformToString();
-    let importJSON = <Entry[]>JSON.parse(importString)
+    let importJSON = <Row[]>JSON.parse(importString)
 
     // importJSON.splice(10); // For import testing
 
@@ -67,23 +71,23 @@ async function main() {
     });
 
     // Removing template that came along with export
-    let templateIndex = importJSON.findIndex(entry => entry.name.includes("Template"));
+    let templateIndex = importJSON.findIndex(row => row.name.includes("Template"));
     if(typeof templateIndex !== undefined && templateIndex > -1) {
       importJSON.splice(templateIndex, 1);
     }
 
     let createdRecords = 0;
 
-    for await (const entry of importJSON) {
+    for await (const row of importJSON) {
 
       // Ensuring unique slug
-      let slug = JSON.parse(JSON.stringify(entry.slug));
+      let slug = JSON.parse(JSON.stringify(row.slug));
       const slugSuffix = "-";
       let slugNumber = 1;
       let slugIsUnique = false;
       while(!slugIsUnique) {
         const currentSlug = slug + (slugNumber > 1 ? (slugSuffix + slugNumber.toString()) : "")
-        const foundSlug = await prisma.polygon.findUnique({
+        const foundSlug = await prisma.entry.findUnique({
           where : {
             slug : currentSlug
           }
@@ -96,20 +100,20 @@ async function main() {
         }
       }
 
-      let newPolygon = await prisma.polygon.create({
+      let newEntry = await prisma.entry.create({
         data : {
-          createdAt : new Date(entry.createdAt),
-          updatedAt : new Date(entry.updatedAt),
-          name : entry.name,
+          createdAt : new Date(row.createdAt),
+          updatedAt : new Date(row.updatedAt),
+          name : row.name,
           slug : slug,
-          color : entry.color,
-          sources : entry.sources,
-          category : entry.category,
+          color : row.color,
+          sources : row.sources,
+          category : row.category,
           published : true,
-          pronunciation : entry.pronunciation ? entry.pronunciation : "",
+          pronunciation : row.pronunciation ? row.pronunciation : "",
           websites : {
             createMany : {
-              data : entry.websites.map(website => {
+              data : row.websites.map(website => {
                 return {
                   url : website.url,
                   title : website.title
@@ -119,7 +123,7 @@ async function main() {
           },
           changelog : {
             createMany : {
-              data : entry.changelog.map(change => {
+              data : row.changelog.map(change => {
                 return {
                   createdAt : new Date(change.createdAt),
                   description : change.description
@@ -129,7 +133,7 @@ async function main() {
           },
           media : {
             createMany : {
-              data : entry.media.map(thisMedia => {
+              data : row.media.map(thisMedia => {
                 return {
                   url : `${process.env.AWS_WP_CLOUDFRONT}/${thisMedia.url}`,
                   title : thisMedia.title,
@@ -144,23 +148,21 @@ async function main() {
         }
       });
 
-      console.log(entry.name)
+      console.log(row.name)
 
       // Then add the geometry
-      if(newPolygon) {
+      if(newEntry) {
         createdRecords = createdRecords + 1;
-        if(entry.geometry) {
-          // console.log(entry.name)
-          // console.log(entry.geometry)
-          let geometryAsString = JSON.stringify(entry.geometry);
-          await prisma.$executeRawUnsafe(`
-            UPDATE "Polygon"
-            SET geometry = ST_Force2D(ST_GeomFromGeoJSON('${JSON.stringify(entry.geometry)}'))
-            WHERE id = ${newPolygon.id};
-          `)
+        if(row.geometry) {
+          if(row.geometry.type.indexOf("Polygon") > -1) {
+            await prisma.$executeRawUnsafe(`
+              INSERT INTO "Polygon" (geometry, "entryId")
+              VALUES (ST_Force2D(ST_GeomFromGeoJSON('${JSON.stringify(row.geometry)}')), ${newEntry.id})
+            `)
+          }
         }
       } else {
-        console.log('MISSED A POLYGON')
+        console.log('MISSED AN ENTRY')
       }
 
     }
@@ -168,36 +170,36 @@ async function main() {
     console.log('created ', createdRecords);
 
     // Then add the related fields
-    const polygons = await prisma.polygon.findMany({
+    const entries = await prisma.entry.findMany({
       select : {
         id : true,
         slug : true
       }
     });
 
-    for await (const entry of importJSON) {
-      let thisPolygon = polygons.find(polygon => polygon.slug === entry.slug)
-      if(thisPolygon) {
+    for await (const row of importJSON) {
+      let thisEntry = entries.find(entry => entry.slug === row.slug)
+      if(thisEntry) {
         let hasRelation = false;
-        entry.related.forEach(thisRelation => {
-          let relatedPolygon = polygons.find(polygon => polygon.slug === thisRelation.relatedTo_slug)
-          if(relatedPolygon) {
+        row.related.forEach(thisRelation => {
+          let relatedEntry = entries.find(entry => entry.slug === thisRelation.relatedTo_slug)
+          if(relatedEntry) {
             hasRelation = true;
           }
         })
         if(hasRelation) {
-          let newPolygonRelation = await prisma.polygon.update({
+          let newEntryRelation = await prisma.entry.update({
             where : {
-              id : thisPolygon.id
+              id : thisEntry.id
             },
             data : {
               relatedTo : {
                 createMany : {
-                  data : entry.related.map(thisRelation => {
-                    let relatedPolygon = polygons.find(polygon => polygon.slug === thisRelation.relatedTo_slug)
+                  data : row.related.map(thisRelation => {
+                    let relatedEntry = entries.find(entry => entry.slug === thisRelation.relatedTo_slug)
                     return {
                       description : thisRelation.description,
-                      relatedToId : relatedPolygon ? relatedPolygon.id : 0
+                      relatedToId : relatedEntry ? relatedEntry.id : 0
                     }
                   })
                 }
