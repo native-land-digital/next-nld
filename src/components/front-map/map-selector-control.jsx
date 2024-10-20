@@ -46,8 +46,8 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
     }
 
     const selectDropdown = (id, category) => {
-      fetch(`/api/entry/searcher/${id}`).then(resp => resp.json()).then(entry => {
-        const bounds = makeBoundsFromPoly(entry)
+      fetch(`/api/entry/searcher?id=${id}`).then(resp => resp.json()).then(entry => {
+        const bounds = makeBoundsFromPoly(entry[0])
         map.fitBounds(bounds, { padding : 20 })
         adjustCurrentLayers(true, category);
       })

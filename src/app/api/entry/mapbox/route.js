@@ -25,10 +25,11 @@ export const GET = async (req) => {
             .where('published', '=', true)
             .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
             .select((eb) => [
-              'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug',
+              'Entry.id', 'Entry.name', 'Entry.category', 'Entry.color', 'Entry.slug',
               eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
             ])
-            .executeTakeFirst()
+            .distinctOn('Entry.id')
+            .execute()
 
           if(entries.length > 0) {
 

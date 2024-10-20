@@ -49,18 +49,27 @@ export default function EditEntry({ entry }) {
         websites : websites,
         media : media,
         changelog : changelog,
-        relatedTo : relatedTo.map(related => {
-          return {
-            relatedToId : related.relatedTo.id,
-            description : related.description
-          }
-        }),
+        relatedTo : relatedTo,
         geometry : geometry
       })
     }).then(resp => resp.json()).then(results => {
       if(results.error) {
         toast(results.error)
       } else {
+        if(results.entry.geometry) {
+          results.entry.geometry = JSON.parse(results.entry.geometry)
+        }
+        setName(results.entry.name)
+        setCategory(results.entry.category)
+        setSources(results.entry.sources)
+        setPronunciation(results.entry.pronunciation)
+        setColor(results.entry.color)
+        setPublished(results.entry.published)
+        setMedia(results.entry.media)
+        setWebsites(results.entry.websites)
+        setChangelog(results.entry.changelog)
+        setRelatedTo(results.entry.relatedTo)
+        setGeometry(results.entry.geometry)
         toast(t('saved-entry'))
       }
     });

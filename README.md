@@ -104,6 +104,9 @@ Current costs:
 
 ## Notes for current development to-dos
 
+Issues:
+- Local testing of "relation" field won't work, because the remote DB IDs won't line up with the local DB import IDs
+
 Aspirational:
 - Adding placenames
 - Adding language games and educational tools for learning territories

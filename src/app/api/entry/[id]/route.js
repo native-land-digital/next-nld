@@ -276,10 +276,39 @@ export const PATCH = async (req, route) => {
 
           });
 
+          // Return full modified entry
           const entry = await db.selectFrom('Entry')
-            .where('id', '=', parseInt(entryId))
-            .select(['category', 'slug'])
-            .execute();
+            .where('Entry.id', '=', parseInt(entryId))
+            .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
+            .select((eb) => [
+              'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
+              eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+              jsonArrayFrom(
+                eb.selectFrom('Media')
+                  .select(['id', 'url', 'caption', 'title'])
+                  .whereRef('Media.entryId', '=', 'Entry.id')
+              ).as('media'),
+              jsonArrayFrom(
+                eb.selectFrom('Website')
+                  .select(['id', 'url', 'title'])
+                  .whereRef('Website.entryId', '=', 'Entry.id')
+              ).as('websites'),
+              jsonArrayFrom(
+                eb.selectFrom('Change')
+                  .select(['id', 'createdAt', 'description'])
+                  .whereRef('Change.entryId', '=', 'Entry.id')
+              ).as('changelog'),
+              jsonArrayFrom(
+                eb.selectFrom('Relation')
+                  .innerJoin('Entry as RelatedEntry', 'RelatedEntry.id', 'Relation.relatedToId')
+                  .select([
+                    'Relation.id as id', 'Relation.description as description',
+                    'RelatedEntry.id as relatedToId', 'RelatedEntry.name as name', 'RelatedEntry.category as category', 'RelatedEntry.slug as slug'
+                  ])
+                  .whereRef('Relation.relatedFromId', '=', 'Entry.id')
+              ).as('relatedTo')
+            ])
+            .executeTakeFirst()
 
           // Ensure associated paths are now invalidated for next load
           submitRevalidation(`/dashboard/research`);

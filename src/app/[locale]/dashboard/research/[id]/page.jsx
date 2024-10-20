@@ -36,19 +36,10 @@ export default async function Page({ params : { locale, id } }) {
       ).as('changelog'),
       jsonArrayFrom(
         eb.selectFrom('Relation')
-          .innerJoin('Entry as RelatedEntry', 'RelatedEntry.id', 'Relation.relatedFromId')
-          .select([
-            'Relation.id as id', 'Relation.description as description',
-            'RelatedEntry.name as name', 'RelatedEntry.category as category', 'RelatedEntry.slug as slug'
-          ])
-          .whereRef('Relation.relatedToId', '=', 'Entry.id')
-      ).as('relatedFrom'),
-      jsonArrayFrom(
-        eb.selectFrom('Relation')
           .innerJoin('Entry as RelatedEntry', 'RelatedEntry.id', 'Relation.relatedToId')
           .select([
             'Relation.id as id', 'Relation.description as description',
-            'RelatedEntry.name as name', 'RelatedEntry.category as category', 'RelatedEntry.slug as slug'
+            'RelatedEntry.id as relatedToId', 'RelatedEntry.name as name', 'RelatedEntry.category as category', 'RelatedEntry.slug as slug'
           ])
           .whereRef('Relation.relatedFromId', '=', 'Entry.id')
       ).as('relatedTo')

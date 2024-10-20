@@ -92,17 +92,17 @@ export const handlePostRequest = async(event, sql) => {
     if(polygon_geojson.features.length > 0) {
       // Otherwise start the main query
       let topSelect = sql`
-        SELECT Entry.id, Entry.name, Entry.color, Entry.slug, Entry.category, ST_AsGeoJSON(Polygon.geometry) as geojson
+        SELECT "Entry".id, "Entry".name, "Entry".color, "Entry".slug, "Entry".category, ST_AsGeoJSON("Polygon".geometry) as geojson
         FROM "Entry"
-        LEFT JOIN Polygon
-        ON Entry.id = Polygon.entryId;
+        LEFT JOIN "Polygon"
+        ON "Entry".id = "Polygon"."entryId"
       `
 
       let categoryWhere = false;
       let categorySelects = [];
       if(mapCategories.length > 0) {
         mapCategories.forEach(category => {
-          categorySelects.push(categoryWhere ? sql`OR Entry.category = ${category}` : sql`Entry.category = ${category}`);
+          categorySelects.push(categoryWhere ? sql`OR "Entry".category = ${category}` : sql`"Entry".category = ${category}`);
           categoryWhere = true;
         })
       }
@@ -111,7 +111,7 @@ export const handlePostRequest = async(event, sql) => {
       if(polygon_geojson) {
         polygon_geojson.features.forEach(feature => {
           const geometry = JSON.stringify(feature.geometry);
-          positionSelect.push(positionWhere ? sql`OR ST_Intersects(Polygon.geometry, ST_GeomFromGeoJSON(${geometry}))` : sql`ST_Intersects(Polygon.geometry, ST_GeomFromGeoJSON(${geometry}))`)
+          positionSelect.push(positionWhere ? sql`OR ST_Intersects("Polygon".geometry, ST_GeomFromGeoJSON(${geometry}))` : sql`ST_Intersects("Polygon".geometry, ST_GeomFromGeoJSON(${geometry}))`)
           positionWhere = true;
         })
       }
@@ -121,7 +121,7 @@ export const handlePostRequest = async(event, sql) => {
         const res = await sql`
           ${topSelect}
           WHERE (
-            Entry.published = 'true'
+            "Entry".published = TRUE
           )
           AND (
             ${categorySelects}
