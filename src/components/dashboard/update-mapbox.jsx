@@ -8,7 +8,7 @@ export default function UpdateMapbox() {
 
   const updateMapbox = async (category) => {
     if(window.confirm(`Are you sure you want to update the ${category} tileset? This may take up to 30 seconds to complete, please be patient.`)) {
-      fetch(`/api/polygons/mapbox?category=${category}`).then(resp => resp.json()).then(results => {
+      fetch(`/api/entry/mapbox?category=${category}`).then(resp => resp.json()).then(results => {
         if(results.error) {
           toast(results.error)
         } else {

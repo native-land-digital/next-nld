@@ -11,11 +11,11 @@ export default function RelationEditor({ relatedTo, setRelatedTo }) {
 
   const loadOptions = (inputValue, callback) => {
     if(inputValue.length >= 2) {
-      fetch(`/api/polygons/searcher?s=${inputValue}`).then(resp => resp.json()).then(response => {
-        callback(response.map(polygon => {
+      fetch(`/api/entry/searcher?s=${inputValue}`).then(resp => resp.json()).then(response => {
+        callback(response.map(entry => {
           return {
-            value : polygon.id,
-            label : `${polygon.name} (${polygon.category})`
+            value : entry.id,
+            label : `${entry.name} (${entry.category})`
           }
         }));
       })

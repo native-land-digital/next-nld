@@ -2,21 +2,21 @@ import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
 import { getTranslations } from '@/i18n/server-i18n';
 
-import PolygonCard from '@/components/static/polygon-card';
+import EntryCard from '@/components/static/entry-card';
 
 export default async function Sidebar({ children = (<div></div>), picks = 5 }) {
 
   const t = await getTranslations('Sidebar');
 
-  const totalPolygons = await db.selectFrom('Polygon')
-    .select((eb) => eb.fn.count('id').as('num_polygons'))
+  const totalEntries = await db.selectFrom('Entry')
+    .select((eb) => eb.fn.count('id').as('num_entries'))
     .execute();
 
-  const randomIndex = Math.floor(Math.random() * (totalPolygons[0].num_polygons - picks));
+  const randomIndex = Math.floor(Math.random() * (totalEntries[0].num_entries - picks));
 
-  let polygons = await db.selectFrom('Polygon')
-    .leftJoin('Media', 'Media.polygonId', 'Polygon.id')
-    .select(['Polygon.id as id', 'Polygon.name as name', 'Polygon.category as category', 'Polygon.slug as slug', 'Polygon.updatedAt as updatedAt', 'Media.url as media_url'])
+  let entries = await db.selectFrom('Entry')
+    .leftJoin('Media', 'Media.entryId', 'Entry.id')
+    .select(['Entry.id as id', 'Entry.name as name', 'Entry.category as category', 'Entry.slug as slug', 'Entry.updatedAt as updatedAt', 'Media.url as media_url'])
     .orderBy('color', 'asc')
     .limit(picks)
     .offset(randomIndex)
@@ -32,8 +32,8 @@ export default async function Sidebar({ children = (<div></div>), picks = 5 }) {
       <h3 className="pt-0 !mt-0 font-bold text-xl">{picks} {t('random')}</h3>
       <p className="text-sm mb-2.5 !mt-2.5"><Link prefetch={false} href="/maps">{t('visit-maps')}</Link>.</p>
       <div className="grid gap-5">
-        {polygons.map(polygon => {
-          return <PolygonCard key={`polygon-${polygon.id}`} polygon={polygon} />
+        {entries.map(entry => {
+          return <EntryCard key={`entry-${entry.id}`} entry={entry} />
         })}
       </div>
     </div>

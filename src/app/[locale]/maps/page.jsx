@@ -4,7 +4,7 @@ import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 
 import SubHeader from '@/components/nav/sub-header'
 import Sidebar from '@/components/static/sidebar';
-import PolygonCard from '@/components/static/polygon-card';
+import EntryCard from '@/components/static/entry-card';
 
 export const revalidate = false;
 
@@ -23,31 +23,31 @@ export default async function Page({ searchParams, params : { locale } }) {
     search = searchParams.search;
   }
 
-  let totalQuery = db.selectFrom('Polygon')
+  let totalQuery = db.selectFrom('Entry')
     .where('published', '=', true)
-    .select((eb) => eb.fn.count('id').as('num_polygons'))
+    .select((eb) => eb.fn.count('id').as('num_entries'))
 
-  let query = db.selectFrom('Polygon')
+  let query = db.selectFrom('Entry')
     .where('published', '=', true)
-    .leftJoin('Media', 'Media.polygonId', 'Polygon.id')
-    .select(['Polygon.id', 'Polygon.name', 'Polygon.category', 'Polygon.slug', 'Polygon.updatedAt', 'Media.url as media_url'])
-    .distinctOn('Polygon.id')
+    .leftJoin('Media', 'Media.entryId', 'Entry.id')
+    .select(['Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.updatedAt', 'Media.url as media_url'])
+    .distinctOn('Entry.id')
     .limit(24)
     .offset(24 * page)
 
   if(searchParams.search) {
     query = query.where((eb) => eb.or([
-      eb(eb.fn('lower', 'Polygon.name'), 'like', `%${searchParams.search.toLowerCase()}%`),
-      eb(eb.fn('lower', 'Polygon.slug'), 'like', `%${searchParams.search.toLowerCase()}%`),
+      eb(eb.fn('lower', 'Entry.name'), 'like', `%${searchParams.search.toLowerCase()}%`),
+      eb(eb.fn('lower', 'Entry.slug'), 'like', `%${searchParams.search.toLowerCase()}%`),
     ]));
     totalQuery = totalQuery.where((eb) => eb.or([
-      eb(eb.fn('lower', 'Polygon.name'), 'like', `%${searchParams.search.toLowerCase()}%`),
-      eb(eb.fn('lower', 'Polygon.slug'), 'like', `%${searchParams.search.toLowerCase()}%`),
+      eb(eb.fn('lower', 'Entry.name'), 'like', `%${searchParams.search.toLowerCase()}%`),
+      eb(eb.fn('lower', 'Entry.slug'), 'like', `%${searchParams.search.toLowerCase()}%`),
     ]));
   }
 
-  const polygons = await query.execute()
-  const totalPolygons = await totalQuery.execute()
+  const entries = await query.execute()
+  const totalEntries = await totalQuery.execute()
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
@@ -74,12 +74,12 @@ export default async function Page({ searchParams, params : { locale } }) {
               </form>
             </div>
           </div>
-          <p className="mb-2.5 text-sm">{totalPolygons[0].num_polygons} {t('total-all')}</p>
+          <p className="mb-2.5 text-sm">{totalEntries[0].num_entries} {t('total-all')}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {polygons.map(polygon => {
-              return <PolygonCard key={`polygon-${polygon.id}`} polygon={polygon} />
+            {entries.map(entry => {
+              return <EntryCard key={`entry-${entry.id}`} entry={entry} />
             })}
-            {polygons.length >= 24 || page > 0 ?
+            {entries.length >= 24 || page > 0 ?
               <nav className="flex items-center mt-2.5" aria-label="Pagination">
                 {page > 0 ?
                   <form>
@@ -92,7 +92,7 @@ export default async function Page({ searchParams, params : { locale } }) {
                     </button>
                   </form>
                 : false}
-                {polygons.length >= 24 ?
+                {entries.length >= 24 ?
                   <form>
                     <input type="hidden" name="page" value={page + 1} />
                     <button type="submit" className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" aria-label="Next">

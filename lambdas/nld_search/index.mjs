@@ -35,20 +35,25 @@ export const handler = async (event) => {
   }
 
   // Otherwise start the main query
-  let topSelect = sql`SELECT id, name, category FROM "Polygon"`
+  let topSelect = sql`SELECT Entry.id, Entry.name, Entry.category FROM "Entry"`
 
   if(geosearch) {
-    topSelect = sql`SELECT id, name, category, ST_AsGeoJSON(ST_Centroid(geometry)) as centroid, ST_AsGeoJSON(ST_Envelope(geometry)) as bounds FROM "Polygon"`
+    topSelect = sql`
+      SELECT Entry.id, Entry.name, Entry.category, ST_AsGeoJSON(ST_Centroid(Polygon.geometry)) as centroid, ST_AsGeoJSON(ST_Envelope(Polygon.geometry)) as bounds
+      FROM "Entry"
+      LEFT JOIN Polygon
+      ON Entry.id = Polygon.entryId;
+    `
   }
 
   let categoryWhere = false;
   if(category) {
-    categoryWhere = sql`category = ${category}`
+    categoryWhere = sql`Entry.category = ${category}`
   }
 
   let searchWhere = false;
   if(search) {
-    searchWhere = sql`lower(name) LIKE ${`%${search}%`}`
+    searchWhere = sql`lower(Entry.name) LIKE ${`%${search}%`}`
   }
 
   console.log(search)
@@ -58,7 +63,7 @@ export const handler = async (event) => {
     const res = await sql`
       ${topSelect}
       WHERE (
-        published = 'true'
+        Entry.published = 'true'
       )
       ${categoryWhere ? sql`
         AND (

@@ -43,15 +43,15 @@ export default async function sitemap() {
     })
   })
 
-  const polygons = await db.selectFrom('Polygon')
+  const entries = await db.selectFrom('Polygon')
     .select(['id', 'category', 'slug', 'updatedAt'])
     .distinctOn('id')
     .execute();
 
-  polygons.forEach(polygon => {
+  entries.forEach(entry => {
     allPages.push({
-      url: `${process.env.NEXTAUTH_URL}/maps/${polygon.category}/${polygon.slug}`,
-      lastModified: new Date(polygon.updatedAt)
+      url: `${process.env.NEXTAUTH_URL}/maps/${entry.category}/${entry.slug}`,
+      lastModified: new Date(entry.updatedAt)
     })
   })
 

@@ -76,13 +76,18 @@ export const handleGetRequest = async(event, sql) => {
       }
     }
     // Otherwise start the main query
-    let topSelect = sql`SELECT id, name, color, slug, category, ST_AsGeoJSON(geometry) as geojson FROM "Polygon"`
+    let topSelect = sql`
+      SELECT Entry.id, Entry.name, Entry.color, Entry.slug, Entry.category, ST_AsGeoJSON(Polygon.geometry) as geojson
+      FROM "Entry"
+      LEFT JOIN Polygon
+      ON Entry.id = Polygon.entryId;
+    `
 
     let categoryWhere = false;
     let categorySelects = [];
     if(mapCategories.length > 0) {
       mapCategories.forEach(category => {
-        categorySelects.push(categoryWhere ? sql`OR category = ${category}` : sql`category = ${category}`);
+        categorySelects.push(categoryWhere ? sql`OR Entry.category = ${category}` : sql`Entry.category = ${category}`);
         categoryWhere = true;
       })
     }
@@ -92,13 +97,13 @@ export const handleGetRequest = async(event, sql) => {
       const latitude = parseFloat(splitPosition[0]);
       const longitude = parseFloat(splitPosition[1]);
       const geometry = JSON.stringify({ type : "Point", coordinates : [ longitude, latitude ] });
-      positionSelect.push(sql`ST_Contains(geometry, ST_GeomFromGeoJSON(${geometry}))`)
+      positionSelect.push(sql`ST_Contains(Polygon.geometry, ST_GeomFromGeoJSON(${geometry}))`)
     }
     let nameWhere = false;
     let nameSelects = [];
     if(splitNames.length > 0) {
       splitNames.forEach(name => {
-        nameSelects.push(nameWhere ? sql`OR slug = ${encodeURIComponent(name).toLowerCase()}` : sql`slug = ${encodeURIComponent(name).toLowerCase()}`);
+        nameSelects.push(nameWhere ? sql`OR Entry.slug = ${encodeURIComponent(name).toLowerCase()}` : sql`Entry.slug = ${encodeURIComponent(name).toLowerCase()}`);
         nameWhere = true;
       })
     }
@@ -108,7 +113,7 @@ export const handleGetRequest = async(event, sql) => {
       const res = await sql`
         ${topSelect}
         WHERE (
-          published = 'true'
+          Entry.published = 'true'
         )
         AND (
           ${categorySelects}

@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import { getServerSession } from "next-auth/next"
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 
@@ -13,17 +13,10 @@ export default async function Page({ params : { locale } }) {
   setLocaleCache(locale);
   const t = await getTranslations('Dashboard');
 
-  const user = await prisma.user.findUnique({
-    where : { id : session.user.id },
-    select : {
-      id : true,
-      name : true,
-      email : true,
-      organization : true,
-      createdAt : true,
-      api_key : true
-    }
-  });
+  const user = await db.selectFrom('User')
+    .where('id', '=', Number(session.user.id))
+    .select(['id', 'name', 'email', 'organization', 'createdAt', 'api_key'])
+    .executeTakeFirst()
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">

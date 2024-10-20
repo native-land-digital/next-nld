@@ -1,8 +1,7 @@
+import { db } from '@/lib/db/kysely'
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
 import slugify from 'slugify'
-
-import prisma from "@/lib/db/prisma";
 
 export const GET = async (req) => {
 	const secret = req.nextUrl.searchParams.get('secret');
@@ -10,18 +9,14 @@ export const GET = async (req) => {
 	if(secret === process.env.MOBILE_APP_SECRET) {
 
 		try {
-	    const polygons = await prisma.polygon.findMany({
-	      select : {
-	        id : true,
-	        name : true,
-	        category : true
-	      },
-	      orderBy : {
-	        name : 'asc'
-	      }
-	    });
 
-	    return NextResponse.json(polygons);
+		  let entries = db.selectFrom('Entry')
+		    .select(['id', 'name', 'category'])
+		    .distinctOn('id')
+		    .orderBy('name')
+				.execute();
+
+	    return NextResponse.json(entries);
 
 	  } catch (error) {
 	    console.error(error);
@@ -36,12 +31,12 @@ export const POST = async (req) => {
   const token = await getToken({ req })
 
 	if(token && token.id) {
-		const user = await prisma.user.findUnique({
-			where : { id : parseInt(token.id) },
-			select : {
-				permissions : true
-			}
-		});
+
+    const user = await db.selectFrom('User')
+      .where('id', '=', Number(token.id))
+      .select(['permissions'])
+      .executeTakeFirst()
+
 		if(user.permissions.includes('research')) {
 			const body = await req.json();
 
@@ -57,11 +52,12 @@ export const POST = async (req) => {
 	      let slugIsUnique = false;
 	      while(!slugIsUnique) {
 	        const currentSlug = slug + (slugNumber > 1 ? (slugSuffix + slugNumber.toString()) : "")
-	        const foundSlug = await prisma.polygon.findUnique({
-	          where : {
-	            slug : currentSlug
-	          }
-	        })
+
+			    const foundSlug = await db.selectFrom('Entry')
+			      .where('slug', '=', currentSlug)
+			      .select(['id'])
+			      .executeTakeFirst()
+
 	        if(!foundSlug) {
 	          slugIsUnique = true;
 	          slug = currentSlug;
@@ -71,15 +67,20 @@ export const POST = async (req) => {
 	      }
 
 	      // Inserting into db
-	  		const polygon = await prisma.polygon.create({
-	  			data: {
+				const [entry] = await db.insertInto('Entry')
+				  .values({
 	  				name: body.name,
 	          slug : slug,
-						color : randomHslToHex()
-	  			}
-	  		});
+						color : randomHslToHex(),
+						updatedAt: new Date()
+				  })
+					.returningAll()
+				  .execute()
+
+				console.log(entry)
+
 	  		return NextResponse.json({
-	  			id : polygon.id
+	  			id : entry.id
 	  		});
 	  	} catch (error) {
 	  		console.error(error);

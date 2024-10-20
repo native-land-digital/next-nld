@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import { NextResponse } from "next/server";
 
 export const GET = async (req ) => {
@@ -7,23 +7,24 @@ export const GET = async (req ) => {
   if(!verificationKey || !email) {
     return NextResponse.json({ error : "Please provide an email and verification key" }, { status: 400 });
   } else {
-		const user = await prisma.user.findUnique({
-			where : { email : email },
-			select : {
-				name : true,
-				verification_key : true
-			}
-		});
+
+		const user = await db.selectFrom('User')
+			.where('email', '=', email)
+			.select(['name', 'verification_key'])
+			.executeTakeFirst()
+
 		if(!user) {
 			return NextResponse.json({ error : "No user found with this email. Try signing up again." }, { status: 400 });
 		} else {
 			if(verificationKey === user.verification_key) {
-				const user = await prisma.user.update({
-					where : { email : email },
-					data : {
-						email_verified : true
-					}
-				});
+
+				await db.updateTable('User')
+					.set({
+						email_verified : true,
+					})
+					.where('email', '=', email)
+					.execute()
+
 				return NextResponse.json({ user });
 			} else {
 				return NextResponse.json({ error : "Verification keys do not match." }, { status: 400 });

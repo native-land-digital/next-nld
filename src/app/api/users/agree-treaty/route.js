@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import { NextResponse } from "next/server";
 
 export const GET = async (req ) => {
@@ -7,12 +7,14 @@ export const GET = async (req ) => {
   if(!user_id) {
     return NextResponse.json({ error : "Your user ID was not sent correctly. Please reload and try again." }, { status: 400 });
   } else {
-		const user = await prisma.user.update({
-			where : { id : parseInt(user_id) },
-			data : {
+
+		await db.updateTable('User')
+			.set({
 				agreed_treaty : agree && agree === 'true' ? true : false
-			}
-		});
-		return NextResponse.json({ user });
+			})
+			.where('id', '=', parseInt(user_id))
+			.execute()
+
+		return NextResponse.json({ user_id });
   }
 }
