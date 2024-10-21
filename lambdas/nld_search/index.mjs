@@ -2,10 +2,9 @@ import postgres from 'postgres'
 import 'dotenv/config'
 
 // Connect to DB
-// const sql = postgres(process.env.DATABASE_URL.replace('?schema=public', ''))
+const sql = postgres(process.env.DATABASE_URL.replace('?schema=public', ''))
 
 export const handler = async (event) => {
-const sql = postgres(process.env.DATABASE_URL.replace('?schema=public', ''))
 
   let search = false;
   let category = false;
