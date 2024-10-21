@@ -59,16 +59,23 @@ async function main() {
     // importJSON.splice(10); // For import testing
 
     // Admin user
-    let admin = await prisma.user.create({
-      data : {
-        name : "Admin User",
+    const usersExist = await prisma.user.findUnique({
+      where: {
         email : "test@native-land.ca",
-        password : hashPassword("test"),
-        email_verified : true,
-        permissions : ["profile", "api", "research", "manage_users", "update_mapbox"],
-        organization : "Native Land Digital"
       }
     });
+    if(!usersExist) {
+      await prisma.user.create({
+        data : {
+          name : "Admin User",
+          email : "test@native-land.ca",
+          password : hashPassword("test"),
+          email_verified : true,
+          permissions : ["profile", "api", "research", "manage_users", "update_mapbox"],
+          organization : "Native Land Digital"
+        }
+      });
+    }
 
     // Removing template that came along with export
     let templateIndex = importJSON.findIndex(row => row.name.includes("Template"));

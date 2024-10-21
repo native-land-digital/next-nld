@@ -89,7 +89,7 @@ let search_response = await search({
   httpMethod : "GET",
   queryStringParameters : {
     s : 'pomo',
-    category : "territories",
+    // category : "territories",
     // id : 4571
     geosearch : true
   }
