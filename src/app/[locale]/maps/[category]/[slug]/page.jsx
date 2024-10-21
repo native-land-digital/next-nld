@@ -13,17 +13,17 @@ import Changelog from '@/components/maps/changelog';
 
 export const generateStaticParams = async () => {
   if(process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'production') {
-    const polygons = await db.selectFrom('Polygon')
+    const entries = await db.selectFrom('Entry')
       .where('published', '=', true)
       .select(['id', 'category', 'slug'])
       .distinctOn('id')
       .execute();
 
-    return polygons.map(polygon => {
+    return entries.map(entry => {
       return {
         locale : 'en',
-        category : polygon.category,
-        slug : encodeURIComponent(polygon.slug).toLowerCase()
+        category : entry.category,
+        slug : encodeURIComponent(entry.slug).toLowerCase()
       }
     })
   } else {
@@ -38,52 +38,53 @@ export default async function Page({ params : { locale, category, slug }}) {
   setLocaleCache(locale);
   const t = await getTranslations('Maps');
 
-  const polygon = await db.selectFrom('Polygon')
+  const entry = await db.selectFrom('Entry')
     .where('slug', '=', slug.toLowerCase())
     .where('category', '=', category)
     .where('published', '=', true)
+    .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
     .select((eb) => [
-      'id', 'name', 'category', 'slug', 'sources', 'pronunciation', 'createdAt', 'updatedAt',
-      eb.fn('ST_AsGeoJSON', 'geometry').as('geometry'),
+      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.sources', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
+      eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
       jsonArrayFrom(
         eb.selectFrom('Media')
           .select(['url', 'caption', 'title'])
-          .whereRef('Media.polygonId', '=', 'Polygon.id')
+          .whereRef('Media.entryId', '=', 'Entry.id')
       ).as('media'),
       jsonArrayFrom(
         eb.selectFrom('Website')
           .select(['url', 'title'])
-          .whereRef('Website.polygonId', '=', 'Polygon.id')
+          .whereRef('Website.entryId', '=', 'Entry.id')
       ).as('websites'),
       jsonArrayFrom(
         eb.selectFrom('Change')
           .select(['createdAt', 'description'])
-          .whereRef('Change.polygonId', '=', 'Polygon.id')
+          .whereRef('Change.entryId', '=', 'Entry.id')
       ).as('changelog'),
       jsonArrayFrom(
         eb.selectFrom('Relation')
-          .innerJoin('Polygon as RelatedPolygon', 'RelatedPolygon.id', 'Relation.relatedFromId')
+          .innerJoin('Entry as RelatedEntry', 'RelatedEntry.id', 'Relation.relatedFromId')
           .select([
             'Relation.description as description',
-            'RelatedPolygon.name as name', 'RelatedPolygon.category as category', 'RelatedPolygon.slug as slug'
+            'RelatedEntry.name as name', 'RelatedEntry.category as category', 'RelatedEntry.slug as slug'
           ])
-          .whereRef('Relation.relatedToId', '=', 'Polygon.id')
+          .whereRef('Relation.relatedToId', '=', 'Entry.id')
       ).as('relatedFrom'),
       jsonArrayFrom(
         eb.selectFrom('Relation')
-          .innerJoin('Polygon as RelatedPolygon', 'RelatedPolygon.id', 'Relation.relatedToId')
+          .innerJoin('Entry as RelatedEntry', 'RelatedEntry.id', 'Relation.relatedToId')
           .select([
             'Relation.description as description',
-            'RelatedPolygon.name as name', 'RelatedPolygon.category as category', 'RelatedPolygon.slug as slug'
+            'RelatedEntry.name as name', 'RelatedEntry.category as category', 'RelatedEntry.slug as slug'
           ])
-          .whereRef('Relation.relatedFromId', '=', 'Polygon.id')
+          .whereRef('Relation.relatedFromId', '=', 'Entry.id')
       ).as('relatedTo')
     ])
     .executeTakeFirst()
 
-  if(polygon) {
-    if(polygon.geometry) {
-      polygon.geometry = JSON.parse(polygon.geometry)
+  if(entry) {
+    if(entry.geometry) {
+      entry.geometry = JSON.parse(entry.geometry)
     }
   } else {
     notFound();
@@ -91,7 +92,7 @@ export default async function Page({ params : { locale, category, slug }}) {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={polygon.name} crumbs={[{ url : "/maps", title : "Maps" }, { url : `/maps/${polygon.category}`, title : polygon.category }]} />
+      <SubHeader title={entry.name} crumbs={[{ url : "/maps", title : "Maps" }, { url : `/maps/${entry.category}`, title : entry.category }]} />
       <div className="grid gap-5 grid-cols-1 md:grid-cols-3 min-h-screen w-full md:w-2/3 px-5 md:px-0 m-auto -mt-12 text-black">
         <Sidebar picks={3}>
           <ol className="hidden md:block list-inside text-gray-400">
@@ -106,26 +107,26 @@ export default async function Page({ params : { locale, category, slug }}) {
           <span />
         </Sidebar>
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
-          <Map geometry={polygon.geometry} />
+          <Map geometry={entry.geometry} />
           <section className="mt-5">
             <h3 className="text-xl font-bold mb-3" id="websites">{t('websites')}</h3>
-            <Websites websites={polygon.websites} />
+            <Websites websites={entry.websites} />
           </section>
           <section className="mt-5">
             <h3 className="text-xl font-bold mb-3" id="related-maps">{t('related')}</h3>
-            <Related relatedTo={polygon.relatedTo} relatedFrom={polygon.relatedFrom} />
+            <Related relatedTo={entry.relatedTo} relatedFrom={entry.relatedFrom} />
           </section>
           <section className="mt-5">
             <h3 className="text-xl font-bold mb-3" id="media">{t('media')}</h3>
-            <Media media={polygon.media} />
+            <Media media={entry.media} />
           </section>
           <section className="mt-5">
             <h3 className="text-xl font-bold mb-3" id="sources">{t('sources')}</h3>
-            <div className="sources-text" dangerouslySetInnerHTML={{ __html : polygon.sources }} />
+            <div className="sources-text" dangerouslySetInnerHTML={{ __html : entry.sources }} />
           </section>
           <section className="mt-5">
             <h3 className="text-xl font-bold mb-3" id="changelog">{t('changelog')}</h3>
-            <Changelog changelog={polygon.changelog} createdAt={polygon.createdAt} updatedAt={polygon.updatedAt} />
+            <Changelog changelog={entry.changelog} createdAt={entry.createdAt} updatedAt={entry.updatedAt} />
           </section>
           <section className="mt-5">
             <h3 className="text-xl font-bold mb-3" id="send-correction">{t('correction')}</h3>

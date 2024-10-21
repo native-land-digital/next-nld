@@ -8,26 +8,38 @@ export type Change = {
     id: Generated<number>;
     createdAt: Timestamp;
     description: string | null;
-    polygonId: number;
+    entryId: number;
+};
+export type Entry = {
+    id: Generated<number>;
+    name: string;
+    slug: string | null;
+    color: string | null;
+    sources: string | null;
+    pronunciation: string | null;
+    category: string | null;
+    published: Generated<boolean>;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Timestamp;
+};
+export type Line = {
+    id: Generated<number>;
+    entryId: number;
 };
 export type Media = {
     id: Generated<number>;
     url: string;
     title: string | null;
     caption: string | null;
-    polygonId: number;
+    entryId: number;
+};
+export type Point = {
+    id: Generated<number>;
+    entryId: number;
 };
 export type Polygon = {
     id: Generated<number>;
-    name: string;
-    slug: string | null;
-    sources: string | null;
-    color: string | null;
-    pronunciation: string | null;
-    category: string | null;
-    published: Generated<boolean>;
-    createdAt: Generated<Timestamp>;
-    updatedAt: Timestamp;
+    entryId: number;
 };
 export type Relation = {
     id: Generated<number>;
@@ -52,11 +64,14 @@ export type Website = {
     id: Generated<number>;
     url: string;
     title: string | null;
-    polygonId: number;
+    entryId: number;
 };
 export type DB = {
     Change: Change;
+    Entry: Entry;
+    Line: Line;
     Media: Media;
+    Point: Point;
     Polygon: Polygon;
     Relation: Relation;
     User: User;

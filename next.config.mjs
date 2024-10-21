@@ -109,7 +109,7 @@ const nextConfig = {
       destination: "/maps/treaties",
       permanent: true
     },{
-      source: "/api/polygons/searcher",
+      source: "/api/entry/searcher",
       destination : process.env.AWS_GEOCODE_ENDPOINT,
       permanent: true
     },{

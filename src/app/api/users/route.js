@@ -1,7 +1,8 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import { NextResponse } from "next/server";
 import VerificationTemplate from '@/root/emails/verification-template'
 import * as React from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import { sendEmail } from '@/lib/auth/email-actions'
 import { hashPassword } from '@/lib/auth/utils';
 
@@ -20,24 +21,33 @@ export const POST = async (req) => {
 		}
 
 		try {
-			const userExists = await prisma.user.findUnique({
-				where : { email : body.email }
-			});
+
+	    const userExists = await db.selectFrom('User')
+	      .where('email', '=', body.email)
+	      .select(['id'])
+	      .executeTakeFirst()
+
 			if(userExists) {
 				return NextResponse.json({ error : "An account with this email already exists" }, { status: 400 });
 			} else {
-				const user = await prisma.user.create({
-					data: {
+
+				const verification_key = uuidv4()
+
+				const user = await db.insertInto('User')
+					.values({
 						email: body.email,
 						name: body.name,
 						organization : body.organization,
+						verification_key : verification_key,
 						password: hashPassword(body.password)
-					}
-				});
+					})
+					.returningAll()
+					.execute()
+
 				await sendEmail({
 				   to: body.email,
 				   subject: 'Verify your email address',
-				   react: React.createElement(VerificationTemplate, { email: body.email, verification_key : user.verification_key }),
+				   react: React.createElement(VerificationTemplate, { email: body.email, verification_key : verification_key }),
 			  })
 				return NextResponse.json({
 					id : user.id

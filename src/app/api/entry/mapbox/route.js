@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import { S3Client, HeadObjectCommand, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { FormData, File } from 'node-fetch';
 import { NextResponse } from "next/server";
@@ -8,41 +8,46 @@ export const GET = async (req) => {
   const token = await getToken({ req })
 
 	if(token && token.id) {
-		const user = await prisma.user.findUnique({
-			where : { id : parseInt(token.id) },
-			select : {
-				permissions : true
-			}
-		});
+
+    const user = await db.selectFrom('User')
+      .where('id', '=', Number(token.id))
+      .select(['permissions'])
+      .executeTakeFirst()
+
 		if(user.permissions.includes('update_mapbox')) {
 
       const category = req.nextUrl.searchParams.get('category');
       if(category) {
 
         try {
-      	  const polygons = await prisma.$queryRaw`
-      	    SELECT id, name, color, category, slug, ST_AsGeoJSON(geometry) as geojson
-      			FROM "Polygon"
-            WHERE published = true
-      	    AND category = ${category}
-      	  `
-          if(polygons.length > 0) {
+          const entries = await db.selectFrom('Entry')
+            .where('category', '=', category)
+            .where('published', '=', true)
+            .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
+            .select((eb) => [
+              'Entry.id', 'Entry.name', 'Entry.category', 'Entry.color', 'Entry.slug',
+              eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+            ])
+            .distinctOn('Entry.id')
+            .execute()
+
+          if(entries.length > 0) {
 
             // Prepare line-delimited geoJSON
             const features = [];
-            polygons.forEach(polygon => {
-              if(polygon.geojson) {
-                const geometry = JSON.parse(polygon.geojson)
+            entries.forEach(entry => {
+              if(entry.geometry) {
+                const geometry = JSON.parse(entry.geometry)
                 if(geometry && geometry.coordinates) {
                   const feature = {
                     type : "Feature",
-                    id : polygon.id,
+                    id : entry.id,
                     properties : {
-                      id : polygon.id,
-                      Slug : polygon.slug,
-                      Name : polygon.name,
-                      color : polygon.color,
-                      description : process.env.NEXTAUTH_URL + `/maps/${polygon.category}/${polygon.slug}`
+                      id : entry.id,
+                      Slug : entry.slug,
+                      Name : entry.name,
+                      color : entry.color,
+                      description : process.env.NEXTAUTH_URL + `/maps/${entry.category}/${entry.slug}`
                     },
                     geometry : geometry
                   }
@@ -168,11 +173,11 @@ export const GET = async (req) => {
             }
 
         		return NextResponse.json({
-              featuresUpdated : polygons.length,
+              featuresUpdated : entries.length,
               updateSuccessful : true
             });
           } else {
-            return NextResponse.json({ error : `No polygon found with this id` }, { status: 500 });
+            return NextResponse.json({ error : `No entry found with this id` }, { status: 500 });
           }
         } catch (error) {
           console.error(error);

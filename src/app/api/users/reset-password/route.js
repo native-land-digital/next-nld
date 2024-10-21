@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import jwt from 'jsonwebtoken';
 import ResetPassword from '@/root/emails/reset-password-template'
 import * as React from 'react'
@@ -11,14 +11,12 @@ export const GET = async (req ) => {
   if(!email) {
     return NextResponse.json({ error : "Please provide an email" }, { status: 400 });
   } else {
-	  const user = await prisma.user.findUnique({
-	    where : { email : email },
-	    select : {
-				id : true,
-				name : true,
-	      verification_key : true
-	    }
-	  });
+
+		const user = await db.selectFrom('User')
+			.where('email', '=', email)
+			.select(['id', 'name', 'verification_key'])
+			.executeTakeFirst()
+
 		if(!user) {
 	    return NextResponse.json({ error : "No user found with this email. Try signing up again." }, { status: 400 });
 		} else {
@@ -42,21 +40,23 @@ export const POST = async (req) => {
 	    return NextResponse.json({ error : "Make sure your password is longer than 4 characters" }, { status: 400 });
 		} else {
     	const { userId } = jwt.verify(body.token, process.env.NEXTAUTH_SECRET)
-		  const user = await prisma.user.findUnique({
-		    where : { id : parseInt(userId) },
-		    select : {
-					id : true
-		    }
-		  });
+
+			const user = await db.selectFrom('User')
+				.where('id', '=', parseInt(userId))
+				.select(['id'])
+				.executeTakeFirst()
+
 			if(!user) {
 		    return NextResponse.json({ error : "Token not valid. Please try again." }, { status: 400 });
 			} else {
-				await prisma.user.update({
-					where : { id : parseInt(userId) },
-					data : {
+
+				await db.updateTable('User')
+					.set({
 						password : hashPassword(body.password)
-					}
-				});
+					})
+					.where('id', '=', parseInt(userId))
+					.execute()
+
 		    return NextResponse.json({ user });
 			}
 		}

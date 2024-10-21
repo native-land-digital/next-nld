@@ -12,11 +12,12 @@ export default function CreatePolygon() {
   const makeNewPolygon = () => {
     const name = window.prompt("Enter a name for the new polygon");
     if(name) {
-      fetch('/api/polygons', {
+      fetch('/api/entry', {
         method : "POST",
         headers : { 'Content-Type': 'application/json' },
         body : JSON.stringify({
-          name : name
+          name : name,
+          type : "polygon"
         })
       }).then(resp => resp.json()).then(results => {
         if(results.error) {

@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
 import { getTranslations } from '@/i18n/server-i18n';
 
@@ -10,20 +10,15 @@ export default async function FrontPage() {
 
   const t = await getTranslations('FrontPage');
 
-  const latestUpdates = await prisma.polygon.findMany({
-    select : {
-      id : true,
-      name : true,
-      slug : true,
-      category : true,
-      media : true,
-      updatedAt : true
-    },
-    orderBy : {
-      updatedAt : 'desc'
-    },
-    take : 5
-  });
+  const latestUpdates = await db.selectFrom('Entry')
+    .where('published', '=', true)
+    .leftJoin('Media', 'Media.entryId', 'Entry.id')
+    .select(['Entry.id as id', 'Entry.name as name', 'Entry.category as category', 'Entry.slug as slug', 'Entry.updatedAt as updatedAt', 'Media.url as media_url'])
+    .distinctOn('Entry.id')
+    .orderBy('Entry.id')
+    .orderBy('Entry.updatedAt', 'desc')
+    .limit(5)
+    .execute()
 
   return (
     <div className="font-[sans-serif] bg-white py-10 text-center">
@@ -109,12 +104,12 @@ export default async function FrontPage() {
         <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24 text-black">
           <h3 className="text-3xl font-bold pb-16">{t('latest-updates')}</h3>
           <div className="grid grid-cols-1 md:grid-cols-5 pad-5">
-            {latestUpdates.map(polygon => {
+            {latestUpdates.map(entry => {
               return (
-                <div key={`polygon-${polygon.id}`}>
-                  <Link prefetch={false} href={`maps/${polygon.category}/${polygon.slug}`}>
-                    {polygon.media.length > 0 ?
-                      <div className="w-1/2 m-auto mt-5 h-[100px] bg-cover mb-2.5" style={{backgroundImage : `url(${polygon.media[0].url})`}}></div>
+                <div key={`entry-${entry.id}`}>
+                  <Link prefetch={false} href={`maps/${entry.category}/${entry.slug}`}>
+                    {entry.media_url ?
+                      <div className="w-1/2 m-auto mt-5 h-[100px] bg-cover mb-2.5" style={{backgroundImage : `url(${entry.media_url})`}}></div>
                     :
                       <div className="w-1/2 m-auto mt-5 h-[100px] bg-cover mb-2.5">
                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 504 504" width="100px" height="100px">
@@ -126,11 +121,11 @@ export default async function FrontPage() {
                       </div>
                     }
                   </Link>
-                  <p className="uppercase text-gray-300 text-xs pb-2.5">{polygon.category}</p>
-                  <Link prefetch={false} href={`maps/${polygon.category}/${polygon.slug}`}>
-                    <h5 className="text-xl font-bold">{polygon.name}</h5>
+                  <p className="uppercase text-gray-300 text-xs pb-2.5">{entry.category}</p>
+                  <Link prefetch={false} href={`maps/${entry.category}/${entry.slug}`}>
+                    <h5 className="text-xl font-bold">{entry.name}</h5>
                   </Link>
-                  <p className="text-sm pt-2.5">{new Date(polygon.updatedAt).toLocaleDateString()}</p>
+                  <p className="text-sm pt-2.5">{new Date(entry.updatedAt).toLocaleDateString()}</p>
                 </div>
               )
             })}

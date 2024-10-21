@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 
 import { setLocaleCache } from '@/i18n/server-i18n';
 import SubHeader from '@/components/nav/sub-header'
@@ -11,18 +11,10 @@ export default async function Page({ params : { locale, id }}) {
 
   setLocaleCache(locale);
 
-  const user = await prisma.user.findUnique({
-    where : { id : Number(id) },
-    select : {
-      id : true,
-      name : true,
-      email : true,
-      organization : true,
-      permissions : true,
-      createdAt : true,
-      api_key : true
-    }
-  });
+  const user = await db.selectFrom('User')
+    .where('id', '=', Number(id))
+    .select(['id', 'name', 'email', 'organization', 'permissions', 'createdAt', 'api_key'])
+    .executeTakeFirst()
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">

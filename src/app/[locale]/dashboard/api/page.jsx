@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
 import { getServerSession } from "next-auth/next"
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
@@ -16,40 +16,21 @@ export default async function Page({ params : { locale }, searchParams }) {
   const tCommon = await getTranslations('Common');
   const t = await getTranslations('Dashboard');
 
-  const user = await prisma.user.findUnique({
-    where : { id : session.user.id },
-    select : {
-      id : true,
-      api_key : true,
-      agreed_treaty : true
-    }
-  });
+  const user = await db.selectFrom('User')
+    .where('id', '=', Number(session.user.id))
+    .select(['id', 'api_key', 'agreed_treaty'])
+    .executeTakeFirst()
 
   let polygons = [];
-  let search = false;
   if(searchParams.search) {
-    search = searchParams.search;
-  }
-  if(search) {
-    const query = {
-      where : {
-        name : {
-          contains : search,
-          mode: 'insensitive'
-        }
-      },
-      select : {
-        id : true,
-        name : true,
-        slug : true,
-        category : true
-      },
-      orderBy : {
-        updatedAt : 'desc'
-      },
-      take : 50
-    }
-    polygons = await prisma.polygon.findMany(query);
+    polygons = await db.selectFrom('Entry')
+      .where((eb) => eb.fn('lower', eb.ref('name')), 'like', `%${searchParams.search.toLowerCase()}%`)
+      .select(['id', 'name', 'category', 'slug'])
+      .distinctOn('id')
+      .orderBy('id')
+      .orderBy('createdAt')
+      .limit(50)
+      .execute();
   }
 
   return (
@@ -68,13 +49,13 @@ export default async function Page({ params : { locale }, searchParams }) {
           <div className="w-full mb-5 bg-gray-100 p-2.5 rounded">
             <form className="grid grid-cols-4 gap-2.5">
               <div className="col-span-3 md:col-span-2">
-                <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
+                <input type="text" defaultValue={searchParams.search ? searchParams.search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
               </div>
               <div className="col-span-1">
                 <button className="w-full border border-gray-300 px-4 py-3 rounded text-sm">{tCommon('search')}</button>
               </div>
               <div className="col-span-4 md:col-span-1">
-              {search ?
+              {searchParams.search ?
                 <Link prefetch={false} className="block w-full text-center border border-gray-300 px-4 py-3 text-sm rounded" href="/dashboard/api">{tCommon('clear')}</Link>
               : false}
               </div>

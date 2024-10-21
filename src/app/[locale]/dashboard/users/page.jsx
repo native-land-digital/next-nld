@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 
@@ -12,36 +12,28 @@ export default async function Page({ params : { locale }, searchParams }) {
   const t = await getTranslations('Dashboard');
 
   let page = 0;
-  let search = false;
   if(searchParams.page) {
     page = Number(searchParams.page);
   }
+
+  let totalQuery = db.selectFrom('User')
+    .select((eb) => eb.fn.count('id').as('num_users'))
+
+  let query = db.selectFrom('User')
+    .select(['id', 'name', 'email', 'organization', 'permissions'])
+    .distinctOn('id')
+    .orderBy('id')
+    .orderBy('createdAt')
+    .limit(25)
+    .offset(25 * page)
+
   if(searchParams.search) {
-    search = searchParams.search;
+    query = query.where((eb) => eb(eb.fn('lower', 'name'), 'like', `%${searchParams.search.toLowerCase()}%`));
+    totalQuery = totalQuery.where((eb) => eb(eb.fn('lower', 'name'), 'like', `%${searchParams.search.toLowerCase()}%`));
   }
-  const query = {
-    select : {
-      id : true,
-      name : true,
-      email : true,
-      organization : true,
-      permissions : true
-    },
-    orderBy : {
-      createdAt : 'desc'
-    },
-    skip : page * 25,
-    take : 25
-  }
-  if(search) {
-    query['where'] = {
-      name : {
-        contains : search,
-        mode: 'insensitive'
-      }
-    }
-  }
-  const users = await prisma.user.findMany(query);
+
+  const users = await query.execute()
+  const totalUsers = await totalQuery.execute()
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
@@ -53,11 +45,11 @@ export default async function Page({ params : { locale }, searchParams }) {
             <div className="grid grid-cols-4 gap-2.5">
               <form className="grid grid-cols-4 md:grid-cols-5 col-span-4 md:col-span-3 gap-2.5">
                 <div className="col-span-3 md:col-span-2">
-                  <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
+                  <input type="text" defaultValue={searchParams.search ? searchParams.search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
                 </div>
                 <div className="col-span-3 md:col-span-2">
                   <button className="border border-gray-300 px-4 py-3 rounded md:ml-2.5 mr-2.5 text-sm">{tCommon('search')}</button>
-                  {search ?
+                  {searchParams.search ?
                     <Link prefetch={false} className="inline-block border border-gray-300 px-4 py-3 rounded" href="/dashboard/users">{tCommon('clear')}</Link>
                   : false}
                 </div>
@@ -66,6 +58,7 @@ export default async function Page({ params : { locale }, searchParams }) {
               </div>
             </div>
           </div>
+          <p className="mb-2.5 text-sm">{totalUsers[0].num_users} users.</p>
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
               <tr className="hidden md:table-row">
