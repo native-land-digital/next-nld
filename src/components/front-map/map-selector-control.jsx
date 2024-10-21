@@ -46,8 +46,8 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
     }
 
     const selectDropdown = (id, category) => {
-      fetch(`/api/polygons/searcher/${id}`).then(resp => resp.json()).then(polygon => {
-        const bounds = makeBoundsFromPoly(polygon)
+      fetch(`/api/entry/searcher?id=${id}`).then(resp => resp.json()).then(entry => {
+        const bounds = makeBoundsFromPoly(entry[0])
         map.fitBounds(bounds, { padding : 20 })
         adjustCurrentLayers(true, category);
       })
@@ -55,11 +55,11 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
 
     const loadTerritoryOptions = (inputValue, callback) => {
       if(inputValue.length >= 3) {
-        fetch(`/api/polygons/searcher?s=${inputValue}&category=territories`).then(resp => resp.json()).then(response => {
-          callback(response.map(polygon => {
+        fetch(`/api/entry/searcher?s=${inputValue}&category=territories`).then(resp => resp.json()).then(response => {
+          callback(response.map(entry => {
             return {
-              value : polygon.id,
-              label : polygon.name
+              value : entry.id,
+              label : entry.name
             }
           }));
         })
@@ -68,11 +68,11 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
 
     const loadLanguageOptions = (inputValue, callback) => {
       if(inputValue.length >= 3) {
-        fetch(`/api/polygons/searcher?s=${inputValue}&category=languages`).then(resp => resp.json()).then(response => {
-          callback(response.map(polygon => {
+        fetch(`/api/entry/searcher?s=${inputValue}&category=languages`).then(resp => resp.json()).then(response => {
+          callback(response.map(entry => {
             return {
-              value : polygon.id,
-              label : polygon.name
+              value : entry.id,
+              label : entry.name
             }
           }));
         })
@@ -81,11 +81,11 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
 
     const loadTreatyOptions = (inputValue, callback) => {
       if(inputValue.length >= 3) {
-        fetch(`/api/polygons/searcher?s=${inputValue}&category=treaties`).then(resp => resp.json()).then(response => {
-          callback(response.map(polygon => {
+        fetch(`/api/entry/searcher?s=${inputValue}&category=treaties`).then(resp => resp.json()).then(response => {
+          callback(response.map(entry => {
             return {
-              value : polygon.id,
-              label : polygon.name
+              value : entry.id,
+              label : entry.name
             }
           }));
         })

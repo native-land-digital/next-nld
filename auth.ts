@@ -1,5 +1,5 @@
 // @ts-nocheck
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import NextAuth, { getServerSession } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { NextRequest, NextResponse } from "next/server";
@@ -20,17 +20,12 @@ interface Session {
 
 async function getUser(email: string): Promise<User | undefined> {
   try {
-    const user = await prisma.user.findUnique({
-      where : { email : email },
-      select : {
-        id : true,
-        name : true,
-        permissions : true,
-        email : true,
-        email_verified : true,
-        password : true
-      }
-    });
+
+    const user = await db.selectFrom('User')
+      .where('email', '=', email)
+      .select(['id', 'name', 'permissions', 'email', 'email_verified', 'password'])
+      .executeTakeFirst()
+
     if (user) {
       return user;
     } else {

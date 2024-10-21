@@ -25,39 +25,54 @@ model Media {
   url             String
   title           String?
   caption         String?
-  polygonId       Int
-  polygon         Polygon @relation(fields: [polygonId], references: [id], onDelete: Cascade)
+  entryId         Int
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
 
 model Website {
   id              Int @id @default(autoincrement())
   url             String
   title           String?
-  polygonId       Int
-  polygon         Polygon @relation(fields: [polygonId], references: [id], onDelete: Cascade)
-
-  @@index([id])
+  entryId         Int
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
 
 model Change {
   id              Int @id @default(autoincrement())
   createdAt       DateTime
   description     String?
-  polygonId       Int
-  polygon         Polygon @relation(fields: [polygonId], references: [id], onDelete: Cascade)
-
-  @@index([id])
+  entryId         Int
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
 
 model Relation {
   id              Int @id @default(autoincrement())
   description     String?
   relatedToId     Int
-  relatedTo       Polygon @relation("related_to", fields: [relatedToId], references: [id])
+  relatedTo       Entry @relation("related_to", fields: [relatedToId], references: [id])
   relatedFromId   Int
-  relatedFrom     Polygon @relation("related_from", fields: [relatedFromId], references: [id])
+  relatedFrom     Entry @relation("related_from", fields: [relatedFromId], references: [id])
+}
 
-  @@index([id])
+model Point {
+	id              Int @id @default(autoincrement())
+  geometry        Unsupported("geometry(Point, 4326)")?
+  entryId         Int @unique
+  entry           Entry @relation(fields: [entryId], references: [id])
+}
+
+model Line {
+	id              Int @id @default(autoincrement())
+  geometry        Unsupported("geometry(MultiLineString, 4326)")?
+  entryId         Int @unique
+  entry           Entry @relation(fields: [entryId], references: [id])
+}
+
+model Polygon {
+	id              Int @id @default(autoincrement())
+  geometry        Unsupported("geometry(MultiPolygon, 4326)")?
+  entryId         Int @unique
+  entry           Entry @relation(fields: [entryId], references: [id])
 }
 
 model User {
@@ -73,15 +88,15 @@ model User {
   agreed_treaty     Boolean @default(false)
   api_key           String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
 
-  @@index([id, email])
+  @@index([email])
 }
 
-model Polygon {
+model Entry {
 	id              Int @id @default(autoincrement())
 	name            String
   slug            String? @unique
-  sources         String?
   color           String?
+  sources         String?
   pronunciation   String?
   category        String?
   published       Boolean @default(false)
@@ -90,9 +105,12 @@ model Polygon {
   changelog       Change[]
   relatedTo       Relation[] @relation(name: "related_from")
   relatedFrom     Relation[] @relation(name: "related_to")
-  geometry        Unsupported("geometry(MultiPolygon, 4326)")?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+
+  point           Point?
+  line            Line?
+  polygon         Polygon?
 
   @@index([slug])
 }

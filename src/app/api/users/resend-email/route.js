@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import VerificationTemplate from '@/root/emails/verification-template'
 import * as React from 'react'
 import { sendEmail } from '@/lib/auth/email-actions'
@@ -9,13 +9,12 @@ export const GET = async (req ) => {
   if(!email) {
     return NextResponse.json({ error : "Please provide an email (try signing in before visiting this page)" }, { status: 400 });
   } else {
-	  const user = await prisma.user.findUnique({
-	    where : { email : email },
-	    select : {
-				name : true,
-	      verification_key : true
-	    }
-	  });
+
+		const user = await db.selectFrom('User')
+			.where('email', '=', email)
+			.select(['id', 'name', 'verification_key'])
+			.executeTakeFirst()
+
 		if(!user) {
 	    return NextResponse.json({ error : "No user found with this email. Try signing up again." }, { status: 400 });
 		} else {

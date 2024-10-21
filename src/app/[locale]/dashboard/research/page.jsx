@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 
@@ -13,34 +13,23 @@ export default async function Page({ params : { locale }, searchParams }) {
   const t = await getTranslations('Dashboard');
 
   let page = 0;
-  let search = false;
   if(searchParams.page) {
     page = Number(searchParams.page);
   }
+
+  let query = db.selectFrom('Entry')
+    .select(['id', 'name', 'category'])
+    .distinctOn('id')
+    .orderBy('id')
+    .orderBy('createdAt')
+    .limit(25)
+    .offset(25 * page)
+
   if(searchParams.search) {
-    search = searchParams.search;
+    query = query.where((eb) => eb(eb.fn('lower', 'name'), 'like', `%${searchParams.search.toLowerCase()}%`));
   }
-  const query = {
-    select : {
-      id : true,
-      name : true,
-      category : true
-    },
-    orderBy : {
-      updatedAt : 'desc'
-    },
-    skip : page * 50,
-    take : 50
-  }
-  if(search) {
-    query['where'] = {
-      name : {
-        contains : search,
-        mode: 'insensitive'
-      }
-    }
-  }
-  const polygons = await prisma.polygon.findMany(query);
+
+  const entries = await query.execute()
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
@@ -52,11 +41,11 @@ export default async function Page({ params : { locale }, searchParams }) {
             <div className="grid grid-cols-4 gap-2.5">
               <form className="grid grid-cols-4 md:grid-cols-5 col-span-4 md:col-span-3 gap-2.5">
                 <div className="col-span-3 md:col-span-2">
-                  <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
+                  <input type="text" defaultValue={searchParams.search ? searchParams.search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
                 </div>
                 <div className="col-span-3 md:col-span-2">
                   <button className="border border-gray-300 px-4 py-3 rounded md:ml-2.5 mr-2.5 text-sm">{tCommon('search')}</button>
-                  {search ?
+                  {searchParams.search ?
                     <Link prefetch={false} className="inline-block border border-gray-300 px-4 py-3 rounded" href="/dashboard/research">{tCommon('clear')}</Link>
                   : false}
                 </div>
@@ -76,19 +65,19 @@ export default async function Page({ params : { locale }, searchParams }) {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {polygons.map(polygon => {
+              {entries.map(entry => {
                 return (
-                  <tr className="grid md:table-row grid-cols-1 md:grid-cols-none bg-gray-100 m-2.5 md:m-0 md:odd:bg-white md:even:bg-gray-100" key={`polygon-row-${polygon.id}`}>
-                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{polygon.id}</td>
-                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{polygon.name}</td>
-                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{polygon.category}</td>
-                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black"><Link prefetch={false} href={`/dashboard/research/${polygon.id}`}>➜</Link></td>
+                  <tr className="grid md:table-row grid-cols-1 md:grid-cols-none bg-gray-100 m-2.5 md:m-0 md:odd:bg-white md:even:bg-gray-100" key={`polygon-row-${entry.id}`}>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{entry.id}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{entry.name}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{entry.category}</td>
+                    <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black"><Link prefetch={false} href={`/dashboard/research/${entry.id}`}>➜</Link></td>
                   </tr>
                 )
               })}
             </tbody>
           </table>
-          {polygons.length >= 50 || page > 0 ?
+          {entries.length >= 50 || page > 0 ?
             <nav className="flex items-center mt-2.5" aria-label="Pagination">
               {page > 0 ?
                 <form>
@@ -101,7 +90,7 @@ export default async function Page({ params : { locale }, searchParams }) {
                   </button>
                 </form>
               : false}
-              {polygons.length >= 50 ?
+              {entries.length >= 50 ?
                 <form>
                   <input type="hidden" name="page" value={page + 1} />
                   <button type="submit" className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" aria-label="Next">

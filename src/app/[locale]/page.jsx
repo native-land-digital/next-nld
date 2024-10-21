@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 
 import { availableLocales } from '@/i18n/config'
 import { setLocaleCache } from '@/i18n/server-i18n';
@@ -19,45 +19,26 @@ export default async function Home({ params : { locale } }) {
   setLocaleCache(locale);
 
   // Querying for select2 list initial options
-  const territoryOptions = await prisma.polygon.findMany({
-    select : {
-      id : true,
-      name : true
-    },
-    where : {
-      category : 'territories'
-    },
-    orderBy : {
-      name : 'asc'
-    },
-    take : 25
-  });
-  const languageOptions = await prisma.polygon.findMany({
-    select : {
-      id : true,
-      name : true
-    },
-    where : {
-      category : 'languages'
-    },
-    orderBy : {
-      name : 'asc'
-    },
-    take : 25
-  });
-  const treatyOptions = await prisma.polygon.findMany({
-    select : {
-      id : true,
-      name : true
-    },
-    where : {
-      category : 'treaties'
-    },
-    orderBy : {
-      name : 'asc'
-    },
-    take : 25
-  });
+  const territoryOptions = await db.selectFrom('Entry')
+    .where('category', '=', 'territories')
+    .where('published', '=', true)
+    .select(['id', 'name'])
+    .limit(25)
+    .execute()
+
+  const languageOptions = await db.selectFrom('Entry')
+    .where('category', '=', 'languages')
+    .where('published', '=', true)
+    .select(['id', 'name'])
+    .limit(25)
+    .execute()
+
+  const treatyOptions = await db.selectFrom('Entry')
+    .where('category', '=', 'treaties')
+    .where('published', '=', true)
+    .select(['id', 'name'])
+    .limit(25)
+    .execute()
 
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">

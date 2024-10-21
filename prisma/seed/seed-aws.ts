@@ -3,7 +3,6 @@ import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
 import { Readable } from 'stream'
 
 import { hashPassword } from '../../src/lib/auth/utils';
-import importJSON from './sample-nld-seed.json';
 
 const prisma = new PrismaClient();
 
@@ -45,14 +44,17 @@ interface Row {
   media : Media[],
   geometry : Geometry;
 }
-interface RelationInner {
-  description : string;
-  relatedToId : number;
-}
 
 async function main() {
 
-  if(importJSON) {
+  // Get appropriate seed file from AWS bucket
+  const client = new S3Client({ region: process.env.AWS_REGION })
+  const seedBucketParams = { Bucket: process.env.AWS_SEED_BUCKET_NAME, Key: process.env.AWS_SEED_FILE };
+  const data = await client.send(new GetObjectCommand(seedBucketParams));
+
+  if(data && data.Body) {
+    const importString = await data.Body.transformToString();
+    let importJSON = <Row[]>JSON.parse(importString)
 
     // importJSON.splice(10); // For import testing
 
@@ -186,18 +188,6 @@ async function main() {
           }
         })
         if(hasRelation) {
-
-          let limitedRelatedToInner : RelationInner[] = [];
-          row.related.map(thisRelation => {
-            let relatedEntry = entries.find(entry => entry.slug === thisRelation.relatedTo_slug)
-            if(relatedEntry) {
-              limitedRelatedToInner.push({
-                description : thisRelation.description,
-                relatedToId : relatedEntry.id
-              })
-            }
-          })
-
           let newEntryRelation = await prisma.entry.update({
             where : {
               id : thisEntry.id
@@ -205,7 +195,13 @@ async function main() {
             data : {
               relatedTo : {
                 createMany : {
-                  data : limitedRelatedToInner
+                  data : row.related.map(thisRelation => {
+                    let relatedEntry = entries.find(entry => entry.slug === thisRelation.relatedTo_slug)
+                    return {
+                      description : thisRelation.description,
+                      relatedToId : relatedEntry ? relatedEntry.id : 0
+                    }
+                  })
                 }
               }
             }

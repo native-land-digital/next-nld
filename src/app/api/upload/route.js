@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
 import { createPresignedPost } from '@aws-sdk/s3-presigned-post'
 import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { getToken } from "next-auth/jwt"
@@ -8,12 +8,12 @@ export async function POST(req) {
   const token = await getToken({ req })
 
 	if(token && token.id) {
-		const user = await prisma.user.findUnique({
-			where : { id : parseInt(token.id) },
-			select : {
-				permissions : true
-			}
-		});
+
+    const user = await db.selectFrom('User')
+      .where('id', '=', Number(token.id))
+      .select(['permissions'])
+      .executeTakeFirst()
+
 		if(user.permissions.includes('research')) {
       const { contentType } = await req.json()
 
@@ -49,12 +49,12 @@ export async function DELETE(req) {
   const token = await getToken({ req })
 
 	if(token && token.id) {
-		const user = await prisma.user.findUnique({
-			where : { id : parseInt(token.id) },
-			select : {
-				permissions : true
-			}
-		});
+
+    const user = await db.selectFrom('User')
+      .where('id', '=', Number(token.id))
+      .select(['permissions'])
+      .executeTakeFirst()
+
 		if(user.permissions.includes('research')) {
     	const key = req.nextUrl.searchParams.get('key');
       if(key) {

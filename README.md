@@ -23,10 +23,10 @@ We would love to have you involved if you have any fixes or additions you'd like
 
 ## Dev Environment
 
-To get set up:
+To get set up for basic work:
 
 - Clone this repo to your local machine.
-- Copy the `.sample-env` file to `.env` and replace any values that need it
+- Copy the `.sample-env` file to `.env.local` and replace any values that need it
 
 (If you are a staff member of Native Land or working directly with the developers of Native Land Digital, ask for `env` values to get set up with our inner access to AWS, Mapbox, and TinyMCE. Otherwise, to get a fully working repo, there are a few hoops you need to jump through. See the second below ("Independent Local Setup") for instructions.)
 
@@ -36,20 +36,22 @@ To get set up:
 (The repo has a `compose.yml` file that will create and install a PostgreSQL database with PostGIS installed on your Docker. The references to this are already in the `.env` file. However, if you'd prefer to set this up with your own `psql` instance, just replace the `DATABASE_URL` in the `.env` to get things working. Otherwise, start docker and run `docker compose build` and `docker compose up` to get connected.)
 
 - `npx prisma migrate deploy` to apply migrations
-- `npx prisma db seed`
+- `npx prisma db seed` to seed the database with the sample seed (about 65 polygons)
 
 - `npm run dev` will fire up the dev project, and you can visit `http://localhost:3000` to view the site.
 - To login, use `test@native-land.ca` and password `test`.
 
+This gets you towards the most basic functional application, but to do further testing you may need to do elements of the next section, depending on what you're working on.
+
 ## Independent Local Setup
 
-You will need to populate the `.env` with your own values.
+If you're trying to make a 1:1 copy, it's complicated! You will need to populate the `.env` with your own values.
 
+- Create a Mapbox account and get a public token (`NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN`), and you can use the same style for both `NEXT_PUBLIC_MAPBOX_STYLE` and `NEXT_PUBLIC_MAPBOX_STYLE_RESEARCH`. You'll also need a secret token to generate tilesets into your account (`MAPBOX_SECRET_TOKEN` and `MAPBOX_USERNAME`)
+- To get the text editor working in the `/dashboard/research`, sign up for a TinyMCE key. It will automatically be enabled to work for `localhost`, and no CC is required.
 - AWS variables. Because this app stores data in S3, you'll need to set up a bucket for uploads (`AWS_NEXT_BUCKET_NAME`) and geoJSONs (`AWS_GEOJSON_BUCKET`). Then, create an IAM user with appropriate permissions for those buckets and enter the required values (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`).
 - You also need to create Lambdas to fully re-create the NLD API (`/api/index.php` or `/api/polygon/searcher`). If you're just working locally, this doesn't apply. Create test lambdas named `nld_api_dev` and `nld_search_dev`, and prod lambdas named `nld_api` and `nld_search`. Hook them up to API Gateway and enter the appropriate URLs in your `.env` (`AWS_API_ENDPOINT` and `AWS_GEOCODE_ENDPOINT`). If you're forking this, you'll need to add Github secrets as well for the YML files.
-- To get the text editor working in the `/dashboard/research`, sign up for a TinyMCE key. It will automatically be enabled to work for `localhost`, and no CC is required.
-- Create a Mapbox account and get a public token (`NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN`), and you can use the same style for both `NEXT_PUBLIC_MAPBOX_STYLE` and `NEXT_PUBLIC_MAPBOX_STYLE_RESEARCH`. You'll also need a secret token to generate tilesets into your account (`MAPBOX_SECRET_TOKEN` and `MAPBOX_USERNAME`)
-- Add a Resend API key to test user signup (`RESEND_API_KEY`)
+- Add a Resend API key to test user signup (`RESEND_API_KEY`) to make authentication functional
 
 Please let us know if you have trouble doing this setup. It's not easy!
 
@@ -102,8 +104,8 @@ Current costs:
 
 ## Notes for current development to-dos
 
-- Changing so there is a basic seed file in the repo, and otherwise we'll do dumps for new devs
-- Twilio NFP signup
+Issues:
+- Local testing of "relation" field won't work, because the remote DB IDs won't line up with the local DB import IDs
 
 Aspirational:
 - Adding placenames

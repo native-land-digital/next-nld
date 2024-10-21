@@ -90,7 +90,8 @@ let search_response = await search({
   queryStringParameters : {
     s : 'pomo',
     category : "territories",
-    // geosearch : true
+    // id : 4571
+    geosearch : true
   }
 });
 const searchResponseBody = JSON.parse(search_response.body);

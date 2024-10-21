@@ -63,18 +63,18 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
     }
   }, [currentLayers])
 
-  const polygonQuery = async (query) => {
+  const entryQuery = async (query) => {
     if(query && query.length > 2) {
-      return fetch(`/api/polygons/searcher?s=${query}&geosearch=true`)
+      return fetch(`/api/entry/searcher?s=${query}&geosearch=true`)
         .then(resp => resp.json())
         .then(response => {
-          const features = response.map((polygon, i) => {
+          const features = response.map((entry, i) => {
             return {
               type : "Feature",
               id : `feature-from-db-${i}`,
-              place_name : polygon.name + ` (${polygon.category})`,
-              center : polygon.centroid.coordinates,
-              bbox : makeBoundsFromPoly(polygon)
+              place_name : entry.name + ` (${entry.category})`,
+              center : entry.centroid.coordinates,
+              bbox : makeBoundsFromPoly(entry)
             }
           })
           return Promise.resolve(features);
@@ -91,7 +91,7 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
       mapboxgl: mapboxgl,
       placeholder : t('search'),
-      externalGeocoder : polygonQuery,
+      externalGeocoder : entryQuery,
       flyTo : {
         maxDuration : 100,
         maxZoom : 12

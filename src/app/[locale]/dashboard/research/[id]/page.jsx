@@ -1,9 +1,11 @@
-import prisma from "@/lib/db/prisma";
+import { db } from '@/lib/db/kysely'
+import { jsonArrayFrom } from 'kysely/helpers/postgres'
+import { notFound } from 'next/navigation';
 
 import { setLocaleCache } from '@/i18n/server-i18n';
 import SubHeader from '@/components/nav/sub-header'
 import AdminMenu from '@/components/dashboard/menu'
-import EditPolygon from '@/components/dashboard/edit-polygon'
+import EditEntry from '@/components/dashboard/edit-entry'
 
 export const revalidate = false;
 
@@ -11,58 +13,56 @@ export default async function Page({ params : { locale, id } }) {
 
   setLocaleCache(locale);
 
-  // Extra query because all the related fields are too hard to write in SQL
-  const polygonShape = await prisma.$queryRaw`
-    SELECT ST_AsGeoJSON(geometry) FROM "Polygon"
-    WHERE id = ${Number(id)}
-  `
-  const polygon = await prisma.polygon.findUnique({
-    where : { id : Number(id) },
-    select : {
-      id : true,
-      name : true,
-      category : true,
-      slug : true,
-      color : true,
-      sources : true,
-      pronunciation : true,
-      published : true,
-      media : true,
-      websites : true,
-      changelog : true,
-      relatedFrom : true,
-      relatedTo : {
-        select : {
-          relatedTo : {
-            select : {
-              id : true,
-              name : true,
-            }
-          },
-          description : true
-        }
-      },
-      createdAt : true,
-      updatedAt : true
+  const entry = await db.selectFrom('Entry')
+    .where('Entry.id', '=', parseInt(id))
+    .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
+    .select((eb) => [
+      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
+      eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+      jsonArrayFrom(
+        eb.selectFrom('Media')
+          .select(['id', 'url', 'caption', 'title'])
+          .whereRef('Media.entryId', '=', 'Entry.id')
+      ).as('media'),
+      jsonArrayFrom(
+        eb.selectFrom('Website')
+          .select(['id', 'url', 'title'])
+          .whereRef('Website.entryId', '=', 'Entry.id')
+      ).as('websites'),
+      jsonArrayFrom(
+        eb.selectFrom('Change')
+          .select(['id', 'createdAt', 'description'])
+          .whereRef('Change.entryId', '=', 'Entry.id')
+      ).as('changelog'),
+      jsonArrayFrom(
+        eb.selectFrom('Relation')
+          .innerJoin('Entry as RelatedEntry', 'RelatedEntry.id', 'Relation.relatedToId')
+          .select([
+            'Relation.id as id', 'Relation.description as description',
+            'RelatedEntry.id as relatedToId', 'RelatedEntry.name as name', 'RelatedEntry.category as category', 'RelatedEntry.slug as slug'
+          ])
+          .whereRef('Relation.relatedFromId', '=', 'Entry.id')
+      ).as('relatedTo')
+    ])
+    .executeTakeFirst()
+
+  console.log(entry)
+
+  if(entry) {
+    if(entry.geometry) {
+      entry.geometry = JSON.parse(entry.geometry)
     }
-  });
-
-  if(!polygon) {
-    return false;
-  }
-
-  polygon.geometry = null;
-  if(polygonShape && polygonShape[0] && polygonShape[0].st_asgeojson) {
-    polygon.geometry = JSON.parse(polygonShape[0].st_asgeojson)
+  } else {
+    notFound();
   }
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={polygon.name} crumbs={[{ url : "/dashboard", title : "Dashboard" }, { url : "/dashboard/research", title : "Research" }]} />
+      <SubHeader title={entry.name} crumbs={[{ url : "/dashboard", title : "Dashboard" }, { url : "/dashboard/research", title : "Research" }]} />
       <div className="min-h-screen w-full md:w-2/3 m-auto -mt-12 text-black">
         <AdminMenu />
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
-          <EditPolygon polygon={polygon} />
+          <EditEntry entry={entry} />
         </div>
       </div>
     </div>

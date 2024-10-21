@@ -15,28 +15,28 @@ import RelationEditor from '@/components/dashboard/editors/relation-editor';
 
 import { availableCategories } from '@/lib/map/categories';
 
-export default function EditPolygon({ polygon }) {
+export default function EditEntry({ entry }) {
 
   const t = useTranslations('Dashboard');
   const tMaps = useTranslations('Maps');
   const tCommon = useTranslations('Common');
 
-  const [ name, setName ] = useState(polygon.name);
-  const [ category, setCategory ] = useState(polygon.category);
-  const [ sources, setSources ] = useState(polygon.sources);
-  const [ pronunciation, setPronunciation ] = useState(polygon.pronunciation);
-  const [ color, setColor ] = useState(polygon.color);
-  const [ published, setPublished ] = useState(polygon.published);
-  const [ media, setMedia ] = useState(polygon.media);
-  const [ websites, setWebsites ] = useState(polygon.websites);
-  const [ changelog, setChangelog ] = useState(polygon.changelog);
-  const [ relatedTo, setRelatedTo ] = useState(polygon.relatedTo);
-  const [ geometry, setGeometry ] = useState(polygon.geometry);
+  const [ name, setName ] = useState(entry.name);
+  const [ category, setCategory ] = useState(entry.category);
+  const [ sources, setSources ] = useState(entry.sources);
+  const [ pronunciation, setPronunciation ] = useState(entry.pronunciation);
+  const [ color, setColor ] = useState(entry.color);
+  const [ published, setPublished ] = useState(entry.published);
+  const [ media, setMedia ] = useState(entry.media);
+  const [ websites, setWebsites ] = useState(entry.websites);
+  const [ changelog, setChangelog ] = useState(entry.changelog);
+  const [ relatedTo, setRelatedTo ] = useState(entry.relatedTo);
+  const [ geometry, setGeometry ] = useState(entry.geometry);
 
   const [ showSwatches, setShowSwatches ] = useState(false);
 
-  const savePolygon = () => {
-    fetch(`/api/polygons/${polygon.id}`, {
+  const saveEntry = () => {
+    fetch(`/api/entry/${entry.id}`, {
       method : "PATCH",
       headers : { 'Content-Type': 'application/json' },
       body : JSON.stringify({
@@ -49,26 +49,35 @@ export default function EditPolygon({ polygon }) {
         websites : websites,
         media : media,
         changelog : changelog,
-        relatedTo : relatedTo.map(related => {
-          return {
-            relatedToId : related.relatedTo.id,
-            description : related.description
-          }
-        }),
+        relatedTo : relatedTo,
         geometry : geometry
       })
     }).then(resp => resp.json()).then(results => {
       if(results.error) {
         toast(results.error)
       } else {
-        toast(t('saved-polygon'))
+        if(results.entry.geometry) {
+          results.entry.geometry = JSON.parse(results.entry.geometry)
+        }
+        setName(results.entry.name)
+        setCategory(results.entry.category)
+        setSources(results.entry.sources)
+        setPronunciation(results.entry.pronunciation)
+        setColor(results.entry.color)
+        setPublished(results.entry.published)
+        setMedia(results.entry.media)
+        setWebsites(results.entry.websites)
+        setChangelog(results.entry.changelog)
+        setRelatedTo(results.entry.relatedTo)
+        setGeometry(results.entry.geometry)
+        toast(t('saved-entry'))
       }
     });
   }
 
-  const deletePolygon = () => {
-    if(window.confirm(t('delete-polygon-confirm'))) {
-      fetch(`/api/polygons/${polygon.id}`, {
+  const deleteEntry = () => {
+    if(window.confirm(t('delete-entry-confirm'))) {
+      fetch(`/api/entry/${entry.id}`, {
         method : "DELETE"
       }).then(resp => resp.json()).then(results => {
         if(results.error) {
@@ -77,7 +86,7 @@ export default function EditPolygon({ polygon }) {
           setTimeout(() => {
             navigate(`/dashboard/research/`);
           }, 500)
-          toast(t('deleted-polygon'))
+          toast(t('deleted-entry'))
         }
       })
     }
@@ -86,13 +95,13 @@ export default function EditPolygon({ polygon }) {
   return (
     <div>
       <Link prefetch={false} href="/dashboard/research"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>{tCommon('back')}</Link>
-      <h2 className="font-semibold text-3xl">{polygon.name}</h2>
-      {polygon.published && polygon.category ?
-        <Link prefetch={false} href={`/maps/${polygon.category}/${polygon.slug}`} target="_blank" className="text-xs float-right">See live page ➜</Link>
+      <h2 className="font-semibold text-3xl">{entry.name}</h2>
+      {entry.published && entry.category ?
+        <Link prefetch={false} href={`/maps/${entry.category}/${entry.slug}`} target="_blank" className="text-xs float-right">See live page ➜</Link>
       :
         <p className="text-xs float-right">Polygon not published</p>
       }
-      <p className="text-xs mt-1" suppressHydrationWarning>{t('polygon-created')} {new Date(polygon.createdAt).toLocaleString()}, {t('polygon-updated')} {new Date(polygon.updatedAt).toLocaleString()}</p>
+      <p className="text-xs mt-1" suppressHydrationWarning>{t('entry-created')} {new Date(entry.createdAt).toLocaleString()}, {t('entry-updated')} {new Date(entry.updatedAt).toLocaleString()}</p>
       <hr className="mt-3 mb-3" />
 
       <MainMap geometry={geometry} setGeometry={setGeometry} />
@@ -184,7 +193,7 @@ export default function EditPolygon({ polygon }) {
       <div className="flex">
         <div className="w-full md:w-1/2">
           <div className="!mt-8">
-            <button onClick={() => savePolygon()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+            <button onClick={() => saveEntry()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
               {tCommon('save')}
             </button>
           </div>
@@ -193,7 +202,7 @@ export default function EditPolygon({ polygon }) {
 
         <div className="w-full md:w-1/2">
           <div className="!mt-8 flex justify-end">
-            <button onClick={() => deletePolygon()} className="py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-red-600 hover:bg-red-700 focus:outline-none">
+            <button onClick={() => deleteEntry()} className="py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-red-600 hover:bg-red-700 focus:outline-none">
               {tCommon('delete')}
             </button>
           </div>

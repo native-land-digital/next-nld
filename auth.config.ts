@@ -1,7 +1,5 @@
 // @ts-nocheck
 import NextAuthConfig from "next-auth"
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "@/lib/db/prisma";
 
 export const authConfig = {
   pages: {
@@ -34,7 +32,6 @@ export const authConfig = {
     maxAge: 24 * 60 * 60,
     encryption: true,
   },
-  // adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: "jwt", maxAge: 24 * 60 * 60 },
   providers: [],
