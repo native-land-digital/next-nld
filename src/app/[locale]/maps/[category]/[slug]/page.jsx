@@ -13,7 +13,7 @@ import Changelog from '@/components/maps/changelog';
 
 export const generateStaticParams = async () => {
   if(process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'production') {
-    const polygons = await db.selectFrom('Entry')
+    const entries = await db.selectFrom('Entry')
       .where('published', '=', true)
       .select(['id', 'category', 'slug'])
       .distinctOn('id')

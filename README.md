@@ -26,7 +26,7 @@ We would love to have you involved if you have any fixes or additions you'd like
 To get set up for basic work:
 
 - Clone this repo to your local machine.
-- Copy the `.sample-env` file to `.env` and replace any values that need it
+- Copy the `.sample-env` file to `.env.local` and replace any values that need it
 
 (If you are a staff member of Native Land or working directly with the developers of Native Land Digital, ask for `env` values to get set up with our inner access to AWS, Mapbox, and TinyMCE. Otherwise, to get a fully working repo, there are a few hoops you need to jump through. See the second below ("Independent Local Setup") for instructions.)
 
