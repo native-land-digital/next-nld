@@ -7,7 +7,7 @@ Welcome to Native Land 2.0! This is a NextJS and PostGIS rebuild of Native-Land.
 Technologies at use include:
 
 - NextJS (app directory)
-- Prisma
+- Prisma for DB schema, Kysely for queries
 - Typescript
 - TailwindCSS
 - PostgreSQL with PostGIS
@@ -17,7 +17,7 @@ Technologies at use include:
 - Mapbox MTS and Mapbox GL JS
 - i18n custom solution with rewrites and redirects to avoid middleware costs
 - Logs with CloudWatch for API gateways
-- Google Analytics for general website analytics
+- Google Analytics
 
 We would love to have you involved if you have any fixes or additions you'd like to see on the site.
 
@@ -26,7 +26,7 @@ We would love to have you involved if you have any fixes or additions you'd like
 To get set up for basic work:
 
 - Clone this repo to your local machine.
-- Copy the `.sample-env` file to `.env.local` and replace any values that need it
+- Copy the `.sample-env` file to `.env` and replace any values that need it
 
 (If you are a staff member of Native Land or working directly with the developers of Native Land Digital, ask for `env` values to get set up with our inner access to AWS, Mapbox, and TinyMCE. Otherwise, to get a fully working repo, there are a few hoops you need to jump through. See the second below ("Independent Local Setup") for instructions.)
 
@@ -48,7 +48,7 @@ This gets you towards the most basic functional application, but to do further t
 If you're trying to make a 1:1 copy, it's complicated! You will need to populate the `.env` with your own values.
 
 - Create a Mapbox account and get a public token (`NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN`), and you can use the same style for both `NEXT_PUBLIC_MAPBOX_STYLE` and `NEXT_PUBLIC_MAPBOX_STYLE_RESEARCH`. You'll also need a secret token to generate tilesets into your account (`MAPBOX_SECRET_TOKEN` and `MAPBOX_USERNAME`)
-- To get the text editor working in the `/dashboard/research`, sign up for a TinyMCE key. It will automatically be enabled to work for `localhost`, and no CC is required.
+- To get the text editor working in the `/dashboard/research`, sign up for a TinyMCE key. It will automatically be enabled to work for `localhost`, and no CC is required. Enter it into `NEXT_PUBLIC_TINYMCE_KEY`.
 - AWS variables. Because this app stores data in S3, you'll need to set up a bucket for uploads (`AWS_NEXT_BUCKET_NAME`) and geoJSONs (`AWS_GEOJSON_BUCKET`). Then, create an IAM user with appropriate permissions for those buckets and enter the required values (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`).
 - You also need to create Lambdas to fully re-create the NLD API (`/api/index.php` or `/api/polygon/searcher`). If you're just working locally, this doesn't apply. Create test lambdas named `nld_api_dev` and `nld_search_dev`, and prod lambdas named `nld_api` and `nld_search`. Hook them up to API Gateway and enter the appropriate URLs in your `.env` (`AWS_API_ENDPOINT` and `AWS_GEOCODE_ENDPOINT`). If you're forking this, you'll need to add Github secrets as well for the YML files.
 - Add a Resend API key to test user signup (`RESEND_API_KEY`) to make authentication functional
@@ -82,15 +82,9 @@ Notes:
 - Do seeding from local to avoid Vercel timeouts
 - Github actions will push lambdas to `dev` Lambdas on pushes to `dev`, and prod Lambdas on pushes to `main`
 
-Current costs:
-
-- Cloudflare DNS and caching, $28 monthly
-- Premium Supabase ($35 monthly)
-- Maximum budget of $100 in Vercel ($20 base)
-- Lambdas, S3, Cloudfront with AWS
-
 ## Weird exceptions
 
+- Local testing of "relation" field won't work, because the remote DB IDs won't line up with the local DB import IDs
 - Mapbox style has a bug fix in the `text-field` parameter to re-render the Osage name. Because the characters are registered as outside of standard Unicode and outside the range of 65535, it causes the map to error. As a result we use the following expression to allow things to render.
 ```
 [ "case", [ "in", "Osage", [ "to-string", ["get", "Name"] ] ], "Osage", [ "to-string", ["get", "Name"] ] ]
@@ -101,25 +95,6 @@ Current costs:
 - Logs in Cloudflare give some basic information on API usage sorted into graphs
 - CloudWatch Analytics Dashboards give us a good sense of the major referers, data usage, and so on
 - Google Analytics for deep diving and longer data retention than Cloudflare
-
-## Notes for current development to-dos
-
-Issues:
-- Local testing of "relation" field won't work, because the remote DB IDs won't line up with the local DB import IDs
-
-Aspirational:
-- Adding placenames
-- Adding language games and educational tools for learning territories
-
-Questions:
-- Should the site open stuff in a new window? Or open in the same window?
-- Overall general app review for improvements
-- At last tackling Africa?
-- Getting Patreon back into gear?
-- Doing more blog posts again?
-- Updating content?
-- Adding a new roadmap?
-- Redoing top links? Showing off maps more, special pages more
 
 ## History
 
