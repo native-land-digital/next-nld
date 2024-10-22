@@ -26,7 +26,7 @@ We would love to have you involved if you have any fixes or additions you'd like
 To get set up for basic work:
 
 - Clone this repo to your local machine.
-- Copy the `.sample-env` file to `.env.local` and replace any values that need it
+- Copy the `.sample-env` file to `.env` and replace any values that need it
 
 (If you are a staff member of Native Land or working directly with the developers of Native Land Digital, ask for `env` values to get set up with our inner access to AWS, Mapbox, and TinyMCE. Otherwise, to get a fully working repo, there are a few hoops you need to jump through. See the second below ("Independent Local Setup") for instructions.)
 
@@ -39,6 +39,8 @@ To get set up for basic work:
 - `npx prisma db seed` to seed the database with the sample seed (about 65 polygons)
 
 - `npm run dev` will fire up the dev project, and you can visit `http://localhost:3000` to view the site.
+- `npm run lambda` will test the lambdas with your local DB.
+
 - To login, use `test@native-land.ca` and password `test`.
 
 This gets you towards the most basic functional application, but to do further testing you may need to do elements of the next section, depending on what you're working on.

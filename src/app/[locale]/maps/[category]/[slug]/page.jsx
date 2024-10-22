@@ -6,6 +6,7 @@ import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 import { notFound } from 'next/navigation';
 
 import Map from '@/components/maps/map';
+import Greetings from '@/components/maps/greetings';
 import Websites from '@/components/maps/websites';
 import Related from '@/components/maps/related';
 import Media from '@/components/maps/media';
@@ -46,6 +47,11 @@ export default async function Page({ params : { locale, category, slug }}) {
     .select((eb) => [
       'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.sources', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
       eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+      jsonArrayFrom(
+        eb.selectFrom('Greeting')
+          .select(['url', 'translation', 'usage'])
+          .whereRef('Greeting.entryId', '=', 'Entry.id')
+      ).as('greetings'),
       jsonArrayFrom(
         eb.selectFrom('Media')
           .select(['url', 'caption', 'title'])
@@ -98,6 +104,7 @@ export default async function Page({ params : { locale, category, slug }}) {
           <ol className="hidden md:block list-inside text-gray-400">
             <li className="mb-2.5"><a href="#map">{t('map')}</a></li>
             <li className="mb-2.5"><a href="#websites">{t('websites')}</a></li>
+            <li className="mb-2.5"><a href="#greetings">{t('greetings')}</a></li>
             <li className="mb-2.5"><a href="#media">{t('media')}</a></li>
             <li className="mb-2.5"><a href="#sources">{t('sources')}</a></li>
             <li className="mb-2.5"><a href="#related-maps">{t('related')}</a></li>
@@ -111,6 +118,10 @@ export default async function Page({ params : { locale, category, slug }}) {
           <section className="mt-5">
             <h3 className="text-xl font-bold mb-3" id="websites">{t('websites')}</h3>
             <Websites websites={entry.websites} />
+          </section>
+          <section className="mt-5">
+            <h3 className="text-xl font-bold mb-3" id="greetings">{t('greetings')}</h3>
+            <Greetings greetings={entry.greetings} />
           </section>
           <section className="mt-5">
             <h3 className="text-xl font-bold mb-3" id="related-maps">{t('related')}</h3>

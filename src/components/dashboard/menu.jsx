@@ -3,6 +3,7 @@ import { getTranslations } from '@/i18n/server-i18n';
 import Link from 'next/link'
 
 import { authOptions } from "@/root/auth";
+import { hasResearchPermission } from '@/lib/auth/permissions'
 
 export default async function AdminMenu() {
   const session = await getServerSession(authOptions);
@@ -18,7 +19,7 @@ export default async function AdminMenu() {
         {session.user.permissions.indexOf('api') > -1 ?
           <Link prefetch={false} href="/dashboard/api" className="border-r-2 p-2.5 hover:bg-slate-100">{tNav('api')}</Link>
         : false}
-        {session.user.permissions.indexOf('research') > -1 ?
+        {hasResearchPermission(session.user.permissions) ?
           <Link prefetch={false} href="/dashboard/research" className="border-r-2 p-2.5 hover:bg-slate-100">{t('research')}</Link>
         : false}
         {session.user.permissions.indexOf('update_mapbox') > -1 ?

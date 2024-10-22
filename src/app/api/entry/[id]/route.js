@@ -79,10 +79,10 @@ export const PATCH = async (req, route) => {
       .select(['permissions'])
       .executeTakeFirst()
 
-		if(user.permissions.includes('research')) {
+		const body = await req.json();
+		const { id: entryId } = route.params;
 
-  		const body = await req.json();
-  		const { id: entryId } = route.params;
+		if(user.permissions.includes('research') || user.permissions.includes(`research_${entryId}`)) {
 
   		try {
   			if(body.geometry && body.geometry !== "null") {
@@ -283,6 +283,11 @@ export const PATCH = async (req, route) => {
             .select((eb) => [
               'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
               eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+              jsonArrayFrom(
+                eb.selectFrom('Greeting')
+                  .select(['id', 'url', 'translation', 'usage'])
+                  .whereRef('Greeting.entryId', '=', 'Entry.id')
+              ).as('greetings'),
               jsonArrayFrom(
                 eb.selectFrom('Media')
                   .select(['id', 'url', 'caption', 'title'])

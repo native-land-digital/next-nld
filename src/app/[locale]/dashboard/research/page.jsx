@@ -1,7 +1,10 @@
 import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
+import { getServerSession } from "next-auth/next"
 
+import { hasResearchPermission, allowedResearchIDs } from '@/lib/auth/permissions'
+import { authOptions } from "@/root/auth";
 import SubHeader from '@/components/nav/sub-header'
 import AdminMenu from '@/components/dashboard/menu'
 import CreatePolygon from '@/components/dashboard/create-polygon'
@@ -11,6 +14,7 @@ export default async function Page({ params : { locale }, searchParams }) {
   setLocaleCache(locale);
   const tCommon = await getTranslations('Common');
   const t = await getTranslations('Dashboard');
+  const session = await getServerSession(authOptions);
 
   let page = 0;
   if(searchParams.page) {
@@ -24,6 +28,17 @@ export default async function Page({ params : { locale }, searchParams }) {
     .orderBy('createdAt')
     .limit(25)
     .offset(25 * page)
+
+  // Checking for specific permissions
+  let userQuery = await db.selectFrom('User')
+    .where('id', '=', session.user.id)
+    .select(['permissions'])
+    .executeTakeFirst();
+
+  if(hasResearchPermission(userQuery.permissions) && !userQuery.permissions.includes('research')) {
+    let allowedIDs = allowedResearchIDs(userQuery.permissions);
+    query = query.where('id', 'in', allowedIDs);
+  }
 
   if(searchParams.search) {
     query = query.where((eb) => eb(eb.fn('lower', 'name'), 'like', `%${searchParams.search.toLowerCase()}%`));

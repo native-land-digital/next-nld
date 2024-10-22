@@ -8,6 +8,7 @@ import Link from 'next/link'
 
 import MainMap from '@/components/dashboard/editors/map-editor';
 import WYSIWYGEDitor from '@/components/dashboard/editors/wysiwyg-editor';
+import GreetingsEditor from '@/components/dashboard/editors/greeting-editor';
 import MediaEditor from '@/components/dashboard/editors/media-editor';
 import WebsiteEditor from '@/components/dashboard/editors/website-editor';
 import ChangelogEditor from '@/components/dashboard/editors/changelog-editor';
@@ -27,6 +28,7 @@ export default function EditEntry({ entry }) {
   const [ pronunciation, setPronunciation ] = useState(entry.pronunciation);
   const [ color, setColor ] = useState(entry.color);
   const [ published, setPublished ] = useState(entry.published);
+  const [ greetings, setGreetings ] = useState(entry.greetings);
   const [ media, setMedia ] = useState(entry.media);
   const [ websites, setWebsites ] = useState(entry.websites);
   const [ changelog, setChangelog ] = useState(entry.changelog);
@@ -47,6 +49,7 @@ export default function EditEntry({ entry }) {
         pronunciation : pronunciation,
         published : published,
         websites : websites,
+        greetings : greetings,
         media : media,
         changelog : changelog,
         relatedTo : relatedTo,
@@ -65,6 +68,7 @@ export default function EditEntry({ entry }) {
         setPronunciation(results.entry.pronunciation)
         setColor(results.entry.color)
         setPublished(results.entry.published)
+        setGreetings(results.entry.greetings)
         setMedia(results.entry.media)
         setWebsites(results.entry.websites)
         setChangelog(results.entry.changelog)
@@ -169,6 +173,12 @@ export default function EditEntry({ entry }) {
         </div>
       </div>
 
+      {category === 'languages' ?
+        <div className="mt-6">
+          <label className="text-gray-800 text-normal mb-1 block">{tMaps('greetings')}</label>
+          <GreetingsEditor greetings={greetings} setGreetings={setGreetings} />
+        </div>
+      : false}
 
       <div className="mt-6">
         <label className="text-gray-800 text-normal mb-1 block">{tMaps('media')}</label>

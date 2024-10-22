@@ -20,6 +20,15 @@ datasource db {
   directUrl  = env("DIRECT_URL")
 }
 
+model Greeting {
+  id              Int @id @default(autoincrement())
+  url             String
+  translation     String?
+  usage           String?
+  entryId         Int
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+}
+
 model Media {
   id              Int @id @default(autoincrement())
   url             String
@@ -103,6 +112,7 @@ model Entry {
   media           Media[]
   websites        Website[]
   changelog       Change[]
+  greetings       Greeting[]
   relatedTo       Relation[] @relation(name: "related_from")
   relatedFrom     Relation[] @relation(name: "related_to")
   createdAt       DateTime  @default(now())

@@ -3,6 +3,8 @@ import { withAuth } from "next-auth/middleware"
 import { getToken } from "next-auth/jwt";
 import { chain } from "@nimpl/middleware-chain";
 
+import { hasResearchPermission } from '@/lib/auth/permissions'
+
 const redirectMiddleware = async (req) => {
   const path = req.nextUrl.pathname;
   const token = await getToken({ req })
@@ -31,7 +33,7 @@ const authMiddleware = withAuth({
         }
       }
       if (path.startsWith("/dashboard/research")) {
-        if(!token?.permissions.includes("research")) {
+        if(!hasResearchPermission(token?.permissions)) {
           return false;
         }
       }
