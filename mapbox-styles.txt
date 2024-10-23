@@ -1,0 +1,44 @@
+Don't use this file directly. It's a guide to help you recreate the styles in Mapbox.
+
+[
+  {
+      "id": "territories_text",
+      "type": "symbol",
+      "source": "composite",
+      "source-layer": "next_nld_terr_local_source_layer",
+      "layout": {
+          "text-field": [
+              "case",
+              ["in", "Osage", ["to-string", ["get", "Name"]]],
+              "Osage",
+              ["to-string", ["get", "Name"]]
+          ],
+          "text-size": ["interpolate", ["linear"], ["zoom"], 0, 8, 22, 18]
+      },
+      "paint": {
+          "text-opacity": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              0,
+              0,
+              1,
+              1
+          ],
+          "text-halo-color": "hsla(0, 0%, 100%, 0.8)",
+          "text-halo-width": 0.5,
+          "text-halo-blur": 1
+      }
+  },
+  {
+      "id": "territories",
+      "type": "fill",
+      "source": "composite",
+      "source-layer": "next_nld_terr_local_source_layer",
+      "paint": {
+          "fill-opacity": 0.2,
+          "fill-outline-color": "hsla(0, 0%, 0%, 0.44)",
+          "fill-color": ["get", "color"]
+      }
+  }
+]
