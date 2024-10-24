@@ -1,8 +1,6 @@
 import { db } from '@/lib/db/kysely'
 
 import { setLocaleCache } from '@/i18n/server-i18n';
-import SubHeader from '@/components/nav/sub-header'
-import AdminMenu from '@/components/dashboard/menu'
 import EditUser from '@/components/dashboard/edit-user'
 
 export const revalidate = false;

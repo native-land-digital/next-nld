@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../../globals.css";
 import { getMessages } from '@/i18n/server-i18n';
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { ToastContainer } from 'react-toastify';
@@ -6,8 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { LocaleProvider } from '@/i18n/locale-provider';
 import { HeaderSessionProvider } from '@/lib/auth/session-provider'
-import Header from '@/components/nav/header';
-import Footer from '@/components/nav/footer';
+import DashboardMenu from '@/components/nav/dashboard-menu';
 
 export const metadata = {
   metadataBase : new URL("https://native-land.ca"),
@@ -34,14 +33,17 @@ export default async function RootLayout({ children, params : { locale }}) {
     <html lang={locale}>
       <body className="antialiased">
         <LocaleProvider messages={messages}>
-          <div>
-            <HeaderSessionProvider>
-              <Header />
-            </HeaderSessionProvider>
-            <div>
-              {children}
+          <div className="flex h-screen overflow-hidden">
+            <DashboardMenu />
+            <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+              <main>
+                <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+                  <div className="col-span-2 bg-white rounded-t min-h-screen text-black">
+                    {children}
+                  </div>
+                </div>
+              </main>
             </div>
-            <Footer />
             <ToastContainer />
           </div>
         </LocaleProvider>

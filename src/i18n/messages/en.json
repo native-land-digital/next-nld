@@ -261,6 +261,7 @@
     "want-replace" : "Do you want to replace the polygons on the map? This will delete any existing polygons.",
     "non-polygons" : "You have non-polygons in the JSON. Please verify at at https://geojson.io",
     "empty-geojson" : "The geoJSON seems empty. Please verify at at https://geojson.io",
-    "geojson-issue" : "There's an issue with the geoJSON. Please verify it at https://geojson.io"
+    "geojson-issue" : "There's an issue with the geoJSON. Please verify it at https://geojson.io",
+    "back-to-homepage" : "Back to homepage"
   }
 }
