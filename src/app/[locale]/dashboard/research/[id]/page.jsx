@@ -25,7 +25,7 @@ export default async function Page({ params : { locale, id } }) {
       eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
       jsonArrayFrom(
         eb.selectFrom('Greeting')
-          .select(['id', 'url', 'translation', 'usage'])
+          .select(['id', 'url', 'text', 'translation', 'usage', 'parentId'])
           .whereRef('Greeting.entryId', '=', 'Entry.id')
       ).as('greetings'),
       jsonArrayFrom(

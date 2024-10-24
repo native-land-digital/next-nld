@@ -23,8 +23,12 @@ datasource db {
 model Greeting {
   id              Int @id @default(autoincrement())
   url             String
+  text            String?
   translation     String?
   usage           String?
+  parentId        Int?
+  parentGreeting  Greeting? @relation("parent", fields: [parentId], references: [id])
+  responses       Greeting[] @relation(name : "parent")
   entryId         Int
   entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }

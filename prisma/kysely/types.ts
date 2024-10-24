@@ -25,8 +25,10 @@ export type Entry = {
 export type Greeting = {
     id: Generated<number>;
     url: string;
+    text: string | null;
     translation: string | null;
     usage: string | null;
+    parentId: number | null;
     entryId: number;
 };
 export type Line = {

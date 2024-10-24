@@ -185,6 +185,54 @@ export const PATCH = async (req, route) => {
             }
             delete body.changelog;
 
+            // Deleting, updating, adding greetings
+      			const greetings = body.greetings;
+            if(greetings) {
+              const updatedGreetingIds = greetings.map(greeting => greeting.id);
+              if(updatedGreetingIds.length > 0) {
+                await trx.deleteFrom('Greeting')
+                  .where('entryId', '=', entryId)
+                  .where('id', 'not in', updatedGreetingIds)
+                  .execute();
+              } else {
+                await trx.deleteFrom('Greeting')
+                  .where('entryId', '=', entryId)
+                  .execute();
+              }
+
+              for (const greeting of greetings) {
+                if (greeting.id) {
+                  await trx.updateTable('Greeting')
+                    .set({
+                      url : greeting.url,
+                      text : greeting.text,
+                      usage : greeting.usage,
+                      translation : greeting.translation,
+                      parentId : greeting.parentId
+                    })
+                    .where('id', '=', greeting.id)
+                    .execute();
+                }
+              }
+
+              const newGreetings = greetings.filter(greeting => !greeting.id);
+              if (newGreetings.length > 0) {
+                await trx.insertInto('Greeting')
+                  .values(
+                    newGreetings.map(greeting => ({
+                      entryId : parseInt(entryId),
+                      url : greeting.url,
+                      text : greeting.text,
+                      usage : greeting.usage,
+                      translation : greeting.translation,
+                      parentId : greeting.parentId
+                    }))
+                  )
+                  .execute();
+              }
+              delete body.greetings;
+            }
+
             // Deleting, updating, adding media
       			const media = body.media;
             const updatedMediaIds = media.map(thisMedia => thisMedia.id);
@@ -207,7 +255,7 @@ export const PATCH = async (req, route) => {
                     caption : thisMedia.caption,
                     title : thisMedia.title
                   })
-                  .where('id', '=', item.id)
+                  .where('id', '=', thisMedia.id)
                   .execute();
               }
             }
