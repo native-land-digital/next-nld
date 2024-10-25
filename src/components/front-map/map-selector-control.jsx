@@ -96,7 +96,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
     const setGreetingsLayer = (checked) => {
       if(checked && map) {
         setCurrentLayers(['greetings'])
-        // map.flyTo({ center : [-100.1953125, 47.27922900257082] })
+        map.flyTo({ center : [-100.1953125, 47.27922900257082] })
       } else {
         setCurrentLayers([])
       }

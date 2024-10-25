@@ -53,8 +53,6 @@ export default async function Page({ params : { locale, id } }) {
     ])
     .executeTakeFirst()
 
-  console.log(entry)
-
   // Checking for specific permissions
   let userQuery = await db.selectFrom('User')
     .where('id', '=', session.user.id)

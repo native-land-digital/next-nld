@@ -59,6 +59,7 @@ export default async function Page({ searchParams, params : { locale } }) {
             <li className="mb-2.5"><Link prefetch={false} href="/maps/territories">{t('territories-list')}</Link></li>
             <li className="mb-2.5"><Link prefetch={false} href="/maps/languages">{t('languages-list')}</Link></li>
             <li className="mb-2.5"><Link prefetch={false} href="/maps/treaties">{t('treaties-list')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/maps/greetings">{t('greetings-list')}</Link></li>
           </ol>
           <span />
         </Sidebar>
