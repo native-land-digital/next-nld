@@ -1,6 +1,6 @@
 import { db } from '@/lib/db/kysely'
 import { getServerSession } from "next-auth/next"
-import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
+import { setLocaleCache } from '@/i18n/server-i18n';
 
 import EditUser from '@/components/dashboard/edit-user'
 import { authOptions } from "@/root/auth";
@@ -9,7 +9,6 @@ export default async function Page({ params : { locale } }) {
   const session = await getServerSession(authOptions);
 
   setLocaleCache(locale);
-  const t = await getTranslations('Dashboard');
 
   const user = await db.selectFrom('User')
     .where('id', '=', Number(session.user.id))

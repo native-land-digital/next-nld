@@ -5,7 +5,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { LocaleProvider } from '@/i18n/locale-provider';
-import { HeaderSessionProvider } from '@/lib/auth/session-provider'
 import DashboardMenu from '@/components/nav/dashboard-menu';
 
 export const metadata = {

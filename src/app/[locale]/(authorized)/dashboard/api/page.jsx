@@ -10,7 +10,6 @@ export default async function Page({ params : { locale }, searchParams }) {
   const session = await getServerSession(authOptions);
 
   setLocaleCache(locale);
-  const tNav = await getTranslations('Navigation');
   const tCommon = await getTranslations('Common');
   const t = await getTranslations('Dashboard');
 
