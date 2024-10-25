@@ -19,7 +19,7 @@ export const revalidate = false;
 
 export default async function Page({ searchParams, params : { locale, category }}) {
 
-  let allowedCategories = ["territories","languages","treaties"]
+  let allowedCategories = ["territories", "languages", "treaties", "greetings"]
   if(!allowedCategories.includes(category)) {
     notFound()
   }
@@ -37,19 +37,30 @@ export default async function Page({ searchParams, params : { locale, category }
     search = searchParams.search;
   }
 
+  let categoryToSearch = category;
+  if(category === 'greetings') {
+    categoryToSearch = 'languages';
+  }
+
   let totalQuery = db.selectFrom('Entry')
     .where('published', '=', true)
-    .where('category', '=', category)
-    .select((eb) => eb.fn.count('id').as('num_entries'))
+    .where('category', '=', categoryToSearch)
+    .select((eb) => eb.fn.count('Entry.id').as('num_entries'))
+
 
   let query = db.selectFrom('Entry')
     .where('published', '=', true)
-    .where('category', '=', category)
+    .where('category', '=', categoryToSearch)
     .leftJoin('Media', 'Media.entryId', 'Entry.id')
     .select(['Entry.id as id', 'Entry.name as name', 'Entry.category as category', 'Entry.slug as slug', 'Entry.updatedAt as updatedAt', 'Media.url as media_url'])
     .distinctOn('id')
     .limit(24)
     .offset(24 * page)
+
+  if(category === 'greetings') {
+    query = query.innerJoin('Greeting', 'Entry.id', 'Greeting.entryId')
+    totalQuery = totalQuery.innerJoin('Greeting', 'Entry.id', 'Greeting.entryId')
+  }
 
   if(searchParams.search) {
     query = query.where((eb) => eb(eb.fn('lower', 'Entry.name'), 'like', `%${searchParams.search.toLowerCase()}%`));

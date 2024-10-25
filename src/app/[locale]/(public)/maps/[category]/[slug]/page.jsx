@@ -20,13 +20,32 @@ export const generateStaticParams = async () => {
       .distinctOn('id')
       .execute();
 
-    return entries.map(entry => {
+    const entriesToGenerate = entries.map(entry => {
       return {
         locale : 'en',
         category : entry.category,
         slug : encodeURIComponent(entry.slug).toLowerCase()
       }
     })
+
+    // Ensuring we create greetings from appropriate languages
+    const greetingEntries = await db.selectFrom('Entry')
+      .where('published', '=', true)
+      .where('category', '=', 'languages')
+      .select(['id', 'category', 'slug'])
+      .innerJoin('Greeting', 'Entry.id', 'Greeting.entryId')
+      .distinctOn('id')
+      .execute();
+
+    greetingEntries.forEach(entry => {
+      entriesToGenerate.push({
+        locale : 'en',
+        category : 'greetings',
+        slug : encodeURIComponent(entry.slug).toLowerCase()
+      })
+    })
+
+    return entriesToGenerate;
   } else {
     return [];
   }
@@ -39,9 +58,14 @@ export default async function Page({ params : { locale, category, slug }}) {
   setLocaleCache(locale);
   const t = await getTranslations('Maps');
 
+  let categoryToSearch = category;
+  if(category === 'greetings') {
+    categoryToSearch = 'languages';
+  }
+
   const entry = await db.selectFrom('Entry')
     .where('slug', '=', slug.toLowerCase())
-    .where('category', '=', category)
+    .where('category', '=', categoryToSearch)
     .where('published', '=', true)
     .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
     .select((eb) => [
@@ -49,7 +73,7 @@ export default async function Page({ params : { locale, category, slug }}) {
       eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
       jsonArrayFrom(
         eb.selectFrom('Greeting')
-          .select(['url', 'translation', 'usage'])
+          .select(['url', 'text', 'translation', 'usage', 'parentId'])
           .whereRef('Greeting.entryId', '=', 'Entry.id')
       ).as('greetings'),
       jsonArrayFrom(
@@ -98,7 +122,7 @@ export default async function Page({ params : { locale, category, slug }}) {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={entry.name} crumbs={[{ url : "/maps", title : "Maps" }, { url : `/maps/${entry.category}`, title : entry.category }]} />
+      <SubHeader title={entry.name} crumbs={[{ url : "/maps", title : "Maps" }, { url : `/maps/${category}`, title : category }]} />
       <div className="grid gap-5 grid-cols-1 md:grid-cols-3 min-h-screen w-full md:w-2/3 px-5 md:px-0 m-auto -mt-12 text-black">
         <Sidebar picks={3}>
           <ol className="hidden md:block list-inside text-gray-400">
@@ -114,36 +138,52 @@ export default async function Page({ params : { locale, category, slug }}) {
           <span />
         </Sidebar>
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
-          <Map geometry={entry.geometry} />
-          <section className="mt-5">
-            <h3 className="text-xl font-bold mb-3" id="websites">{t('websites')}</h3>
-            <Websites websites={entry.websites} />
-          </section>
-          <section className="mt-5">
-            <h3 className="text-xl font-bold mb-3" id="greetings">{t('greetings')}</h3>
-            <Greetings greetings={entry.greetings} />
-          </section>
-          <section className="mt-5">
-            <h3 className="text-xl font-bold mb-3" id="related-maps">{t('related')}</h3>
-            <Related relatedTo={entry.relatedTo} relatedFrom={entry.relatedFrom} />
-          </section>
-          <section className="mt-5">
-            <h3 className="text-xl font-bold mb-3" id="media">{t('media')}</h3>
-            <Media media={entry.media} />
-          </section>
-          <section className="mt-5">
-            <h3 className="text-xl font-bold mb-3" id="sources">{t('sources')}</h3>
-            <div className="sources-text" dangerouslySetInnerHTML={{ __html : entry.sources }} />
-          </section>
-          <section className="mt-5">
-            <h3 className="text-xl font-bold mb-3" id="changelog">{t('changelog')}</h3>
-            <Changelog changelog={entry.changelog} createdAt={entry.createdAt} updatedAt={entry.updatedAt} />
-          </section>
-          <section className="mt-5">
-            <h3 className="text-xl font-bold mb-3" id="send-correction">{t('correction')}</h3>
-            <p>{t('contact')}</p>
-          </section>
-
+          {category !== 'greetings' ?
+            <div>
+              <Map geometry={entry.geometry} />
+              <section className="mt-5">
+                <h3 className="text-xl font-bold mb-3" id="websites">{t('websites')}</h3>
+                <Websites websites={entry.websites} />
+              </section>
+              <section className="mt-5">
+                <h3 className="text-xl font-bold mb-3" id="greetings">{t('greetings')}</h3>
+                <Greetings greetings={entry.greetings} />
+              </section>
+              <section className="mt-5">
+                <h3 className="text-xl font-bold mb-3" id="related-maps">{t('related')}</h3>
+                <Related relatedTo={entry.relatedTo} relatedFrom={entry.relatedFrom} />
+              </section>
+              <section className="mt-5">
+                <h3 className="text-xl font-bold mb-3" id="media">{t('media')}</h3>
+                <Media media={entry.media} />
+              </section>
+              <section className="mt-5">
+                <h3 className="text-xl font-bold mb-3" id="sources">{t('sources')}</h3>
+                <div className="sources-text" dangerouslySetInnerHTML={{ __html : entry.sources }} />
+              </section>
+              <section className="mt-5">
+                <h3 className="text-xl font-bold mb-3" id="changelog">{t('changelog')}</h3>
+                <Changelog changelog={entry.changelog} createdAt={entry.createdAt} updatedAt={entry.updatedAt} />
+              </section>
+              <section className="mt-5">
+                <h3 className="text-xl font-bold mb-3" id="send-correction">{t('correction')}</h3>
+                <p>{t('contact')}</p>
+              </section>
+            </div>
+          : false}
+          {category === 'greetings' ?
+            <div>
+              <h3 className="text-xl font-bold mb-3" id="greetings">{t('greetings')}</h3>
+              <Greetings greetings={entry.greetings} />
+              <section className="mt-5">
+                <Map geometry={entry.geometry} />
+              </section>
+              <section className="mt-5">
+                <h3 className="text-xl font-bold mb-3" id="greetings">About this Project</h3>
+                <p>This project is a collaboration between the Canadian Commission for UNESCO, nativeland.ca and Dr. Onowa McIvor, President’s Chair at the University of Victoria and supports of the UN International Decade of Indigenous Languages. Read more here (link to UNESCO landing page).</p>
+              </section>
+            </div>
+          : false}
         </div>
       </div>
     </div>
