@@ -94,7 +94,7 @@ export default function GreetingEditor({ greetings, setGreetings }) {
           )
         })}
       </div>
-      <FileUploader afterUpload={afterUpload} />
+      <FileUploader afterUpload={afterUpload} allowedTypes={"audio/midi, audio/mpeg, audio/ogg, audio/wav, audio/webm"} />
     </>
   );
 }

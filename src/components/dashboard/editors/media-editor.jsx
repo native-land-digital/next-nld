@@ -70,7 +70,7 @@ export default function MediaEditor({ media, setMedia }) {
           )
         })}
       </div>
-      <FileUploader afterUpload={afterUpload} />
+      <FileUploader afterUpload={afterUpload} allowedTypes={"image/png, image/jpeg"} />
     </>
   );
 }

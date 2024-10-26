@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify';
 import { useTranslations } from '@/i18n/client-i18n';
 
-export default function FileUploader({ afterUpload }) {
+export default function FileUploader({ afterUpload, allowedTypes }) {
 
   const t = useTranslations('Dashboard');
 
@@ -66,7 +66,7 @@ export default function FileUploader({ afterUpload }) {
               setFile(files[0])
             }
           }}
-          accept="image/png, image/jpeg"
+          accept={allowedTypes}
           className="block w-full text-xs text-slate-500"
         />
       </div>
