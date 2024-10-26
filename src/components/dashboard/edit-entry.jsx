@@ -53,7 +53,8 @@ export default function EditEntry({ entry }) {
         media : media,
         changelog : changelog,
         relatedTo : relatedTo,
-        geometry : geometry
+        geometry : geometry,
+        geometry_type : entry.geometry_type
       })
     }).then(resp => resp.json()).then(results => {
       if(results.error) {
@@ -101,14 +102,14 @@ export default function EditEntry({ entry }) {
       <Link prefetch={false} href="/dashboard/research"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>{tCommon('back')}</Link>
       <h2 className="font-semibold text-3xl">{entry.name}</h2>
       {entry.published && entry.category ?
-        <Link prefetch={false} href={`/maps/${entry.category}/${entry.slug}`} target="_blank" className="text-xs float-right">See live page ➜</Link>
+        <Link prefetch={false} href={`/maps/${entry.category}/${entry.slug}`} target="_blank" className="text-xs float-right">{t('see-live')} ➜</Link>
       :
-        <p className="text-xs float-right">Polygon not published</p>
+        <p className="text-xs float-right">{t('entry-not-published')}</p>
       }
       <p className="text-xs mt-1" suppressHydrationWarning>{t('entry-created')} {new Date(entry.createdAt).toLocaleString()}, {t('entry-updated')} {new Date(entry.updatedAt).toLocaleString()}</p>
       <hr className="mt-3 mb-3" />
 
-      <MainMap geometry={geometry} setGeometry={setGeometry} />
+      <MainMap geometry_type={entry.geometry_type} geometry={geometry} setGeometry={setGeometry} />
 
       <div className="w-full md:w-1/2">
 

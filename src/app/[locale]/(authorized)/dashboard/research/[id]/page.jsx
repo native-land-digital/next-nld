@@ -1,4 +1,5 @@
 import { db } from '@/lib/db/kysely'
+import { sql } from 'kysely';
 import { jsonArrayFrom } from 'kysely/helpers/postgres'
 import { notFound } from 'next/navigation';
 import { getServerSession } from "next-auth/next"
@@ -18,9 +19,21 @@ export default async function Page({ params : { locale, id } }) {
   const entry = await db.selectFrom('Entry')
     .where('Entry.id', '=', parseInt(id))
     .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
+    .leftJoin('Line', 'Line.entryId', 'Entry.id')
+    .leftJoin('Point', 'Point.entryId', 'Entry.id')
     .select((eb) => [
       'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
-      eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+      eb.fn('COALESCE', [
+        eb.fn('ST_AsGeoJSON', 'Polygon.geometry'),
+        eb.fn('ST_AsGeoJSON', 'Line.geometry'),
+        eb.fn('ST_AsGeoJSON', 'Point.geometry')
+      ]).as('geometry'),
+      eb.case()
+        .when('Polygon.entryId', 'is not', null).then('Polygon')
+        .when('Line.entryId', 'is not', null).then('Line')
+        .when('Point.entryId', 'is not', null).then('Point')
+        .end()
+      .as('geometry_type'),
       jsonArrayFrom(
         eb.selectFrom('Greeting')
           .select(['id', 'url', 'text', 'translation', 'usage', 'parentId'])

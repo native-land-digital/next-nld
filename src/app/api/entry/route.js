@@ -77,7 +77,33 @@ export const POST = async (req) => {
 					.returningAll()
 				  .execute()
 
-				console.log(entry)
+				if(body.type === 'polygon') {
+					// let polyGeometry = { type : "Polygon", coordinates : [] }
+					await db.insertInto('Polygon')
+						.values({
+							geometry: null,
+							entryId : parseInt(entry.id),
+						})
+						.execute();
+				}
+				if(body.type === 'line') {
+					// let lineGeometry = { type : "LineString", coordinates : [] }
+					await db.insertInto('Line')
+						.values({
+							geometry: null,
+							entryId : parseInt(entry.id),
+						})
+						.execute();
+				}
+				if(body.type === 'point') {
+					// let pointGeometry = { type : "Point", coordinates : [] }
+					await db.insertInto('Point')
+						.values({
+							geometry: null,
+							entryId : parseInt(entry.id),
+						})
+						.execute();
+				}
 
 	  		return NextResponse.json({
 	  			id : entry.id

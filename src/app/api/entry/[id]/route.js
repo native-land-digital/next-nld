@@ -91,7 +91,7 @@ export const PATCH = async (req, route) => {
           await db.transaction().execute(async (trx) => {
 
             // Update polygon or insert new
-            await trx.insertInto('Polygon')
+            await trx.insertInto(body.geometry_type)
               .values({
                 geometry: sql`ST_GeomFromGeoJSON(${featureGeometry})`,
                 entryId : parseInt(entryId),
@@ -104,6 +104,7 @@ export const PATCH = async (req, route) => {
               )
               .execute();
             delete body.geometry;
+            delete body.geometry_type;
 
             // Deleting, updating, adding websites
       			const websites = body.websites;

@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth/next"
 
 import { hasResearchPermission, allowedResearchIDs } from '@/lib/auth/permissions'
 import { authOptions } from "@/root/auth";
-import CreatePolygon from '@/components/dashboard/create-polygon'
+import CreateEntry from '@/components/dashboard/create-entry'
 
 export default async function Page({ params : { locale }, searchParams }) {
 
@@ -62,7 +62,7 @@ export default async function Page({ params : { locale }, searchParams }) {
             </div>
           </form>
           <div className="col-span-4 md:col-span-1 text-sm justify-end">
-            <CreatePolygon />
+            <CreateEntry />
           </div>
         </div>
       </div>
