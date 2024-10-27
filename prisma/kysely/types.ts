@@ -42,6 +42,22 @@ export type Media = {
     caption: string | null;
     entryId: number;
 };
+export type PermissionAction = {
+    id: Generated<number>;
+    name: string;
+};
+export type PermissionDetail = {
+    id: Generated<number>;
+    columnName: string | null;
+    appliesToAll: boolean;
+    actionId: number;
+    entityId: number;
+    userId: number;
+};
+export type PermissionEntity = {
+    id: Generated<number>;
+    name: string;
+};
 export type Point = {
     id: Generated<number>;
     entryId: number;
@@ -81,6 +97,9 @@ export type DB = {
     Greeting: Greeting;
     Line: Line;
     Media: Media;
+    PermissionAction: PermissionAction;
+    PermissionDetail: PermissionDetail;
+    PermissionEntity: PermissionEntity;
     Point: Point;
     Polygon: Polygon;
     Relation: Relation;

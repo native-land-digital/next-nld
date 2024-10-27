@@ -71,37 +71,21 @@ model Point {
 	id              Int @id @default(autoincrement())
   geometry        Unsupported("geometry(Point, 4326)")?
   entryId         Int @unique
-  entry           Entry @relation(fields: [entryId], references: [id])
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
 
 model Line {
 	id              Int @id @default(autoincrement())
   geometry        Unsupported("geometry(MultiLineString, 4326)")?
   entryId         Int @unique
-  entry           Entry @relation(fields: [entryId], references: [id])
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
 
 model Polygon {
 	id              Int @id @default(autoincrement())
   geometry        Unsupported("geometry(MultiPolygon, 4326)")?
   entryId         Int @unique
-  entry           Entry @relation(fields: [entryId], references: [id])
-}
-
-model User {
-	id                Int @id @default(autoincrement())
-  createdAt         DateTime  @default(now())
-	email             String @unique
-  password          String
-	name              String?
-  permissions       String[] @default(["api", "profile"])
-  organization      String?
-  verification_key  String? @default(uuid())
-  email_verified    Boolean @default(false)
-  agreed_treaty     Boolean @default(false)
-  api_key           String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
-
-  @@index([email])
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
 
 model Entry {
@@ -127,4 +111,45 @@ model Entry {
   polygon         Polygon?
 
   @@index([slug])
+}
+
+model PermissionAction {
+  id              Int @id @default(autoincrement())
+  name            String
+  appliedTo       PermissionDetail[]
+}
+
+model PermissionEntity {
+  id              Int @id @default(autoincrement())
+  name            String
+  appliedTo       PermissionDetail[]
+}
+
+model PermissionDetail {
+  id              Int @id @default(autoincrement())
+  columnName      String?
+  appliesToAll    Boolean
+  actionId        Int
+  action          PermissionAction @relation(fields: [actionId], references: [id])
+  entityId        Int
+  entity          PermissionEntity @relation(fields: [entityId], references: [id])
+  userId          Int
+  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+	id                Int @id @default(autoincrement())
+  createdAt         DateTime  @default(now())
+	email             String @unique
+  password          String
+	name              String?
+  permissions_list  PermissionDetail[]
+  permissions       String[] @default(["api", "profile"])
+  organization      String?
+  verification_key  String? @default(uuid())
+  email_verified    Boolean @default(false)
+  agreed_treaty     Boolean @default(false)
+  api_key           String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
+
+  @@index([email])
 }
