@@ -18,7 +18,7 @@ export default function MapEditor({ geometry_type, geometry, setGeometry }) {
 
   const [ map, setMap ] = useState(false);
   const [ draw, setDraw ] = useState(false);
-  const polygons = useRef([])
+  const drawn_shapes = useRef([])
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
@@ -32,18 +32,47 @@ export default function MapEditor({ geometry_type, geometry, setGeometry }) {
 
   useEffect(() => {
     if(geometry && draw && geometry !== "null") {
-      if(polygons.current.length === 0) {
-        const loadedPolygons = geometry.coordinates.map(polygonGeometry => {
-          return {
-            type : "Feature",
-            id : (Math.random() + 1).toString(36).substring(7),
-            geometry : {
-              type : "Polygon",
-              coordinates : polygonGeometry
-            }
+
+      if(geometry_type === "Point") {
+        const loadedPoint = [{
+          type : "Feature",
+          id : (Math.random() + 1).toString(36).substring(7),
+          geometry : {
+            type : "Point",
+            coordinates : geometry.coordinates
           }
-        })
-        setMapFeatures(loadedPolygons)
+        }]
+        draw.deleteAll()
+        setMapFeatures(loadedPoint)
+      }
+
+      if(drawn_shapes.current.length === 0) {
+        if(geometry_type === "Line") {
+          const loadedLines = geometry.coordinates.map(lineGeometry => {
+            return {
+              type : "Feature",
+              id : (Math.random() + 1).toString(36).substring(7),
+              geometry : {
+                type : "LineString",
+                coordinates : lineGeometry
+              }
+            }
+          })
+          setMapFeatures(loadedLines)
+        }
+        if(geometry_type === "Polygon") {
+          const loadedPolygons = geometry.coordinates.map(polygonGeometry => {
+            return {
+              type : "Feature",
+              id : (Math.random() + 1).toString(36).substring(7),
+              geometry : {
+                type : "Polygon",
+                coordinates : polygonGeometry
+              }
+            }
+          })
+          setMapFeatures(loadedPolygons)
+        }
       }
     }
   }, [geometry, draw])
@@ -55,24 +84,37 @@ export default function MapEditor({ geometry_type, geometry, setGeometry }) {
     }
   }, [map])
 
-  const setGeometryFromPolygons = () => {
-    if(polygons.current.length > 0) {
-      const featureCollection = { type : "FeatureCollection", features : polygons.current }
-      const combined = combine(featureCollection)
-      const featureGeometry = combined.features[0].geometry;
-      setGeometry(featureGeometry)
+  const setGeometryFromShapes = () => {
+    if(drawn_shapes.current.length > 0) {
+      const featureCollection = { type : "FeatureCollection", features : drawn_shapes.current }
+      if(geometry_type !== "Point") {
+        const combined = combine(featureCollection)
+        const featureGeometry = combined.features[0].geometry;
+        if(JSON.stringify(featureGeometry) !== JSON.stringify(geometry)) {
+          setGeometry(featureGeometry)
+        }
+      } else {
+        const featureGeometry = featureCollection.features[0].geometry;
+        if(JSON.stringify(featureGeometry) !== JSON.stringify(geometry)) {
+          setGeometry(featureGeometry)
+        }
+      }
     } else {
       setGeometry("null")
     }
   }
 
   const setMapFeatures = (features) => {
-    polygons.current = features;
-    setGeometryFromPolygons();
+    drawn_shapes.current = features;
+    setGeometryFromShapes();
     const featureCollection = { type : "FeatureCollection", features : features }
     draw.add(featureCollection)
-    const bounds = bbox(featureCollection)
-    map.fitBounds(bounds, { padding : 50, duration : 0 })
+    if(geometry_type === "Point") {
+      map.easeTo({ center : featureCollection.features[0].geometry.coordinates, zoom : 5 })
+    } else {
+      const bounds = bbox(featureCollection)
+      map.fitBounds(bounds, { padding : 50, duration : 0 })
+    }
   }
 
   const addControls = () => {
@@ -100,34 +142,38 @@ export default function MapEditor({ geometry_type, geometry, setGeometry }) {
   const addEventListeners = () => {
 
     map.on('draw.create', ({ features }) => {
-      const newPolygons = JSON.parse(JSON.stringify(polygons.current));
-      newPolygons.push(features[0]);
-      polygons.current = newPolygons;
-      setGeometryFromPolygons();
+      let newDrawnShapes = JSON.parse(JSON.stringify(drawn_shapes.current));
+      if(geometry_type !== "Point") {
+        newDrawnShapes.push(features[0]);
+      } else {
+        newDrawnShapes = [features[0]];
+      }
+      drawn_shapes.current = newDrawnShapes;
+      setGeometryFromShapes();
     })
 
     map.on('draw.update', ({ features }) => {
-      const newPolygons = JSON.parse(JSON.stringify(polygons.current));
-      const polygonIndex = polygons.current.findIndex(feature => feature.id === features[0].id);
-      newPolygons[polygonIndex] = features[0];
-      polygons.current = newPolygons;
-      setGeometryFromPolygons();
+      const newDrawnShapes = JSON.parse(JSON.stringify(drawn_shapes.current));
+      const shapeIndex = drawn_shapes.current.findIndex(feature => feature.id === features[0].id);
+      newDrawnShapes[shapeIndex] = features[0];
+      drawn_shapes.current = newDrawnShapes;
+      setGeometryFromShapes();
     })
 
     map.on('draw.delete', ({ features }) => {
-      const newPolygons = JSON.parse(JSON.stringify(polygons.current));
-      const polygonIndex = polygons.current.findIndex(feature => feature.id === features[0].id);
-      newPolygons.splice(polygonIndex, 1);
-      polygons.current = newPolygons;
-      setGeometryFromPolygons();
+      const newDrawnShapes = JSON.parse(JSON.stringify(drawn_shapes.current));
+      const shapeIndex = drawn_shapes.current.findIndex(feature => feature.id === features[0].id);
+      newDrawnShapes.splice(shapeIndex, 1);
+      drawn_shapes.current = newDrawnShapes;
+      setGeometryFromShapes();
     })
 
   }
 
   const downloadGeoJSON = () => {
-    const featureCollection = { type : "FeatureCollection", features : polygons.current.map(polygon => {
-      polygon.properties = {};
-      return polygon;
+    const featureCollection = { type : "FeatureCollection", features : drawn_shapes.current.map(shape => {
+      shape.properties = {};
+      return shape;
     }) }
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(featureCollection));
     const downloadAnchorNode = document.createElement('a');
@@ -144,22 +190,38 @@ export default function MapEditor({ geometry_type, geometry, setGeometry }) {
       try {
         const json = JSON.parse(e.target.result);
         if(json.features.length > 0) {
-          const nonPolygons = json.features.filter(feature => feature.geometry.type.indexOf("Polygon") === -1);
-          if(nonPolygons.length === 0) {
-            const finalPolygons = json.features.filter(feature => feature.geometry.type === "Polygon")
-            const multipolygons = json.features.filter(feature => feature.geometry.type === "MultiPolygon");
-            multipolygons.forEach(multipolygon => {
-              multipolygon.geometry.coordinates.forEach(coordinateSet => {
-                finalPolygons.push({ type : "Feature", geometry : { type : "Polygon", coordinates : coordinateSet }});
+          const nonShapeType = json.features.filter(feature => feature.geometry.type.indexOf(geometry_type) === -1);
+          if(nonShapeType.length === 0) {
+            let finalShapes = [];
+            if(geometry_type === "Point") {
+              finalShapes = json.features.filter(feature => feature.geometry.type === "Point")
+              finalShapes = [finalShapes[0]];
+            }
+            if(geometry_type === "Line") {
+              finalShapes = json.features.filter(feature => feature.geometry.type === "LineString")
+              const multishapes = json.features.filter(feature => feature.geometry.type === "MultiLineString");
+              multishapes.forEach(multishape => {
+                multishape.geometry.coordinates.forEach(coordinateSet => {
+                  finalShapes.push({ type : "Feature", geometry : { type : "LineString", coordinates : coordinateSet }});
+                })
               })
-            })
+            }
+            if(geometry_type === "Polygon") {
+              finalShapes = json.features.filter(feature => feature.geometry.type === "Polygon")
+              const multishapes = json.features.filter(feature => feature.geometry.type === "MultiPolygon");
+              multishapes.forEach(multishape => {
+                multishape.geometry.coordinates.forEach(coordinateSet => {
+                  finalShapes.push({ type : "Feature", geometry : { type : "Polygon", coordinates : coordinateSet }});
+                })
+              })
+            }
             toast(t('geojson-uploaded'))
             if(window.confirm(t('want-replace'))) {
               draw.deleteAll();
-              setMapFeatures(finalPolygons)
+              setMapFeatures(finalShapes)
             }
           } else {
-            toast(t('non-polygons'))
+            toast(t('non-shape-type'))
           }
         } else {
           toast(t('empty-geojson'))

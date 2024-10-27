@@ -270,8 +270,8 @@
     "url-placeholder" : "Enter website URL",
     "description-placeholder" : "Enter description",
     "geojson-uploaded" : "GeoJSON successfully uploaded",
-    "want-replace" : "Do you want to replace the polygons on the map? This will delete any existing polygons.",
-    "non-polygons" : "You have non-polygons in the JSON. Please verify at at https://geojson.io",
+    "want-replace" : "Do you want to replace the shapes on the map? This will delete any existing shapes.",
+    "non-shape-type" : "You have shapes that don't match this entry's geometry in the JSON. Please verify at at https://geojson.io",
     "empty-geojson" : "The geoJSON seems empty. Please verify at at https://geojson.io",
     "geojson-issue" : "There's an issue with the geoJSON. Please verify it at https://geojson.io",
     "back-to-homepage" : "Back to homepage"
