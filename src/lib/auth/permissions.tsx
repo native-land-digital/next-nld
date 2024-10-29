@@ -3,5 +3,6 @@ export const possiblePermissions = [
   'api',
   'research',
   'update_mapbox',
+  'issues',
   'manage_users'
 ]

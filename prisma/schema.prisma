@@ -88,6 +88,9 @@ model User {
   agreed_treaty     Boolean @default(false)
   api_key           String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
 
+  issues            Issue[]
+  comments          IssueComment[]
+
   @@index([email])
 }
 
@@ -113,4 +116,42 @@ model Entry {
   polygon         Polygon?
 
   @@index([slug])
+}
+
+model IssueMedia {
+	id              Int @id @default(autoincrement())
+  url             String
+  IssueCommentId   Int
+  IssueComment     IssueComment @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model IssueCategory {
+	id              Int @id @default(autoincrement())
+	name            String
+  Issues          Issue[]
+}
+
+model IssueComment {
+	id              Int @id @default(autoincrement())
+  comment         String
+  media           IssueMedia[]
+  issueId         Int
+  issue           Issue @relation(fields: [authorId], references: [id])
+  authorId        Int
+  author          User @relation(fields: [authorId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Issue {
+	id              Int @id @default(autoincrement())
+	name            String
+  open            Boolean @default(true)
+  categories      IssueCategory[]
+  users           User[]
+  comments        IssueComment[]
+  entryId         Int?
+  entry           Entry? @relation(fields: [entryId], references: [id])
+  authorId        Int?
+  author          User? @relation(fields: [authorId], references: [id])
 }
