@@ -54,8 +54,8 @@ export const POST = async (req) => {
 		return NextResponse.json({ error : "Please provide a description for the issue" }, { status: 400 });
 	}
 
-  if(isAnonymous) {
-		if (!body.newEmail || body.anonEmail.length < 4) {
+  if(isNewUser) {
+		if (!body.newEmail || body.newEmail.length < 4) {
 			return NextResponse.json({ error : "Please provide a valid email" }, { status: 400 });
 		}
 		if (!body.newName) {
@@ -73,7 +73,10 @@ export const POST = async (req) => {
 	      .executeTakeFirst()
 
       if(userExists) {
+
         userId = userExists.id;
+        isNewUser = false;
+
       } else {
 
 				const verification_key = uuidv4()
@@ -98,30 +101,57 @@ export const POST = async (req) => {
 
     let issueValues = {
       name : body.name,
-      categories : body.categories,
-      authorId : userId
+      authorId : userId,
+      createdAt : new Date()
     }
     if(body.entryId) {
       issueValues.entryId = body.entryId;
     }
 
-		const issue = await db.insertInto('Issue')
-			.values(issueValues)
-			.returningAll()
-			.execute()
+    let newIssue = false;
+    await db.transaction().execute(async (trx) => {
 
-		const issueComment = await db.insertInto('IssueComment')
-			.values({
-        issueId : issue.id,
-        createdAt : new Date(),
-        updatedAt : new Date(),
-        authorId : userId,
-        comment : body.comment
-      })
-			.returningAll()
-			.execute()
+      newIssue = await trx.insertInto('Issue')
+  			.values(issueValues)
+  			.returningAll()
+  			.executeTakeFirst()
 
-    if(isAnonymous) {
+      await trx.insertInto('UsersOnIssues')
+  			.values({
+          issueId : newIssue.id,
+          userId : userId
+        })
+  			.execute()
+
+      if(body.categories.length > 0) {
+        for (const category of body.categories) {
+          await trx.insertInto('CategoriesOnIssues')
+      			.values({
+              issueId : newIssue.id,
+              categoryId : category.id
+            })
+      			.returningAll()
+      			.execute()
+        }
+      }
+
+      await trx.insertInto('IssueComment')
+  			.values({
+          issueId : newIssue.id,
+          createdAt : new Date(),
+          updatedAt : new Date(),
+          authorId : userId,
+          comment : body.comment
+        })
+  			.execute()
+    })
+
+    const issue = await db.selectFrom('Issue')
+      .where('id', '=', newIssue.id)
+      .select(['id'])
+      .executeTakeFirst()
+
+    if(isNewUser) {
 			await sendEmail({
 			   to: body.anonEmail,
 			   subject: 'Native Land Digital has recieved your issue',

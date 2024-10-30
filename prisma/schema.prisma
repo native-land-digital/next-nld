@@ -113,7 +113,6 @@ model Entry {
   polygon         Polygon?
 
   itemPerms       ItemPermission[]
-
   issues          Issue[]
 
   @@index([slug])
@@ -200,8 +199,10 @@ model IssueComment {
 
 model IssueCategory {
 	id              Int @id @default(autoincrement())
-	name            String
+	name            String @unique
   posts           CategoriesOnIssues[]
+
+  @@index([name])
 }
 
 model CategoriesOnIssues {
@@ -231,6 +232,7 @@ model Issue {
   categories      CategoriesOnIssues[]
   users           UsersOnIssues[]
   comments        IssueComment[]
+  createdAt       DateTime  @default(now())
   entryId         Int?
   entry           Entry? @relation(fields: [entryId], references: [id])
   authorId        Int?

@@ -1,4 +1,9 @@
-export const GET = async (req) => {
+import { db } from '@/lib/db/kysely'
+import { jsonObjectFrom, jsonArrayFrom } from 'kysely/helpers/postgres';
+import { NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt"
+
+export const GET = async (req, route) => {
   const token = await getToken({ req })
 
   if(token && token.id) {
@@ -15,10 +20,8 @@ export const GET = async (req) => {
 
         const issue = await db.selectFrom('Issue')
           .where('Issue.id', '=', parseInt(issueId))
-          .innerJoin('User', 'User.id', 'Issue.authorId')
-          .innerJoin('Entry', 'Entry.id', 'Issue.entryId')
           .select((eb) => [
-            'Issue.name', 'Issue.open',
+            'Issue.name', 'Issue.open', 'Issue.createdAt',
             jsonObjectFrom(
               eb.selectFrom('User')
                 .select(['User.id', 'User.name'])
@@ -48,18 +51,18 @@ export const GET = async (req) => {
                 .whereRef('IssueComment.issueId', '=', 'Issue.id')
                 .innerJoin('User', 'User.id', 'IssueComment.authorId')
                 .select((eb) => [
-                  'IssueComment.id', 'IssueComment.comment', 'Issue.createdAt', 'Issue.updatedAt',
+                  'IssueComment.id', 'IssueComment.comment', 'IssueComment.createdAt', 'IssueComment.updatedAt',
                   'User.name as authorName', 'User.id as authorId',
                   jsonArrayFrom(
                     eb.selectFrom('IssueMedia')
                       .select(['IssueMedia.id', 'IssueMedia.url'])
-                      .whereRef('IssueMedia.entryId', '=', 'Issue.id')
+                      .whereRef('IssueMedia.issueCommentId', '=', 'IssueComment.id')
                   ).as('media')
                 ])
                 .orderBy('IssueComment.createdAt')
             ).as('comments')
           ])
-          .execute();
+          .executeTakeFirst();
 
         return NextResponse.json(issue);
 
