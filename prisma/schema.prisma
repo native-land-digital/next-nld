@@ -70,6 +70,8 @@ model Relation {
 model Point {
 	id              Int @id @default(autoincrement())
   geometry        Unsupported("geometry(Point, 4326)")?
+  osmType         String?
+  osmId           String?
   entryId         Int @unique
   entry           Entry @relation(fields: [entryId], references: [id])
 }
