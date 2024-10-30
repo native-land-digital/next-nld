@@ -20,6 +20,19 @@ datasource db {
   directUrl  = env("DIRECT_URL")
 }
 
+model Greeting {
+  id              Int @id @default(autoincrement())
+  url             String
+  text            String?
+  translation     String?
+  usage           String?
+  parentId        Int?
+  parentGreeting  Greeting? @relation("parent", fields: [parentId], references: [id])
+  responses       Greeting[] @relation(name : "parent")
+  entryId         Int
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+}
+
 model Media {
   id              Int @id @default(autoincrement())
   url             String
@@ -57,6 +70,8 @@ model Relation {
 model Point {
 	id              Int @id @default(autoincrement())
   geometry        Unsupported("geometry(Point, 4326)")?
+  osmType         String?
+  osmId           String?
   entryId         Int @unique
   entry           Entry @relation(fields: [entryId], references: [id])
 }
@@ -107,6 +122,7 @@ model Entry {
   media           Media[]
   websites        Website[]
   changelog       Change[]
+  greetings       Greeting[]
   relatedTo       Relation[] @relation(name: "related_from")
   relatedFrom     Relation[] @relation(name: "related_to")
   createdAt       DateTime  @default(now())

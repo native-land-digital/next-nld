@@ -79,10 +79,10 @@ export const PATCH = async (req, route) => {
       .select(['permissions'])
       .executeTakeFirst()
 
-		if(user.permissions.includes('research')) {
+		const body = await req.json();
+		const { id: entryId } = route.params;
 
-  		const body = await req.json();
-  		const { id: entryId } = route.params;
+		if(user.permissions.includes('research') || user.permissions.includes(`research_${entryId}`)) {
 
   		try {
   			if(body.geometry && body.geometry !== "null") {
@@ -91,7 +91,7 @@ export const PATCH = async (req, route) => {
           await db.transaction().execute(async (trx) => {
 
             // Update polygon or insert new
-            await trx.insertInto('Polygon')
+            await trx.insertInto(body.geometry_type)
               .values({
                 geometry: sql`ST_GeomFromGeoJSON(${featureGeometry})`,
                 entryId : parseInt(entryId),
@@ -104,6 +104,7 @@ export const PATCH = async (req, route) => {
               )
               .execute();
             delete body.geometry;
+            delete body.geometry_type;
 
             // Deleting, updating, adding websites
       			const websites = body.websites;
@@ -185,6 +186,54 @@ export const PATCH = async (req, route) => {
             }
             delete body.changelog;
 
+            // Deleting, updating, adding greetings
+      			const greetings = body.greetings;
+            if(greetings) {
+              const updatedGreetingIds = greetings.map(greeting => greeting.id);
+              if(updatedGreetingIds.length > 0) {
+                await trx.deleteFrom('Greeting')
+                  .where('entryId', '=', entryId)
+                  .where('id', 'not in', updatedGreetingIds)
+                  .execute();
+              } else {
+                await trx.deleteFrom('Greeting')
+                  .where('entryId', '=', entryId)
+                  .execute();
+              }
+
+              for (const greeting of greetings) {
+                if (greeting.id) {
+                  await trx.updateTable('Greeting')
+                    .set({
+                      url : greeting.url,
+                      text : greeting.text,
+                      usage : greeting.usage,
+                      translation : greeting.translation,
+                      parentId : greeting.parentId
+                    })
+                    .where('id', '=', greeting.id)
+                    .execute();
+                }
+              }
+
+              const newGreetings = greetings.filter(greeting => !greeting.id);
+              if (newGreetings.length > 0) {
+                await trx.insertInto('Greeting')
+                  .values(
+                    newGreetings.map(greeting => ({
+                      entryId : parseInt(entryId),
+                      url : greeting.url,
+                      text : greeting.text,
+                      usage : greeting.usage,
+                      translation : greeting.translation,
+                      parentId : greeting.parentId
+                    }))
+                  )
+                  .execute();
+              }
+              delete body.greetings;
+            }
+
             // Deleting, updating, adding media
       			const media = body.media;
             const updatedMediaIds = media.map(thisMedia => thisMedia.id);
@@ -207,7 +256,7 @@ export const PATCH = async (req, route) => {
                     caption : thisMedia.caption,
                     title : thisMedia.title
                   })
-                  .where('id', '=', item.id)
+                  .where('id', '=', thisMedia.id)
                   .execute();
               }
             }
@@ -283,6 +332,11 @@ export const PATCH = async (req, route) => {
             .select((eb) => [
               'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
               eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+              jsonArrayFrom(
+                eb.selectFrom('Greeting')
+                  .select(['id', 'url', 'text', 'translation', 'usage', 'parentId'])
+                  .whereRef('Greeting.entryId', '=', 'Entry.id')
+              ).as('greetings'),
               jsonArrayFrom(
                 eb.selectFrom('Media')
                   .select(['id', 'url', 'caption', 'title'])

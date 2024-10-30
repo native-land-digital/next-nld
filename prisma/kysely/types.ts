@@ -22,6 +22,15 @@ export type Entry = {
     createdAt: Generated<Timestamp>;
     updatedAt: Timestamp;
 };
+export type Greeting = {
+    id: Generated<number>;
+    url: string;
+    text: string | null;
+    translation: string | null;
+    usage: string | null;
+    parentId: number | null;
+    entryId: number;
+};
 export type Line = {
     id: Generated<number>;
     entryId: number;
@@ -69,6 +78,7 @@ export type Website = {
 export type DB = {
     Change: Change;
     Entry: Entry;
+    Greeting: Greeting;
     Line: Line;
     Media: Media;
     Point: Point;

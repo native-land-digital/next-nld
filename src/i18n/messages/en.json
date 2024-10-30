@@ -42,6 +42,7 @@
     "territories-list" : "Territories List",
     "languages-list" : "Languages List",
     "treaties-list" : "Treaties List",
+    "greetings-list" : "Greetings List",
     "contact" : "Contact",
     "support-us" : "Support Us",
     "translations" : "Translations",
@@ -75,7 +76,10 @@
   "DisclaimerModal" : {
     "disclaimer-header" : "Native Land Disclaimer",
     "disclaimer" : "<p>Native Land Digital honors the sovereignty of all Indigenous nations, their lands, and their waters. We recognize that these boundaries and territories are representations of the sacred.</p><p>We respect the rights of Indigenous data sovereignty, and we are committed to an ongoing process of collaboration, growth, and learning.</p><p>We work to update and replace information that is a continuation of trauma caused by theft, injustice, misinformation, and ignorance.</p><p>The map is a living document, informed by the contributions of Indigenous communities, Indigenous knowledge holders and their stories. It does not claim to represent official or legal boundaries. We encourage you to connect directly with the Indigenous nations to learn more about their territories and histories.</p><p>This is an honouring of Indigenous resilience past, present and future.</p>",
-    "disclaimer-close" : "Go to Map"
+    "disclaimer-close" : "Go to Map",
+    "greetings-disclaimer-header" : "Greetings Disclaimer",
+    "greetings-disclaimer" : "<p>In collaboration with CCUNESCO and Dr. Onowa McIvor, some map areas now feature Indigenous language greetings.</p><p>Read more about this project here.</p>",
+    "greetings-disclaimer-close" : "Go to Greetings"
   },
   "FrontPage" : {
     "welcome" : "Welcome.",
@@ -132,7 +136,8 @@
     "zoom" : "Zoom",
     "print" : "Print",
     "colors" : "Colors",
-    "osm" : "OpenStreetMap Labels"
+    "osm" : "OpenStreetMap Labels",
+    "new" : "New"
   },
   "Auth" : {
     "no-account" : "Don't have an account?",
@@ -172,6 +177,12 @@
     "total-all" : "total territories, languages, and treaties found.",
     "last-updated" : "Last updated",
     "map" : "Map",
+    "text" : "Text",
+    "translation" : "Translation",
+    "usage" : "Usage",
+    "greetings" : "Greetings",
+    "no-greetings" : "No greetings yet.",
+    "response" : "Response",
     "websites" : "Websites",
     "no-websites" : "No websites yet.",
     "media" : "Media",
@@ -202,17 +213,28 @@
     "id" : "ID",
     "category" : "Category",
     "edit" : "Edit",
-    "create-polygon" : "Create New Polygon",
+    "create-entry" : "Create New Entry",
+    "point" : "Point",
+    "line" : "Line",
+    "polygon" : "Polygon",
+    "create-entry" : "Create New Entry",
+    "entry-not-published" : "Entry not published",
+    "see-live" : "See live page",
+    "enter-name" : "Enter a name for the new entry",
     "saved-entry" : "Entry saved successfully",
     "delete-entry-confirm" : "Are you sure you want to delete this entry? This can't be undone.",
     "deleted-entry" : "Entry deleted successfully",
-    "polygon-created" : "Polygon created",
-    "polygon-updated" : "polygon updated",
+    "entry-created" : "Entry created",
+    "entry-updated" : "entry updated",
     "none" : "none",
     "color" : "Color",
     "pick-color" : "Pick color",
     "pronunciation" : "Pronunciation",
     "pronunciation-placeholder" : "Enter pronunciation",
+    "text-placeholder" : "Enter text in original language",
+    "translation-placeholder" : "Enter translation",
+    "usage-placeholder" : "Enter usage description",
+    "parent" : "Enter parent greeting (for responses)",
     "public" : "Public",
     "published" : "Published",
     "create-user" : "Create New User",
@@ -248,9 +270,10 @@
     "url-placeholder" : "Enter website URL",
     "description-placeholder" : "Enter description",
     "geojson-uploaded" : "GeoJSON successfully uploaded",
-    "want-replace" : "Do you want to replace the polygons on the map? This will delete any existing polygons.",
-    "non-polygons" : "You have non-polygons in the JSON. Please verify at at https://geojson.io",
+    "want-replace" : "Do you want to replace the shapes on the map? This will delete any existing shapes.",
+    "non-shape-type" : "You have shapes that don't match this entry's geometry in the JSON. Please verify at at https://geojson.io",
     "empty-geojson" : "The geoJSON seems empty. Please verify at at https://geojson.io",
-    "geojson-issue" : "There's an issue with the geoJSON. Please verify it at https://geojson.io"
+    "geojson-issue" : "There's an issue with the geoJSON. Please verify it at https://geojson.io",
+    "back-to-homepage" : "Back to homepage"
   }
 }

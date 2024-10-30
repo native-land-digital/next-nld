@@ -1,28 +1,14 @@
 import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
-import { notFound } from 'next/navigation';
 
-import SubHeader from '@/components/nav/sub-header';
+import SubHeader from '@/components/nav/sub-header'
 import Sidebar from '@/components/static/sidebar';
 import EntryCard from '@/components/static/entry-card';
 
-export const generateStaticParams = () => {
-  return [
-    { locale : 'en', category : 'territories' },
-    { locale : 'en', category : 'languages' },
-    { locale : 'en', category : 'treaties' }
-  ]
-}
-
 export const revalidate = false;
 
-export default async function Page({ searchParams, params : { locale, category }}) {
-
-  let allowedCategories = ["territories","languages","treaties"]
-  if(!allowedCategories.includes(category)) {
-    notFound()
-  }
+export default async function Page({ searchParams, params : { locale } }) {
 
   setLocaleCache(locale);
   const t = await getTranslations('Maps');
@@ -31,7 +17,7 @@ export default async function Page({ searchParams, params : { locale, category }
   let page = 0;
   let search = false;
   if(searchParams.page) {
-    page = parseInt(searchParams.page);
+    page = Number(searchParams.page);
   }
   if(searchParams.search) {
     search = searchParams.search;
@@ -39,21 +25,25 @@ export default async function Page({ searchParams, params : { locale, category }
 
   let totalQuery = db.selectFrom('Entry')
     .where('published', '=', true)
-    .where('category', '=', category)
     .select((eb) => eb.fn.count('id').as('num_entries'))
 
   let query = db.selectFrom('Entry')
     .where('published', '=', true)
-    .where('category', '=', category)
     .leftJoin('Media', 'Media.entryId', 'Entry.id')
-    .select(['Entry.id as id', 'Entry.name as name', 'Entry.category as category', 'Entry.slug as slug', 'Entry.updatedAt as updatedAt', 'Media.url as media_url'])
-    .distinctOn('id')
+    .select(['Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.updatedAt', 'Media.url as media_url'])
+    .distinctOn('Entry.id')
     .limit(24)
     .offset(24 * page)
 
   if(searchParams.search) {
-    query = query.where((eb) => eb(eb.fn('lower', 'Entry.name'), 'like', `%${searchParams.search.toLowerCase()}%`));
-    totalQuery = totalQuery.where((eb) => eb(eb.fn('lower', 'Entry.name'), 'like', `%${searchParams.search.toLowerCase()}%`));
+    query = query.where((eb) => eb.or([
+      eb(eb.fn('lower', 'Entry.name'), 'like', `%${searchParams.search.toLowerCase()}%`),
+      eb(eb.fn('lower', 'Entry.slug'), 'like', `%${searchParams.search.toLowerCase()}%`),
+    ]));
+    totalQuery = totalQuery.where((eb) => eb.or([
+      eb(eb.fn('lower', 'Entry.name'), 'like', `%${searchParams.search.toLowerCase()}%`),
+      eb(eb.fn('lower', 'Entry.slug'), 'like', `%${searchParams.search.toLowerCase()}%`),
+    ]));
   }
 
   const entries = await query.execute()
@@ -61,7 +51,7 @@ export default async function Page({ searchParams, params : { locale, category }
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={category} crumbs={[{ url : "/maps", title : "Maps" }]} />
+      <SubHeader title="Maps" />
       <div className="grid gap-5 grid-cols-1 md:grid-cols-3 px-5 md:px-0 w-full md:w-2/3 min-h-screen m-auto -mt-12 text-black static-page">
         <Sidebar>
           <ol className="list-inside text-gray-400">
@@ -69,6 +59,7 @@ export default async function Page({ searchParams, params : { locale, category }
             <li className="mb-2.5"><Link prefetch={false} href="/maps/territories">{t('territories-list')}</Link></li>
             <li className="mb-2.5"><Link prefetch={false} href="/maps/languages">{t('languages-list')}</Link></li>
             <li className="mb-2.5"><Link prefetch={false} href="/maps/treaties">{t('treaties-list')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/maps/greetings">{t('greetings-list')}</Link></li>
           </ol>
           <span />
         </Sidebar>
@@ -84,8 +75,8 @@ export default async function Page({ searchParams, params : { locale, category }
               </form>
             </div>
           </div>
-          <p className="mb-2.5 text-sm">{totalEntries[0].num_entries} {category}.</p>
-          <div className="grid grid-cols-1 md:grid-cols-2  gap-5">
+          <p className="mb-2.5 text-sm">{totalEntries[0].num_entries} {t('total-all')}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {entries.map(entry => {
               return <EntryCard key={`entry-${entry.id}`} entry={entry} />
             })}

@@ -20,8 +20,13 @@ export const GET = async (req) => {
       if(category) {
 
         try {
-          const entries = await db.selectFrom('Entry')
-            .where('category', '=', category)
+          let categoryToSearch = category;
+          if(category === 'greetings') {
+            categoryToSearch = 'languages';
+          }
+
+          let entriesQuery = db.selectFrom('Entry')
+            .where('category', '=', categoryToSearch)
             .where('published', '=', true)
             .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
             .select((eb) => [
@@ -29,7 +34,12 @@ export const GET = async (req) => {
               eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
             ])
             .distinctOn('Entry.id')
-            .execute()
+
+          if(category === 'greetings') {
+            entriesQuery = entriesQuery.innerJoin('Greeting', 'Entry.id', 'Greeting.entryId')
+          }
+
+          const entries = await entriesQuery.execute()
 
           if(entries.length > 0) {
 
@@ -47,7 +57,7 @@ export const GET = async (req) => {
                       Slug : entry.slug,
                       Name : entry.name,
                       color : entry.color,
-                      description : process.env.NEXTAUTH_URL + `/maps/${entry.category}/${entry.slug}`
+                      description : process.env.NEXTAUTH_URL + `/maps/${category}/${entry.slug}`
                     },
                     geometry : geometry
                   }
@@ -90,6 +100,8 @@ export const GET = async (req) => {
               tilesetName = process.env.LANGUAGES_TILESET_NAME;
             } else if(category === 'treaties') {
               tilesetName = process.env.TREATIES_TILESET_NAME;
+            } else if(category === 'greetings') {
+              tilesetName = process.env.GREETINGS_TILESET_NAME;
             }
             const tileset_source = tilesetName + "_source";
             // const tileset_source_layer = tilesetName + "_source_layer";
@@ -104,8 +116,8 @@ export const GET = async (req) => {
             // Only activate one of the below methods at a time.
             // They are both here in case, in the future, you need to create a new tileset this way.
 
-            // // FOR NEW TILESETS
-            // // CREATES A NEW TILESET
+            // FOR NEW TILESETS
+            // CREATES A NEW TILESET
             // try {
             //   const tilesetSourceCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
             //     method : "POST",

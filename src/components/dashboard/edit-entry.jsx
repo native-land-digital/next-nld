@@ -8,6 +8,7 @@ import Link from 'next/link'
 
 import MainMap from '@/components/dashboard/editors/map-editor';
 import WYSIWYGEDitor from '@/components/dashboard/editors/wysiwyg-editor';
+import GreetingsEditor from '@/components/dashboard/editors/greeting-editor';
 import MediaEditor from '@/components/dashboard/editors/media-editor';
 import WebsiteEditor from '@/components/dashboard/editors/website-editor';
 import ChangelogEditor from '@/components/dashboard/editors/changelog-editor';
@@ -27,6 +28,7 @@ export default function EditEntry({ entry }) {
   const [ pronunciation, setPronunciation ] = useState(entry.pronunciation);
   const [ color, setColor ] = useState(entry.color);
   const [ published, setPublished ] = useState(entry.published);
+  const [ greetings, setGreetings ] = useState(entry.greetings);
   const [ media, setMedia ] = useState(entry.media);
   const [ websites, setWebsites ] = useState(entry.websites);
   const [ changelog, setChangelog ] = useState(entry.changelog);
@@ -47,10 +49,12 @@ export default function EditEntry({ entry }) {
         pronunciation : pronunciation,
         published : published,
         websites : websites,
+        greetings : greetings,
         media : media,
         changelog : changelog,
         relatedTo : relatedTo,
-        geometry : geometry
+        geometry : geometry,
+        geometry_type : entry.geometry_type
       })
     }).then(resp => resp.json()).then(results => {
       if(results.error) {
@@ -65,6 +69,7 @@ export default function EditEntry({ entry }) {
         setPronunciation(results.entry.pronunciation)
         setColor(results.entry.color)
         setPublished(results.entry.published)
+        setGreetings(results.entry.greetings)
         setMedia(results.entry.media)
         setWebsites(results.entry.websites)
         setChangelog(results.entry.changelog)
@@ -97,14 +102,14 @@ export default function EditEntry({ entry }) {
       <Link prefetch={false} href="/dashboard/research"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>{tCommon('back')}</Link>
       <h2 className="font-semibold text-3xl">{entry.name}</h2>
       {entry.published && entry.category ?
-        <Link prefetch={false} href={`/maps/${entry.category}/${entry.slug}`} target="_blank" className="text-xs float-right">See live page ➜</Link>
+        <Link prefetch={false} href={`/maps/${entry.category}/${entry.slug}`} target="_blank" className="text-xs float-right">{t('see-live')} ➜</Link>
       :
-        <p className="text-xs float-right">Polygon not published</p>
+        <p className="text-xs float-right">{t('entry-not-published')}</p>
       }
       <p className="text-xs mt-1" suppressHydrationWarning>{t('entry-created')} {new Date(entry.createdAt).toLocaleString()}, {t('entry-updated')} {new Date(entry.updatedAt).toLocaleString()}</p>
       <hr className="mt-3 mb-3" />
 
-      <MainMap geometry={geometry} setGeometry={setGeometry} />
+      <MainMap geometry_type={entry.geometry_type} geometry={geometry} setGeometry={setGeometry} />
 
       <div className="w-full md:w-1/2">
 
@@ -169,6 +174,12 @@ export default function EditEntry({ entry }) {
         </div>
       </div>
 
+      {category === 'languages' ?
+        <div className="mt-6">
+          <label className="text-gray-800 text-normal mb-1 block">{tMaps('greetings')}</label>
+          <GreetingsEditor greetings={greetings} setGreetings={setGreetings} />
+        </div>
+      : false}
 
       <div className="mt-6">
         <label className="text-gray-800 text-normal mb-1 block">{tMaps('media')}</label>
