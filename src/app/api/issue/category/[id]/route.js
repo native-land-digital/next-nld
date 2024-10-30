@@ -18,23 +18,22 @@ export const PATCH = async (req) => {
     	const body = await req.json();
 
       if (!body.id) {
-    		return NextResponse.json({ error : "No comment ID provided" }, { status: 400 });
+    		return NextResponse.json({ error : "No category ID provided" }, { status: 400 });
       }
-    	if (!body.comment) {
-    		return NextResponse.json({ error : "No comment text provided" }, { status: 400 });
+    	if (!body.name) {
+    		return NextResponse.json({ error : "Please provide a name for the category" }, { status: 400 });
     	}
 
       try {
 
-        const issueComment = await db.updateTable('IssueComment')
+        const issueCategory = await db.updateTable('IssueCategory')
           .set({
-            comment : body.comment,
-            updatedAt : new Date()
+            name : body.name
           })
           .where('id', '=', body.id)
         	.execute()
 
-  			return NextResponse.json({ issueComment });
+  			return NextResponse.json({ issueCategory });
 
       } catch (error) {
       	console.error(error);
@@ -59,15 +58,16 @@ export const DELETE = async (req, route) => {
       .executeTakeFirst()
 
 		if(user.permissions.includes('issues')) {
-  		const { id: commentId } = route.params;
+  		const { id: issueCategoryId } = route.params;
 
   		try {
 
-        const issueComment = await db.deleteFrom('IssueComment')
-          .where('id', '=', Number(commentId))
+        const issueCategory = await db.deleteFrom('IssueCategory')
+          .where('id', '=', Number(issueCategoryId))
           .execute();
 
-  			return NextResponse.json({ issueComment });
+  			return NextResponse.json({ issueCategory });
+
   		} catch (error) {
   			console.error(error);
 

@@ -13,13 +13,52 @@ export const GET = async (req) => {
 
       try {
 
-        let issue = db.selectFrom('Issue')
-          .where('id', '=', issueId)
-          .select([
-            'id', 'name', 'category'
+        const issue = await db.selectFrom('Issue')
+          .where('Issue.id', '=', parseInt(issueId))
+          .innerJoin('User', 'User.id', 'Issue.authorId')
+          .innerJoin('Entry', 'Entry.id', 'Issue.entryId')
+          .select((eb) => [
+            'Issue.name', 'Issue.open',
+            jsonObjectFrom(
+              eb.selectFrom('User')
+                .select(['User.id', 'User.name'])
+                .whereRef('User.id', '=', 'Issue.authorId')
+            ).as('author'),
+            jsonObjectFrom(
+              eb.selectFrom('Entry')
+                .select(['Entry.id', 'Entry.name', 'Entry.category'])
+                .whereRef('Entry.id', '=', 'Issue.entryId')
+            ).as('entry'),
+            jsonArrayFrom(
+              eb.selectFrom('User')
+                .innerJoin('UsersOnIssues', 'User.id', 'UsersOnIssues.userId')
+                .innerJoin('Issue', 'UsersOnIssues.issueId', 'Issue.id')
+                .select(['User.id', 'User.name'])
+                .where('Issue.id', '=', parseInt(issueId))
+            ).as('users'),
+            jsonArrayFrom(
+              eb.selectFrom('IssueCategory')
+                .innerJoin('CategoriesOnIssues', 'IssueCategory.id', 'CategoriesOnIssues.categoryId')
+                .innerJoin('Issue', 'CategoriesOnIssues.issueId', 'Issue.id')
+                .select(['IssueCategory.id', 'IssueCategory.name'])
+                .where('Issue.id', '=', parseInt(issueId))
+            ).as('categories'),
+            jsonArrayFrom(
+              eb.selectFrom('IssueComment')
+                .whereRef('IssueComment.issueId', '=', 'Issue.id')
+                .innerJoin('User', 'User.id', 'IssueComment.authorId')
+                .select((eb) => [
+                  'IssueComment.id', 'IssueComment.comment', 'Issue.createdAt', 'Issue.updatedAt',
+                  'User.name as authorName', 'User.id as authorId',
+                  jsonArrayFrom(
+                    eb.selectFrom('IssueMedia')
+                      .select(['IssueMedia.id', 'IssueMedia.url'])
+                      .whereRef('IssueMedia.entryId', '=', 'Issue.id')
+                  ).as('media')
+                ])
+                .orderBy('IssueComment.createdAt')
+            ).as('comments')
           ])
-          .distinctOn('id')
-          .orderBy('createdAt')
           .execute();
 
         return NextResponse.json(issue);
