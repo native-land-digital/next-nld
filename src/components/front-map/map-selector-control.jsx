@@ -4,7 +4,7 @@ import Switch from "react-switch";
 import AsyncSelect from 'react-select/async';
 import Link from 'next/link'
 
-import { makeBoundsFromPoly } from '@/components/front-map/map-utils';
+import { makeBoundsFromPoly, isMobile } from '@/components/front-map/map-utils';
 
 import './map.geocoder.css';
 
@@ -14,6 +14,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
 
     const [ toggledFeatures, setToggledFeatures ] = useState([])
     const [ showLists, setShowLists ] = useState(false)
+    const [ resultsSlided, setResultsSlided ] = useState(false)
 
     const adjustCurrentLayers = (checked, layer) => {
       const newCurrentLayers = JSON.parse(JSON.stringify(currentLayers));
@@ -175,11 +176,23 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
             loadOptions={loadTreatyOptions} />
         </div>
         {selectedFeatures.length > 0 ?
-          <div className="shadow-lg shadow-gray-500/40 bg-white rounded p-2.5 mt-2.5 relative">
-            <div className="absolute top-0 right-0 block md:hidden p-1" onClick={() => setSelectedFeatures([])}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000" className="bi bi-x" viewBox="0 0 16 16">
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-              </svg>
+          <div className={`shadow-lg shadow-gray-500/40 bg-white rounded p-2.5 mt-2.5 relative transition ease-in-out ${resultsSlided ? 'w-full -translate-x-64' : ''}`}>
+            <div className="absolute top-0 right-0 block md:hidden p-1" onClick={() => {
+              if(isMobile()) {
+                setResultsSlided(!resultsSlided)
+              } else {
+                setSelectedFeatures([])
+              }
+            }}>
+              {resultsSlided ?
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#000" className="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                  <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                </svg>
+              :
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000" className="bi bi-x" viewBox="0 0 16 16">
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                </svg>
+              }
             </div>
             <p className="text-sm text-black mb-1.5">{t('contact-nations')}</p>
             <ul className="list-none">
