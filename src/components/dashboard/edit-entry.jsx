@@ -133,20 +133,22 @@ export default function EditEntry({ entry }) {
         </div>
 
 
-        <div className="mt-2.5">
-          <label className="text-gray-800 text-sm mb-1 block">{t('color')}</label>
-          <div className="relative flex items-center">
-            <div className="w-10 h-10" style={{backgroundColor : color }}></div>
-            <button className="ml-2.5 py-1 px-2.5 text-sm tracking-wide rounded-lg text-black bg-gray-100 hover:bg-gray-200 focus:outline-none" onClick={() => setShowSwatches(true)}>{t('pick-color')}</button>
-            <div className={`${showSwatches ? 'absolute block' : 'hidden'} ml-40 z-30`}>
-              <div className="fixed top-0 bottom-0 right-0 left-0" onClick={() => setShowSwatches(false)}></div>
-              <SwatchesPicker
-                color={color}
-                onChangeComplete={(color) => { setColor(color.hex); setShowSwatches(false); }}
-              />
+        {category === 'languages' || category === 'territories' || category === 'treaties' ?
+          <div className="mt-2.5">
+            <label className="text-gray-800 text-sm mb-1 block">{t('color')}</label>
+            <div className="relative flex items-center">
+              <div className="w-10 h-10" style={{backgroundColor : color }}></div>
+              <button className="ml-2.5 py-1 px-2.5 text-sm tracking-wide rounded-lg text-black bg-gray-100 hover:bg-gray-200 focus:outline-none" onClick={() => setShowSwatches(true)}>{t('pick-color')}</button>
+              <div className={`${showSwatches ? 'absolute block' : 'hidden'} ml-40 z-30`}>
+                <div className="fixed top-0 bottom-0 right-0 left-0" onClick={() => setShowSwatches(false)}></div>
+                <SwatchesPicker
+                  color={color}
+                  onChangeComplete={(color) => { setColor(color.hex); setShowSwatches(false); }}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        : false }
 
         <div className="mt-2.5">
           <label className="text-gray-800 text-sm mb-1 block">{t('pronunciation')}</label>

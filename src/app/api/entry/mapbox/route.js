@@ -25,18 +25,41 @@ export const GET = async (req) => {
             categoryToSearch = 'languages';
           }
 
-          let entriesQuery = db.selectFrom('Entry')
-            .where('category', '=', categoryToSearch)
-            .where('published', '=', true)
-            .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
-            .select((eb) => [
-              'Entry.id', 'Entry.name', 'Entry.category', 'Entry.color', 'Entry.slug',
-              eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
-            ])
-            .distinctOn('Entry.id')
+          let geometryType = "Polygon";
+          if(category === 'placenames') {
+            geometryType = "Point";
+          }
 
-          if(category === 'greetings') {
-            entriesQuery = entriesQuery.innerJoin('Greeting', 'Entry.id', 'Greeting.entryId')
+          let entriesQuery = false;
+
+          // Polygon layers
+          if(category === 'territories' || category === 'languages' || category === 'treaties' || category === 'greetings') {
+            entriesQuery = db.selectFrom('Entry')
+              .where('category', '=', categoryToSearch)
+              .where('published', '=', true)
+              .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
+              .select((eb) => [
+                'Entry.id', 'Entry.name', 'Entry.category', 'Entry.color', 'Entry.slug',
+                eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+              ])
+              .distinctOn('Entry.id')
+
+            if(category === 'greetings') {
+              entriesQuery = entriesQuery.innerJoin('Greeting', 'Entry.id', 'Greeting.entryId')
+            }
+          }
+
+          // Point layers
+          if(category === 'placenames') {
+            entriesQuery = db.selectFrom('Entry')
+              .where('category', '=', categoryToSearch)
+              .where('published', '=', true)
+              .leftJoin('Point', 'Point.entryId', 'Entry.id')
+              .select((eb) => [
+                'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug',
+                eb.fn('ST_AsGeoJSON', 'Point.geometry').as('geometry'),
+              ])
+              .distinctOn('Entry.id')
           }
 
           const entries = await entriesQuery.execute()
@@ -56,10 +79,12 @@ export const GET = async (req) => {
                       id : entry.id,
                       Slug : entry.slug,
                       Name : entry.name,
-                      color : entry.color,
                       description : process.env.NEXTAUTH_URL + `/maps/${category}/${entry.slug}`
                     },
                     geometry : geometry
+                  }
+                  if(category === 'territories' || category === 'languages' || category === 'treaties' || category === 'greetings') {
+                    feature.properties.color = entry.color;
                   }
                   features.push(feature);
                 }
@@ -102,6 +127,8 @@ export const GET = async (req) => {
               tilesetName = process.env.TREATIES_TILESET_NAME;
             } else if(category === 'greetings') {
               tilesetName = process.env.GREETINGS_TILESET_NAME;
+            } else if(category === 'placenames') {
+              tilesetName = process.env.PLACENAMES_TILESET_NAME;
             }
             const tileset_source = tilesetName + "_source";
             // const tileset_source_layer = tilesetName + "_source_layer";
