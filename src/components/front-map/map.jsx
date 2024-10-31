@@ -3,7 +3,7 @@ import { useTranslations } from '@/i18n/client-i18n';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-import { randomStartingPosition, createSetFeatureCollection, makeBoundsFromPoly, getUniqueFeatures } from '@/components/front-map/map-utils';
+import { randomStartingPosition, createSetFeatureCollection, makeBoundsFromPoly, getUniqueFeatures, isMobile } from '@/components/front-map/map-utils';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -148,7 +148,9 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
             }
           });
           if (html) {
-            popup.setLngLat(e.lngLat).setHTML(html).addTo(map);
+            if(!isMobile()) {
+              popup.setLngLat(e.lngLat).setHTML(html).addTo(map);
+            }
           }
         });
 
