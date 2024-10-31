@@ -8,14 +8,10 @@ export const PATCH = async (req, route) => {
 
 	if(token && token.id) {
 
-    const user = await db.selectFrom('User')
-      .where('id', '=', Number(token.id))
-      .select(['permissions'])
-      .executeTakeFirst()
-
     const { id: userId } = route.params;
 
-		if(user.permissions.includes('manage_users') || parseInt(userId) === token.id) {
+		if(token.global_permissions.find(perm => perm.entity === "users") || parseInt(userId) === token.id) {
+
   		const body = await req.json();
 
   		try {
@@ -44,12 +40,7 @@ export const DELETE = async (req, route) => {
 
 	if(token && token.id) {
 
-    const user = await db.selectFrom('User')
-      .where('id', '=', Number(token.id))
-      .select(['permissions'])
-      .executeTakeFirst()
-
-  	if(user && user.permissions.includes('manage_users')) {
+    if(token.global_permissions.find(perm => perm.entity === "users")) {
   		const { id: userId } = route.params;
 
   		try {

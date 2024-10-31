@@ -4,7 +4,6 @@ import { jsonArrayFrom } from 'kysely/helpers/postgres'
 import { notFound } from 'next/navigation';
 import { getServerSession } from "next-auth/next"
 
-import { hasResearchPermission, allowedResearchIDs } from '@/lib/auth/permissions'
 import { authOptions } from "@/root/auth";
 import { setLocaleCache } from '@/i18n/server-i18n';
 import EditEntry from '@/components/dashboard/edit-entry'
@@ -66,17 +65,8 @@ export default async function Page({ params : { locale, id } }) {
     ])
     .executeTakeFirst()
 
-  // Checking for specific permissions
-  let userQuery = await db.selectFrom('User')
-    .where('id', '=', session.user.id)
-    .select(['permissions'])
-    .executeTakeFirst();
-
-  if(hasResearchPermission(userQuery.permissions) && !userQuery.permissions.includes('research')) {
-    let allowedIDs = allowedResearchIDs(userQuery.permissions);
-    if(allowedIDs.indexOf(entry.id) == -1) {
-      notFound();
-    }
+  if(!session.user.global_permissions.find(perm => perm.entity === "research") && !session.user.item_permissions.find(perm => perm.entity === "research" && perm.entry === parseInt(id))) {
+    notFound();
   }
 
   if(entry) {

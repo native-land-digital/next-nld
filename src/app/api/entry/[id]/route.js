@@ -74,15 +74,10 @@ export const PATCH = async (req, route) => {
 
 	if(token && token.id) {
 
-    const user = await db.selectFrom('User')
-      .where('id', '=', Number(token.id))
-      .select(['permissions'])
-      .executeTakeFirst()
-
 		const body = await req.json();
 		const { id: entryId } = route.params;
 
-		if(user.permissions.includes('research') || user.permissions.includes(`research_${entryId}`)) {
+		if(token.global_permissions.find(perm => perm.entity === "research")) {
 
   		try {
   			if(body.geometry && body.geometry !== "null") {
@@ -392,12 +387,7 @@ export const DELETE = async (req, route) => {
 
 	if(token && token.id) {
 
-    const user = await db.selectFrom('User')
-      .where('id', '=', Number(token.id))
-      .select(['permissions'])
-      .executeTakeFirst()
-
-		if(user.permissions.includes('research')) {
+		if(token.global_permissions.find(perm => perm.entity === "research")) {
   		const { id: entryId } = route.params;
 
   		try {

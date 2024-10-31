@@ -29,6 +29,12 @@ export default async function Page({ params : { locale }, searchParams }) {
     totalQuery = totalQuery.where((eb) => eb(eb.fn('lower', 'name'), 'like', `%${searchParams.search.toLowerCase()}%`));
   }
 
+  // If atomized permissions, only return results they are allowed to see
+  if(!session.user.global_permissions.find(perm => perm.entity === "users") && session.user.item_permissions.find(perm => perm.entity === "users")) {
+    const allowedUserIDs = session.user.item_permissions.filter(perm => perm.entity === "users").map(perm => perm.user);
+    query = query.where('id', 'in', allowedUserIDs);
+  }
+
   const users = await query.execute()
   const totalUsers = await totalQuery.execute()
 

@@ -26,35 +26,33 @@ export default async function DashboardMenu() {
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
         <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6">
           <ul className="mb-6 flex flex-col gap-1.5">
-            {session.user.permissions.indexOf('profile') > -1 ?
-              <li>
-                <Link prefetch={false} href="/dashboard" className="shadow group relative flex items-center gap-2.5 rounded px-4 py-2 font-medium text-white duration-300 ease-in-out bg-white bg-opacity-20 hover:bg-opacity-30 ">
-                  {tDash('profile')}
-                </Link>
-              </li>
-            : false}
-            {session.user.permissions.indexOf('api') > -1 ?
+            <li>
+              <Link prefetch={false} href="/dashboard" className="shadow group relative flex items-center gap-2.5 rounded px-4 py-2 font-medium text-white duration-300 ease-in-out bg-white bg-opacity-20 hover:bg-opacity-30 ">
+                {tDash('profile')}
+              </Link>
+            </li>
+            {session.user.global_permissions.find(perm => perm.entity === "api") || session.user.item_permissions.find(perm => perm.entity === "api") ?
               <li>
                 <Link prefetch={false} href="/dashboard/api" className="shadow group relative flex items-center gap-2.5 rounded px-4 py-2 font-medium text-white duration-300 ease-in-out bg-white bg-opacity-20 hover:bg-opacity-30 ">
                   {t('api')}
                 </Link>
               </li>
             : false }
-            {hasResearchPermission(session.user.permissions) ?
+            {session.user.global_permissions.find(perm => perm.entity === "research") || session.user.item_permissions.find(perm => perm.entity === "research") ?
               <li>
                 <Link prefetch={false} href="/dashboard/research" className="shadow group relative flex items-center gap-2.5 rounded px-4 py-2 font-medium text-white duration-300 ease-in-out bg-white bg-opacity-20 hover:bg-opacity-30 ">
                   {tDash('research')}
                 </Link>
               </li>
             : false }
-            {session.user.permissions.indexOf('update_mapbox') > -1 ?
+            {session.user.global_permissions.find(perm => perm.entity === "mapbox") || session.user.item_permissions.find(perm => perm.entity === "mapbox") ?
               <li>
                 <Link prefetch={false} href="/dashboard/mapbox" className="shadow group relative flex items-center gap-2.5 rounded px-4 py-2 font-medium text-white duration-300 ease-in-out bg-white bg-opacity-20 hover:bg-opacity-30 ">
                   {tDash('mapbox')}
                 </Link>
               </li>
             : false }
-            {session.user.permissions.indexOf('manage_users') > -1 ?
+            {session.user.global_permissions.find(perm => perm.entity === "users") || session.user.item_permissions.find(perm => perm.entity === "users") ?
               <li>
                 <Link prefetch={false} href="/dashboard/users" className="shadow group relative flex items-center gap-2.5 rounded px-4 py-2 font-medium text-white duration-300 ease-in-out bg-white bg-opacity-20 hover:bg-opacity-30 ">
                   {tDash('user-management')}
