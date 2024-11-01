@@ -274,6 +274,11 @@
     "non-shape-type" : "You have shapes that don't match this entry's geometry in the JSON. Please verify at at https://geojson.io",
     "empty-geojson" : "The geoJSON seems empty. Please verify at at https://geojson.io",
     "geojson-issue" : "There's an issue with the geoJSON. Please verify it at https://geojson.io",
-    "back-to-homepage" : "Back to homepage"
+    "back-to-homepage" : "Back to homepage",
+    "issues" : "Issues",
+    "create-new-issue" : "Create New Issue",
+    "issue-created" : "Issue created!",
+    "comment" : "Comment",
+    "cancel" : "Cancel"
   }
 }

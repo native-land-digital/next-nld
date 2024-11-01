@@ -47,10 +47,10 @@ export const POST = async (req) => {
 
 	const body = await req.json();
 
-	if (!body.name) {
+	if (!body.name || body.name === "") {
 		return NextResponse.json({ error : "Please provide a name for the issue" }, { status: 400 });
 	}
-	if (!body.comment) {
+	if (!body.comment || body.comment === "") {
 		return NextResponse.json({ error : "Please provide a description for the issue" }, { status: 400 });
 	}
 
