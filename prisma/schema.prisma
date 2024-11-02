@@ -200,6 +200,7 @@ model IssueComment {
 model IssueCategory {
 	id              Int @id @default(autoincrement())
 	name            String @unique
+  color           String
   posts           CategoriesOnIssues[]
 
   @@index([name])

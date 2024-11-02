@@ -42,7 +42,7 @@ export default async function Page({ params : { locale }, searchParams }) {
         .select(eb.fn.count('IssueComment.id').as('totalComments'))
         .as('total_comments')
     ])
-    .orderBy('Issue.createdAt')
+    .orderBy('Issue.createdAt', 'desc')
     .limit(25)
     .offset(25 * page)
 
@@ -53,8 +53,6 @@ export default async function Page({ params : { locale }, searchParams }) {
 
   const issues = await query.execute()
   const totalIssues = await totalQuery.execute()
-
-  console.log(issues)
 
   return (
     <div>
