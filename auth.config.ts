@@ -30,7 +30,7 @@ export const authConfig = {
     }
   },
   jwt: {
-    secret: process.env.NEXTAUTH_SECRET,\
+    secret: process.env.NEXTAUTH_SECRET,
     encryption: true,
   },
   secret: process.env.NEXTAUTH_SECRET,

@@ -1,10 +1,14 @@
 import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
+import { getServerSession } from "next-auth/next"
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
+
+import { authOptions } from "@/root/auth";
 
 export default async function Page({ params : { locale }, searchParams }) {
 
   setLocaleCache(locale);
+  const session = await getServerSession(authOptions);
   const tCommon = await getTranslations('Common');
   const t = await getTranslations('Dashboard');
 

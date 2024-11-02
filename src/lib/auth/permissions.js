@@ -6,6 +6,27 @@ export const possiblePermissions = [
   'manage_users'
 ]
 
+export const editableColumns = {
+  research : [
+    "name",
+    "color",
+    "sources",
+    "pronunciation",
+    "category",
+    "published",
+    "media",
+    "websites",
+    "greetings",
+    "relatedTo",
+    "geometry"
+  ],
+  users : [
+    "email",
+    "name",
+    "organization"
+  ]
+}
+
 export const hasResearchPermission = (permissions) => {
   let researchPermissions = false;
   if(permissions) {

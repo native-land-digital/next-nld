@@ -5,7 +5,9 @@ import { possiblePermissions } from '@/lib/auth/permissions';
 import { toast } from 'react-toastify';
 import Link from 'next/link'
 
-export default function EditUser({ user, isAdmin }) {
+import PermissionsEditor from '@/components/dashboard/editors/permissions-editor';
+
+export default function EditUser({ user, isAdmin, permissionActions = [], permissionEntities = [] }) {
 
   const t = useTranslations('Dashboard');
   const tCommon = useTranslations('Common');
@@ -13,6 +15,8 @@ export default function EditUser({ user, isAdmin }) {
   const [ name, setName ] = useState(user.name ? user.name : '');
   const [ email, setEmail ] = useState(user.email ? user.email : '');
   const [ permissions, setPermissions ] = useState(user.permissions);
+  const [ globalPermissions, setGlobalPermissions ] = useState(user.global_permissions);
+  const [ itemPermissions, setItemPermissions ] = useState(user.item_permissions);
   const [ organization, setOrganization ] = useState(user.organization ? user.organization : '');
 
   const savePermissions = (checked, permission) => {
@@ -100,22 +104,14 @@ export default function EditUser({ user, isAdmin }) {
         </div>
 
         {isAdmin ?
-          <div className="mt-2.5">
-            <label className="text-gray-800 text-sm mb-1 block">{t('permissions')}</label>
-            <div className="relative">
-              <p className="text-gray-500 text-xs mb-2.5">{t('permissions-log-out')}</p>
-              {possiblePermissions.map(permission => {
-                return (
-                  <div key={`checkbox-${permission}`}>
-                    <label htmlFor={permission} className='capitalize text-sm'>
-                      <input id={permission} type="checkbox" checked={permissions.includes(permission)} name={permission} onChange={(e) => savePermissions(e.target.checked, permission)} className="mr-1.5" />
-                      {permission.replace('_', ' ')}
-                    </label>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
+          <PermissionsEditor
+            globalPermissions={globalPermissions}
+            setGlobalPermissions={setGlobalPermissions}
+            itemPermissions={itemPermissions}
+            setItemPermissions={itemPermissions}
+            permissionActions={permissionActions}
+            permissionEntities={permissionEntities}
+          />
         : false}
       </div>
 
