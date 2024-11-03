@@ -59,7 +59,7 @@ async function main() {
   if(importJSON) {
 
     // importJSON.splice(10); // For import testing
-    const permissionActions = [ "update" ];
+    const permissionActions = [ "create", "update", "delete" ];
     const permissionEntities = [ "profile", "api", "mapbox", "research", "users" ];
 
     const permissionActionsDB : number[] = [];

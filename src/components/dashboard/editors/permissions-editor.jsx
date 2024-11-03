@@ -1,4 +1,5 @@
 'use client'
+import { useState, useEffect } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
 
 import { editableColumns } from '@/lib/auth/permissions'
@@ -7,59 +8,102 @@ export default function PermissionsEditor({ globalPermissions, setGlobalPermissi
 
   const t = useTranslations('Dashboard');
 
-  console.log(globalPermissions)
+  const [ entityTab, setEntityTab ] = useState(false);
+  const [ actionTab, setActionTab ] = useState(false);
+  const [ currentGlobalPermissions, setCurrentGlobalPermissions ] = useState(false)
+  const [ currentItemPermissions, setCurrentItemPermissions ] = useState([])
+  const [ currentPermissionColumns, setCurrentPermissionColumns ] = useState([])
+
+  useEffect(() => {
+    if(permissionActions && permissionEntities) {
+      setEntityTab(permissionEntities[0].name)
+      setActionTab(permissionActions[0].name)
+    }
+  }, [permissionActions])
+
+  useEffect(() => {
+    if(entityTab && actionTab) {
+      const newCurrentGlobalPermissions = globalPermissions.find(perm => perm.entity === entityTab && perm.action === actionTab);
+      const newCurrentItemPermissions = itemPermissions.filter(perm => perm.entity === entityTab && perm.action === actionTab);
+      setCurrentGlobalPermissions(newCurrentGlobalPermissions)
+      setCurrentItemPermissions(newCurrentItemPermissions)
+      setCurrentPermissionColumns(editableColumns[entityTab] ? editableColumns[entityTab] : [])
+    }
+  }, [entityTab, actionTab, globalPermissions, itemPermissions])
+
+  const modifyGlobalPermissions = (columnName, value) => {
+    const permissionsCopy = JSON.parse(JSON.stringify(globalPermissions));
+    const thisEntityIndex = permissionsCopy.findIndex(perm => perm.entity === entityTab && perm.action === actionTab)
+    // If adding "all" permissions and nothing exists
+    if(thisEntityIndex === -1 && columnName === null && value === true) {
+      permissionsCopy.push({ action : actionTab, entity : entityTab, columnNames : null });
+    }
+    // If adding "all" permissions and something exists
+    if(thisEntityIndex > -1 && columnName === null && value === true) {
+      permissionsCopy[thisEntityIndex].columnNames = null;
+    }
+    // If removing "all" permissions
+    if(thisEntityIndex > -1 && columnName === null && value === false) {
+      permissionsCopy.splice(thisEntityIndex, 1);
+    }
+    // If changing column values
+    if(columnName !== null) {
+      // Adding to existing scoped value
+      if(thisEntityIndex > -1 && value === true) {
+        permissionsCopy[thisEntityIndex].columnNames.push(columnName)
+      }
+      // Removing existing scoped value
+      if(thisEntityIndex > -1 && value === false) {
+        let columnNameIndex = permissionsCopy[thisColumnNamesIndex].columnNames.indexOf(columnName)
+        permissionsCopy[thisEntityIndex].columnNames.splice(columnNameIndex, 1);
+      }
+      // Adding totally new scoped value
+      if(thisEntityIndex === -1 && value === true) {
+        permissionsCopy.push({ action : actionTab, entity : entityTab, columnNames : [columnName] })
+      }
+    }
+    setGlobalPermissions(permissionsCopy)
+  }
 
   return (
     <div className="mt-2.5">
       <label className="text-gray-800 text-sm mb-1 block">{t('permissions')}</label>
       <div className="relative">
         <p className="text-gray-500 text-xs mb-2.5">{t('permissions-log-out')}</p>
-        {permissionEntities.map((entity, i) => {
-          const thisGlobalPermission = globalPermissions.find(perm => perm.entity === entity.name);
-          const columnNames = editableColumns[entity.name];
-          return (
-            <div key={`checkbox-${i}`} className="mt-2.5">
-              <p className="uppercase text-sm font-bold">{entity.name}</p>
-              <p className="text-sm">Global</p>
-              {permissionActions.map((action, ii) => {
-                if(columnNames) {
-                  return (
-                    <div>
-                      {columnNames.map((columnName, iii) => {
-                        return (
-                          <div key={`${i}-${ii}-${iii}-name`}>
-                            <input id={`${i}-${ii}-action`} type="checkbox" checked={typeof thisGlobalPermission !== 'undefined' ? true : false} /> <label for={`${i}-${ii}-action`} className="uppercase text-xs">{columnName}</label>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  )
-                } else {
-                  return (
-                    <div key={`${i}-${ii}-action`}>
-                      <input id={`${i}-${ii}-action`} type="checkbox" checked={typeof thisGlobalPermission !== 'undefined' ? true : false} /> <label for={`${i}-${ii}-action`} className="uppercase text-xs">{action.name}</label>
-                    </div>
-                  )
-                }
-              })}
-              {columnNames ?
-                <div>
-                  <p className="text-sm">Item</p>
-                  {entity.name === 'research' ?
-                    <div>
-                      <input type="text" placeholders="Search entries" />
-                    </div>
-                  : false}
-                  {entity.name === 'users' ?
-                    <div>
-                      <input type="text" placeholders="Search users" />
-                    </div>
-                  : false}
+
+        <div className="flex bg-slate-100 rounded shadow border">
+          {permissionEntities.map((entity, i) => {
+            return (
+              <div key={`${entity}-${i}`}>
+                <div className={`${entityTab === entity.name ? 'bg-white' : ''} p-2.5 uppercase text-xs cursor-pointer`} onClick={() => setEntityTab(entity.name)}>
+                  <p>{entity.name}</p>
                 </div>
-              : false}
-            </div>
-          )
-        })}
+              </div>
+            )
+          })}
+        </div>
+        <div className="flex">
+          {permissionActions.map((action, i) => {
+            return (
+              <div key={`${action}-${i}`} className={`${actionTab === action.name ? 'bg-white' : 'bg-slate-100'} mr-1 rounded-b p-1 uppercase text-xs cursor-pointer border-b border-l border-r border-slate-300`} onClick={() => setActionTab(action.name)}>
+                <p>{action.name}</p>
+              </div>
+            )
+          })}
+        </div>
+        <div className="mt-2.5">
+          <p className="text-sm">Global Permissions</p>
+          <input id={`all-${entityTab}`} type="checkbox" onChange={(e) => modifyGlobalPermissions(null, e.target.checked)} checked={currentGlobalPermissions?.columnNames === null ? true : false} /> <label htmlFor={`all-${entityTab}`} className="uppercase text-xs">All</label>
+          <div>
+            {currentPermissionColumns.map((columnName, i) => {
+              return (
+                <div key={`columnname-${i}`}>
+                  <input id={`columnname-${i}`} type="checkbox" onChange={(e) => modifyGlobalPermissions(columnName, e.target.checked)} checked={currentGlobalPermissions?.columnNames === null || currentGlobalPermissions?.columnNames?.indexOf(columnName) > -1 ? true : false} /> <label htmlFor={`columnname-${i}`} className="uppercase text-xs">{columnName}</label>
+                </div>
+              )
+            })}
+          </div>
+        </div>
       </div>
     </div>
   )
