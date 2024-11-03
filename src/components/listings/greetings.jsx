@@ -1,6 +1,6 @@
 import { getTranslations } from '@/i18n/server-i18n';
 
-import AudioPlayer from '@/components/maps/utils/audio-player';
+import AudioPlayer from '@/components/listings/utils/audio-player';
 
 export default async function Greetings({ greetings }) {
 

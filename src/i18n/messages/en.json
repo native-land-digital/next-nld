@@ -13,7 +13,7 @@
   },
   "Sidebar" : {
     "random" : "Random picks",
-    "visit-maps" : "Visit our maps page"
+    "visit-listings" : "Visit our listings pages"
   },
   "Navigation" : {
     "home" : "Home",
@@ -38,7 +38,7 @@
     "teachers-guide" : "Teacher's Guide",
     "mobile-apps" : "Mobile Apps",
     "api" : "API",
-    "all-maps" : "All Maps",
+    "all-listings" : "All Listings",
     "territories-list" : "Territories List",
     "languages-list" : "Languages List",
     "treaties-list" : "Treaties List",
@@ -111,7 +111,7 @@
     "land-acknowledgement-header" : "Land Acknowledgement",
     "land-acknowledgement" : "Take a look at <a href='/resources/territory-acknowledgement/'>our Land Acknowledgement</a> page to learn more about doing it right.",
     "research-header" : "Research references",
-    "research" : "All our <a href='/maps'>research and maps</a> are documented on our <a href='/resources/territories-list/'>territory</a>, <a href='/resources/languages-list/'>language</a>, and <a href='/resources/treaties-list/'>treaty</a> reference pages.",
+    "research" : "All our <a href='/listings'>research and maps</a> are documented on our <a href='/resources/territories-list/'>territory</a>, <a href='/resources/languages-list/'>language</a>, and <a href='/resources/treaties-list/'>treaty</a> reference pages.",
     "blogs-header" : "Blogs & Articles",
     "blogs" : "Keep up to date with <a href='/category/community-blog/'>our latest thoughts and discussions</a>.",
     "support-button" : "You can help support us in many ways",
@@ -170,11 +170,13 @@
     "reset-password-message-reset" : "Type your new password and click the button to reset."
   },
   "Maps" : {
-    "all-maps" : "All Maps",
+    "all-listings" : "All Listings",
     "territories-list" : "Territories List",
     "languages-list" : "Languages List",
     "treaties-list" : "Treaties List",
-    "total-all" : "total territories, languages, and treaties found.",
+    "greetings-list" : "Greetings List",
+    "placenames-list" : "Placenames List",
+    "total-all" : "total listings found.",
     "last-updated" : "Last updated",
     "map" : "Map",
     "text" : "Text",
@@ -188,8 +190,8 @@
     "media" : "Media",
     "no-media" : "No media yet.",
     "sources" : "Sources",
-    "related" : "Related Maps",
-    "no-related" : "No related maps are currently entered.",
+    "related" : "Related",
+    "no-related" : "No related listings are currently entered.",
     "changelog" : "Changelog",
     "added" : "Added",
     "updated" : "last updated",

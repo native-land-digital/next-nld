@@ -367,7 +367,7 @@ export const PATCH = async (req, route) => {
           // Ensure associated paths are now invalidated for next load
           submitRevalidation(`/dashboard/research`);
           submitRevalidation(`/dashboard/research/${entryId}`);
-          submitRevalidation(`/maps/${entry.category}/${encodeURIComponent(entry.slug).toLowerCase()}`);
+          submitRevalidation(`/listings/${entry.category}/${encodeURIComponent(entry.slug).toLowerCase()}`);
 
     			return NextResponse.json({ entry });
 

@@ -44,6 +44,8 @@ export type Media = {
 };
 export type Point = {
     id: Generated<number>;
+    osmType: string | null;
+    osmId: string | null;
     entryId: number;
 };
 export type Polygon = {

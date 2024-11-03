@@ -102,7 +102,7 @@ export default function EditEntry({ entry }) {
       <Link prefetch={false} href="/dashboard/research"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>{tCommon('back')}</Link>
       <h2 className="font-semibold text-3xl">{entry.name}</h2>
       {entry.published && entry.category ?
-        <Link prefetch={false} href={`/maps/${entry.category}/${entry.slug}`} target="_blank" className="text-xs float-right">{t('see-live')} ➜</Link>
+        <Link prefetch={false} href={`/listings/${entry.category}/${entry.slug}`} target="_blank" className="text-xs float-right">{t('see-live')} ➜</Link>
       :
         <p className="text-xs float-right">{t('entry-not-published')}</p>
       }

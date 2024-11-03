@@ -56,7 +56,7 @@ export const GET = async (req) => {
               .where('published', '=', true)
               .leftJoin('Point', 'Point.entryId', 'Entry.id')
               .select((eb) => [
-                'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug',
+                'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Point.osmType as type',
                 eb.fn('ST_AsGeoJSON', 'Point.geometry').as('geometry'),
               ])
               .distinctOn('Entry.id')
@@ -72,19 +72,30 @@ export const GET = async (req) => {
               if(entry.geometry) {
                 const geometry = JSON.parse(entry.geometry)
                 if(geometry && geometry.coordinates) {
-                  const feature = {
-                    type : "Feature",
-                    id : entry.id,
-                    properties : {
+                  let properties = {};
+                  if(category === 'territories' || category === 'languages' || category === 'treaties' || category === 'greetings') {
+                    properties = {
                       id : entry.id,
                       Slug : entry.slug,
                       Name : entry.name,
-                      description : process.env.NEXTAUTH_URL + `/maps/${category}/${entry.slug}`
-                    },
-                    geometry : geometry
+                      color : entry.color,
+                      description : process.env.NEXTAUTH_URL + `/listings/${category}/${entry.slug}`
+                    }
                   }
-                  if(category === 'territories' || category === 'languages' || category === 'treaties' || category === 'greetings') {
-                    feature.properties.color = entry.color;
+                  if(category === 'placenames') {
+                    properties = {
+                      id : entry.id,
+                      Slug : entry.slug,
+                      Name : entry.name,
+                      type : entry.type,
+                      description : process.env.NEXTAUTH_URL + `/listings/${category}/${entry.slug}`
+                    }
+                  }
+                  const feature = {
+                    type : "Feature",
+                    id : entry.id,
+                    properties : properties,
+                    geometry : geometry
                   }
                   features.push(feature);
                 }

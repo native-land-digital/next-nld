@@ -25,7 +25,7 @@ export default async function Related({ relatedTo, relatedFrom }) {
         return (
           <div key={`relation-${i}`} className="mb-2.5">
             <p className="text-black">
-              <Link prefetch={false} href={`/maps/${relation.category}/${relation.slug}`}>{relation.name} ({relation.category})</Link> {relation.description ? `- ${relation.description}` : ''}
+              <Link prefetch={false} href={`/listings/${relation.category}/${relation.slug}`}>{relation.name} ({relation.category})</Link> {relation.description ? `- ${relation.description}` : ''}
             </p>
           </div>
         )

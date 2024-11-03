@@ -28,13 +28,17 @@ export default async function sitemap() {
   const allPages = [{
     url: process.env.NEXTAUTH_URL
   },{
-    url: `${process.env.NEXTAUTH_URL}/maps`
+    url: `${process.env.NEXTAUTH_URL}/listings`
   },{
-    url: `${process.env.NEXTAUTH_URL}/maps/territories`
+    url: `${process.env.NEXTAUTH_URL}/listings/territories`
   },{
-    url: `${process.env.NEXTAUTH_URL}/maps/languages`
+    url: `${process.env.NEXTAUTH_URL}/listings/languages`
   },{
-    url: `${process.env.NEXTAUTH_URL}/maps/treaties`
+    url: `${process.env.NEXTAUTH_URL}/listings/treaties`
+  },{
+    url: `${process.env.NEXTAUTH_URL}/listings/greetings`
+  },{
+    url: `${process.env.NEXTAUTH_URL}/listings/placenames`
   }]
 
   staticPages.forEach(page => {
@@ -43,14 +47,14 @@ export default async function sitemap() {
     })
   })
 
-  const entries = await db.selectFrom('Polygon')
+  const listings = await db.selectFrom('Entry')
     .select(['id', 'category', 'slug', 'updatedAt'])
     .distinctOn('id')
     .execute();
 
-  entries.forEach(entry => {
+  listings.forEach(entry => {
     allPages.push({
-      url: `${process.env.NEXTAUTH_URL}/maps/${entry.category}/${entry.slug}`,
+      url: `${process.env.NEXTAUTH_URL}/listings/${entry.category}/${entry.slug}`,
       lastModified: new Date(entry.updatedAt)
     })
   })

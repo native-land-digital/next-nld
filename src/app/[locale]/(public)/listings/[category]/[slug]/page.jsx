@@ -5,12 +5,12 @@ import Sidebar from '@/components/static/sidebar';
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 import { notFound } from 'next/navigation';
 
-import Map from '@/components/maps/map';
-import Greetings from '@/components/maps/greetings';
-import Websites from '@/components/maps/websites';
-import Related from '@/components/maps/related';
-import Media from '@/components/maps/media';
-import Changelog from '@/components/maps/changelog';
+import Map from '@/components/listings/map';
+import Greetings from '@/components/listings/greetings';
+import Websites from '@/components/listings/websites';
+import Related from '@/components/listings/related';
+import Media from '@/components/listings/media';
+import Changelog from '@/components/listings/changelog';
 
 export const generateStaticParams = async () => {
   if(process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'production') {
@@ -68,9 +68,21 @@ export default async function Page({ params : { locale, category, slug }}) {
     .where('category', '=', categoryToSearch)
     .where('published', '=', true)
     .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
+    .leftJoin('Line', 'Line.entryId', 'Entry.id')
+    .leftJoin('Point', 'Point.entryId', 'Entry.id')
     .select((eb) => [
       'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.sources', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
-      eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+      eb.fn('COALESCE', [
+        eb.fn('ST_AsGeoJSON', 'Polygon.geometry'),
+        eb.fn('ST_AsGeoJSON', 'Line.geometry'),
+        eb.fn('ST_AsGeoJSON', 'Point.geometry')
+      ]).as('geometry'),
+      eb.case()
+        .when('Polygon.entryId', 'is not', null).then('Polygon')
+        .when('Line.entryId', 'is not', null).then('Line')
+        .when('Point.entryId', 'is not', null).then('Point')
+        .end()
+      .as('geometry_type'),
       jsonArrayFrom(
         eb.selectFrom('Greeting')
           .select(['id', 'url', 'text', 'translation', 'usage', 'parentId'])
@@ -122,17 +134,29 @@ export default async function Page({ params : { locale, category, slug }}) {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={entry.name} crumbs={[{ url : "/maps", title : "Maps" }, { url : `/maps/${category}`, title : category }]} />
+      <SubHeader title={entry.name} crumbs={[{ url : "/listings", title : "Listings" }, { url : `/listings/${category}`, title : category }]} />
       <div className="grid gap-5 grid-cols-1 md:grid-cols-3 min-h-screen w-full md:w-2/3 px-5 md:px-0 m-auto -mt-12 text-black">
         <Sidebar picks={3}>
           <ol className="hidden md:block list-inside text-gray-400">
             <li className="mb-2.5"><a href="#map">{t('map')}</a></li>
-            <li className="mb-2.5"><a href="#websites">{t('websites')}</a></li>
-            <li className="mb-2.5"><a href="#greetings">{t('greetings')}</a></li>
-            <li className="mb-2.5"><a href="#media">{t('media')}</a></li>
-            <li className="mb-2.5"><a href="#sources">{t('sources')}</a></li>
-            <li className="mb-2.5"><a href="#related-maps">{t('related')}</a></li>
-            <li className="mb-2.5"><a href="#changelog">{t('changelog')}</a></li>
+            {entry.websites.length > 0 ?
+              <li className="mb-2.5"><a href="#websites">{t('websites')}</a></li>
+            : false}
+            {entry.greetings.length > 0 ?
+              <li className="mb-2.5"><a href="#greetings">{t('greetings')}</a></li>
+            : false}
+            {entry.relatedTo.length > 0 ?
+              <li className="mb-2.5"><a href="#related-maps">{t('related')}</a></li>
+            : false}
+            {entry.media.length > 0 ?
+              <li className="mb-2.5"><a href="#media">{t('media')}</a></li>
+            : false}
+            {entry.sources !== "" ?
+              <li className="mb-2.5"><a href="#sources">{t('sources')}</a></li>
+            : false}
+            {entry.changelog.length > 0 ?
+              <li className="mb-2.5"><a href="#changelog">{t('changelog')}</a></li>
+            : false}
             <li className="mb-2.5"><a href="#send-correction">{t('correction')}</a></li>
           </ol>
           <span />
@@ -140,31 +164,43 @@ export default async function Page({ params : { locale, category, slug }}) {
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
           {category !== 'greetings' ?
             <div>
-              <Map geometry={entry.geometry} />
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="websites">{t('websites')}</h3>
-                <Websites websites={entry.websites} />
-              </section>
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="greetings">{t('greetings')}</h3>
-                <Greetings greetings={entry.greetings} />
-              </section>
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="related-maps">{t('related')}</h3>
-                <Related relatedTo={entry.relatedTo} relatedFrom={entry.relatedFrom} />
-              </section>
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="media">{t('media')}</h3>
-                <Media media={entry.media} />
-              </section>
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="sources">{t('sources')}</h3>
-                <div className="sources-text" dangerouslySetInnerHTML={{ __html : entry.sources }} />
-              </section>
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="changelog">{t('changelog')}</h3>
-                <Changelog changelog={entry.changelog} createdAt={entry.createdAt} updatedAt={entry.updatedAt} />
-              </section>
+              <Map geometry={entry.geometry} geometry_type={entry.geometry_type} category={entry.category} />
+              {entry.websites.length > 0 ?
+                <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="websites">{t('websites')}</h3>
+                  <Websites websites={entry.websites} />
+                </section>
+              : false}
+              {entry.greetings.length > 0 ?
+                <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="greetings">{t('greetings')}</h3>
+                  <Greetings greetings={entry.greetings} />
+                </section>
+              : false}
+              {entry.relatedTo.length > 0 ?
+                <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="related-maps">{t('related')}</h3>
+                  <Related relatedTo={entry.relatedTo} relatedFrom={entry.relatedFrom} />
+                </section>
+              : false}
+              {entry.media.length > 0 ?
+                <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="media">{t('media')}</h3>
+                  <Media media={entry.media} />
+                </section>
+              : false}
+              {entry.sources !== "" ?
+                <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="sources">{t('sources')}</h3>
+                  <div className="sources-text" dangerouslySetInnerHTML={{ __html : entry.sources }} />
+                </section>
+              : false}
+              {entry.changelog.length > 0 ?
+                <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="changelog">{t('changelog')}</h3>
+                  <Changelog changelog={entry.changelog} createdAt={entry.createdAt} updatedAt={entry.updatedAt} />
+                </section>
+              : false}
               <section className="mt-5">
                 <h3 className="text-xl font-bold mb-3" id="send-correction">{t('correction')}</h3>
                 <p>{t('contact')}</p>

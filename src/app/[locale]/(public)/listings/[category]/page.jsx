@@ -12,6 +12,7 @@ export const generateStaticParams = () => {
     { locale : 'en', category : 'territories' },
     { locale : 'en', category : 'languages' },
     { locale : 'en', category : 'treaties' },
+    { locale : 'en', category : 'placenames' },
     { locale : 'en', category : 'greetings' }
   ]
 }
@@ -20,7 +21,7 @@ export const revalidate = false;
 
 export default async function Page({ searchParams, params : { locale, category }}) {
 
-  let allowedCategories = ["territories", "languages", "treaties", "greetings"]
+  let allowedCategories = ["territories", "languages", "treaties", "placenames", "greetings"]
   if(!allowedCategories.includes(category)) {
     notFound()
   }
@@ -73,15 +74,16 @@ export default async function Page({ searchParams, params : { locale, category }
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={category} crumbs={[{ url : "/maps", title : "Maps" }]} />
+      <SubHeader title={category} crumbs={[{ url : "/listings", title : "Listings" }]} />
       <div className="grid gap-5 grid-cols-1 md:grid-cols-3 px-5 md:px-0 w-full md:w-2/3 min-h-screen m-auto -mt-12 text-black static-page">
         <Sidebar>
           <ol className="list-inside text-gray-400">
-            <li className="mb-2.5"><Link prefetch={false} href="/maps">{t('all-maps')}</Link></li>
-            <li className="mb-2.5"><Link prefetch={false} href="/maps/territories">{t('territories-list')}</Link></li>
-            <li className="mb-2.5"><Link prefetch={false} href="/maps/languages">{t('languages-list')}</Link></li>
-            <li className="mb-2.5"><Link prefetch={false} href="/maps/treaties">{t('treaties-list')}</Link></li>
-            <li className="mb-2.5"><Link prefetch={false} href="/maps/greetings">{t('greetings-list')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/listings">{t('all-maps')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/listings/territories">{t('territories-list')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/listings/languages">{t('languages-list')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/listings/treaties">{t('treaties-list')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/listings/greetings">{t('greetings-list')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/listings/placenames">{t('placenames-list')}</Link></li>
           </ol>
           <span />
         </Sidebar>
@@ -92,7 +94,7 @@ export default async function Page({ searchParams, params : { locale, category }
                 <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
                 <button className="border border-gray-300 px-4 py-3 rounded ml-2.5">{tCommon('search')}</button>
                 {search ?
-                  <Link prefetch={false} className="border border-gray-300 px-4 py-3 rounded ml-2.5 text-slate-600" href="/maps/territories">{tCommon('clear')}</Link>
+                  <Link prefetch={false} className="border border-gray-300 px-4 py-3 rounded ml-2.5 text-slate-600" href="/listings/territories">{tCommon('clear')}</Link>
                 : false}
               </form>
             </div>

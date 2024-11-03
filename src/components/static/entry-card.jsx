@@ -7,7 +7,7 @@ export default async function EntryCard({ entry, hideCategory }) {
 
   return (
     <div className="h-40 w-full">
-      <Link prefetch={false} href={`/maps/${entry.category}/${entry.slug}`}>
+      <Link prefetch={false} href={`/listings/${entry.category}/${entry.slug}`}>
         <div className="h-full w-full bg-cover rounded" style={{backgroundImage : entry.media_url ? `url(${entry.media_url})` : ''}}>
           <div className="h-full w-full bg-slate-600/80 rounded flex justify-items-center align-items-center place-items-center hover:bg-slate-600/75 hover:border-2 hover:border-white">
             <div className="text-center w-full p-2.5">

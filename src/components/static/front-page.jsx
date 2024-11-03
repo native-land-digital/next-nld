@@ -107,7 +107,7 @@ export default async function FrontPage() {
             {latestUpdates.map(entry => {
               return (
                 <div key={`entry-${entry.id}`}>
-                  <Link prefetch={false} href={`maps/${entry.category}/${entry.slug}`}>
+                  <Link prefetch={false} href={`listings/${entry.category}/${entry.slug}`}>
                     {entry.media_url ?
                       <div className="w-1/2 m-auto mt-5 h-[100px] bg-cover mb-2.5" style={{backgroundImage : `url(${entry.media_url})`}}></div>
                     :
@@ -122,7 +122,7 @@ export default async function FrontPage() {
                     }
                   </Link>
                   <p className="uppercase text-gray-300 text-xs pb-2.5">{entry.category}</p>
-                  <Link prefetch={false} href={`maps/${entry.category}/${entry.slug}`}>
+                  <Link prefetch={false} href={`listings/${entry.category}/${entry.slug}`}>
                     <h5 className="text-xl font-bold">{entry.name}</h5>
                   </Link>
                   <p className="text-sm pt-2.5">{new Date(entry.updatedAt).toLocaleDateString()}</p>
