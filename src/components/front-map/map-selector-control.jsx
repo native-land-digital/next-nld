@@ -11,7 +11,7 @@ import './map.geocoder.css';
 export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, territoryOptions, languageOptions, treatyOptions }) {
 
     const t = useTranslations('FrontMap');
-    const tMaps = useTranslations('Maps');
+    const tMaps = useTranslations('Listings');
 
     const [ toggledFeatures, setToggledFeatures ] = useState([])
     const [ showLists, setShowLists ] = useState(false)

@@ -3,7 +3,7 @@ import { getTranslations } from '@/i18n/server-i18n';
 
 export default async function Related({ relatedTo, relatedFrom }) {
 
-  const t = await getTranslations('Maps');
+  const t = await getTranslations('Listings');
 
   if(relatedTo.length === 0 && relatedFrom.length === 0) {
     return (<p>{t('no-related')}</p>)

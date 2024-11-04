@@ -56,7 +56,7 @@ export const revalidate = false;
 export default async function Page({ params : { locale, category, slug }}) {
 
   setLocaleCache(locale);
-  const t = await getTranslations('Maps');
+  const t = await getTranslations('Listings');
 
   let categoryToSearch = category;
   if(category === 'greetings') {

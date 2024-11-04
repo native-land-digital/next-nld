@@ -2,7 +2,7 @@ import { getTranslations } from '@/i18n/server-i18n';
 
 export default async function Websites({ websites }) {
 
-  const t = await getTranslations('Maps');
+  const t = await getTranslations('Listings');
 
   if(websites.length === 0) {
     return (<p>{t('no-websites')}</p>)

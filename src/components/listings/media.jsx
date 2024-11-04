@@ -2,7 +2,7 @@ import { getTranslations } from '@/i18n/server-i18n';
 
 export default async function Media({ media }) {
 
-  const t = await getTranslations('Maps');
+  const t = await getTranslations('Listings');
 
   if(media.length === 0) {
     return (<p>{t('no-media')}</p>)

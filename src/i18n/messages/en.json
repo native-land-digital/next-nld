@@ -170,6 +170,10 @@
     "reset-password-message-reset" : "Type your new password and click the button to reset."
   },
   "Maps" : {
+    "maps" : "Maps",
+    "placenames-map" : "Placenames Map"
+  },
+  "Listings" : {
     "all-listings" : "All Listings",
     "territories-list" : "Territories List",
     "languages-list" : "Languages List",

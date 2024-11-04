@@ -27,7 +27,7 @@ export default async function Page({ searchParams, params : { locale, category }
   }
 
   setLocaleCache(locale);
-  const t = await getTranslations('Maps');
+  const t = await getTranslations('Listings');
   const tCommon = await getTranslations('Common');
 
   let page = 0;

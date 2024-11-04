@@ -3,7 +3,7 @@ import { getTranslations } from '@/i18n/server-i18n';
 
 export default async function EntryCard({ entry, hideCategory }) {
 
-  const t = await getTranslations('Maps');
+  const t = await getTranslations('Listings');
 
   return (
     <div className="h-40 w-full">

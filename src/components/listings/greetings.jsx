@@ -4,7 +4,7 @@ import AudioPlayer from '@/components/listings/utils/audio-player';
 
 export default async function Greetings({ greetings }) {
 
-  const t = await getTranslations('Maps');
+  const t = await getTranslations('Listings');
 
   if(greetings.length === 0) {
     return (<p>{t('no-greetings')}</p>)

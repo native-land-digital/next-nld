@@ -11,7 +11,7 @@ export const revalidate = false;
 export default async function Page({ searchParams, params : { locale } }) {
 
   setLocaleCache(locale);
-  const t = await getTranslations('Maps');
+  const t = await getTranslations('Listings');
   const tCommon = await getTranslations('Common');
 
   let page = 0;
