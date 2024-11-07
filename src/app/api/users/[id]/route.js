@@ -16,15 +16,96 @@ export const PATCH = async (req, route) => {
 
   		try {
 
-        await db.updateTable('User')
-          .set(body)
-          .where('id', '=', parseInt(userId))
-          .execute()
+        await db.transaction().execute(async (trx) => {
+
+          // Deleting, updating, adding global permissions
+          const globalPermissions = body.globalPermissions;
+          const updatedGlobalPermissionIds = globalPermissions.map(perm => { return perm.id; });
+          if(updatedGlobalPermissionIds.length > 0) {
+            await trx.deleteFrom('GlobalPermission')
+              .where('userId', '=', parseInt(userId))
+              .where('id', 'not in', updatedGlobalPermissionIds)
+              .execute();
+          } else {
+            await trx.deleteFrom('GlobalPermission')
+              .where('userId', '=', parseInt(userId))
+              .execute();
+          }
+
+          for (const globalPerm of globalPermissions) {
+            const result = await trx.updateTable('GlobalPermission')
+              .set({
+                columnNames: globalPerm.columnNames,
+              })
+              .where('entityId', '=', globalPerm.entityId)
+              .where('actionId', '=', globalPerm.actionId)
+              .where('userId', '=', parseInt(userId))
+              .executeTakeFirst();
+
+            if(result.numUpdatedRows === 0n) {
+              await trx.insertInto('GlobalPermission')
+                .values({
+                  columnNames: globalPerm.columnNames,
+                  actionId: globalPerm.actionId,
+                  entityId: globalPerm.entityId,
+                  userId : parseInt(userId)
+                })
+                .execute();
+            }
+          }
+          delete body.globalPermissions;
+
+          // Deleting, updating, adding item permissions
+          const itemPermissions = body.itemPermissions;
+          const updatedItemPermissionIds = itemPermissions.map(perm => { return perm.id; });
+          if(updatedItemPermissionIds.length > 0) {
+            await trx.deleteFrom('ItemPermission')
+              .where('userId', '=', parseInt(userId))
+              .where('id', 'not in', updatedItemPermissionIds)
+              .execute();
+          } else {
+            await trx.deleteFrom('ItemPermission')
+              .where('userId', '=', parseInt(userId))
+              .execute();
+          }
+
+          for (const itemPerm of itemPermissions) {
+            const result = await trx.updateTable('ItemPermission')
+              .set({
+                columnNames: itemPerm.columnNames,
+              })
+              .where('entityId', '=', itemPerm.entityId)
+              .where('actionId', '=', itemPerm.actionId)
+              .where('entryId', '=', itemPerm.entryId)
+              .where('userId', '=', parseInt(userId))
+              .executeTakeFirst();
+
+            if(result.numUpdatedRows === 0n) {
+              await trx.insertInto('ItemPermission')
+                .values({
+                  columnNames: itemPerm.columnNames,
+                  actionId: itemPerm.actionId,
+                  entityId: itemPerm.entityId,
+                  entryId: itemPerm.entryId,
+                  userId : parseInt(userId)
+                })
+                .execute();
+            }
+          }
+          delete body.itemPermissions;
+
+          await db.updateTable('User')
+            .set(body)
+            .where('id', '=', parseInt(userId))
+            .execute()
+
+        })
 
         submitRevalidation(`/dashboard/users/${userId}`);
 
-  			return NextResponse.json({ user });
+  			return NextResponse.json({ saved : true });
   		} catch (error) {
+        console.log(error)
   			return NextResponse.json({ error : `Something went wrong. Here is the error message: ${JSON.stringify(error)}`}, { status: 400 });
   		}
     } else {

@@ -37,7 +37,8 @@ export default function EditUser({ user, isAdmin, permissionActions = [], permis
         email : email,
         name : name,
         organization : organization,
-        permissions : permissions
+        globalPermissions : globalPermissions,
+        itemPermissions : itemPermissions
       })
     }).then(resp => resp.json()).then(results => {
       if(results.error) {
@@ -108,7 +109,7 @@ export default function EditUser({ user, isAdmin, permissionActions = [], permis
             globalPermissions={globalPermissions}
             setGlobalPermissions={setGlobalPermissions}
             itemPermissions={itemPermissions}
-            setItemPermissions={itemPermissions}
+            setItemPermissions={setItemPermissions}
             permissionActions={permissionActions}
             permissionEntities={permissionEntities}
           />

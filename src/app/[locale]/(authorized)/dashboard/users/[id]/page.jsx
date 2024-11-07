@@ -22,14 +22,15 @@ export default async function Page({ params : { locale, id }}) {
         eb.selectFrom('GlobalPermission')
           .leftJoin('PermissionAction', 'GlobalPermission.actionId', 'PermissionAction.id')
           .leftJoin('PermissionEntity', 'GlobalPermission.entityId', 'PermissionEntity.id')
-          .select(['PermissionAction.name as action', 'GlobalPermission.columnNames', 'PermissionEntity.name as entity'])
+          .select(['GlobalPermission.id', 'PermissionAction.id as actionId', 'GlobalPermission.columnNames', 'PermissionEntity.id as entityId'])
           .whereRef('GlobalPermission.userId', '=', 'User.id')
       ).as('global_permissions'),
       jsonArrayFrom(
         eb.selectFrom('ItemPermission')
           .leftJoin('PermissionAction', 'ItemPermission.actionId', 'PermissionAction.id')
           .leftJoin('PermissionEntity', 'ItemPermission.entityId', 'PermissionEntity.id')
-          .select(['PermissionAction.name as action', 'ItemPermission.columnNames', 'ItemPermission.entryId as entry', 'ItemPermission.userId as user', 'PermissionEntity.name as entity'])
+          .leftJoin('Entry', 'ItemPermission.entryId', 'Entry.id')
+          .select(['ItemPermission.id', 'PermissionAction.id as actionId', 'ItemPermission.columnNames', 'ItemPermission.entryId', 'Entry.name as entryName', 'PermissionEntity.id as entityId'])
           .whereRef('ItemPermission.userId', '=', 'User.id')
       ).as('item_permissions'),
     ])
@@ -41,8 +42,6 @@ export default async function Page({ params : { locale, id }}) {
   if(!session.user.global_permissions.find(perm => perm.entity === "users") && !session.user.item_permissions.find(perm => perm.entity === "users" && perm.user === parseInt(id))) {
     notFound();
   }
-
-  console.log(user)
 
   return (
     <EditUser user={user} isAdmin={true} permissionActions={permissionActions} permissionEntities={permissionEntities} />
