@@ -57,8 +57,11 @@ export default function PermissionsEditor({ globalPermissions, setGlobalPermissi
       }
       // Removing existing scoped value
       if(thisEntityIndex > -1 && value === false) {
-        let columnNameIndex = permissionsCopy[thisColumnNamesIndex].columnNames.indexOf(columnName)
+        let columnNameIndex = permissionsCopy[thisEntityIndex].columnNames.indexOf(columnName)
         permissionsCopy[thisEntityIndex].columnNames.splice(columnNameIndex, 1);
+        if(permissionsCopy[thisEntityIndex].columnNames.length === 0) {
+          permissionsCopy.splice(thisEntityIndex, 1);
+        }
       }
       // Adding totally new scoped value
       if(thisEntityIndex === -1 && value === true) {
@@ -88,6 +91,9 @@ export default function PermissionsEditor({ globalPermissions, setGlobalPermissi
       if(value === false) {
         let columnNameIndex = permissionsCopy[thisItemIndex].columnNames.indexOf(columnName)
         permissionsCopy[thisItemIndex].columnNames.splice(columnNameIndex, 1);
+        if(permissionsCopy[thisItemIndex].columnNames.length === 0) {
+          permissionsCopy.splice(thisItemIndex, 1);
+        }
       }
     }
     setItemPermissions(permissionsCopy)

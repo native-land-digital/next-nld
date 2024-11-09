@@ -18,6 +18,7 @@ export const editableColumns = {
     "websites",
     "greetings",
     "relatedTo",
+    "changelog",
     "geometry"
   ],
   users : [

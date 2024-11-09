@@ -19,16 +19,6 @@ export default function EditUser({ user, isAdmin, permissionActions = [], permis
   const [ itemPermissions, setItemPermissions ] = useState(user.item_permissions);
   const [ organization, setOrganization ] = useState(user.organization ? user.organization : '');
 
-  const savePermissions = (checked, permission) => {
-    const newPermissions = JSON.parse(JSON.stringify(permissions));
-    if(checked) {
-      newPermissions.push(permission);
-    } else {
-      newPermissions.splice(newPermissions.indexOf(permission), 1);
-    }
-    setPermissions(newPermissions)
-  }
-
   const saveUser = () => {
     fetch(`/api/users/${user.id}`, {
       method : "PATCH",

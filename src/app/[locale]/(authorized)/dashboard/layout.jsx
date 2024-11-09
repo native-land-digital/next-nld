@@ -4,6 +4,7 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { HeaderSessionProvider } from '@/lib/auth/session-provider'
 import { LocaleProvider } from '@/i18n/locale-provider';
 import DashboardMenu from '@/components/nav/dashboard-menu';
 
@@ -38,7 +39,9 @@ export default async function RootLayout({ children, params : { locale }}) {
               <main>
                 <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
                   <div className="col-span-2 bg-white rounded-t min-h-screen text-black">
-                    {children}
+                    <HeaderSessionProvider>
+                      {children}
+                    </HeaderSessionProvider>
                   </div>
                 </div>
               </main>

@@ -71,7 +71,6 @@ export default async function Page({ params : { locale }, searchParams }) {
             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Name</th>
             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Email</th>
             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Organization</th>
-            <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Permissions</th>
             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Edit</th>
           </tr>
         </thead>
@@ -83,7 +82,6 @@ export default async function Page({ params : { locale }, searchParams }) {
                 <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.name}</td>
                 <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.email}</td>
                 <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.organization}</td>
-                <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.permissions.join(', ')}</td>
                 <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black"><Link prefetch={false} href={`/dashboard/users/${user.id}`}>➜</Link></td>
               </tr>
             )
