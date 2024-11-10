@@ -142,8 +142,8 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 handleDiameter={15} />
               <p>{t('treaties')}</p>
             </div>
-            <div className="bg-white rounded md:absolute md:right-0 md:-mr-[90px] md:shadow-lg md:p-2.5">
-            <span className="hidden md:hidden bg-green-700 p-1 rounded text-xs text-white absolute right-0 -mt-4 -mr-4">{t('new')}</span>
+            <div className="hidden bg-white rounded md:absolute md:right-0 md:-mr-[90px] md:shadow-lg md:p-2.5">
+              <span className="md:hidden bg-green-700 p-1 rounded text-xs text-white absolute right-0 -mt-4 -mr-4">{t('new')}</span>
               <Switch
                 checked={currentLayers.indexOf('greetings') > -1}
                 onChange={(checked) => setGreetingsLayer(checked)}
