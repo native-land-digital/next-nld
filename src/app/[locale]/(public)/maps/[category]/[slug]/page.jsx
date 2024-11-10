@@ -32,9 +32,9 @@ export const generateStaticParams = async () => {
     const greetingEntries = await db.selectFrom('Entry')
       .where('published', '=', true)
       .where('category', '=', 'languages')
-      .select(['id', 'category', 'slug'])
+      .select(['Entry.id', 'Entry.category', 'Entry.slug'])
       .innerJoin('Greeting', 'Entry.id', 'Greeting.entryId')
-      .distinctOn('id')
+      .distinctOn('Entry.id')
       .execute();
 
     greetingEntries.forEach(entry => {
