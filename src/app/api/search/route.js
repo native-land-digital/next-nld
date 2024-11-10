@@ -2,7 +2,7 @@ import { db } from '@/lib/db/kysely'
 import { headers } from 'next/headers'
 import { NextResponse } from "next/server";
 
-export const GET = async (req, route) => {
+export const GET = async (req) => {
   const referer = headers().get('referer');
   if(referer && referer.indexOf(process.env.NEXTAUTH_URL) > -1) {
 

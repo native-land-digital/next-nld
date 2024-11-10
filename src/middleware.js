@@ -3,8 +3,6 @@ import { withAuth } from "next-auth/middleware"
 import { getToken } from "next-auth/jwt";
 import { chain } from "@nimpl/middleware-chain";
 
-import { hasResearchPermission } from '@/lib/auth/permissions'
-
 const redirectMiddleware = async (req) => {
   const path = req.nextUrl.pathname;
   const token = await getToken({ req })

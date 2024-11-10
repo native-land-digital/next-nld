@@ -1,5 +1,4 @@
 import { db } from '@/lib/db/kysely'
-import { sql } from 'kysely';
 import { jsonArrayFrom } from 'kysely/helpers/postgres'
 import { notFound } from 'next/navigation';
 import { getServerSession } from "next-auth/next"

@@ -26,12 +26,6 @@ export default async function Page({ params : { locale }, searchParams }) {
     .limit(25)
     .offset(25 * page)
 
-  // Checking for specific permissions
-  let userQuery = await db.selectFrom('User')
-    .where('id', '=', session.user.id)
-    .select(['permissions'])
-    .executeTakeFirst();
-
   // If atomized permissions, only return results they are allowed to see
   if(!session.user.global_permissions.find(perm => perm.entity === "research") && session.user.item_permissions.find(perm => perm.entity === "research")) {
     const allowedEntryIDs = session.user.item_permissions.filter(perm => perm.entity === "research").map(perm => perm.entry);
