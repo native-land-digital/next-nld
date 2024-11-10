@@ -145,7 +145,7 @@ export default async function Page({ params : { locale, category, slug }}) {
                 <h3 className="text-xl font-bold mb-3" id="websites">{t('websites')}</h3>
                 <Websites websites={entry.websites} />
               </section>
-              <section className="mt-5">
+              <section className="hidden mt-5">
                 <h3 className="text-xl font-bold mb-3" id="greetings">{t('greetings')}</h3>
                 <Greetings greetings={entry.greetings} />
               </section>
