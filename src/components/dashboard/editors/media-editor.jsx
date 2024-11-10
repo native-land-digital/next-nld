@@ -12,7 +12,7 @@ export default function MediaEditor({ media, setMedia }) {
     if(url) {
       const key = url.split('/')[url.split('/').length - 1];
 
-      const response = await fetch(`/api/upload?key=${key}`, {
+      const response = await fetch(`/api/upload?key=${key}&type=media`, {
         method : "DELETE",
         headers : { 'Content-Type': 'application/json' }
       }).then(resp => resp.json());
@@ -33,6 +33,12 @@ export default function MediaEditor({ media, setMedia }) {
       newMedia[index][prop] = value;
     }
     setMedia(newMedia)
+  }
+
+  const afterUpload = (url) => {
+    const newMedia = JSON.parse(JSON.stringify(media))
+    newMedia.push({ url : url, title : '', caption : '' })
+    setMedia(newMedia);
   }
 
   return (
@@ -64,7 +70,7 @@ export default function MediaEditor({ media, setMedia }) {
           )
         })}
       </div>
-      <FileUploader media={media} setMedia={setMedia} />
+      <FileUploader afterUpload={afterUpload} allowedTypes={"image/png, image/jpeg"} />
     </>
   );
 }

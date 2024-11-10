@@ -20,6 +20,19 @@ datasource db {
   directUrl  = env("DIRECT_URL")
 }
 
+model Greeting {
+  id              Int @id @default(autoincrement())
+  url             String
+  text            String?
+  translation     String?
+  usage           String?
+  parentId        Int?
+  parentGreeting  Greeting? @relation("parent", fields: [parentId], references: [id])
+  responses       Greeting[] @relation(name : "parent")
+  entryId         Int
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+}
+
 model Media {
   id              Int @id @default(autoincrement())
   url             String
@@ -58,37 +71,21 @@ model Point {
 	id              Int @id @default(autoincrement())
   geometry        Unsupported("geometry(Point, 4326)")?
   entryId         Int @unique
-  entry           Entry @relation(fields: [entryId], references: [id])
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
 
 model Line {
 	id              Int @id @default(autoincrement())
   geometry        Unsupported("geometry(MultiLineString, 4326)")?
   entryId         Int @unique
-  entry           Entry @relation(fields: [entryId], references: [id])
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
 
 model Polygon {
 	id              Int @id @default(autoincrement())
   geometry        Unsupported("geometry(MultiPolygon, 4326)")?
   entryId         Int @unique
-  entry           Entry @relation(fields: [entryId], references: [id])
-}
-
-model User {
-	id                Int @id @default(autoincrement())
-  createdAt         DateTime  @default(now())
-	email             String @unique
-  password          String
-	name              String?
-  permissions       String[] @default(["api", "profile"])
-  organization      String?
-  verification_key  String? @default(uuid())
-  email_verified    Boolean @default(false)
-  agreed_treaty     Boolean @default(false)
-  api_key           String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
-
-  @@index([email])
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
 
 model Entry {
@@ -103,6 +100,7 @@ model Entry {
   media           Media[]
   websites        Website[]
   changelog       Change[]
+  greetings       Greeting[]
   relatedTo       Relation[] @relation(name: "related_from")
   relatedFrom     Relation[] @relation(name: "related_to")
   createdAt       DateTime  @default(now())
@@ -111,6 +109,64 @@ model Entry {
   point           Point?
   line            Line?
   polygon         Polygon?
+  
+  itemPerms       ItemPermission[]
 
   @@index([slug])
+}
+
+model PermissionAction {
+  id              Int @id @default(autoincrement())
+  name            String
+  appliedToGlobal GlobalPermission[]
+  appliedToItem   ItemPermission[]
+}
+
+model PermissionEntity {
+  id              Int @id @default(autoincrement())
+  name            String
+  appliedToGlobal GlobalPermission[]
+  appliedToItem   ItemPermission[]
+}
+
+model GlobalPermission {
+  id              Int @id @default(autoincrement())
+  columnNames     String[]
+  actionId        Int
+  action          PermissionAction @relation(fields: [actionId], references: [id])
+  entityId        Int
+  entity          PermissionEntity @relation(fields: [entityId], references: [id])
+  userId          Int
+  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ItemPermission {
+  id              Int @id @default(autoincrement())
+  columnNames     String[]
+  entryId         Int
+  entry           Entry @relation(fields: [entryId], references: [id])
+  actionId        Int
+  action          PermissionAction @relation(fields: [actionId], references: [id])
+  entityId        Int
+  entity          PermissionEntity @relation(fields: [entityId], references: [id])
+  userId          Int
+  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+	id                   Int @id @default(autoincrement())
+  createdAt            DateTime  @default(now())
+	email                String @unique
+  password             String
+	name                 String?
+  permissions_global   GlobalPermission[]
+  permissions_items    ItemPermission[]
+  permissions          String[] @default(["api", "profile"])
+  organization         String?
+  verification_key     String? @default(uuid())
+  email_verified       Boolean @default(false)
+  agreed_treaty        Boolean @default(false)
+  api_key              String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
+
+  @@index([email])
 }

@@ -11,6 +11,7 @@ import './map.geocoder.css';
 export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, territoryOptions, languageOptions, treatyOptions }) {
 
     const t = useTranslations('FrontMap');
+    const tMaps = useTranslations('Maps');
 
     const [ toggledFeatures, setToggledFeatures ] = useState([])
     const [ showLists, setShowLists ] = useState(false)
@@ -93,8 +94,17 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
       }
     };
 
+    const setGreetingsLayer = (checked) => {
+      if(checked && map) {
+        setCurrentLayers(['greetings'])
+        map.flyTo({ center : [-100.1953125, 47.27922900257082] })
+      } else {
+        setCurrentLayers([])
+      }
+    }
+
     return (
-      <div className="w-72 absolute z-10 left-0 top-0 m-2.5">
+      <div className="w-80 absolute z-10 left-0 top-0 m-2.5">
         <div className="w-full shadow-lg shadow-gray-500/40 bg-white rounded p-2.5">
           <div className="flex justify-between items-center text-center text-sm text-black">
             <div>
@@ -132,6 +142,20 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 checkedIcon={false}
                 handleDiameter={15} />
               <p>{t('treaties')}</p>
+            </div>
+            <div className="bg-white rounded md:absolute md:right-0 md:-mr-[90px] md:shadow-lg md:p-2.5">
+            <span className="block md:hidden bg-green-700 p-1 rounded text-xs text-white absolute right-0 -mt-4 -mr-4">{t('new')}</span>
+              <Switch
+                checked={currentLayers.indexOf('greetings') > -1}
+                onChange={(checked) => setGreetingsLayer(checked)}
+                width={40}
+                height={20}
+                onColor={"#1e3a8a"} // blue-900
+                uncheckedIcon={false}
+                checkedIcon={false}
+                handleDiameter={15} />
+              <p>{tMaps('greetings')}</p>
+              <span className="hidden md:block bg-green-700 p-1 rounded text-xs text-white ml-3.5 absolute mt-1">{t('new')}</span>
             </div>
           </div>
           <hr className="mt-1.5 border-slate-300" />
