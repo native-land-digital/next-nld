@@ -12,7 +12,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 
-export default function MapEditor({ geometry, setGeometry }) {
+export default function MapEditor({ geometry_type, geometry, setGeometry }) {
 
   const t = useTranslations('Dashboard');
 
@@ -85,9 +85,9 @@ export default function MapEditor({ geometry, setGeometry }) {
     map.addControl(geocoder, "top-left");
     const newDraw = new MapboxDraw({
       controls : {
-        point : false,
-        line_string : false,
-        polygon : true,
+        point : geometry_type === 'Point',
+        line_string : geometry_type === 'Line',
+        polygon : geometry_type === 'Polygon',
         combine_features : false,
         uncombine_features : false,
         trash : true

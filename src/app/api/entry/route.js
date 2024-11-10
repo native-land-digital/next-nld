@@ -32,12 +32,7 @@ export const POST = async (req) => {
 
 	if(token && token.id) {
 
-    const user = await db.selectFrom('User')
-      .where('id', '=', Number(token.id))
-      .select(['permissions'])
-      .executeTakeFirst()
-
-		if(user.permissions.includes('research')) {
+		if(token.global_permissions.find(perm => perm.entity === "research")) {
 			const body = await req.json();
 
 	  	if (!body.name) {
@@ -77,7 +72,33 @@ export const POST = async (req) => {
 					.returningAll()
 				  .execute()
 
-				console.log(entry)
+				if(body.type === 'polygon') {
+					// let polyGeometry = { type : "Polygon", coordinates : [] }
+					await db.insertInto('Polygon')
+						.values({
+							geometry: null,
+							entryId : parseInt(entry.id),
+						})
+						.execute();
+				}
+				if(body.type === 'line') {
+					// let lineGeometry = { type : "LineString", coordinates : [] }
+					await db.insertInto('Line')
+						.values({
+							geometry: null,
+							entryId : parseInt(entry.id),
+						})
+						.execute();
+				}
+				if(body.type === 'point') {
+					// let pointGeometry = { type : "Point", coordinates : [] }
+					await db.insertInto('Point')
+						.values({
+							geometry: null,
+							entryId : parseInt(entry.id),
+						})
+						.execute();
+				}
 
 	  		return NextResponse.json({
 	  			id : entry.id

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify';
 import { useTranslations } from '@/i18n/client-i18n';
 
-export default function FileUploader({ media, setMedia }) {
+export default function FileUploader({ afterUpload, allowedTypes }) {
 
   const t = useTranslations('Dashboard');
 
@@ -42,11 +42,7 @@ export default function FileUploader({ media, setMedia }) {
       })
 
       if (uploadResponse.ok) {
-        const newMedia = JSON.parse(JSON.stringify(media))
-        console.log(url);
-        console.log(process.env.NEXT_PUBLIC_AWS_NEXT_CLOUDFRONT)
-        newMedia.push({ url : `${process.env.NEXT_PUBLIC_AWS_NEXT_CLOUDFRONT}/${fields.key}`, title : '', caption : '' })
-        setMedia(newMedia);
+        afterUpload(`${process.env.NEXT_PUBLIC_AWS_NEXT_CLOUDFRONT}/${fields.key}`)
       } else {
         toast(t('s3-error'), uploadResponse)
         toast(t('upload-failed'))
@@ -70,7 +66,7 @@ export default function FileUploader({ media, setMedia }) {
               setFile(files[0])
             }
           }}
-          accept="image/png, image/jpeg"
+          accept={allowedTypes}
           className="block w-full text-xs text-slate-500"
         />
       </div>

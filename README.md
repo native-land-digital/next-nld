@@ -41,6 +41,8 @@ To get set up for basic work:
 - Create a Mapbox account and get a public token (`NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN`), and you can use the same style for both `NEXT_PUBLIC_MAPBOX_STYLE` and `NEXT_PUBLIC_MAPBOX_STYLE_RESEARCH`.
 
 - `npm run dev` will fire up the dev project, and you can visit `http://localhost:3000` to view the site.
+- `npm run lambda` will test the lambdas with your local DB.
+
 - To login, use `test@native-land.ca` and password `test`.
 
 This gets you towards the most basic functional application, but to do further testing you may need to do elements of the next section, depending on what you're working on.

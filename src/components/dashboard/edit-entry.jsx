@@ -1,6 +1,7 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
+import { useSession } from "next-auth/react";
 import { toast } from 'react-toastify';
 import { navigate } from '@/lib/actions'
 import { SwatchesPicker } from 'react-color';
@@ -8,6 +9,7 @@ import Link from 'next/link'
 
 import MainMap from '@/components/dashboard/editors/map-editor';
 import WYSIWYGEDitor from '@/components/dashboard/editors/wysiwyg-editor';
+import GreetingsEditor from '@/components/dashboard/editors/greeting-editor';
 import MediaEditor from '@/components/dashboard/editors/media-editor';
 import WebsiteEditor from '@/components/dashboard/editors/website-editor';
 import ChangelogEditor from '@/components/dashboard/editors/changelog-editor';
@@ -20,6 +22,7 @@ export default function EditEntry({ entry }) {
   const t = useTranslations('Dashboard');
   const tMaps = useTranslations('Maps');
   const tCommon = useTranslations('Common');
+  const { data : session } = useSession();
 
   const [ name, setName ] = useState(entry.name);
   const [ category, setCategory ] = useState(entry.category);
@@ -27,6 +30,7 @@ export default function EditEntry({ entry }) {
   const [ pronunciation, setPronunciation ] = useState(entry.pronunciation);
   const [ color, setColor ] = useState(entry.color);
   const [ published, setPublished ] = useState(entry.published);
+  const [ greetings, setGreetings ] = useState(entry.greetings);
   const [ media, setMedia ] = useState(entry.media);
   const [ websites, setWebsites ] = useState(entry.websites);
   const [ changelog, setChangelog ] = useState(entry.changelog);
@@ -34,6 +38,26 @@ export default function EditEntry({ entry }) {
   const [ geometry, setGeometry ] = useState(entry.geometry);
 
   const [ showSwatches, setShowSwatches ] = useState(false);
+  const [ allowedColumns, setAllowedColumns ] = useState([]);
+
+  useEffect(() => {
+    if(session && session.user) {
+      const globalPermissionResearch = session.user.global_permissions.find(perm => perm.entity === 'research');
+      if(globalPermissionResearch && globalPermissionResearch.columnNames === null) {
+        setAllowedColumns(["all"]);
+      } else if(globalPermissionResearch && globalPermissionResearch.columnNames.length > 0) {
+        setAllowedColumns(globalPermissionResearch.columnNames);
+      }
+      const itemPermissionResearch = session.user.item_permissions.find(perm => perm.entity === 'research');
+      if(itemPermissionResearch && itemPermissionResearch.entry === entry.id) {
+        if(itemPermissionResearch.columnNames === null) {
+          setAllowedColumns(["all"]);
+        } else if(itemPermissionResearch.columnNames.length > 0) {
+          setAllowedColumns(itemPermissionResearch.columnNames);
+        }
+      }
+    }
+  }, [session])
 
   const saveEntry = () => {
     fetch(`/api/entry/${entry.id}`, {
@@ -47,10 +71,12 @@ export default function EditEntry({ entry }) {
         pronunciation : pronunciation,
         published : published,
         websites : websites,
+        greetings : greetings,
         media : media,
         changelog : changelog,
         relatedTo : relatedTo,
-        geometry : geometry
+        geometry : geometry,
+        geometry_type : entry.geometry_type
       })
     }).then(resp => resp.json()).then(results => {
       if(results.error) {
@@ -65,6 +91,7 @@ export default function EditEntry({ entry }) {
         setPronunciation(results.entry.pronunciation)
         setColor(results.entry.color)
         setPublished(results.entry.published)
+        setGreetings(results.entry.greetings)
         setMedia(results.entry.media)
         setWebsites(results.entry.websites)
         setChangelog(results.entry.changelog)
@@ -97,98 +124,130 @@ export default function EditEntry({ entry }) {
       <Link prefetch={false} href="/dashboard/research"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>{tCommon('back')}</Link>
       <h2 className="font-semibold text-3xl">{entry.name}</h2>
       {entry.published && entry.category ?
-        <Link prefetch={false} href={`/maps/${entry.category}/${entry.slug}`} target="_blank" className="text-xs float-right">See live page ➜</Link>
+        <Link prefetch={false} href={`/maps/${entry.category}/${entry.slug}`} target="_blank" className="text-xs float-right">{t('see-live')} ➜</Link>
       :
-        <p className="text-xs float-right">Polygon not published</p>
+        <p className="text-xs float-right">{t('entry-not-published')}</p>
       }
       <p className="text-xs mt-1" suppressHydrationWarning>{t('entry-created')} {new Date(entry.createdAt).toLocaleString()}, {t('entry-updated')} {new Date(entry.updatedAt).toLocaleString()}</p>
       <hr className="mt-3 mb-3" />
 
-      <MainMap geometry={geometry} setGeometry={setGeometry} />
+      {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('geometry') > -1 ?
+        <MainMap geometry_type={entry.geometry_type} geometry={geometry} setGeometry={setGeometry} />
+      : false}
 
       <div className="w-full md:w-1/2">
 
-        <div className="mt-2.5">
-          <label className="text-gray-800 text-sm mb-1 block">{t('name')}</label>
-          <div className="relative flex items-center">
-            <input value={name} onChange={(e) => setName(e.target.value)} name="name" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('enter-name')} />
-          </div>
-        </div>
-
-        <div className="mt-2.5">
-          <label className="text-gray-800 text-sm mb-1 block">{t('category')}</label>
-          <div className="relative flex items-center">
-            <select onChange={(e) => setCategory(e.target.value)} value={category ? category : ""} className="text-sm capitalize h-12 border border-gray-300 text-gray-600 text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none" >
-              <option>({t('none')})</option>
-              {availableCategories.map(category => {
-                return (<option key={`option-${category}`} value={category}>{category}</option>)
-              })}
-            </select>
-          </div>
-        </div>
-
-
-        <div className="mt-2.5">
-          <label className="text-gray-800 text-sm mb-1 block">{t('color')}</label>
-          <div className="relative flex items-center">
-            <div className="w-10 h-10" style={{backgroundColor : color }}></div>
-            <button className="ml-2.5 py-1 px-2.5 text-sm tracking-wide rounded-lg text-black bg-gray-100 hover:bg-gray-200 focus:outline-none" onClick={() => setShowSwatches(true)}>{t('pick-color')}</button>
-            <div className={`${showSwatches ? 'absolute block' : 'hidden'} ml-40 z-30`}>
-              <div className="fixed top-0 bottom-0 right-0 left-0" onClick={() => setShowSwatches(false)}></div>
-              <SwatchesPicker
-                color={color}
-                onChangeComplete={(color) => { setColor(color.hex); setShowSwatches(false); }}
-              />
+        {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('name') > -1 ?
+          <div className="mt-2.5">
+            <label className="text-gray-800 text-sm mb-1 block">{t('name')}</label>
+            <div className="relative flex items-center">
+              <input value={name} onChange={(e) => setName(e.target.value)} name="name" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('enter-name')} />
             </div>
           </div>
-        </div>
+        : false}
 
-        <div className="mt-2.5">
-          <label className="text-gray-800 text-sm mb-1 block">{t('pronunciation')}</label>
-          <div className="relative flex items-center">
-            <input value={pronunciation ? pronunciation : ""} onChange={(e) => setPronunciation(e.target.value)} name="pronunciation" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('pronunciation-placeholder')} />
+        {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('category') > -1 ?
+          <div className="mt-2.5">
+            <label className="text-gray-800 text-sm mb-1 block">{t('category')}</label>
+            <div className="relative flex items-center">
+              <select onChange={(e) => setCategory(e.target.value)} value={category ? category : ""} className="text-sm capitalize h-12 border border-gray-300 text-gray-600 text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none" >
+                <option>({t('none')})</option>
+                {availableCategories.map(category => {
+                  return (<option key={`option-${category}`} value={category}>{category}</option>)
+                })}
+              </select>
+            </div>
+          </div>
+        : false}
+
+
+        {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('color') > -1 ?
+          <div className="mt-2.5">
+            <label className="text-gray-800 text-sm mb-1 block">{t('color')}</label>
+            <div className="relative flex items-center">
+              <div className="w-10 h-10" style={{backgroundColor : color }}></div>
+              <button className="ml-2.5 py-1 px-2.5 text-sm tracking-wide rounded-lg text-black bg-gray-100 hover:bg-gray-200 focus:outline-none" onClick={() => setShowSwatches(true)}>{t('pick-color')}</button>
+              <div className={`${showSwatches ? 'absolute block' : 'hidden'} ml-40 z-30`}>
+                <div className="fixed top-0 bottom-0 right-0 left-0" onClick={() => setShowSwatches(false)}></div>
+                <SwatchesPicker
+                  color={color}
+                  onChangeComplete={(color) => { setColor(color.hex); setShowSwatches(false); }}
+                />
+              </div>
+            </div>
+          </div>
+        : false}
+
+        {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('pronunciation') > -1 ?
+          <div className="mt-2.5">
+            <label className="text-gray-800 text-sm mb-1 block">{t('pronunciation')}</label>
+            <div className="relative flex items-center">
+              <input value={pronunciation ? pronunciation : ""} onChange={(e) => setPronunciation(e.target.value)} name="pronunciation" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('pronunciation-placeholder')} />
+            </div>
+          </div>
+        : false}
+
+        {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('published') > -1 ?
+          <div className="mt-2.5">
+            <label className="text-gray-800 text-sm mb-1 block">{t('public')}</label>
+            <div className="relative">
+              <label htmlFor="published" className='capitalize text-sm'>
+                <input id="published" type="checkbox" checked={published} name="published" onChange={(e) => setPublished(e.target.checked)} className="mr-1.5" />
+                {t('published')}
+              </label>
+            </div>
+          </div>
+        : false}
+
+      </div>
+
+      {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('sources') > -1 ?
+        <div className="w-full">
+          <div className="mt-2.5">
+            <label className="text-gray-800 text-sm mb-1 block">{tMaps('sources')}</label>
+            <WYSIWYGEDitor sources={sources} setSources={setSources} />
           </div>
         </div>
+      : false}
 
-        <div className="mt-2.5">
-          <label className="text-gray-800 text-sm mb-1 block">{t('public')}</label>
-          <div className="relative">
-            <label htmlFor="published" className='capitalize text-sm'>
-              <input id="published" type="checkbox" checked={published} name="published" onChange={(e) => setPublished(e.target.checked)} className="mr-1.5" />
-              {t('published')}
-            </label>
-          </div>
+      {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('greetings') > -1 ?
+        <div>
+          {category === 'languages' ?
+            <div className="mt-6">
+              <label className="text-gray-800 text-normal mb-1 block">{tMaps('greetings')}</label>
+              <GreetingsEditor greetings={greetings} setGreetings={setGreetings} />
+            </div>
+          : false}
         </div>
+      : false}
 
-      </div>
-
-      <div className="w-full">
-        <div className="mt-2.5">
-          <label className="text-gray-800 text-sm mb-1 block">{tMaps('sources')}</label>
-          <WYSIWYGEDitor sources={sources} setSources={setSources} />
+      {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('media') > -1 ?
+        <div className="mt-6">
+          <label className="text-gray-800 text-normal mb-1 block">{tMaps('media')}</label>
+          <MediaEditor media={media} setMedia={setMedia} />
         </div>
-      </div>
+      : false}
 
+      {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('websites') > -1 ?
+        <div className="mt-6">
+          <label className="text-gray-800 text-normal mb-1 block">{tMaps('websites')}</label>
+          <WebsiteEditor websites={websites} setWebsites={setWebsites} />
+        </div>
+      : false}
 
-      <div className="mt-6">
-        <label className="text-gray-800 text-normal mb-1 block">{tMaps('media')}</label>
-        <MediaEditor media={media} setMedia={setMedia} />
-      </div>
+      {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('relatedTo') > -1 ?
+        <div className="mt-6">
+          <label className="text-gray-800 text-normal mb-1 block">{tMaps('related')}</label>
+          <RelationEditor relatedTo={relatedTo} setRelatedTo={setRelatedTo} />
+        </div>
+      : false}
 
-      <div className="mt-6">
-        <label className="text-gray-800 text-normal mb-1 block">{tMaps('websites')}</label>
-        <WebsiteEditor websites={websites} setWebsites={setWebsites} />
-      </div>
-
-      <div className="mt-6">
-        <label className="text-gray-800 text-normal mb-1 block">{tMaps('related')}</label>
-        <RelationEditor relatedTo={relatedTo} setRelatedTo={setRelatedTo} />
-      </div>
-
-      <div className="mt-6">
-        <label className="text-gray-800 text-normal mb-1 block">{tMaps('changelog')}</label>
-        <ChangelogEditor changelog={changelog} setChangelog={setChangelog} />
-      </div>
+      {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('changelog') > -1 ?
+        <div className="mt-6">
+          <label className="text-gray-800 text-normal mb-1 block">{tMaps('changelog')}</label>
+          <ChangelogEditor changelog={changelog} setChangelog={setChangelog} />
+        </div>
+      : false}
 
       <div className="flex">
         <div className="w-full md:w-1/2">
