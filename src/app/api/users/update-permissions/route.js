@@ -14,12 +14,10 @@ export const GET = async () => {
 
     for (const user of users) {
 
-			console.log(user)
 
       for(const permissionIndex in user.permissions) {
-	
+
         const permission = user.permissions[permissionIndex];
-				console.log(permission)
         const thisEntity = permissionEntities.find(entity => entity.name === permission);
         const thisAction = permissionActions.find(action => action.name === "update");
 

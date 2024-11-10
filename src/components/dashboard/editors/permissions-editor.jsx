@@ -11,6 +11,8 @@ export default function PermissionsEditor({ globalPermissions, setGlobalPermissi
 
   const [ entityTab, setEntityTab ] = useState(false);
   const [ actionTab, setActionTab ] = useState(false);
+  const [ currentGlobalPermissions, setCurrentGlobalPermissions ] = useState(false)
+  const [ currentItemPermissions, setCurrentItemPermissions ] = useState([])
   const [ currentPermissionColumns, setCurrentPermissionColumns ] = useState([])
 
   useEffect(() => {
@@ -22,6 +24,10 @@ export default function PermissionsEditor({ globalPermissions, setGlobalPermissi
 
   useEffect(() => {
     if(entityTab && actionTab) {
+      const newCurrentGlobalPermissions = globalPermissions.find(perm => perm.entityId === entityTab.id && perm.actionId === actionTab.id);
+      const newCurrentItemPermissions = itemPermissions.filter(perm => perm.entityId === entityTab.id && perm.actionId === actionTab.id);
+      setCurrentGlobalPermissions(newCurrentGlobalPermissions)
+      setCurrentItemPermissions(newCurrentItemPermissions)
       setCurrentPermissionColumns(editableColumns[entityTab.name] ? editableColumns[entityTab.name] : [])
     }
   }, [entityTab, actionTab, globalPermissions, itemPermissions])
@@ -150,12 +156,12 @@ export default function PermissionsEditor({ globalPermissions, setGlobalPermissi
         </div>
         <div className="mt-2.5">
           <p className="text-sm">Global Permissions</p>
-          <input id={`all-${entityTab.id}`} type="checkbox" onChange={(e) => modifyGlobalPermissions(null, e.target.checked)} checked={globalPermissions?.columnNames === null ? true : false} /> <label htmlFor={`all-${entityTab.id}`} className="uppercase text-xs">All</label>
+          <input id={`all-${entityTab.id}`} type="checkbox" onChange={(e) => modifyGlobalPermissions(null, e.target.checked)} checked={currentGlobalPermissions?.columnNames === null ? true : false} /> <label htmlFor={`all-${entityTab.id}`} className="uppercase text-xs">All</label>
           <div>
             {currentPermissionColumns.map((columnName, i) => {
               return (
                 <div key={`columnname-${i}`}>
-                  <input id={`columnname-${i}`} type="checkbox" onChange={(e) => modifyGlobalPermissions(columnName, e.target.checked)} checked={globalPermissions?.columnNames === null || globalPermissions?.columnNames?.indexOf(columnName) > -1 ? true : false} /> <label htmlFor={`columnname-${i}`} className="uppercase text-xs">{columnName}</label>
+                  <input id={`columnname-${i}`} type="checkbox" onChange={(e) => modifyGlobalPermissions(columnName, e.target.checked)} checked={currentGlobalPermissions?.columnNames === null || currentGlobalPermissions?.columnNames?.indexOf(columnName) > -1 ? true : false} /> <label htmlFor={`columnname-${i}`} className="uppercase text-xs">{columnName}</label>
                 </div>
               )
             })}
@@ -171,7 +177,7 @@ export default function PermissionsEditor({ globalPermissions, setGlobalPermissi
               onChange={(e) => addEntryPermission(e)}
               cacheOptions
               loadOptions={loadEntryOptions} />
-              {itemPermissions.filter(item => item.entryId).map((item, i) => {
+              {currentItemPermissions.map((item, i) => {
                 return (
                   <div className="mt-2.5" key={`item-entry-${i}`}>
                     <p className="text-xs">{item.entryName} - <span className="cursor-pointer text-blue-600" onClick={() => removeItemPermission(item.entryId)}>Remove</span></p>
