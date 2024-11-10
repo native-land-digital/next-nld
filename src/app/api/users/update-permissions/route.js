@@ -1,7 +1,7 @@
 import { db } from '@/lib/db/kysely'
 import { NextResponse } from "next/server";
 
-export const GET = async (req ) => {
+export const GET = async () => {
 
 	const users = await db.selectFrom('User')
 		.select(['id', 'permissions'])

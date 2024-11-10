@@ -3,7 +3,6 @@ import { getServerSession } from "next-auth/next"
 import Link from 'next/link'
 
 import { authOptions } from "@/root/auth";
-import { hasResearchPermission } from '@/lib/auth/permissions'
 
 export default async function DashboardMenu() {
   const session = await getServerSession(authOptions);

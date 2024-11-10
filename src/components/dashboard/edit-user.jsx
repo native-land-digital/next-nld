@@ -1,7 +1,6 @@
 'use client'
 import { useState } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
-import { possiblePermissions } from '@/lib/auth/permissions';
 import { toast } from 'react-toastify';
 import Link from 'next/link'
 
@@ -14,7 +13,6 @@ export default function EditUser({ user, isAdmin, permissionActions = [], permis
 
   const [ name, setName ] = useState(user.name ? user.name : '');
   const [ email, setEmail ] = useState(user.email ? user.email : '');
-  const [ permissions, setPermissions ] = useState(user.permissions);
   const [ globalPermissions, setGlobalPermissions ] = useState(user.global_permissions);
   const [ itemPermissions, setItemPermissions ] = useState(user.item_permissions);
   const [ organization, setOrganization ] = useState(user.organization ? user.organization : '');
