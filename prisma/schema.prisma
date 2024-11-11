@@ -95,6 +95,7 @@ model Entry {
   color           String?
   sources         String?
   pronunciation   String?
+  disclaimer      String?
   category        String?
   published       Boolean @default(false)
   media           Media[]
@@ -109,7 +110,7 @@ model Entry {
   point           Point?
   line            Line?
   polygon         Polygon?
-  
+
   itemPerms       ItemPermission[]
 
   @@index([slug])

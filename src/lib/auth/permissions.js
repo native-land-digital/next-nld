@@ -11,6 +11,7 @@ export const editableColumns = {
     "name",
     "color",
     "sources",
+    "disclaimer",
     "pronunciation",
     "category",
     "published",

@@ -27,6 +27,7 @@ export default function EditEntry({ entry }) {
   const [ name, setName ] = useState(entry.name);
   const [ category, setCategory ] = useState(entry.category);
   const [ sources, setSources ] = useState(entry.sources);
+  const [ disclaimer, setDisclaimer ] = useState(entry.disclaimer);
   const [ pronunciation, setPronunciation ] = useState(entry.pronunciation);
   const [ color, setColor ] = useState(entry.color);
   const [ published, setPublished ] = useState(entry.published);
@@ -67,6 +68,7 @@ export default function EditEntry({ entry }) {
         name : name,
         category : category,
         sources : sources,
+        disclaimer : disclaimer,
         color : color,
         pronunciation : pronunciation,
         published : published,
@@ -87,6 +89,7 @@ export default function EditEntry({ entry }) {
         }
         setName(results.entry.name)
         setCategory(results.entry.category)
+        setDisclaimer(results.entry.disclaimer)
         setSources(results.entry.sources)
         setPronunciation(results.entry.pronunciation)
         setColor(results.entry.color)
@@ -206,6 +209,15 @@ export default function EditEntry({ entry }) {
           <div className="mt-2.5">
             <label className="text-gray-800 text-sm mb-1 block">{tMaps('sources')}</label>
             <WYSIWYGEDitor sources={sources} setSources={setSources} />
+          </div>
+        </div>
+      : false}
+
+      {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('disclaimer') > -1 ?
+        <div className="w-full">
+          <div className="mt-2.5">
+            <label className="text-gray-800 text-sm mb-1 block">{tMaps('disclaimer')}</label>
+            <WYSIWYGEDitor sources={disclaimer} setSources={setDisclaimer} />
           </div>
         </div>
       : false}
