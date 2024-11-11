@@ -20,6 +20,14 @@ datasource db {
   directUrl  = env("DIRECT_URL")
 }
 
+model Pronunciation {
+  id              Int @id @default(autoincrement())
+  url             String?
+  text            String?
+  entryId         Int
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+}
+
 model Greeting {
   id              Int @id @default(autoincrement())
   url             String
@@ -96,7 +104,7 @@ model Entry {
   slug            String? @unique
   color           String?
   sources         String?
-  pronunciation   String?
+  pronunciation   Pronunciation[]
   disclaimer      String?
   category        String?
   published       Boolean @default(false)

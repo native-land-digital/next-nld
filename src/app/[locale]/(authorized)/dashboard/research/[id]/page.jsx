@@ -20,7 +20,7 @@ export default async function Page({ params : { locale, id } }) {
     .leftJoin('Line', 'Line.entryId', 'Entry.id')
     .leftJoin('Point', 'Point.entryId', 'Entry.id')
     .select((eb) => [
-      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.disclaimer', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
+      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.disclaimer', 'Entry.createdAt', 'Entry.updatedAt',
       eb.fn('COALESCE', [
         eb.fn('ST_AsGeoJSON', 'Polygon.geometry'),
         eb.fn('ST_AsGeoJSON', 'Line.geometry'),
@@ -32,6 +32,11 @@ export default async function Page({ params : { locale, id } }) {
         .when('Point.entryId', 'is not', null).then('Point')
         .end()
       .as('geometry_type'),
+      jsonArrayFrom(
+        eb.selectFrom('Pronunciation')
+          .select(['id', 'url', 'text'])
+          .whereRef('Pronunciation.entryId', '=', 'Entry.id')
+      ).as('pronunciations'),
       jsonArrayFrom(
         eb.selectFrom('Greeting')
           .select(['id', 'url', 'text', 'translation', 'usage', 'parentId'])

@@ -117,7 +117,6 @@ async function main() {
           sources : row.sources,
           category : row.category,
           published : true,
-          pronunciation : row.pronunciation ? row.pronunciation : "",
           websites : {
             createMany : {
               data : row.websites.map(website => {
