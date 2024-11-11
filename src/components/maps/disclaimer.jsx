@@ -1,5 +1,3 @@
-import { getTranslations } from '@/i18n/server-i18n';
-
 import MapModal from '@/components/front-map/modal';
 
 export default async function Disclaimer({ disclaimer }) {
