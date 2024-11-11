@@ -6,6 +6,7 @@ import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 import { notFound } from 'next/navigation';
 
 import Map from '@/components/maps/map';
+import Pronunciations from '@/components/maps/pronunciations';
 import Greetings from '@/components/maps/greetings';
 import Websites from '@/components/maps/websites';
 import Related from '@/components/maps/related';
@@ -58,6 +59,7 @@ export default async function Page({ params : { locale, category, slug }}) {
 
   setLocaleCache(locale);
   const t = await getTranslations('Maps');
+  const tDash = await getTranslations('Dashboard');
 
   let categoryToSearch = category;
   if(category === 'greetings') {
@@ -70,8 +72,13 @@ export default async function Page({ params : { locale, category, slug }}) {
     .where('published', '=', true)
     .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
     .select((eb) => [
-      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.sources', 'Entry.pronunciation', 'Entry.disclaimer', 'Entry.createdAt', 'Entry.updatedAt',
+      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.sources', 'Entry.disclaimer', 'Entry.createdAt', 'Entry.updatedAt',
       eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+      jsonArrayFrom(
+        eb.selectFrom('Pronunciation')
+          .select(['id', 'url', 'text'])
+          .whereRef('Pronunciation.entryId', '=', 'Entry.id')
+      ).as('pronunciations'),
       jsonArrayFrom(
         eb.selectFrom('Greeting')
           .select(['id', 'url', 'text', 'translation', 'usage', 'parentId'])
@@ -121,6 +128,8 @@ export default async function Page({ params : { locale, category, slug }}) {
     notFound();
   }
 
+  console.log(entry)
+
   return (
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={entry.name} crumbs={[{ url : "/maps", title : "Maps" }, { url : `/maps/${category}`, title : category }]} />
@@ -128,12 +137,25 @@ export default async function Page({ params : { locale, category, slug }}) {
         <Sidebar picks={3}>
           <ol className="hidden md:block list-inside text-gray-400">
             <li className="mb-2.5"><a href="#map">{t('map')}</a></li>
-            <li className="mb-2.5"><a href="#websites">{t('websites')}</a></li>
-            <li className="mb-2.5"><a href="#greetings">{t('greetings')}</a></li>
-            <li className="mb-2.5"><a href="#media">{t('media')}</a></li>
+            {entry.websites.length > 0 ?
+              <li className="mb-2.5"><a href="#websites">{t('websites')}</a></li>
+            : false}
+            {entry.pronunciations.length > 0 ?
+              <li className="mb-2.5"><a href="#pronunciations">{tDash('pronunciations')}</a></li>
+            : false}
+            {entry.greetings.length > 0 ?
+              <li className="mb-2.5"><a href="#greetings">{t('greetings')}</a></li>
+            : false}
+            {entry.media.length > 0 ?
+              <li className="mb-2.5"><a href="#media">{t('media')}</a></li>
+            : false}
             <li className="mb-2.5"><a href="#sources">{t('sources')}</a></li>
-            <li className="mb-2.5"><a href="#related-maps">{t('related')}</a></li>
-            <li className="mb-2.5"><a href="#changelog">{t('changelog')}</a></li>
+            {entry.relatedTo.length > 0 || entry.relatedFrom.length > 0 ?
+              <li className="mb-2.5"><a href="#related-maps">{t('related')}</a></li>
+            : false}
+            {entry.changelog.length > 0 ?
+              <li className="mb-2.5"><a href="#changelog">{t('changelog')}</a></li>
+            : false}
             <li className="mb-2.5"><a href="#send-correction">{t('correction')}</a></li>
           </ol>
           <span />
@@ -146,6 +168,12 @@ export default async function Page({ params : { locale, category, slug }}) {
                 <section className="mt-5">
                   <h3 className="text-xl font-bold mb-3" id="websites">{t('websites')}</h3>
                   <Websites websites={entry.websites} />
+                </section>
+              : false}
+              {entry.pronunciations.length > 0 ?
+                <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="pronunciations">{tDash('pronunciations')}</h3>
+                  <Pronunciations pronunciations={entry.pronunciations} />
                 </section>
               : false}
               {entry.greetings.length > 0 ?

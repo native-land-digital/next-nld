@@ -12,7 +12,7 @@ export const editableColumns = {
     "color",
     "sources",
     "disclaimer",
-    "pronunciation",
+    "pronunciations",
     "category",
     "published",
     "media",
