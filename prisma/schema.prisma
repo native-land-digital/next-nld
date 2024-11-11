@@ -70,6 +70,8 @@ model Relation {
 model Point {
 	id              Int @id @default(autoincrement())
   geometry        Unsupported("geometry(Point, 4326)")?
+  osmType         String?
+  osmId           String?
   entryId         Int @unique
   entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
@@ -112,6 +114,7 @@ model Entry {
   polygon         Polygon?
 
   itemPerms       ItemPermission[]
+  issues          Issue[]
 
   @@index([slug])
 }
@@ -169,5 +172,71 @@ model User {
   agreed_treaty        Boolean @default(false)
   api_key              String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
 
+  issueAuthor          Issue[]
+  issueUser            UsersOnIssues[]
+  comments             IssueComment[]
+
   @@index([email])
+}
+
+model IssueMedia {
+	id               Int @id @default(autoincrement())
+  url              String
+  issueCommentId   Int
+  issueComment     IssueComment @relation(fields: [issueCommentId], references: [id], onDelete: Cascade)
+}
+
+model IssueComment {
+	id              Int @id @default(autoincrement())
+  comment         String
+  media           IssueMedia[]
+  issueId         Int
+  issue           Issue @relation(fields: [issueId], references: [id])
+  authorId        Int
+  author          User @relation(fields: [authorId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model IssueCategory {
+	id              Int @id @default(autoincrement())
+	name            String @unique
+  color           String
+  posts           CategoriesOnIssues[]
+
+  @@index([name])
+}
+
+model CategoriesOnIssues {
+	id              Int @id @default(autoincrement())
+  issueId         Int
+  issue           Issue @relation(fields: [issueId], references: [id])
+  categoryId      Int
+  category        IssueCategory @relation(fields: [categoryId], references: [id])
+
+  @@index([issueId, categoryId])
+}
+
+model UsersOnIssues {
+	id              Int @id @default(autoincrement())
+  issueId         Int
+  issue           Issue @relation(fields: [issueId], references: [id])
+  userId          Int
+  user            User @relation(fields: [userId], references: [id])
+
+  @@index([issueId, userId])
+}
+
+model Issue {
+	id              Int @id @default(autoincrement())
+	name            String
+  open            Boolean @default(true)
+  categories      CategoriesOnIssues[]
+  users           UsersOnIssues[]
+  comments        IssueComment[]
+  createdAt       DateTime  @default(now())
+  entryId         Int?
+  entry           Entry? @relation(fields: [entryId], references: [id])
+  authorId        Int?
+  author          User? @relation(fields: [authorId], references: [id])
 }

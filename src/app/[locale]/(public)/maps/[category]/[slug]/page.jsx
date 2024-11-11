@@ -11,6 +11,7 @@ import Websites from '@/components/maps/websites';
 import Related from '@/components/maps/related';
 import Media from '@/components/maps/media';
 import Changelog from '@/components/maps/changelog';
+import Disclaimer from '@/components/maps/disclaimer';
 
 export const generateStaticParams = async () => {
   if(process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'production') {
@@ -141,30 +142,43 @@ export default async function Page({ params : { locale, category, slug }}) {
           {category !== 'greetings' ?
             <div>
               <Map geometry={entry.geometry} />
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="websites">{t('websites')}</h3>
-                <Websites websites={entry.websites} />
-              </section>
-              <section className="hidden mt-5">
-                <h3 className="text-xl font-bold mb-3" id="greetings">{t('greetings')}</h3>
-                <Greetings greetings={entry.greetings} />
-              </section>
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="related-maps">{t('related')}</h3>
-                <Related relatedTo={entry.relatedTo} relatedFrom={entry.relatedFrom} />
-              </section>
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="media">{t('media')}</h3>
-                <Media media={entry.media} />
-              </section>
+              {entry.websites.length > 0 ?
+                <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="websites">{t('websites')}</h3>
+                  <Websites websites={entry.websites} />
+                </section>
+              : false}
+              {entry.greetings.length > 0 ?
+                <section className="hidden mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="greetings">{t('greetings')}</h3>
+                  <Greetings greetings={entry.greetings} />
+                </section>
+              : false}
+              {entry.relatedTo.length > 0 || entry.relatedFrom.length > 0 ?
+                <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="related-maps">{t('related')}</h3>
+                  <Related relatedTo={entry.relatedTo} relatedFrom={entry.relatedFrom} />
+                </section>
+              : false}
+              {entry.media.length > 0 ?
+                <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="media">{t('media')}</h3>
+                  <Media media={entry.media} />
+                </section>
+              : false}
               <section className="mt-5">
                 <h3 className="text-xl font-bold mb-3" id="sources">{t('sources')}</h3>
                 <div className="sources-text" dangerouslySetInnerHTML={{ __html : entry.sources }} />
               </section>
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="changelog">{t('changelog')}</h3>
-                <Changelog changelog={entry.changelog} createdAt={entry.createdAt} updatedAt={entry.updatedAt} />
-              </section>
+              {entry.changelog.length > 0 ?
+                <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="changelog">{t('changelog')}</h3>
+                  <Changelog changelog={entry.changelog} createdAt={entry.createdAt} updatedAt={entry.updatedAt} />
+                </section>
+              : false}
+              {entry.disclaimer && entry.disclaimer !== "" ?
+                <Disclaimer disclaimer={entry.disclaimer} />
+              : false}
               <section className="mt-5">
                 <h3 className="text-xl font-bold mb-3" id="send-correction">{t('correction')}</h3>
                 <p>{t('contact')}</p>

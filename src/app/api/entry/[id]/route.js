@@ -325,7 +325,7 @@ export const PATCH = async (req, route) => {
             .where('Entry.id', '=', parseInt(entryId))
             .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
             .select((eb) => [
-              'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
+              'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.disclaimer', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
               eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
               jsonArrayFrom(
                 eb.selectFrom('Greeting')

@@ -208,7 +208,7 @@ export default function EditEntry({ entry }) {
         <div className="w-full">
           <div className="mt-2.5">
             <label className="text-gray-800 text-sm mb-1 block">{tMaps('sources')}</label>
-            <WYSIWYGEDitor sources={sources} setSources={setSources} />
+            <WYSIWYGEDitor id="sources" text={sources} setText={setSources} />
           </div>
         </div>
       : false}
@@ -217,7 +217,7 @@ export default function EditEntry({ entry }) {
         <div className="w-full">
           <div className="mt-2.5">
             <label className="text-gray-800 text-sm mb-1 block">{tMaps('disclaimer')}</label>
-            <WYSIWYGEDitor sources={disclaimer} setSources={setDisclaimer} />
+            <WYSIWYGEDitor id="disclaimer" text={disclaimer} setText={setDisclaimer} />
           </div>
         </div>
       : false}
