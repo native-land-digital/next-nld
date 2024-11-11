@@ -14,7 +14,7 @@ export default function MapModal({ headerText, bodyText, footerText }) {
         <div className="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto">
           <div className="flex justify-between items-center py-3 px-4 border-b">
             <h3 id="hs-basic-modal-label" className="font-bold text-gray-800">
-              {t(headerText)}
+              {t(headerText) ? t(headerText) : headerText}
             </h3>
             <button onClick={() => setModalOpen(false)} type="button" className="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none" aria-label="Close">
               <span className="sr-only">Close</span>
@@ -25,11 +25,11 @@ export default function MapModal({ headerText, bodyText, footerText }) {
             </button>
           </div>
           <div className="p-4 overflow-y-auto">
-            <div className="text-black" dangerouslySetInnerHTML={{ __html : t(bodyText)}} />
+            <div className="text-black" dangerouslySetInnerHTML={{ __html : t(bodyText) ? t(bodyText) : bodyText}} />
           </div>
           <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
             <button onClick={() => setModalOpen(false)} type="button" className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-            {t(footerText)}
+            {t(footerText) ? t(footerText) : footerText}
             </button>
           </div>
         </div>
