@@ -9,6 +9,7 @@ import Link from 'next/link'
 
 import MainMap from '@/components/dashboard/editors/map-editor';
 import WYSIWYGEDitor from '@/components/dashboard/editors/wysiwyg-editor';
+import PronunciationsEditor from '@/components/dashboard/editors/pronunciations-editor';
 import GreetingsEditor from '@/components/dashboard/editors/greeting-editor';
 import MediaEditor from '@/components/dashboard/editors/media-editor';
 import WebsiteEditor from '@/components/dashboard/editors/website-editor';
@@ -28,7 +29,7 @@ export default function EditEntry({ entry }) {
   const [ category, setCategory ] = useState(entry.category);
   const [ sources, setSources ] = useState(entry.sources);
   const [ disclaimer, setDisclaimer ] = useState(entry.disclaimer);
-  const [ pronunciation, setPronunciation ] = useState(entry.pronunciation);
+  const [ pronunciations, setPronunciations ] = useState(entry.pronunciations);
   const [ color, setColor ] = useState(entry.color);
   const [ published, setPublished ] = useState(entry.published);
   const [ greetings, setGreetings ] = useState(entry.greetings);
@@ -70,7 +71,7 @@ export default function EditEntry({ entry }) {
         sources : sources,
         disclaimer : disclaimer,
         color : color,
-        pronunciation : pronunciation,
+        pronunciations : pronunciations,
         published : published,
         websites : websites,
         greetings : greetings,
@@ -91,7 +92,7 @@ export default function EditEntry({ entry }) {
         setCategory(results.entry.category)
         setDisclaimer(results.entry.disclaimer)
         setSources(results.entry.sources)
-        setPronunciation(results.entry.pronunciation)
+        setPronunciations(results.entry.pronunciations)
         setColor(results.entry.color)
         setPublished(results.entry.published)
         setGreetings(results.entry.greetings)
@@ -181,12 +182,10 @@ export default function EditEntry({ entry }) {
           </div>
         : false}
 
-        {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('pronunciation') > -1 ?
+        {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('pronunciations') > -1 ?
           <div className="mt-2.5">
-            <label className="text-gray-800 text-sm mb-1 block">{t('pronunciation')}</label>
-            <div className="relative flex items-center">
-              <input value={pronunciation ? pronunciation : ""} onChange={(e) => setPronunciation(e.target.value)} name="pronunciation" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('pronunciation-placeholder')} />
-            </div>
+            <label className="text-gray-800 text-sm mb-1 block">{t('pronunciations')}</label>
+            <PronunciationsEditor pronunciations={pronunciations} setPronunciations={setPronunciations} />
           </div>
         : false}
 

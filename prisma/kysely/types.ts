@@ -21,7 +21,6 @@ export type Entry = {
     slug: string | null;
     color: string | null;
     sources: string | null;
-    pronunciation: string | null;
     disclaimer: string | null;
     category: string | null;
     published: Generated<boolean>;
@@ -107,6 +106,12 @@ export type Polygon = {
     id: Generated<number>;
     entryId: number;
 };
+export type Pronunciation = {
+    id: Generated<number>;
+    url: string | null;
+    text: string | null;
+    entryId: number;
+};
 export type Relation = {
     id: Generated<number>;
     description: string | null;
@@ -154,6 +159,7 @@ export type DB = {
     PermissionEntity: PermissionEntity;
     Point: Point;
     Polygon: Polygon;
+    Pronunciation: Pronunciation;
     Relation: Relation;
     User: User;
     UsersOnIssues: UsersOnIssues;
