@@ -160,7 +160,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
           </div>
           <hr className="mt-1.5 border-slate-300" />
           <div>
-            <p className="hidden md:block text-xs text-black mt-2.5">{t('search-address')} <Link prefetch={false} href="https://native-land.ca/teachers-guide/">{t('think-critically')}</Link>.</p>
+            <p className="hidden md:block text-xs text-black mt-2.5">{t('search-address')} <Link prefetch={false} href="/resources/teachers-guide/">{t('think-critically')}</Link>.</p>
             <div id="nld_geocoder" className="m-0" />
           </div>
           <div className="block md:hidden mt-1 rounded bg-slate-100 p-1" onClick={() => setShowLists(!showLists)}>
