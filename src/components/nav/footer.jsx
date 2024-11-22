@@ -25,9 +25,6 @@ export default async function Footer() {
             <h4 className="text-lg text-gray-900 font-medium mb-7">{t('about')}</h4>
             <ul className="text-sm  transition-all duration-500">
               <li className="mb-3">
-                <Link prefetch={false} href="/about/our-team" className="text-gray-600 hover:text-gray-900">{t('our-team')}</Link>
-              </li>
-              <li className="mb-3">
                 <Link prefetch={false} href="/about/why-it-matters" className="text-gray-600 hover:text-gray-900">{t('why-it-matters')}</Link>
               </li>
               <li className="mb-3">
