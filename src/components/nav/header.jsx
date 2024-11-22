@@ -45,7 +45,6 @@ export default function Header() {
             </div>
             <div className={`${openNav === 'about' ? '' : 'hidden'} absolute w-48 z-30`}>
               <div className="mt-[23px] border-t-4 border-l border-b border-r md:border-l-0 md:border-b-0 md:border-r-0 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/our-team" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('our-team')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/why-it-matters" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('why-it-matters')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/how-it-works" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('how-it-works')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/partners-and-contributors" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('partners-contributors')}</Link>
