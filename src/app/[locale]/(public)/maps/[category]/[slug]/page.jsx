@@ -69,7 +69,7 @@ export default async function Page({ params : { locale, category, slug }}) {
     .where('published', '=', true)
     .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
     .select((eb) => [
-      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.sources', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
+      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.sources', 'Entry.createdAt', 'Entry.updatedAt',
       eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
       jsonArrayFrom(
         eb.selectFrom('Greeting')
