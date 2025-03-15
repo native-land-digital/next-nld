@@ -124,7 +124,7 @@ export default async function Page({ params : { locale, category, slug }}) {
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={entry.name} crumbs={[{ url : "/maps", title : "Maps" }, { url : `/maps/${category}`, title : category }]} />
       <div className="grid gap-5 grid-cols-1 md:grid-cols-3 min-h-screen w-full md:w-2/3 px-5 md:px-0 m-auto -mt-12 text-black">
-        <Sidebar picks={3}>
+        <Sidebar picks={category !== "greetings" ? 3 : 0}>
           <ol className="hidden md:block list-inside text-gray-400">
             <li className="mb-2.5"><a href="#map">{t('map')}</a></li>
             <li className="mb-2.5"><a href="#websites">{t('websites')}</a></li>
@@ -136,6 +136,15 @@ export default async function Page({ params : { locale, category, slug }}) {
             <li className="mb-2.5"><a href="#send-correction">{t('correction')}</a></li>
           </ol>
           <span />
+          {category === 'greetings' ?
+            <div>
+              <hr className="my-2.5" />
+              <section className="mt-5">
+                <h3 className="text-xl font-bold mb-3" id="greetings">About this Project</h3>
+                <p>This project is a collaboration between the Canadian Commission for UNESCO, nativeland.ca and Dr. Onowa McIvor, President’s Chair at the University of Victoria and supports the UN International Decade of Indigenous Languages. Read more here (link to UNESCO landing page).</p>
+              </section>
+            </div>
+          : false}
         </Sidebar>
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
           {category !== 'greetings' ?
@@ -177,10 +186,6 @@ export default async function Page({ params : { locale, category, slug }}) {
               <Greetings greetings={entry.greetings} />
               <section className="mt-5">
                 <Map geometry={entry.geometry} />
-              </section>
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="greetings">About this Project</h3>
-                <p>This project is a collaboration between the Canadian Commission for UNESCO, nativeland.ca and Dr. Onowa McIvor, President’s Chair at the University of Victoria and supports of the UN International Decade of Indigenous Languages. Read more here (link to UNESCO landing page).</p>
               </section>
             </div>
           : false}

@@ -208,10 +208,11 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
             <p className="text-sm text-black mb-1.5">{t('contact-nations')}</p>
             <ul className="list-none">
               {selectedFeatures.map(feature => {
+                const icon = feature.layer.id !== "greetings" ? "↗" : "🕪";
                 return (
                   <li key={`selected-features-${feature.properties.Slug}`}>
-                    <input type="checkbox" checked={toggledFeatures.indexOf(feature.properties.Slug) === -1} className="mr-1.5" onChange={() => nationToggle(feature.properties.Slug)} />
-                    <Link prefetch={false} href={process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'preview' ? feature.properties.description.substring(feature.properties.description.indexOf('/')) : feature.properties.description} target="_blank">{feature.properties.Name} ↗</Link>
+                    <input type="checkbox" checked={toggledFeatures.indexOf(feature.properties.Slug) === -1} className="mr-1" onChange={() => nationToggle(feature.properties.Slug)} />
+                    <Link prefetch={false} href={process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'preview' ? feature.properties.description.substring(feature.properties.description.indexOf('/')) : feature.properties.description} target="_blank">{feature.properties.Name} {icon}</Link>
                   </li>)
               })}
             </ul>
