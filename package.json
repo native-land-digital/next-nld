@@ -15,6 +15,7 @@
     "email-dev": "email dev"
   },
   "dependencies": {
+    "@ai-sdk/deepseek": "^0.2.1",
     "@aws-sdk/client-s3": "^3.654.0",
     "@aws-sdk/s3-presigned-post": "^3.654.0",
     "@aws-sdk/signature-v4-crt": "^3.654.0",
@@ -33,6 +34,7 @@
     "@turf/combine": "^7.1.0",
     "@types/crypto-js": "^4.2.2",
     "@types/mdx": "^2.0.13",
+    "ai": "^4.2.2",
     "aws-crt": "^1.22.0",
     "aws-sdk": "^2.1691.0",
     "crypto-js": "^4.2.0",
@@ -48,6 +50,7 @@
     "prisma": "^5.20.0",
     "prisma-kysely": "^1.8.0",
     "react": "^18",
+    "react-chatbot-kit": "^2.2.2",
     "react-color": "^2.19.3",
     "react-dom": "^18",
     "react-email": "^3.0.1",
