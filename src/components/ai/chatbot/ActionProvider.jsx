@@ -14,9 +14,7 @@ const ActionProvider = ({ createChatBotMessage, setState, state, children }) => 
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
 
-
     const originalMessages = JSON.parse(JSON.stringify(state.messages));
-    console.log(originalMessages)
 
     let streamingMessage = {
       id : Math.random() * 1000,
