@@ -21,8 +21,36 @@ export default async function FrontPage() {
     .execute()
 
   return (
-    <div className="font-[sans-serif] bg-white py-10 text-center">
+    <div className="font-[sans-serif] bg-white pb-10 text-center">
       <div className="m-auto">
+        <section className="w-full px-5 md:px-0 m-auto mb-5 bg-blue-600 py-5">
+          <div className="grid grid-cols-6 m-auto w-2/3 gap-5">
+            <div className="border-4 border-white rounded-full">
+              <p className="text-4xl font-bold text-white mt-8">100M+</p>
+              <p className="text-slate-100 mb-8">visitors</p>
+            </div>
+            <div className="border-4 border-white rounded-full">
+              <p className="text-4xl font-bold text-white mt-8">4K+</p>
+              <p className="text-slate-100 mb-8">nations added</p>
+            </div>
+            <div className="border-4 border-white rounded-full">
+              <p className="text-4xl font-bold text-white mt-8">20M+</p>
+              <p className="text-slate-100 mb-8">API calls</p>
+            </div>
+            <div className="border-4 border-white rounded-full">
+              <p className="text-4xl font-bold text-white mt-8">10K+</p>
+              <p className="text-slate-100 mb-8">dialogues</p>
+            </div>
+            <div className="border-4 border-white rounded-full">
+              <p className="text-4xl font-bold text-white mt-8">60M+</p>
+              <p className="text-slate-100 mb-8">shapes shared</p>
+            </div>
+            <div className="border-4 border-white rounded-full">
+              <p className="text-4xl font-bold text-white mt-8">100+</p>
+              <p className="text-slate-100 mb-8">collaborations</p>
+            </div>
+          </div>
+        </section>
         <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-5">
           <h2 className="text-4xl md:text-6xl font-bold leading-snug"><span className="text-blue-600 underline underline-offset-2 decoration-yellow-600/30 decoration-[15px]">{t('welcome')}</span> <span className="text-black">{t('welcome-glad')}</span></h2>
           <p className="text-xl text-gray-500 my-8">{t('welcome-blurb')}</p>
