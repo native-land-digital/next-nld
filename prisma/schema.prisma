@@ -20,6 +20,14 @@ datasource db {
   directUrl  = env("DIRECT_URL")
 }
 
+model Pronunciation {
+  id              Int @id @default(autoincrement())
+  url             String?
+  text            String?
+  entryId         Int
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+}
+
 model Greeting {
   id              Int @id @default(autoincrement())
   url             String
@@ -70,38 +78,24 @@ model Relation {
 model Point {
 	id              Int @id @default(autoincrement())
   geometry        Unsupported("geometry(Point, 4326)")?
+  osmType         String?
+  osmId           String?
   entryId         Int @unique
-  entry           Entry @relation(fields: [entryId], references: [id])
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
 
 model Line {
 	id              Int @id @default(autoincrement())
   geometry        Unsupported("geometry(MultiLineString, 4326)")?
   entryId         Int @unique
-  entry           Entry @relation(fields: [entryId], references: [id])
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
 
 model Polygon {
 	id              Int @id @default(autoincrement())
   geometry        Unsupported("geometry(MultiPolygon, 4326)")?
   entryId         Int @unique
-  entry           Entry @relation(fields: [entryId], references: [id])
-}
-
-model User {
-	id                Int @id @default(autoincrement())
-  createdAt         DateTime  @default(now())
-	email             String @unique
-  password          String
-	name              String?
-  permissions       String[] @default(["api", "profile"])
-  organization      String?
-  verification_key  String? @default(uuid())
-  email_verified    Boolean @default(false)
-  agreed_treaty     Boolean @default(false)
-  api_key           String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
-
-  @@index([email])
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
 
 model Entry {
@@ -110,7 +104,8 @@ model Entry {
   slug            String? @unique
   color           String?
   sources         String?
-  pronunciation   String?
+  pronunciation   Pronunciation[]
+  disclaimer      String?
   category        String?
   published       Boolean @default(false)
   media           Media[]
@@ -126,5 +121,130 @@ model Entry {
   line            Line?
   polygon         Polygon?
 
+  itemPerms       ItemPermission[]
+  issues          Issue[]
+
   @@index([slug])
+}
+
+model PermissionAction {
+  id              Int @id @default(autoincrement())
+  name            String
+  appliedToGlobal GlobalPermission[]
+  appliedToItem   ItemPermission[]
+}
+
+model PermissionEntity {
+  id              Int @id @default(autoincrement())
+  name            String
+  appliedToGlobal GlobalPermission[]
+  appliedToItem   ItemPermission[]
+}
+
+model GlobalPermission {
+  id              Int @id @default(autoincrement())
+  columnNames     String[]
+  actionId        Int
+  action          PermissionAction @relation(fields: [actionId], references: [id])
+  entityId        Int
+  entity          PermissionEntity @relation(fields: [entityId], references: [id])
+  userId          Int
+  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ItemPermission {
+  id              Int @id @default(autoincrement())
+  columnNames     String[]
+  entryId         Int
+  entry           Entry @relation(fields: [entryId], references: [id])
+  actionId        Int
+  action          PermissionAction @relation(fields: [actionId], references: [id])
+  entityId        Int
+  entity          PermissionEntity @relation(fields: [entityId], references: [id])
+  userId          Int
+  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+	id                   Int @id @default(autoincrement())
+  createdAt            DateTime  @default(now())
+	email                String @unique
+  password             String
+	name                 String?
+  permissions_global   GlobalPermission[]
+  permissions_items    ItemPermission[]
+  permissions          String[] @default(["api", "profile"])
+  organization         String?
+  verification_key     String? @default(uuid())
+  email_verified       Boolean @default(false)
+  agreed_treaty        Boolean @default(false)
+  api_key              String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
+
+  issueAuthor          Issue[]
+  issueUser            UsersOnIssues[]
+  comments             IssueComment[]
+
+  @@index([email])
+}
+
+model IssueMedia {
+	id               Int @id @default(autoincrement())
+  url              String
+  issueCommentId   Int
+  issueComment     IssueComment @relation(fields: [issueCommentId], references: [id], onDelete: Cascade)
+}
+
+model IssueComment {
+	id              Int @id @default(autoincrement())
+  comment         String
+  media           IssueMedia[]
+  issueId         Int
+  issue           Issue @relation(fields: [issueId], references: [id])
+  authorId        Int
+  author          User @relation(fields: [authorId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model IssueCategory {
+	id              Int @id @default(autoincrement())
+	name            String @unique
+  color           String
+  posts           CategoriesOnIssues[]
+
+  @@index([name])
+}
+
+model CategoriesOnIssues {
+	id              Int @id @default(autoincrement())
+  issueId         Int
+  issue           Issue @relation(fields: [issueId], references: [id])
+  categoryId      Int
+  category        IssueCategory @relation(fields: [categoryId], references: [id])
+
+  @@index([issueId, categoryId])
+}
+
+model UsersOnIssues {
+	id              Int @id @default(autoincrement())
+  issueId         Int
+  issue           Issue @relation(fields: [issueId], references: [id])
+  userId          Int
+  user            User @relation(fields: [userId], references: [id])
+
+  @@index([issueId, userId])
+}
+
+model Issue {
+	id              Int @id @default(autoincrement())
+	name            String
+  open            Boolean @default(true)
+  categories      CategoriesOnIssues[]
+  users           UsersOnIssues[]
+  comments        IssueComment[]
+  createdAt       DateTime  @default(now())
+  entryId         Int?
+  entry           Entry? @relation(fields: [entryId], references: [id])
+  authorId        Int?
+  author          User? @relation(fields: [authorId], references: [id])
 }

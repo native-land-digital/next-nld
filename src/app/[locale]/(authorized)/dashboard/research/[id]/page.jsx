@@ -3,7 +3,6 @@ import { jsonArrayFrom } from 'kysely/helpers/postgres'
 import { notFound } from 'next/navigation';
 import { getServerSession } from "next-auth/next"
 
-import { hasResearchPermission, allowedResearchIDs } from '@/lib/auth/permissions'
 import { authOptions } from "@/root/auth";
 import { setLocaleCache } from '@/i18n/server-i18n';
 import EditEntry from '@/components/dashboard/edit-entry'
@@ -18,9 +17,26 @@ export default async function Page({ params : { locale, id } }) {
   const entry = await db.selectFrom('Entry')
     .where('Entry.id', '=', parseInt(id))
     .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
+    .leftJoin('Line', 'Line.entryId', 'Entry.id')
+    .leftJoin('Point', 'Point.entryId', 'Entry.id')
     .select((eb) => [
-      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
-      eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.disclaimer', 'Entry.createdAt', 'Entry.updatedAt',
+      eb.fn('COALESCE', [
+        eb.fn('ST_AsGeoJSON', 'Polygon.geometry'),
+        eb.fn('ST_AsGeoJSON', 'Line.geometry'),
+        eb.fn('ST_AsGeoJSON', 'Point.geometry')
+      ]).as('geometry'),
+      eb.case()
+        .when('Polygon.entryId', 'is not', null).then('Polygon')
+        .when('Line.entryId', 'is not', null).then('Line')
+        .when('Point.entryId', 'is not', null).then('Point')
+        .end()
+      .as('geometry_type'),
+      jsonArrayFrom(
+        eb.selectFrom('Pronunciation')
+          .select(['id', 'url', 'text'])
+          .whereRef('Pronunciation.entryId', '=', 'Entry.id')
+      ).as('pronunciations'),
       jsonArrayFrom(
         eb.selectFrom('Greeting')
           .select(['id', 'url', 'text', 'translation', 'usage', 'parentId'])
@@ -53,17 +69,8 @@ export default async function Page({ params : { locale, id } }) {
     ])
     .executeTakeFirst()
 
-  // Checking for specific permissions
-  let userQuery = await db.selectFrom('User')
-    .where('id', '=', session.user.id)
-    .select(['permissions'])
-    .executeTakeFirst();
-
-  if(hasResearchPermission(userQuery.permissions) && !userQuery.permissions.includes('research')) {
-    let allowedIDs = allowedResearchIDs(userQuery.permissions);
-    if(allowedIDs.indexOf(entry.id) == -1) {
-      notFound();
-    }
+  if(!session.user.global_permissions.find(perm => perm.entity === "research") && !session.user.item_permissions.find(perm => perm.entity === "research" && perm.entry === parseInt(id))) {
+    notFound();
   }
 
   if(entry) {
