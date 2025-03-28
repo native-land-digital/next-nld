@@ -1,7 +1,7 @@
 import React from 'react';
 import { createClientMessage } from 'react-chatbot-kit';
 
-const ActionProvider = ({ createChatBotMessage, setState, state, children }) => {
+const ActionProvider = ({ setState, state, children }) => {
 
   const getAIResponse = async (message) => {
 
@@ -57,6 +57,7 @@ const ActionProvider = ({ createChatBotMessage, setState, state, children }) => 
               }));
             } catch (e) {
               // Sometimes the data might not be JSON
+              console.log(e)
               console.log('Raw data:', line.slice(6));
             }
           }

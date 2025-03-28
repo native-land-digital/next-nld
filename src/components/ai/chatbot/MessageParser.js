@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const MessageParser = ({ children, actions }) => {
-
-  const [ currentMessages, setCurrentMessages ] = useState([])
 
   const parse = (message) => {
     actions.getAIResponse(message);
