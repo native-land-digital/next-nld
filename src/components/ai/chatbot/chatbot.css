@@ -1,0 +1,12 @@
+.react-chatbot-kit-chat-container {
+  @apply w-full;
+}
+
+.react-chatbot-kit-chat-bot-message {
+  @apply ml-5;
+  @apply w-full;
+}
+
+.react-chatbot-kit-chat-input {
+  @apply text-black;
+}
