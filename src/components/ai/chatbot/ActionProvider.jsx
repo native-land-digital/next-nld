@@ -1,28 +1,39 @@
 import React from 'react';
+import { createClientMessage } from 'react-chatbot-kit';
 
 const ActionProvider = ({ createChatBotMessage, setState, state, children }) => {
 
   const getAIResponse = async (message) => {
 
+    // Putting together messages for API
+    const originalMessages = [...state.messages, createClientMessage(message)];
+    const messagesToSend = JSON.parse(JSON.stringify(originalMessages))
+    messagesToSend.shift();
+
+    // Creating loading interface and placeholder message
+    console.log(messagesToSend)
+    let streamingMessage = {
+      id : Math.random() * 1000,
+      message : '',
+      loading : true,
+      type : 'bot'
+    }
+    setState((prev) => ({
+      ...prev,
+      messages: [...originalMessages, streamingMessage],
+    }));
+
     const response = await fetch(`/api/ai`, {
       method : "POST",
       body : JSON.stringify({
-        message : message
+        messages : messagesToSend
       })
     })
 
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
-
-    const originalMessages = JSON.parse(JSON.stringify(state.messages));
-
-    let streamingMessage = {
-      id : Math.random() * 1000,
-      message : '',
-      loading : false,
-      type : 'bot'
-    }
-    let streamingText = ''
+    let streamingText = '';
+    streamingMessage.loading = false;
 
     try {
       while (true) {
