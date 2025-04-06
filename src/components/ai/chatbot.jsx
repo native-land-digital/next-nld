@@ -1,6 +1,7 @@
 'use client'
-import Chatbot from "react-chatbot-kit";
 import { useState } from 'react';
+import Chatbot from "react-chatbot-kit";
+import { createClientMessage } from 'react-chatbot-kit';
 import 'react-chatbot-kit/build/main.css'
 
 import config from '@/components/ai/chatbot/config.js';

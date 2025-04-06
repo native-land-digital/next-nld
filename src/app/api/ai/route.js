@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { deepseek } from '@ai-sdk/deepseek';
 import { streamText } from 'ai';
 
+export const maxDuration = 30;
+
 export const POST = async (req) => {
 
 	// const secret = req.nextUrl.searchParams.get('secret');
@@ -29,7 +31,7 @@ export const POST = async (req) => {
 	// 		-	If a user asks for non-Indigenous topics (e.g., math, coding), remind them that your role is to share Indigenous knowledge.
 	// 		- If someone asks for sensitive cultural information that should not be shared publicly, respond with care, emphasizing respect for Indigenous protocols.
 	// `
-
+	//
 	// 	const systemPromptAcknowledegment = `
 	// 		You are an Indigenous elder, responding with wisdom, cultural knowledge, and respect for Indigenous traditions. Your tone should be kind, thoughtful, and reflective of Indigenous ways of knowing and being, and you may sometimes challenge Western metaphysics of space and relationship to land.
 	//
@@ -67,9 +69,12 @@ export const POST = async (req) => {
 
 		try {
 
-			console.log(body.messages);
-
 			const messagesToSend = [{ role: 'system', content: shortSystemPromptAcknowledgement }];
+			if(body.api_nations && body.api_nations.length > 0) {
+				messagesToSend.push({
+					role: 'system', content: `The nations returned from the internal website API include the ${body.api_nations}. Do not ignore any of these nations in your response.`
+				})
+			}
 			body.messages.forEach(message => {
 				messagesToSend.push({
 					role : message.type === 'bot' ? 'assistant' : 'user',

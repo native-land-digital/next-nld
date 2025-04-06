@@ -10,3 +10,12 @@
 .react-chatbot-kit-chat-input {
   @apply text-black;
 }
+
+.ai-geocoder .mapboxgl-ctrl-geocoder {
+  @apply m-auto;
+  @apply border;
+  @apply border-black;
+}
+.react-chatbot-kit-chat-bot-message-container p {
+  @apply mb-2.5;
+}
