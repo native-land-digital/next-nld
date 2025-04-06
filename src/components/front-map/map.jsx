@@ -18,6 +18,7 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
     mapboxgl.clearStorage();
+    mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.3.0/mapbox-gl-rtl-text.js', null, true);
     const newMap = new mapboxgl.Map({
       ...randomStartingPosition(),
       container: "nld-mapbox-map",
