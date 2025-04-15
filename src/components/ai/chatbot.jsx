@@ -1,6 +1,6 @@
 'use client'
-import Chatbot from "react-chatbot-kit";
 import { useState } from 'react';
+import Chatbot from "react-chatbot-kit";
 import 'react-chatbot-kit/build/main.css'
 
 import config from '@/components/ai/chatbot/config.js';
@@ -14,7 +14,7 @@ export default function AIChatbot() {
 
   return (
     <>
-      <div className={`fixed right-0 bottom-0 z-50 m-5 w-1/2 ${minimized ? 'w-0 h-0 -z-10' : ''}`}>
+      <div className={`fixed right-0 bottom-0 m-5 ${minimized ? 'w-0 h-0 -z-10' : 'z-50 w-6/7 md:w-1/2'}`}>
         <Chatbot
           config={config(setMinimized)}
           messageParser={MessageParser}

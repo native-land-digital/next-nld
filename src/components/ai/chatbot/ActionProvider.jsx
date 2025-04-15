@@ -3,15 +3,15 @@ import { createClientMessage } from 'react-chatbot-kit';
 
 const ActionProvider = ({ setState, state, children }) => {
 
-  const getAIResponse = async (message) => {
+  const getAIResponse = async (message, api_nations) => {
 
     // Putting together messages for API
     const originalMessages = [...state.messages, createClientMessage(message)];
     const messagesToSend = JSON.parse(JSON.stringify(originalMessages))
     messagesToSend.shift();
+    messagesToSend.shift();
 
     // Creating loading interface and placeholder message
-    console.log(messagesToSend)
     let streamingMessage = {
       id : Math.random() * 1000,
       message : '',
@@ -26,7 +26,8 @@ const ActionProvider = ({ setState, state, children }) => {
     const response = await fetch(`/api/ai`, {
       method : "POST",
       body : JSON.stringify({
-        messages : messagesToSend
+        messages : messagesToSend,
+        api_nations : api_nations
       })
     })
 
@@ -47,9 +48,9 @@ const ActionProvider = ({ setState, state, children }) => {
           if (line.startsWith('0:')) {
             try {
               let text = line.slice(3, line.length - 1);
-              text = text.replace(/\\n/g, "<br />");
+              text = text.replace(/\\n/g, "\n");
               streamingText += text;
-              streamingMessage.message = <div id="test-div" dangerouslySetInnerHTML={{__html : streamingText }} />
+              streamingMessage.message = streamingText
 
               setState((prev) => ({
                 ...prev,
