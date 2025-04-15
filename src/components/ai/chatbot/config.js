@@ -1,4 +1,4 @@
-import { createChatBotMessage, createCustomMessage, createClientMessage } from 'react-chatbot-kit';
+import { createCustomMessage, createChatBotMessage } from 'react-chatbot-kit';
 import Markdown from 'react-markdown'
 
 /*
@@ -20,8 +20,8 @@ const GeocoderMessage = () => {
 const config = (setMinimized) => {
   return {
     initialMessages: [
-      createChatBotMessage(`Welcome! My name is Kōrero. I'm here to help you understand Indigenous land and culture. I can help you create a territory acknowledgement or help you understand more about your own relationship to the land. Where are you interested in learning more about?`),
-      createCustomMessage('Test', 'custom')
+      createChatBotMessage(`I'm Kōrero, a reflective, relational AI built to support meaningful, responsibility-based land acknowledgements. Rooted in the principles of Indigenous data sovereignty, I'm here to foster relational learning through guided questions and gentle prompts.`),
+      createCustomMessage('Geocoder', 'geocoder')
     ],
     botName : "Kōrero",
     customComponents : {
@@ -47,7 +47,7 @@ const config = (setMinimized) => {
       }
     },
     customMessages: {
-      custom: (props) => <GeocoderMessage {...props} />,
+      geocoder: (props) => <GeocoderMessage {...props} />,
     }
   };
 }

@@ -11,7 +11,8 @@ const MessageParser = ({ children, actions }) => {
     if(!geocoderCreated) {
       geocoderCreated = true;
       const geocoder = new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken
+        accessToken: mapboxgl.accessToken,
+        placeholder : "Search for a place you're interested in..."
       });
       geocoder.on('result', async (e) => {
         const apiResponse = await fetch(`https://native-land.ca/api/index.php?maps=territories&position=${e.result.center[1]},${e.result.center[0]}`)
