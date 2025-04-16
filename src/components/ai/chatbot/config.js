@@ -20,7 +20,7 @@ const GeocoderMessage = () => {
 const config = (setMinimized) => {
   return {
     initialMessages: [
-      createChatBotMessage(`I'm Kōrero, a reflective, relational AI built to support meaningful, responsibility-based land acknowledgements. Rooted in the principles of Indigenous data sovereignty, I'm here to foster relational learning through guided questions and gentle prompts.`),
+      createChatBotMessage(`Hello, I'm Kōrero, land and waters acknowledgment assistant.`),
       createCustomMessage('Geocoder', 'geocoder')
     ],
     botName : "Kōrero",
