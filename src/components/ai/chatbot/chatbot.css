@@ -1,0 +1,44 @@
+.react-chatbot-kit-chat-container {
+  @apply w-full;
+}
+
+.react-chatbot-kit-chat-bot-message {
+  @apply ml-5;
+  @apply w-full;
+}
+
+.react-chatbot-kit-chat-input {
+  @apply text-black;
+}
+
+.ai-geocoder .mapboxgl-ctrl-geocoder {
+  @apply m-auto;
+  @apply border;
+  @apply border-black;
+}
+.react-chatbot-kit-chat-bot-message-container h3 {
+  @apply text-lg;
+  @apply font-bold;
+  @apply mb-2.5;
+}
+.react-chatbot-kit-chat-bot-message-container ol {
+  @apply pl-5;
+  @apply mb-2.5;
+}
+.react-chatbot-kit-chat-bot-message-container ol li {
+  @apply list-decimal;
+}
+.react-chatbot-kit-chat-bot-message-container ul {
+  @apply pl-5;
+  @apply mb-2.5;
+}
+.react-chatbot-kit-chat-bot-message-container ul li {
+  @apply list-disc;
+}
+.react-chatbot-kit-chat-bot-message-container p {
+  @apply mb-2.5;
+}
+.react-chatbot-kit-chat-bot-message-container a {
+  @apply text-blue-200;
+  @apply underline;
+}
