@@ -22,6 +22,7 @@
     "our-team" : "Our Team",
     "why-it-matters" : "Why It Matters",
     "how-it-works" : "How It Works",
+    "faq" : "FAQ",
     "partners-contributors" : "Partners & Contributors",
     "roadmap" : "Roadmap",
     "media" : "Media",
@@ -77,8 +78,8 @@
     "disclaimer-header" : "Native Land Disclaimer",
     "disclaimer" : "<p>Native Land Digital honors the sovereignty of all Indigenous nations, their lands, and their waters. We recognize that these boundaries and territories are representations of the sacred.</p><p>We respect the rights of Indigenous data sovereignty, and we are committed to an ongoing process of collaboration, growth, and learning.</p><p>We work to update and replace information that is a continuation of trauma caused by theft, injustice, misinformation, and ignorance.</p><p>The map is a living document, informed by the contributions of Indigenous communities, Indigenous knowledge holders and their stories. It does not claim to represent official or legal boundaries. We encourage you to connect directly with the Indigenous nations to learn more about their territories and histories.</p><p>This is an honouring of Indigenous resilience past, present and future.</p>",
     "disclaimer-close" : "Go to Map",
-    "greetings-disclaimer-header" : "Greetings Disclaimer",
-    "greetings-disclaimer" : "<p>In collaboration with CCUNESCO and Dr. Onowa McIvor, some map areas now feature Indigenous language greetings.</p><p>Read more about this project here.</p>",
+    "greetings-disclaimer-header" : "About Greetings",
+    "greetings-disclaimer" : "<p>In collaboration with CCUNESCO and Dr. Onowa McIvor, some map areas now feature Indigenous language greetings.</p><p>Read more here.</p>",
     "greetings-disclaimer-close" : "Go to Greetings"
   },
   "FrontPage" : {

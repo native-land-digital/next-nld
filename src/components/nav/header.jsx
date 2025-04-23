@@ -49,6 +49,7 @@ export default function Header() {
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/how-it-works" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('how-it-works')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/partners-and-contributors" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('partners-contributors')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/roadmap" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('roadmap')}</Link>
+                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/faq" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('faq')}</Link>
               </div>
             </div>
           </div>
