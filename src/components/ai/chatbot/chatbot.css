@@ -1,5 +1,13 @@
 .react-chatbot-kit-chat-container {
   @apply w-full;
+  @apply shadow-lg;
+  @apply border;
+  @apply rounded-md;
+  @apply border-slate-200;
+}
+
+.react-chatbot-kit-chat-container input[type="text"], .react-chatbot-kit-chat-container .react-chatbot-kit-chat-input {
+  font-size: 16px;
 }
 
 .react-chatbot-kit-chat-bot-message {
