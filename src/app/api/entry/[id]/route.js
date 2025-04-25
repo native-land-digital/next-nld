@@ -77,7 +77,14 @@ export const PATCH = async (req, route) => {
 		const body = await req.json();
 		const { id: entryId } = route.params;
 
-		if(token.global_permissions.find(perm => perm.entity === "research")) {
+		if(token.global_permissions.find(perm => perm.entity === "research") || token.item_permissions.find(perm => perm.entity === "research")) {
+
+      if(token.item_permissions.find(perm => perm.entity === "research")) {
+        const allowedEntryIDs = token.item_permissions.filter(perm => perm.entity === "research").map(perm => perm.entry);
+        if(allowedEntryIDs.indexOf(parseInt(entryId)) === -1) {
+          return NextResponse.json({ error : `You do not have permission to access this endpoint` }, { status: 500 });
+        }
+      }
 
   		try {
   			if(body.geometry && body.geometry !== "null") {
