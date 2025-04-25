@@ -1,9 +1,11 @@
 'use client'
-import React, { useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 const MessageParser = ({ children, actions }) => {
+
+  const apiNations = useRef([]);
 
   useEffect(() => {
     let geocoderCreated = false;
@@ -18,7 +20,8 @@ const MessageParser = ({ children, actions }) => {
         const apiResponse = await fetch(`https://native-land.ca/api/index.php?maps=territories&position=${e.result.center[1]},${e.result.center[0]}`)
         const parsedResponse = await apiResponse.json();
         const nations = parsedResponse.map(feature => feature.properties["Name"]);
-        parse(`Let's talk about ${e.result.place_name}.`, nations);
+        apiNations.current = nations;
+        parse(`Let's talk about ${e.result.place_name}.`);
       });
       const addGeocoderInterval = setInterval(() => {
         if(typeof document !== 'undefined') {
@@ -31,8 +34,8 @@ const MessageParser = ({ children, actions }) => {
     }
   }, [])
 
-  const parse = (message, api_nations = []) => {
-    actions.getAIResponse(message, api_nations);
+  const parse = (message) => {
+    actions.getAIResponse(message, apiNations.current);
   };
 
   return (
