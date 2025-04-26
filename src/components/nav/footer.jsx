@@ -76,7 +76,7 @@ export default async function Footer() {
             <h4 className="text-lg text-gray-900 font-medium mb-7">{t('resources')}</h4>
             <ul className="text-sm  transition-all duration-500">
               <li className="mb-3">
-                <Link prefetch={false} href="/resources/territory-acknowledgement" className="text-gray-600 hover:text-gray-900">{t('territory-acknowledgement')}</Link>
+                <Link prefetch={false} href="/resources/land-&-water-acknowledgement-AI" className="text-gray-600 hover:text-gray-900">{t('territory-acknowledgement')}</Link>
               </li>
               <li className="mb-3">
                 <Link prefetch={false} href="/resources/teachers-guide" className="text-gray-600 hover:text-gray-900">{t('teachers-guide')}</Link>
