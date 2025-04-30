@@ -114,6 +114,7 @@ model Entry {
   sources         String?
   pronunciation   String?
   category        String?
+  language        String?
   published       Boolean @default(false)
   media           Media[]
   websites        Website[]
