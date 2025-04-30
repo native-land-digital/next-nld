@@ -74,15 +74,10 @@ export const PATCH = async (req, route) => {
 
 	if(token && token.id) {
 
-    const user = await db.selectFrom('User')
-      .where('id', '=', Number(token.id))
-      .select(['permissions'])
-      .executeTakeFirst()
-
 		const body = await req.json();
 		const { id: entryId } = route.params;
 
-		if(user.permissions.includes('research') || user.permissions.includes(`research_${entryId}`)) {
+		if(token.global_permissions.find(perm => perm.entity === "research")) {
 
   		try {
   			if(body.geometry && body.geometry !== "null") {
@@ -105,6 +100,46 @@ export const PATCH = async (req, route) => {
               .execute();
             delete body.geometry;
             delete body.geometry_type;
+
+            // Deleting, updating, adding pronunciation
+            const pronunciations = body.pronunciations;
+            const updatedPronunciationIds = pronunciations.map(pronunciation => { return pronunciation.id; });
+            if(updatedPronunciationIds.length > 0) {
+              await trx.deleteFrom('Pronunciation')
+                .where('entryId', '=', parseInt(entryId))
+                .where('id', 'not in', updatedPronunciationIds)
+                .execute();
+            } else {
+              await trx.deleteFrom('Pronunciation')
+                .where('entryId', '=', parseInt(entryId))
+                .execute();
+            }
+
+            for (const pronunciation of pronunciations) {
+              if (pronunciation.id) {
+                await trx.updateTable('Pronunciation')
+                  .set({
+                    url: pronunciation.url,
+                    text: pronunciation.text,
+                  })
+                  .where('id', '=', pronunciation.id)
+                  .execute();
+              }
+            }
+
+            const newPronunciations = pronunciations.filter(pronunciation => !pronunciation.id);
+            if (newPronunciations.length > 0) {
+              await trx.insertInto('Pronunciation')
+                .values(
+                  newPronunciations.map(pronunciation => ({
+                    entryId : parseInt(entryId),
+                    url: pronunciation.url,
+                    text: pronunciation.text,
+                  }))
+                )
+                .execute();
+            }
+            delete body.pronunciations;
 
             // Deleting, updating, adding websites
       			const websites = body.websites;
@@ -330,8 +365,13 @@ export const PATCH = async (req, route) => {
             .where('Entry.id', '=', parseInt(entryId))
             .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
             .select((eb) => [
-              'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
+              'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.disclaimer', 'Entry.createdAt', 'Entry.updatedAt',
               eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+              jsonArrayFrom(
+                eb.selectFrom('Pronunciation')
+                  .select(['id', 'url', 'text'])
+                  .whereRef('Pronunciation.entryId', '=', 'Entry.id')
+              ).as('pronunciations'),
               jsonArrayFrom(
                 eb.selectFrom('Greeting')
                   .select(['id', 'url', 'text', 'translation', 'usage', 'parentId'])
@@ -392,12 +432,7 @@ export const DELETE = async (req, route) => {
 
 	if(token && token.id) {
 
-    const user = await db.selectFrom('User')
-      .where('id', '=', Number(token.id))
-      .select(['permissions'])
-      .executeTakeFirst()
-
-		if(user.permissions.includes('research')) {
+		if(token.global_permissions.find(perm => perm.entity === "research")) {
   		const { id: entryId } = route.params;
 
   		try {

@@ -1,10 +1,14 @@
 import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
+import { getServerSession } from "next-auth/next"
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
+
+import { authOptions } from "@/root/auth";
 
 export default async function Page({ params : { locale }, searchParams }) {
 
   setLocaleCache(locale);
+  const session = await getServerSession(authOptions);
   const tCommon = await getTranslations('Common');
   const t = await getTranslations('Dashboard');
 
@@ -27,6 +31,12 @@ export default async function Page({ params : { locale }, searchParams }) {
   if(searchParams.search) {
     query = query.where((eb) => eb(eb.fn('lower', 'name'), 'like', `%${searchParams.search.toLowerCase()}%`));
     totalQuery = totalQuery.where((eb) => eb(eb.fn('lower', 'name'), 'like', `%${searchParams.search.toLowerCase()}%`));
+  }
+
+  // If atomized permissions, only return results they are allowed to see
+  if(!session.user.global_permissions.find(perm => perm.entity === "users") && session.user.item_permissions.find(perm => perm.entity === "users")) {
+    const allowedUserIDs = session.user.item_permissions.filter(perm => perm.entity === "users").map(perm => perm.user);
+    query = query.where('id', 'in', allowedUserIDs);
   }
 
   const users = await query.execute()
@@ -61,7 +71,6 @@ export default async function Page({ params : { locale }, searchParams }) {
             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Name</th>
             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Email</th>
             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Organization</th>
-            <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Permissions</th>
             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Edit</th>
           </tr>
         </thead>
@@ -73,7 +82,6 @@ export default async function Page({ params : { locale }, searchParams }) {
                 <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.name}</td>
                 <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.email}</td>
                 <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.organization}</td>
-                <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{user.permissions.join(', ')}</td>
                 <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black"><Link prefetch={false} href={`/dashboard/users/${user.id}`}>➜</Link></td>
               </tr>
             )

@@ -49,12 +49,47 @@ interface RelationInner {
   description : string;
   relatedToId : number;
 }
+interface AdminPermissions {
+  actionId : number;
+  entityId : number;
+}
 
 async function main() {
 
   if(importJSON) {
 
     // importJSON.splice(10); // For import testing
+    const permissionActions = [ "create", "update", "delete" ];
+    const permissionEntities = [ "profile", "api", "mapbox", "research", "users" ];
+
+    const permissionActionsDB : number[] = [];
+    for(let i = 0; i < permissionActions.length; i++) {
+      const action = await prisma.permissionAction.create({
+        data : {
+          name : permissionActions[i],
+        }
+      });
+      permissionActionsDB.push(action.id);
+    }
+    const permissionEntitiesDB : number[] = [] ;
+    for(let i = 0; i < permissionEntities.length; i++) {
+      const entity = await prisma.permissionEntity.create({
+        data : {
+          name : permissionEntities[i],
+        }
+      });
+      permissionEntitiesDB.push(entity.id);
+    }
+
+    let adminPermissionsToCreate : AdminPermissions[] = [];
+    permissionActionsDB.forEach(permissionAction => {
+      permissionEntitiesDB.forEach(permissionEntity => {
+        adminPermissionsToCreate.push({
+          actionId : permissionAction,
+          entityId : permissionEntity
+        })
+      })
+    })
 
     // Admin user
     let admin = await prisma.user.create({
@@ -63,7 +98,11 @@ async function main() {
         email : "test@native-land.ca",
         password : hashPassword("test"),
         email_verified : true,
-        permissions : ["profile", "api", "research", "manage_users", "update_mapbox"],
+        permissions_global : {
+          createMany : {
+            data : adminPermissionsToCreate
+          }
+        },
         organization : "Native Land Digital"
       }
     });
@@ -108,7 +147,6 @@ async function main() {
           sources : row.sources,
           category : row.category,
           published : true,
-          pronunciation : row.pronunciation ? row.pronunciation : "",
           websites : {
             createMany : {
               data : row.websites.map(website => {

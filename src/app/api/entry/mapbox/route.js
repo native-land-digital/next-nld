@@ -9,12 +9,7 @@ export const GET = async (req) => {
 
 	if(token && token.id) {
 
-    const user = await db.selectFrom('User')
-      .where('id', '=', Number(token.id))
-      .select(['permissions'])
-      .executeTakeFirst()
-
-		if(user.permissions.includes('update_mapbox')) {
+		if(token.global_permissions.find(perm => perm.entity === "mapbox")) {
 
       const category = req.nextUrl.searchParams.get('category');
       if(category) {

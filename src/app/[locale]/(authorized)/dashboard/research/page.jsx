@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 import { getServerSession } from "next-auth/next"
 
-import { hasResearchPermission, allowedResearchIDs } from '@/lib/auth/permissions'
 import { authOptions } from "@/root/auth";
 import CreateEntry from '@/components/dashboard/create-entry'
 
@@ -25,15 +24,10 @@ export default async function Page({ params : { locale }, searchParams }) {
     .limit(25)
     .offset(25 * page)
 
-  // Checking for specific permissions
-  let userQuery = await db.selectFrom('User')
-    .where('id', '=', session.user.id)
-    .select(['permissions'])
-    .executeTakeFirst();
-
-  if(hasResearchPermission(userQuery.permissions) && !userQuery.permissions.includes('research')) {
-    let allowedIDs = allowedResearchIDs(userQuery.permissions);
-    query = query.where('id', 'in', allowedIDs);
+  // If atomized permissions, only return results they are allowed to see
+  if(!session.user.global_permissions.find(perm => perm.entity === "research") && session.user.item_permissions.find(perm => perm.entity === "research")) {
+    const allowedEntryIDs = session.user.item_permissions.filter(perm => perm.entity === "research").map(perm => perm.entry);
+    query = query.where('id', 'in', allowedEntryIDs);
   }
 
   if(searchParams.search) {

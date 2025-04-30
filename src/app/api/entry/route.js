@@ -32,12 +32,7 @@ export const POST = async (req) => {
 
 	if(token && token.id) {
 
-    const user = await db.selectFrom('User')
-      .where('id', '=', Number(token.id))
-      .select(['permissions'])
-      .executeTakeFirst()
-
-		if(user.permissions.includes('research')) {
+		if(token.global_permissions.find(perm => perm.entity === "research")) {
 			const body = await req.json();
 
 	  	if (!body.name) {

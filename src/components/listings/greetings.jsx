@@ -19,7 +19,7 @@ export default async function Greetings({ greetings }) {
               <h3 className="text-lg font-bold">Greeting {i + 1}</h3>
               <p>
                 <u>{greeting.text}</u>
-                <AudioPlayer greeting={greeting} />
+                <AudioPlayer audio={greeting} />
               </p>
               <p className="mb-1">{greeting.translation}</p>
               {greeting.usage ? <p>{greeting.usage}</p> : false}

@@ -3,7 +3,7 @@ import { useTranslations } from '@/i18n/client-i18n';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-import { randomStartingPosition, createSetFeatureCollection, makeBoundsFromPoly, getUniqueFeatures } from '@/components/front-map/map-utils';
+import { randomStartingPosition, createSetFeatureCollection, makeBoundsFromPoly, getUniqueFeatures, isMobile } from '@/components/front-map/map-utils';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -18,6 +18,7 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
     mapboxgl.clearStorage();
+    mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.3.0/mapbox-gl-rtl-text.js', null, true);
     const newMap = new mapboxgl.Map({
       ...randomStartingPosition(),
       container: "nld-mapbox-map",
@@ -148,7 +149,9 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
             }
           });
           if (html) {
-            popup.setLngLat(e.lngLat).setHTML(html).addTo(map);
+            if(!isMobile()) {
+              popup.setLngLat(e.lngLat).setHTML(html).addTo(map);
+            }
           }
         });
 

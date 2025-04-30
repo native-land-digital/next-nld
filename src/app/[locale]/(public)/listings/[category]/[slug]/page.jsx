@@ -5,12 +5,14 @@ import Sidebar from '@/components/static/sidebar';
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 import { notFound } from 'next/navigation';
 
-import Map from '@/components/listings/map';
-import Greetings from '@/components/listings/greetings';
-import Websites from '@/components/listings/websites';
-import Related from '@/components/listings/related';
-import Media from '@/components/listings/media';
-import Changelog from '@/components/listings/changelog';
+import Map from '@/components/maps/map';
+import Pronunciations from '@/components/maps/pronunciations';
+import Greetings from '@/components/maps/greetings';
+import Websites from '@/components/maps/websites';
+import Related from '@/components/maps/related';
+import Media from '@/components/maps/media';
+import Changelog from '@/components/maps/changelog';
+import Disclaimer from '@/components/maps/disclaimer';
 
 export const generateStaticParams = async () => {
   if(process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'production') {
@@ -32,9 +34,9 @@ export const generateStaticParams = async () => {
     const greetingEntries = await db.selectFrom('Entry')
       .where('published', '=', true)
       .where('category', '=', 'languages')
-      .select(['id', 'category', 'slug'])
+      .select(['Entry.id', 'Entry.category', 'Entry.slug'])
       .innerJoin('Greeting', 'Entry.id', 'Greeting.entryId')
-      .distinctOn('id')
+      .distinctOn('Entry.id')
       .execute();
 
     greetingEntries.forEach(entry => {
@@ -84,6 +86,11 @@ export default async function Page({ params : { locale, category, slug }}) {
         .end()
       .as('geometry_type'),
       jsonArrayFrom(
+        eb.selectFrom('Pronunciation')
+          .select(['id', 'url', 'text'])
+          .whereRef('Pronunciation.entryId', '=', 'Entry.id')
+      ).as('pronunciations'),
+      jsonArrayFrom(
         eb.selectFrom('Greeting')
           .select(['id', 'url', 'text', 'translation', 'usage', 'parentId'])
           .whereRef('Greeting.entryId', '=', 'Entry.id')
@@ -132,6 +139,8 @@ export default async function Page({ params : { locale, category, slug }}) {
     notFound();
   }
 
+  console.log(entry)
+
   return (
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={entry.name} crumbs={[{ url : "/listings", title : "Listings" }, { url : `/listings/${category}`, title : category }]} />
@@ -142,17 +151,18 @@ export default async function Page({ params : { locale, category, slug }}) {
             {entry.websites.length > 0 ?
               <li className="mb-2.5"><a href="#websites">{t('websites')}</a></li>
             : false}
+            {entry.pronunciations.length > 0 ?
+              <li className="mb-2.5"><a href="#pronunciations">{t('pronunciations')}</a></li>
+            : false}
             {entry.greetings.length > 0 ?
               <li className="mb-2.5"><a href="#greetings">{t('greetings')}</a></li>
-            : false}
-            {entry.relatedTo.length > 0 ?
-              <li className="mb-2.5"><a href="#related-maps">{t('related')}</a></li>
             : false}
             {entry.media.length > 0 ?
               <li className="mb-2.5"><a href="#media">{t('media')}</a></li>
             : false}
-            {entry.sources !== "" ?
-              <li className="mb-2.5"><a href="#sources">{t('sources')}</a></li>
+            <li className="mb-2.5"><a href="#sources">{t('sources')}</a></li>
+            {entry.relatedTo.length > 0 || entry.relatedFrom.length > 0 ?
+              <li className="mb-2.5"><a href="#related-maps">{t('related')}</a></li>
             : false}
             {entry.changelog.length > 0 ?
               <li className="mb-2.5"><a href="#changelog">{t('changelog')}</a></li>
@@ -171,13 +181,19 @@ export default async function Page({ params : { locale, category, slug }}) {
                   <Websites websites={entry.websites} />
                 </section>
               : false}
-              {entry.greetings.length > 0 ?
+              {entry.pronunciations.length > 0 ?
                 <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="pronunciations">{tDash('pronunciations')}</h3>
+                  <Pronunciations pronunciations={entry.pronunciations} />
+                </section>
+              : false}
+              {entry.greetings.length > 0 ?
+                <section className="hidden mt-5">
                   <h3 className="text-xl font-bold mb-3" id="greetings">{t('greetings')}</h3>
                   <Greetings greetings={entry.greetings} />
                 </section>
               : false}
-              {entry.relatedTo.length > 0 ?
+              {entry.relatedTo.length > 0 || entry.relatedFrom.length > 0 ?
                 <section className="mt-5">
                   <h3 className="text-xl font-bold mb-3" id="related-maps">{t('related')}</h3>
                   <Related relatedTo={entry.relatedTo} relatedFrom={entry.relatedFrom} />
@@ -200,6 +216,9 @@ export default async function Page({ params : { locale, category, slug }}) {
                   <h3 className="text-xl font-bold mb-3" id="changelog">{t('changelog')}</h3>
                   <Changelog changelog={entry.changelog} createdAt={entry.createdAt} updatedAt={entry.updatedAt} />
                 </section>
+              : false}
+              {entry.disclaimer && entry.disclaimer !== "" ?
+                <Disclaimer disclaimer={entry.disclaimer} />
               : false}
               <section className="mt-5">
                 <h3 className="text-xl font-bold mb-3" id="send-correction">{t('correction')}</h3>

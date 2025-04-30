@@ -4,7 +4,6 @@ export default async function sitemap() {
 
   const staticPages = [
     '/about/how-it-works',
-    '/about/our-team',
     '/about/partners-and-contributors',
     '/about/roadmap',
     '/about/why-it-matters',

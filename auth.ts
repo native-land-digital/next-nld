@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { db } from '@/lib/db/kysely'
+import { jsonArrayFrom } from 'kysely/helpers/postgres'
 import NextAuth, { getServerSession } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { NextRequest, NextResponse } from "next/server";
@@ -22,8 +23,24 @@ async function getUser(email: string): Promise<User | undefined> {
   try {
 
     const user = await db.selectFrom('User')
-      .where('email', '=', email)
-      .select(['id', 'name', 'permissions', 'email', 'email_verified', 'password'])
+      .where('User.email', '=', email)
+      .select((eb) => [
+        'User.id', 'User.name', 'User.email', 'User.email_verified', 'User.password',
+        jsonArrayFrom(
+          eb.selectFrom('GlobalPermission')
+            .leftJoin('PermissionAction', 'GlobalPermission.actionId', 'PermissionAction.id')
+            .leftJoin('PermissionEntity', 'GlobalPermission.entityId', 'PermissionEntity.id')
+            .select(['PermissionAction.name as action', 'GlobalPermission.columnNames', 'PermissionEntity.name as entity'])
+            .whereRef('GlobalPermission.userId', '=', 'User.id')
+        ).as('global_permissions'),
+        jsonArrayFrom(
+          eb.selectFrom('ItemPermission')
+            .leftJoin('PermissionAction', 'ItemPermission.actionId', 'PermissionAction.id')
+            .leftJoin('PermissionEntity', 'ItemPermission.entityId', 'PermissionEntity.id')
+            .select(['PermissionAction.name as action', 'ItemPermission.columnNames', 'ItemPermission.entryId as entry', 'ItemPermission.userId as user', 'PermissionEntity.name as entity'])
+            .whereRef('ItemPermission.userId', '=', 'User.id')
+        ).as('item_permissions'),
+      ])
       .executeTakeFirst()
 
     if (user) {

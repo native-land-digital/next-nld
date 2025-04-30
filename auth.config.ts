@@ -13,7 +13,8 @@ export const authConfig = {
           user : {
             id : token.id,
             name : session.user.name,
-            permissions : token.permissions
+            global_permissions : token.global_permissions,
+            item_permissions : token.item_permissions
           }
         }
       }
@@ -22,17 +23,21 @@ export const authConfig = {
     async jwt({ token, user }) {
       if(user) {
         token.id = user.id;
-        token.permissions = user.permissions;
+        token.global_permissions = user.global_permissions;
+        token.item_permissions = user.item_permissions;
       }
       return token;
     }
   },
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,
-    maxAge: 24 * 60 * 60,
     encryption: true,
   },
   secret: process.env.NEXTAUTH_SECRET,
-  session: { strategy: "jwt", maxAge: 24 * 60 * 60 },
+  session: {
+    strategy: "jwt",
+    maxAge: 24 * 60 * 60,
+    updateAge: 10 * 60
+  },
   providers: [],
 } satisfies NextAuthConfig;

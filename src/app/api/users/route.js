@@ -33,25 +33,53 @@ export const POST = async (req) => {
 
 				const verification_key = uuidv4()
 
-				const user = await db.insertInto('User')
-					.values({
-						email: body.email,
-						name: body.name,
-						organization : body.organization,
-						verification_key : verification_key,
-						password: hashPassword(body.password)
-					})
-					.returningAll()
-					.execute()
+			  const permissionActions = await db.selectFrom('PermissionAction').select(['id', 'name']).execute();
+			  const permissionEntities = await db.selectFrom('PermissionEntity').select(['id', 'name']).execute();
 
-				await sendEmail({
-				   to: body.email,
-				   subject: 'Verify your email address',
-				   react: React.createElement(VerificationTemplate, { email: body.email, verification_key : verification_key }),
-			  })
-				return NextResponse.json({
-					id : user.id
-				});
+				const basicEntities = permissionEntities.filter(perm => perm.name === 'api' || perm.name === 'profile');
+				const basicAction = permissionActions.find(perm => perm.name === 'update');
+
+				let createdUser = false;
+
+				await db.transaction().execute(async (trx) => {
+
+					createdUser = await db.insertInto('User')
+						.values({
+							email: body.email,
+							name: body.name,
+							organization : body.organization,
+							verification_key : verification_key,
+							password: hashPassword(body.password)
+						})
+						.returningAll()
+						.execute()
+
+					if(createdUser) {
+	          for (const entity of basicEntities) {
+							await trx.insertInto('GlobalPermission')
+								.values({
+									actionId: basicAction.id,
+									entityId: entity.id,
+									userId : createdUser[0].id
+								})
+								.execute();
+						}
+					}
+
+				})
+
+				if(createdUser) {
+					await sendEmail({
+					   to: body.email,
+					   subject: 'Verify your email address',
+					   react: React.createElement(VerificationTemplate, { email: body.email, verification_key : verification_key }),
+				  })
+					return NextResponse.json({
+						id : createdUser[0].id
+					});
+				} else {
+					return NextResponse.json({ error : `Something went wrong.` }, { status: 500 });
+				}
 			}
 		} catch (error) {
 			console.error(error);
