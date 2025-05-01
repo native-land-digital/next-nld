@@ -47,9 +47,7 @@ export const handleGetRequest = async(event, sql) => {
       const res = await sql`
         SELECT "User".id
         FROM "User"
-        WHERE (
-          "User".api_key = ${apiKey}
-        )
+        WHERE "User".api_key = ${apiKey}
       `
       if(res.length === 0) {
         log.error = `The API key is not valid. Please check that this belongs to a valid user.`;
