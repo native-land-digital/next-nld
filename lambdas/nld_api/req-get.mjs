@@ -7,6 +7,7 @@ export const handleGetRequest = async(event, sql) => {
   let maps = false;
   let names = false;
   let position = false;
+  let apiKey = false;
 
   const log = {
     type : '',
@@ -26,6 +27,54 @@ export const handleGetRequest = async(event, sql) => {
     maps = event.queryStringParameters.maps;
     names = event.queryStringParameters.name;
     position = event.queryStringParameters.position;
+    apiKey = event.queryStringParameters.key;
+  }
+
+  // Breaking request if API key doesn't match the DB
+  if(!apiKey) {
+    log.error = "You did not include an API key. See https://api-docs.native-land.ca/get-and-use-your-api-key";
+    console.log(log)
+    const response = {
+      statusCode: 400,
+      headers: {
+        "Content-Type" : "application/json"
+      },
+      body: JSON.stringify({ error : log.error })
+    };
+    return response;
+  } else {
+    try {
+      const res = await sql`
+        SELECT "User".id
+        FROM "User"
+        WHERE (
+          "User".api_key = ${apiKey}
+        )
+      `
+      if(res.length === 0) {
+        log.error = `The API key is not valid. Please check that this belongs to a valid user.`;
+        console.log(log)
+        const response = {
+          statusCode: 400,
+          headers: {
+            "Content-Type" : "application/json"
+          },
+          body: JSON.stringify({ error : log.error}),
+        };
+        return response;
+      }
+    }  catch (err) {
+      log.error = `Something went wrong. Here is the error message: ${JSON.stringify(err)}`;
+      console.log(log)
+      const response = {
+        statusCode: 400,
+        headers: {
+          "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({ error : log.error}),
+      };
+      return response;
+    }
   }
 
   if(event.headers) {
