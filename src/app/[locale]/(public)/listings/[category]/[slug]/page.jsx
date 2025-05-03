@@ -5,14 +5,14 @@ import Sidebar from '@/components/static/sidebar';
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 import { notFound } from 'next/navigation';
 
-import Map from '@/components/maps/map';
-import Pronunciations from '@/components/maps/pronunciations';
-import Greetings from '@/components/maps/greetings';
-import Websites from '@/components/maps/websites';
-import Related from '@/components/maps/related';
-import Media from '@/components/maps/media';
-import Changelog from '@/components/maps/changelog';
-import Disclaimer from '@/components/maps/disclaimer';
+import Map from '@/components/listings/map';
+import Pronunciations from '@/components/listings/pronunciations';
+import Greetings from '@/components/listings/greetings';
+import Websites from '@/components/listings/websites';
+import Related from '@/components/listings/related';
+import Media from '@/components/listings/media';
+import Changelog from '@/components/listings/changelog';
+import Disclaimer from '@/components/listings/disclaimer';
 
 export const generateStaticParams = async () => {
   if(process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'production') {
@@ -140,8 +140,6 @@ export default async function Page({ params : { locale, category, slug }}) {
   } else {
     notFound();
   }
-
-  console.log(entry)
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">

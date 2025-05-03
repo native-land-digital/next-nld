@@ -9,14 +9,20 @@ export default function Map({ geometry, category, geometry_type }) {
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
+    mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.3.0/mapbox-gl-rtl-text.js', null, true);
     let style = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
     if(category === 'placenames') {
       style = process.env.NEXT_PUBLIC_MAPBOX_STYLE_PLACENAMES
     }
-    const newMap = new mapboxgl.Map({
+    let mapParams = {
       container: "nld-maps-mapbox-map",
       style: style
-    });
+    }
+    if(geometry_type === 'Point') {
+      mapParams.center = geometry.coordinates;
+      mapParams.zoom = 13;
+    }
+    const newMap = new mapboxgl.Map(mapParams);
     const nav = new mapboxgl.NavigationControl();
     newMap.addControl(nav, "bottom-right");
     newMap.on('load', () => {
@@ -54,9 +60,6 @@ export default function Map({ geometry, category, geometry_type }) {
         })
         const bounds = bbox(featureCollection)
         newMap.fitBounds(bounds, { padding : 50, duration : 0 })
-      }
-      if(geometry_type === 'Point') {
-        newMap.easeTo({ center : geometry.coordinates, zoom : 13, duration : 0 })
       }
     })
   }, [])
