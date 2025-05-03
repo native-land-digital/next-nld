@@ -18,6 +18,7 @@ export const generateStaticParams = async () => {
   if(process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'production') {
     const entries = await db.selectFrom('Entry')
       .where('published', '=', true)
+      .where('category', '!=', 'placenames')
       .select(['id', 'category', 'slug'])
       .distinctOn('id')
       .execute();
@@ -53,6 +54,7 @@ export const generateStaticParams = async () => {
   }
 }
 
+export const dynamic = 'force-static';
 export const revalidate = false;
 
 export default async function Page({ params : { locale, category, slug }}) {
