@@ -75,7 +75,7 @@ export default async function Page({ params : { locale, category, slug }}) {
     .leftJoin('Line', 'Line.entryId', 'Entry.id')
     .leftJoin('Point', 'Point.entryId', 'Entry.id')
     .select((eb) => [
-      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.sources', 'Entry.pronunciation', 'Entry.createdAt', 'Entry.updatedAt',
+      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.sources', 'Entry.createdAt', 'Entry.updatedAt',
       eb.fn('COALESCE', [
         eb.fn('ST_AsGeoJSON', 'Polygon.geometry'),
         eb.fn('ST_AsGeoJSON', 'Line.geometry'),
