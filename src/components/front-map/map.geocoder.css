@@ -2,10 +2,11 @@
   @apply w-full;
   @apply mt-2.5;
   @apply shadow-none;
-  @apply text-xs;
+  @apply md:text-xs;
   @apply border;
   @apply border-solid;
   @apply border-slate-200;
+  @apply text-[16px]
 }
 .mapboxgl-ctrl-geocoder--input {
   @apply h-[30px];
