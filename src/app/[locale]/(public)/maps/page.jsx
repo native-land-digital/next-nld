@@ -20,8 +20,15 @@ export default async function Page({ params : { locale }}) {
         <Sidebar />
         <div className="col-span-2 bg-white rounded-t shadow-lg mt-5">
           <div className="px-4 py-4 break-words">
-            <Link prefetch={false} href={'/maps/placenames'} className="text-xl">{t('placenames-map')}</Link>
-            <p>Please note: this map is currently in beta.</p>
+            <p>Native Land is in the process of creating more complex and diverse maps and ways to visualize and imagine Indigenous territory. Please keep an eye on this space as we add more maps in the months to come!</p>
+            <h2 className="text-xl mt-4">
+              <Link prefetch={false} href={'/'}>Native Land Map</Link>
+            </h2>
+            <p>This is our classic searchable map of Indigenous territories, treaties, and languages.</p>
+            <h2 className="text-xl mt-4">
+              <Link prefetch={false} href={'/maps/placenames'}>{t('placenames-map')}</Link>
+            </h2>
+            <p>This map displays a collection of placenames from Indigenous nations around the world. You can search for names or click to learn more about any placename shown on the map.</p>
           </div>
         </div>
       </div>

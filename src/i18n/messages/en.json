@@ -25,6 +25,10 @@
     "partners-contributors" : "Partners & Contributors",
     "roadmap" : "Roadmap",
     "media" : "Media",
+    "maps" : "Maps",
+    "main-map" : "Main Map",
+    "placename-map" : "Placename Map",
+    "all-maps" : "All Maps",
     "community-blog" : "Community & Blog",
     "media-coverage" : "Media Coverage",
     "contribute" : "Contribute",
@@ -129,6 +133,7 @@
     "search-territories" : "Search territories",
     "search-languages" : "Search languages",
     "search-treaties" : "Search treaties",
+    "search-placenames" : "Search placenames",
     "search" : "Search your address",
     "search-address" : "Search your address, or toggle switches above to add shapes. Click around!",
     "think-critically" : "Think critically about this map",
@@ -171,7 +176,9 @@
   },
   "Maps" : {
     "maps" : "Maps",
-    "placenames-map" : "Placenames Map"
+    "placenames-map" : "Placenames Map",
+    "search-address-placenames" : "Search your address, or click around to learn more about local placenames.",
+    "placename-disclaimer" : "We are still adding data for placenames. Click to see sources and more."
   },
   "Listings" : {
     "all-listings" : "All Listings",
