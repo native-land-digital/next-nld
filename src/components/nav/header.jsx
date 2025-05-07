@@ -107,7 +107,6 @@ export default function Header() {
                 <a href="https://api-docs.native-land.ca" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('api')}</a>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/maps/territories" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('territories-list')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/maps/languages" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('languages-list')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/maps/treaties" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('treaties-list')}</Link>
               </div>
             </div>
           </div>
