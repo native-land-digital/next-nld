@@ -98,15 +98,15 @@ const nextConfig = {
       permanent: true
     },{
       source: "/resources/territories-list",
-      destination: "/maps/territories",
+      destination: "/listings/territories",
       permanent: true
     },{
       source: "/resources/languages-list",
-      destination: "/maps/languages",
+      destination: "/listings/languages",
       permanent: true
     },{
       source: "/resources/treaties-list",
-      destination: "/maps/treaties",
+      destination: "/listings/treaties",
       permanent: true
     },{
       source: "/api/entry/searcher",
@@ -114,7 +114,11 @@ const nextConfig = {
       permanent: true
     },{
       source: "/maps-old/:path*",
-      destination : "/maps/:path*",
+      destination : "/listings/:path*",
+      permanent: true
+    },{
+      source: "/maps/:catpath/:path",
+      destination : "/listings/:catpath/:path",
       permanent: true
     },{
       source: "/mobile-app",

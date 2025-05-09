@@ -412,9 +412,9 @@ export const PATCH = async (req, route) => {
             .executeTakeFirst()
 
           // Ensure associated paths are now invalidated for next load
-          submitRevalidation(`/en/dashboard/research`);
-          submitRevalidation(`/en/dashboard/research/${entryId}`);
-          submitRevalidation(`/en/maps/${entry.category}/${encodeURIComponent(entry.slug).toLowerCase()}`);
+          submitRevalidation(`/dashboard/research`);
+          submitRevalidation(`/dashboard/research/${entryId}`);
+          submitRevalidation(`/listings/${entry.category}/${encodeURIComponent(entry.slug).toLowerCase()}`);
 
     			return NextResponse.json({ entry });
 

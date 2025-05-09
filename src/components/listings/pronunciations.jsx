@@ -1,4 +1,4 @@
-import AudioPlayer from '@/components/maps/utils/audio-player';
+import AudioPlayer from '@/components/listings/utils/audio-player';
 
 export default async function Pronunciations({ pronunciations }) {
 

@@ -128,7 +128,7 @@ export default function EditEntry({ entry }) {
       <Link prefetch={false} href="/dashboard/research"><div className="inline-block rotate-180 mr-2.5 mb-2.5">➜</div>{tCommon('back')}</Link>
       <h2 className="font-semibold text-3xl">{entry.name}</h2>
       {entry.published && entry.category ?
-        <Link prefetch={false} href={`/maps/${entry.category}/${entry.slug}`} target="_blank" className="text-xs float-right">{t('see-live')} ➜</Link>
+        <Link prefetch={false} href={`/listings/${entry.category}/${entry.slug}`} target="_blank" className="text-xs float-right">{t('see-live')} ➜</Link>
       :
         <p className="text-xs float-right">{t('entry-not-published')}</p>
       }
@@ -165,20 +165,24 @@ export default function EditEntry({ entry }) {
         : false}
 
 
-        {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('color') > -1 ?
-          <div className="mt-2.5">
-            <label className="text-gray-800 text-sm mb-1 block">{t('color')}</label>
-            <div className="relative flex items-center">
-              <div className="w-10 h-10" style={{backgroundColor : color }}></div>
-              <button className="ml-2.5 py-1 px-2.5 text-sm tracking-wide rounded-lg text-black bg-gray-100 hover:bg-gray-200 focus:outline-none" onClick={() => setShowSwatches(true)}>{t('pick-color')}</button>
-              <div className={`${showSwatches ? 'absolute block' : 'hidden'} ml-40 z-30`}>
-                <div className="fixed top-0 bottom-0 right-0 left-0" onClick={() => setShowSwatches(false)}></div>
-                <SwatchesPicker
-                  color={color}
-                  onChangeComplete={(color) => { setColor(color.hex); setShowSwatches(false); }}
-                />
+        {category === 'languages' || category === 'territories' || category === 'treaties' ?
+          <div>
+            {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('color') > -1 ?
+              <div className="mt-2.5">
+                <label className="text-gray-800 text-sm mb-1 block">{t('color')}</label>
+                <div className="relative flex items-center">
+                  <div className="w-10 h-10" style={{backgroundColor : color }}></div>
+                  <button className="ml-2.5 py-1 px-2.5 text-sm tracking-wide rounded-lg text-black bg-gray-100 hover:bg-gray-200 focus:outline-none" onClick={() => setShowSwatches(true)}>{t('pick-color')}</button>
+                  <div className={`${showSwatches ? 'absolute block' : 'hidden'} ml-40 z-30`}>
+                    <div className="fixed top-0 bottom-0 right-0 left-0" onClick={() => setShowSwatches(false)}></div>
+                    <SwatchesPicker
+                      color={color}
+                      onChangeComplete={(color) => { setColor(color.hex); setShowSwatches(false); }}
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
+            : false}
           </div>
         : false}
 

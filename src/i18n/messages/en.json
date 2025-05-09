@@ -13,7 +13,7 @@
   },
   "Sidebar" : {
     "random" : "Random picks",
-    "visit-maps" : "Visit our maps page"
+    "visit-listings" : "Visit our listings pages"
   },
   "Navigation" : {
     "home" : "Home",
@@ -26,6 +26,10 @@
     "partners-contributors" : "Partners & Contributors",
     "roadmap" : "Roadmap",
     "media" : "Media",
+    "maps" : "Maps",
+    "main-map" : "Main Map",
+    "placename-map" : "Placename Map",
+    "all-maps" : "All Maps",
     "community-blog" : "Community & Blog",
     "media-coverage" : "Media Coverage",
     "contribute" : "Contribute",
@@ -39,7 +43,7 @@
     "teachers-guide" : "Teacher's Guide",
     "mobile-apps" : "Mobile Apps",
     "api" : "API",
-    "all-maps" : "All Maps",
+    "all-listings" : "All Listings",
     "territories-list" : "Territories List",
     "languages-list" : "Languages List",
     "treaties-list" : "Treaties List",
@@ -112,7 +116,7 @@
     "land-acknowledgement-header" : "Land Acknowledgement",
     "land-acknowledgement" : "Take a look at <a href='/resources/territory-acknowledgement/'>our Land Acknowledgement</a> page to learn more about doing it right.",
     "research-header" : "Research references",
-    "research" : "All our <a href='/maps'>research and maps</a> are documented on our <a href='/resources/territories-list/'>territory</a>, <a href='/resources/languages-list/'>language</a>, and <a href='/resources/treaties-list/'>treaty</a> reference pages.",
+    "research" : "All our <a href='/listings'>research and maps</a> are documented on our <a href='/resources/territories-list/'>territory</a>, <a href='/resources/languages-list/'>language</a>, and <a href='/resources/treaties-list/'>treaty</a> reference pages.",
     "blogs-header" : "Blogs & Articles",
     "blogs" : "Keep up to date with <a href='/category/community-blog/'>our latest thoughts and discussions</a>.",
     "support-button" : "You can help support us in many ways",
@@ -130,6 +134,7 @@
     "search-territories" : "Search territories",
     "search-languages" : "Search languages",
     "search-treaties" : "Search treaties",
+    "search-placenames" : "Search placenames",
     "search" : "Search your address",
     "search-address" : "Search your address, or toggle switches above to add shapes. Click around!",
     "think-critically" : "Think critically about this map",
@@ -171,11 +176,19 @@
     "reset-password-message-reset" : "Type your new password and click the button to reset."
   },
   "Maps" : {
-    "all-maps" : "All Maps",
+    "maps" : "Maps",
+    "placenames-map" : "Placenames Map",
+    "search-address-placenames" : "Search your address, or click around to learn more about local placenames.",
+    "placename-disclaimer" : "We are still adding data for placenames. Click to see sources and more."
+  },
+  "Listings" : {
+    "all-listings" : "All Listings",
     "territories-list" : "Territories List",
     "languages-list" : "Languages List",
     "treaties-list" : "Treaties List",
-    "total-all" : "total territories, languages, and treaties found.",
+    "greetings-list" : "Greetings List",
+    "placenames-list" : "Placenames List",
+    "total-all" : "total listings found.",
     "last-updated" : "Last updated",
     "map" : "Map",
     "text" : "Text",
@@ -272,8 +285,8 @@
     "url-placeholder" : "Enter website URL",
     "description-placeholder" : "Enter description",
     "geojson-uploaded" : "GeoJSON successfully uploaded",
-    "want-replace" : "Do you want to replace the polygons on the map? This will delete any existing polygons.",
-    "non-polygons" : "You have non-polygons in the JSON. Please verify at at https://geojson.io",
+    "want-replace" : "Do you want to replace the shapes on the map? This will delete any existing shapes.",
+    "non-shape-type" : "You have shapes that don't match this entry's geometry in the JSON. Please verify at at https://geojson.io",
     "empty-geojson" : "The geoJSON seems empty. Please verify at at https://geojson.io",
     "geojson-issue" : "There's an issue with the geoJSON. Please verify it at https://geojson.io",
     "back-to-homepage" : "Back to homepage"

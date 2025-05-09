@@ -1,10 +1,10 @@
 import { getTranslations } from '@/i18n/server-i18n';
 
-import AudioPlayer from '@/components/maps/utils/audio-player';
+import AudioPlayer from '@/components/listings/utils/audio-player';
 
 export default async function Greetings({ greetings }) {
 
-  const t = await getTranslations('Maps');
+  const t = await getTranslations('Listings');
 
   if(greetings.length === 0) {
     return (<p>{t('no-greetings')}</p>)

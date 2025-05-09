@@ -23,6 +23,7 @@ export type Entry = {
     sources: string | null;
     disclaimer: string | null;
     category: string | null;
+    language: string | null;
     published: Generated<boolean>;
     createdAt: Generated<Timestamp>;
     updatedAt: Timestamp;

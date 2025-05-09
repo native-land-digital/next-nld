@@ -20,18 +20,41 @@ export const GET = async (req) => {
             categoryToSearch = 'languages';
           }
 
-          let entriesQuery = db.selectFrom('Entry')
-            .where('category', '=', categoryToSearch)
-            .where('published', '=', true)
-            .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
-            .select((eb) => [
-              'Entry.id', 'Entry.name', 'Entry.category', 'Entry.color', 'Entry.slug',
-              eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
-            ])
-            .distinctOn('Entry.id')
+          let geometryType = "Polygon";
+          if(category === 'placenames') {
+            geometryType = "Point";
+          }
 
-          if(category === 'greetings') {
-            entriesQuery = entriesQuery.innerJoin('Greeting', 'Entry.id', 'Greeting.entryId')
+          let entriesQuery = false;
+
+          // Polygon layers
+          if(category === 'territories' || category === 'languages' || category === 'treaties' || category === 'greetings') {
+            entriesQuery = db.selectFrom('Entry')
+              .where('category', '=', categoryToSearch)
+              .where('published', '=', true)
+              .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
+              .select((eb) => [
+                'Entry.id', 'Entry.name', 'Entry.category', 'Entry.color', 'Entry.slug',
+                eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+              ])
+              .distinctOn('Entry.id')
+
+            if(category === 'greetings') {
+              entriesQuery = entriesQuery.innerJoin('Greeting', 'Entry.id', 'Greeting.entryId')
+            }
+          }
+
+          // Point layers
+          if(category === 'placenames') {
+            entriesQuery = db.selectFrom('Entry')
+              .where('category', '=', categoryToSearch)
+              .where('published', '=', true)
+              .leftJoin('Point', 'Point.entryId', 'Entry.id')
+              .select((eb) => [
+                'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Point.osmType as type',
+                eb.fn('ST_AsGeoJSON', 'Point.geometry').as('geometry'),
+              ])
+              .distinctOn('Entry.id')
           }
 
           const entries = await entriesQuery.execute()
@@ -44,16 +67,29 @@ export const GET = async (req) => {
               if(entry.geometry) {
                 const geometry = JSON.parse(entry.geometry)
                 if(geometry && geometry.coordinates) {
-                  const feature = {
-                    type : "Feature",
-                    id : entry.id,
-                    properties : {
+                  let properties = {};
+                  if(category === 'territories' || category === 'languages' || category === 'treaties' || category === 'greetings') {
+                    properties = {
                       id : entry.id,
                       Slug : entry.slug,
                       Name : entry.name,
                       color : entry.color,
-                      description : process.env.NEXTAUTH_URL + `/maps/${category}/${entry.slug}`
-                    },
+                      description : process.env.NEXTAUTH_URL + `/listings/${category}/${entry.slug}`
+                    }
+                  }
+                  if(category === 'placenames') {
+                    properties = {
+                      id : entry.id,
+                      Slug : entry.slug,
+                      Name : entry.name,
+                      type : entry.type,
+                      description : process.env.NEXTAUTH_URL + `/listings/${category}/${entry.slug}`
+                    }
+                  }
+                  const feature = {
+                    type : "Feature",
+                    id : entry.id,
+                    properties : properties,
                     geometry : geometry
                   }
                   features.push(feature);
@@ -97,9 +133,10 @@ export const GET = async (req) => {
               tilesetName = process.env.TREATIES_TILESET_NAME;
             } else if(category === 'greetings') {
               tilesetName = process.env.GREETINGS_TILESET_NAME;
+            } else if(category === 'placenames') {
+              tilesetName = process.env.PLACENAMES_TILESET_NAME;
             }
             const tileset_source = tilesetName + "_source";
-            // const tileset_source_layer = tilesetName + "_source_layer";
             const tileset = mapbox_username + '.' + tilesetName + '_layer';
 
             // Create formdata to send
@@ -113,6 +150,7 @@ export const GET = async (req) => {
 
             // FOR NEW TILESETS
             // CREATES A NEW TILESET
+            // const tileset_source_layer = tilesetName + "_source_layer";
             // try {
             //   const tilesetSourceCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
             //     method : "POST",
@@ -122,14 +160,14 @@ export const GET = async (req) => {
             // } catch(err) {
             //   return NextResponse.json({ error : `Error creating tileset source ${JSON.stringify(err)}` }, { status: 500 });
             // }
-            //
+            
             // const recipe = { version : 1, layers : {}}
             // recipe.layers[tileset_source_layer] = {
             //   "source": `mapbox://tileset-source/${mapbox_username}/${tileset_source}`,
             //   "minzoom": 1,
             //   "maxzoom": 10
             // }
-            //
+            
             // try {
             //   const tilesetCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}?access_token=${secret_access_token}`, {
             //     method : "POST",
@@ -145,9 +183,9 @@ export const GET = async (req) => {
             // } catch(err) {
             //   return NextResponse.json({ error : `Error creating tileset ${JSON.stringify(err)}` }, { status: 500 });
             // }
-            //
+            
             // await new Promise(resolve => setTimeout(resolve, 5000)); // Because the tileset takes a moment to register
-            //
+            
             // try {
             //   const tilesetPublishCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}/publish?access_token=${secret_access_token}`, {
             //     method : "POST"

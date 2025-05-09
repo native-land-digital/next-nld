@@ -5,19 +5,20 @@ import Sidebar from '@/components/static/sidebar';
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 import { notFound } from 'next/navigation';
 
-import Map from '@/components/maps/map';
-import Pronunciations from '@/components/maps/pronunciations';
-import Greetings from '@/components/maps/greetings';
-import Websites from '@/components/maps/websites';
-import Related from '@/components/maps/related';
-import Media from '@/components/maps/media';
-import Changelog from '@/components/maps/changelog';
-import Disclaimer from '@/components/maps/disclaimer';
+import Map from '@/components/listings/map';
+import Pronunciations from '@/components/listings/pronunciations';
+import Greetings from '@/components/listings/greetings';
+import Websites from '@/components/listings/websites';
+import Related from '@/components/listings/related';
+import Media from '@/components/listings/media';
+import Changelog from '@/components/listings/changelog';
+import Disclaimer from '@/components/listings/disclaimer';
 
 export const generateStaticParams = async () => {
   if(process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'production') {
     const entries = await db.selectFrom('Entry')
       .where('published', '=', true)
+      .where('category', '!=', 'placenames')
       .select(['id', 'category', 'slug'])
       .distinctOn('id')
       .execute();
@@ -53,13 +54,13 @@ export const generateStaticParams = async () => {
   }
 }
 
+export const dynamic = 'force-static';
 export const revalidate = false;
 
 export default async function Page({ params : { locale, category, slug }}) {
 
   setLocaleCache(locale);
-  const t = await getTranslations('Maps');
-  const tDash = await getTranslations('Dashboard');
+  const t = await getTranslations('Listings');
 
   let categoryToSearch = category;
   if(category === 'greetings') {
@@ -71,9 +72,21 @@ export default async function Page({ params : { locale, category, slug }}) {
     .where('category', '=', categoryToSearch)
     .where('published', '=', true)
     .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
+    .leftJoin('Line', 'Line.entryId', 'Entry.id')
+    .leftJoin('Point', 'Point.entryId', 'Entry.id')
     .select((eb) => [
       'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.sources', 'Entry.disclaimer', 'Entry.createdAt', 'Entry.updatedAt',
-      eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+      eb.fn('COALESCE', [
+        eb.fn('ST_AsGeoJSON', 'Polygon.geometry'),
+        eb.fn('ST_AsGeoJSON', 'Line.geometry'),
+        eb.fn('ST_AsGeoJSON', 'Point.geometry')
+      ]).as('geometry'),
+      eb.case()
+        .when('Polygon.entryId', 'is not', null).then('Polygon')
+        .when('Line.entryId', 'is not', null).then('Line')
+        .when('Point.entryId', 'is not', null).then('Point')
+        .end()
+      .as('geometry_type'),
       jsonArrayFrom(
         eb.selectFrom('Pronunciation')
           .select(['id', 'url', 'text'])
@@ -130,7 +143,7 @@ export default async function Page({ params : { locale, category, slug }}) {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={entry.name} crumbs={[{ url : "/maps", title : "Maps" }, { url : `/maps/${category}`, title : category }]} />
+      <SubHeader title={entry.name} crumbs={[{ url : "/listings", title : "Listings" }, { url : `/listings/${category}`, title : category }]} />
       <div className="grid gap-5 grid-cols-1 md:grid-cols-3 min-h-screen w-full md:w-2/3 px-5 md:px-0 m-auto -mt-12 text-black">
         <Sidebar picks={category !== "greetings" ? 3 : 0}>
           <ol className="hidden md:block list-inside text-gray-400">
@@ -139,7 +152,7 @@ export default async function Page({ params : { locale, category, slug }}) {
               <li className="mb-2.5"><a href="#websites">{t('websites')}</a></li>
             : false}
             {entry.pronunciations.length > 0 ?
-              <li className="mb-2.5"><a href="#pronunciations">{tDash('pronunciations')}</a></li>
+              <li className="mb-2.5"><a href="#pronunciations">{t('pronunciations')}</a></li>
             : false}
             {entry.greetings.length > 0 ?
               <li className="mb-2.5"><a href="#greetings">{t('greetings')}</a></li>
@@ -170,7 +183,7 @@ export default async function Page({ params : { locale, category, slug }}) {
         <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
           {category !== 'greetings' ?
             <div>
-              <Map geometry={entry.geometry} />
+              <Map geometry={entry.geometry} geometry_type={entry.geometry_type} category={entry.category} />
               {entry.websites.length > 0 ?
                 <section className="mt-5">
                   <h3 className="text-xl font-bold mb-3" id="websites">{t('websites')}</h3>
@@ -201,10 +214,12 @@ export default async function Page({ params : { locale, category, slug }}) {
                   <Media media={entry.media} />
                 </section>
               : false}
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="sources">{t('sources')}</h3>
-                <div className="sources-text" dangerouslySetInnerHTML={{ __html : entry.sources }} />
-              </section>
+              {entry.sources !== "" ?
+                <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="sources">{t('sources')}</h3>
+                  <div className="sources-text" dangerouslySetInnerHTML={{ __html : entry.sources }} />
+                </section>
+              : false}
               {entry.changelog.length > 0 ?
                 <section className="mt-5">
                   <h3 className="text-xl font-bold mb-3" id="changelog">{t('changelog')}</h3>

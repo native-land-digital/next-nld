@@ -10,7 +10,7 @@ export default function NotFound() {
   const pathname = usePathname()
 
   let linkSuggestion = false;
-  if(pathname.indexOf('maps/') > -1) {
+  if(pathname.indexOf('listings/') > -1) {
     let splitPath = pathname.split('/');
     if(splitPath[3]) {
       linkSuggestion = splitPath[3].substring(splitPath[3].length - parseInt(splitPath[3].length * 0.2), splitPath[3].length - parseInt(splitPath[3].length * 0.8))
@@ -27,7 +27,7 @@ export default function NotFound() {
               <p>Sorry, the website is having trouble finding the page you were looking for.</p>
               <p>This might be an error on our side. If you think this page should exist, get in touch with us at report-bugs@native-land.ca.</p>
               {linkSuggestion ?
-                <p className="font-bold">If you were looking for a territory, language, or treaty you think should work, <Link prefetch={false} href={`/maps?search=${encodeURIComponent(linkSuggestion).toLowerCase()}`}>try clicking here to do a search</Link>.</p>
+                <p className="font-bold">If you were looking for a territory, language, or treaty you think should work, <Link prefetch={false} href={`/listings?search=${encodeURIComponent(linkSuggestion).toLowerCase()}`}>try clicking here to do a search</Link>.</p>
               : false}
             </div>
           </div>

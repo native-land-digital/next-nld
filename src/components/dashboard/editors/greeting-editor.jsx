@@ -6,7 +6,7 @@ import { useTranslations } from '@/i18n/client-i18n';
 export default function GreetingEditor({ greetings, setGreetings }) {
 
   const t = useTranslations('Dashboard');
-  const tMaps = useTranslations('Maps');
+  const tMaps = useTranslations('Listings');
 
   const deleteObject = async (e, url) => {
     e.preventDefault();

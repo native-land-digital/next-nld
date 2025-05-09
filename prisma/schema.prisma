@@ -107,6 +107,7 @@ model Entry {
   pronunciation   Pronunciation[]
   disclaimer      String?
   category        String?
+  language        String?
   published       Boolean @default(false)
   media           Media[]
   websites        Website[]
