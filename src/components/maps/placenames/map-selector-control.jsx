@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
-import Switch from "react-switch";
 import AsyncSelect from 'react-select/async';
 import Link from 'next/link'
 
@@ -8,12 +7,11 @@ import { makeBoundsFromPoly, isMobile } from '@/components/front-map/map-utils';
 
 import '@/components/front-map/map.geocoder.css';
 
-export default function SelectorControl({ map, selectedFeature, setSelectedFeature }) {
+export default function SelectorControl({ map, selectedFeature }) {
 
     const t = useTranslations('FrontMap');
     const tMaps = useTranslations('Maps');
 
-    const [ toggledFeatures, setToggledFeatures ] = useState([])
     const [ showLists, setShowLists ] = useState(false)
     const [ resultsSlided, setResultsSlided ] = useState(false)
 

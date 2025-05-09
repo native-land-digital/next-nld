@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
@@ -69,7 +69,7 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
         );
         map.getCanvas().style.cursor = 'pointer'
       })
-      map.on('mouseout', placenameLayer, (e) => {
+      map.on('mouseout', placenameLayer, () => {
         map.setFeatureState(
             { source: 'composite', sourceLayer : 'next_nld_place_local_source_layer', id: hoveredId },
             { hover: false }
