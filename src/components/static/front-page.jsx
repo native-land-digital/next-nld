@@ -24,7 +24,7 @@ export default async function FrontPage() {
     <div className="font-[sans-serif] bg-white pb-10 text-center">
       <div className="m-auto">
         <section className="w-full px-5 md:px-0 m-auto mb-5 bg-blue-600 py-5">
-          <div className="grid grid-cols-6 m-auto w-2/3 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-6 m-auto w-full md:w-2/3 gap-5">
             <div className="border-4 border-white rounded-full">
               <p className="text-4xl font-bold text-white mt-8">100M+</p>
               <p className="text-slate-100 mb-8">visitors</p>

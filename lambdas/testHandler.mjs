@@ -6,6 +6,7 @@ let get_api_response = await api({
   queryStringParameters : {
     maps : 'territories',
     // name : 'nʉmʉnʉʉ-comanche'
+    key : '9oYx0p04aaXPRhyjq7tk3',
     position : '49.18842944,-122.83028873'
   }
 });
@@ -23,6 +24,7 @@ let post_api_response = await api({
   httpMethod : "POST",
   body : JSON.stringify({
     maps : "territories",
+    key : '9oYx0p04aaXPRhyjq7tk3',
     polygon_geojson : {
       "type": "FeatureCollection",
       "features": [

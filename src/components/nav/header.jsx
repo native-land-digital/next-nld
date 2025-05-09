@@ -51,6 +51,7 @@ export default function Header() {
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/roadmap" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('roadmap')}</Link>
                 <a href="https://medium.com/@native-land" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('community-blog')}</a>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/media/media-coverage" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('media-coverage')}</Link>
+                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/faq" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('faq')}</Link>
               </div>
             </div>
           </div>

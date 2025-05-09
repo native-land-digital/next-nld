@@ -30,13 +30,17 @@ export default async function Sidebar({ children = (<div></div>), picks = 5 }) {
         {children}
       </div>
       {children.length > 0 ? <hr className="my-2.5" /> : false }
-      <h3 className="pt-0 !mt-0 font-bold text-xl">{picks} {t('random')}</h3>
-      <p className="text-sm mb-2.5 !mt-2.5"><Link prefetch={false} href="/listings">{t('visit-listings')}.</Link></p>
-      <div className="grid gap-5">
-        {entries.map(entry => {
-          return <EntryCard key={`entry-${entry.id}`} entry={entry} />
-        })}
-      </div>
+      {picks !== 0 ?
+        <div>
+          <h3 className="pt-0 !mt-0 font-bold text-xl">{picks} {t('random')}</h3>
+          <p className="text-sm mb-2.5 !mt-2.5"><Link prefetch={false} href="/listings">{t('visit-listings')}.</Link></p>
+          <div className="grid gap-5">
+            {entries.map(entry => {
+              return <EntryCard key={`entry-${entry.id}`} entry={entry} />
+            })}
+          </div>
+        </div>
+      : false}
     </div>
   )
 }
