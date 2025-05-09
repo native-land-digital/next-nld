@@ -1,5 +1,3 @@
-import { db } from '@/lib/db/kysely'
-
 import { availableLocales } from '@/i18n/config'
 import { setLocaleCache } from '@/i18n/server-i18n';
 import Sidebar from '@/components/static/sidebar';

@@ -20,11 +20,6 @@ export const GET = async (req) => {
             categoryToSearch = 'languages';
           }
 
-          let geometryType = "Polygon";
-          if(category === 'placenames') {
-            geometryType = "Point";
-          }
-
           let entriesQuery = false;
 
           // Polygon layers
