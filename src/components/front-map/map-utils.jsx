@@ -47,6 +47,25 @@ export const randomStartingPosition = () => {
   }
 }
 
+export const randomPlacenameStartingPosition = () => {
+  if (window.innerWidth < 500) {
+    return {
+      center: [-97.255109, 52.342345],
+      zoom: 3,
+    };
+  } else {
+    const possibleStarts = [
+      [155.212111, -35.574853],
+      [-97.255109, 52.342345],
+      [-61.631791, -21.020510],
+    ];
+    return {
+      center: possibleStarts[Math.floor(Math.random() * possibleStarts.length)],
+      zoom: 3,
+    };
+  }
+}
+
 export const createSetFeatureCollection = (featureStateKey, map) => {
   const oldFeatureCollection = [];
   return (newFeatures) => {
