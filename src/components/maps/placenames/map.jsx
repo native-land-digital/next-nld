@@ -3,7 +3,7 @@ import { useTranslations } from '@/i18n/client-i18n';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-import { getUniqueFeatures } from '@/components/front-map/map-utils';
+import { randomPlacenameStartingPosition, getUniqueFeatures } from '@/components/front-map/map-utils';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -19,8 +19,8 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
     mapboxgl.clearStorage();
     const newMap = new mapboxgl.Map({
-      center : [172.42, -40.83],
-      zoom : 4.39,
+      ...randomPlacenameStartingPosition(),
+      zoom : 3,
       container: "nld-placenames-map",
       style: process.env.NEXT_PUBLIC_MAPBOX_STYLE_PLACENAMES,
       showZoom: false,

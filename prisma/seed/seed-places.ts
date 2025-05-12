@@ -20,15 +20,63 @@ interface Row {
   saved_slug : string;
 }
 
-const placenamesToFetch = [ "navajo", "dakota", "yupik", "apache", "keres", "cherokee", "choctaw", "zuni", "oodham", "ojibwe", "hopi", "inupiat", "tewa", "muskogee", "crow", "shoshoni", "cheyenne", "tiwa", "towa", "inuktitut", "central_siberian_yupik", "central_alaskan_yupik", "alutiiq", "unangan", "denaina", "deg_xinag", "holikachuk", "koyukon", "dinaki", "gwichin", "lower_tanana", "upper_tanana", "tanacross", "han", "ahtna", "eyak", "tlingit", "haida", "smalgyax", "northern_sami", "lule_sami", "southern_sami", "skolt_sami", "pite_sami", "kven", "maori", "cree", "innu_aimun", "chipewyan", "oji_cree", "mikmaq", "sioux", "atikamekw", "blackfoot", "tlicho", "algonquin", "dakelh", "gitxsanimaax", "tsilhqotin", "slavey", "maliseet_passamaquoddy", "inuinnaqtun", "kanienkeha", "pitcairn_norfolk", "australian_aboriginal_language", "yugambeh_bandjalangic", "pitjantjatjara", "wiradjuri", "nyungar", "gundungurra", "pintupi", "bininj_gun_wok", "ngarigo", "daungwurrung", "woiwurrung", "wathawurrung", "kaurna", "gunditjmara", "eastern_arrernte", "dharug" ]
+const placenamesToFetch = 
+  [
+    "navajo", "dakota", "yupik", "apache", "keres", "cherokee", "choctaw", "zuni",
+    "oodham", "ojibwe", "hopi", "inupiat", "tewa", "muskogee", "crow", "shoshoni",
+    "cheyenne", "tiwa", "towa", "inuktitut", "central_siberian_yupik",
+    "central_alaskan_yupik", "alutiiq", "unangan", "denaina", "deg_xinag",
+    "holikachuk", "koyukon", "dinaki", "gwichin", "lower_tanana", "upper_tanana",
+    "tanacross", "han", "ahtna", "eyak", "tlingit", "haida", "smalgyax",
+    "northern_sami", "lule_sami", "southern_sami", "skolt_sami", "pite_sami",
+    "kven", "maori", "cree", "innu_aimun", "chipewyan", "oji_cree", "mikmaq",
+    "sioux", "atikamekw", "blackfoot", "tlicho", "algonquin", "dakelh",
+    "gitxsanimaax", "tsilhqotin", "slavey", "maliseet_passamaquoddy",
+    "inuinnaqtun", "kanienkeha", "australian_aboriginal_language",
+    "yugambeh_bandjalangic", "pitjantjatjara", "wiradjuri", "nyungar",
+    "gundungurra", "pintupi", "bininj_gun_wok", "ngarigo", "daungwurrung",
+    "woiwurrung", "wathawurrung", "kaurna", "gunditjmara", "eastern_arrernte",
+    "dharug", "quechua", "aymara", "guarani", "nahuatl", "kiche", "maya_yucatec",
+    "zapotec", "mixtec", "otomi", "totonac", "kaqchikel", "mam", "mapudungun",
+    "wayu", "huitoto", "tikuna", "ashaninka", "shipibo", "yanomami", "tupi",
+    "kayapo", "shuara", "embera", "miskito", "kuna", "tarasco", "huichol",
+    "mazahua", "huasteco", "kabylie", "amazigh", "tamasheq",
+    "quechua", "aymara", "guarani", "nahuatl", "kiche", "maya_yucatec", "zapotec", 
+    "mixtec", "otomi", "totonac", "kaqchikel", "mam", "mapudungun", "wayu", "huitoto", 
+    "tikuna", "ashaninka", "shipibo", "yanomami", "tupi", "kayapo", "shuara", "embera", 
+    "miskito", "kuna", "tarasco", "huichol", "mazahua", "huasteco", "masai", "amazigh", 
+    "tamasheq", "mohawk", "ainu", "inari_sami", "saliba", "chickasaw", "wampanoag", "lenca", 
+    "mixe", "yuchi", "chinook_jargon", "tenetehara", "kalaallisut", "siksika", "aikana", 
+    "guato", "huitoto_murui", "yine", "kaxinawa", "cashinahua", "tucano", "cocama", "trio", 
+    "karaja", "san", "nama", "teda", "kanuri", "beja", "masalit", "kabyle", "nuba", "dagbani"
+  ];
 
 async function main() {
 
-  await prisma.entry.deleteMany({ where : {
-    category : {
-      equals : 'placenames'
-    }
-  } })
+
+  const BATCH_SIZE = 1000;
+
+  while (true) {
+    const ids = await prisma.entry.findMany({
+      select: { id: true },
+      where: { 
+        category : {
+          equals : 'placenames'
+        }
+      },
+      take: BATCH_SIZE,
+    });
+
+    if (ids.length === 0) break;
+
+    await prisma.entry.deleteMany({
+      where: {
+        id: { in: ids.map(i => i.id) },
+      },
+    });
+
+    console.log(`Deleted ${ids.length} records`);
+  }
 
   let createdRecords = 0;
 
