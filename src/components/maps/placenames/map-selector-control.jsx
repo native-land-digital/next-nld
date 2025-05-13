@@ -3,7 +3,7 @@ import { useTranslations } from '@/i18n/client-i18n';
 import AsyncSelect from 'react-select/async';
 import Link from 'next/link'
 
-import { makeBoundsFromPoly, isMobile } from '@/components/front-map/map-utils';
+import { isMobile } from '@/components/front-map/map-utils';
 
 import '@/components/front-map/map.geocoder.css';
 
