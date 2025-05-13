@@ -75,7 +75,7 @@ export default async function Page({ params : { locale, category, slug }}) {
     .leftJoin('Line', 'Line.entryId', 'Entry.id')
     .leftJoin('Point', 'Point.entryId', 'Entry.id')
     .select((eb) => [
-      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.sources', 'Entry.disclaimer', 'Entry.createdAt', 'Entry.updatedAt',
+      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.language', 'Entry.sources', 'Entry.disclaimer', 'Entry.createdAt', 'Entry.updatedAt',
       eb.fn('COALESCE', [
         eb.fn('ST_AsGeoJSON', 'Polygon.geometry'),
         eb.fn('ST_AsGeoJSON', 'Line.geometry'),
@@ -148,6 +148,9 @@ export default async function Page({ params : { locale, category, slug }}) {
         <Sidebar picks={category !== "greetings" ? 3 : 0}>
           <ol className="hidden md:block list-inside text-gray-400">
             <li className="mb-2.5"><a href="#map">{t('map')}</a></li>
+            {entry.language && entry.language !== "" ?
+              <li className="mb-2.5"><a href="#language">{t('language')}</a></li>
+            : false}
             {entry.websites.length > 0 ?
               <li className="mb-2.5"><a href="#websites">{t('websites')}</a></li>
             : false}
@@ -184,6 +187,12 @@ export default async function Page({ params : { locale, category, slug }}) {
           {category !== 'greetings' ?
             <div>
               <Map geometry={entry.geometry} geometry_type={entry.geometry_type} category={entry.category} />
+              {entry.language && entry.language !== "" ?
+                <section className="mt-5">
+                  <h3 className="text-xl font-bold mb-3" id="language">{t('language')}</h3>
+                  <p>{entry.language}</p>
+                </section>
+              : false}
               {entry.websites.length > 0 ?
                 <section className="mt-5">
                   <h3 className="text-xl font-bold mb-3" id="websites">{t('websites')}</h3>

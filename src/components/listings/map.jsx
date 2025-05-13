@@ -5,11 +5,12 @@ import bbox from "@turf/bbox";
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
+mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.3.0/mapbox-gl-rtl-text.js', null, true);
+
 export default function Map({ geometry, category, geometry_type }) {
 
   useEffect(() => {
-    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
-    mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.3.0/mapbox-gl-rtl-text.js', null, true);
     let style = process.env.NEXT_PUBLIC_MAPBOX_STYLE;
     if(category === 'placenames') {
       style = process.env.NEXT_PUBLIC_MAPBOX_STYLE_PLACENAMES

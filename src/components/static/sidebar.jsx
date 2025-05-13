@@ -10,6 +10,7 @@ export default async function Sidebar({ children = (<div></div>), picks = 5 }) {
 
   const totalEntries = await db.selectFrom('Entry')
     .select((eb) => eb.fn.count('id').as('num_entries'))
+    .where('Entry.category', '!=', "placenames")
     .execute();
 
   const randomIndex = Math.floor(Math.random() * (totalEntries[0].num_entries - picks));
