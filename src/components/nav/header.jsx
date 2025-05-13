@@ -86,7 +86,6 @@ export default function Header() {
             <div className={`${openNav === 'contribute' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-l border-b border-r md:border-l-0 md:border-b-0 md:border-r-0 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/how-to-contribute/jobs" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('jobs')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/how-to-contribute/volunteer" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('volunteer')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/how-to-contribute/fixes-and-adding-maps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('fixes-adding-maps')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/how-to-contribute/translations" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('translations')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/support/supporters-circle" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('supporters-circle')}</Link>
@@ -105,7 +104,7 @@ export default function Header() {
             </div>
             <div className={`${openNav === 'resources' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-l border-b border-r md:border-l-0 md:border-b-0 md:border-r-0 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/resources/territory-acknowledgement" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('territory-acknowledgement')}</Link>
+                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/resources/land-&-water-acknowledgement-AI" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('territory-acknowledgement')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/resources/teachers-guide" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('teachers-guide')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/resources/mobile-apps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('mobile-apps')}</Link>
                 <a href="https://api-docs.native-land.ca" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('api')}</a>
