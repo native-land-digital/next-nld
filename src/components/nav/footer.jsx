@@ -68,9 +68,6 @@ export default async function Footer() {
                 <Link prefetch={false} href="/how-to-contribute/jobs" className="text-gray-600 hover:text-gray-900">{t('jobs')}</Link>
               </li>
               <li className="mb-3">
-                <Link prefetch={false} href="/how-to-contribute/volunteer" className="text-gray-600 hover:text-gray-900">{t('volunteer')}</Link>
-              </li>
-              <li className="mb-3">
                 <Link prefetch={false} href="/how-to-contribute/fixes-and-adding-maps" className="text-gray-600 hover:text-gray-900">{t('fixes-adding-maps')}</Link>
               </li>
               <li className="mb-3">
@@ -85,7 +82,7 @@ export default async function Footer() {
             <h4 className="text-lg text-gray-900 font-medium mb-7">{t('resources')}</h4>
             <ul className="text-sm  transition-all duration-500">
               <li className="mb-3">
-                <Link prefetch={false} href="/resources/territory-acknowledgement" className="text-gray-600 hover:text-gray-900">{t('territory-acknowledgement')}</Link>
+                <Link prefetch={false} href="/resources/land-&-water-acknowledgement-AI" className="text-gray-600 hover:text-gray-900">{t('territory-acknowledgement')}</Link>
               </li>
               <li className="mb-3">
                 <Link prefetch={false} href="/resources/teachers-guide" className="text-gray-600 hover:text-gray-900">{t('teachers-guide')}</Link>
