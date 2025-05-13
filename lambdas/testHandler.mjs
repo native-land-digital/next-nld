@@ -90,9 +90,9 @@ console.log("--- END POST API RESPONSE TEST ---");
 let search_response = await search({
   httpMethod : "GET",
   queryStringParameters : {
-    s : 'pomo',
-    // category : "territories",
-    // id : 4571
+    // s : 'gundara',
+    // category : "languages",
+    id : 87742,
     geosearch : true
   }
 });
@@ -101,7 +101,7 @@ console.log("--- START SEARCH RESPONSE TEST ---");
 if(searchResponseBody.error) {
   console.log(searchResponseBody.error)
 } else {
-  // console.log(searchResponseBody)
+  console.log(searchResponseBody)
   console.log(searchResponseBody.map(row => row.name));
   console.log(searchResponseBody.length);
 }

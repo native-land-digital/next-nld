@@ -15,11 +15,9 @@ export default function SelectorControl({ map, selectedFeature }) {
     const [ showLists, setShowLists ] = useState(false)
     const [ resultsSlided, setResultsSlided ] = useState(false)
 
-    const selectDropdown = (id, category) => {
+    const selectDropdown = (id) => {
       fetch(`/api/entry/searcher?id=${id}&geosearch=true`).then(resp => resp.json()).then(entry => {
-        const bounds = makeBoundsFromPoly(entry[0])
-        map.fitBounds(bounds, { padding : 20 })
-        adjustCurrentLayers(true, category);
+        map.flyTo({ center : entry.centroid })
       })
     }
 
