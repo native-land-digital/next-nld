@@ -28,8 +28,8 @@ export default function AIChatbot() {
       </div>
       {minimized ?
         <div className="fixed left-0 bottom-0 m-2.5 mb-2.5 md:mb-8 ml-4 md:ml-2.5 z-50">
-          <div className="rounded-md bg-blue-900 hover:bg-blue-600 cursor-pointer shadow-lg">
-            <div className="hidden md:inline-flex py-2.5 pl-2.5 text-white text-sm" onClick={() => setMinimized(false)}>
+          <div className="rounded-md bg-orange-400 hover:bg-blue-600 border-white border cursor-pointer shadow-lg">
+            <div className="hidden md:inline-flex py-2.5 pl-2.5 text-white" onClick={() => setMinimized(false)}>
               Click here to speak with Kōrero, our AI Territory Acknowledgement helper!
             </div>
             <div className="inline-flex md:hidden py-2.5 pl-2.5 inline-flex text-xs" onClick={() => setMinimized(false)}>
