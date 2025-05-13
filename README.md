@@ -37,6 +37,7 @@ To get set up for basic work:
 
 - `npx prisma migrate deploy` to apply migrations
 - `npx prisma db seed` to seed the database with the sample seed (about 65 polygons)
+- If you need to seed the database with placenames, please get in touch with the dev team.
 
 - Create a Mapbox account and get a public token (`NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN`), and you can use the same style for both `NEXT_PUBLIC_MAPBOX_STYLE` and `NEXT_PUBLIC_MAPBOX_STYLE_RESEARCH`.
 
