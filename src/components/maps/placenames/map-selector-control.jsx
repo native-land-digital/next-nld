@@ -17,7 +17,7 @@ export default function SelectorControl({ map, selectedFeature }) {
 
     const selectDropdown = (id) => {
       fetch(`/api/entry/searcher?id=${id}&geosearch=true`).then(resp => resp.json()).then(entry => {
-        map.flyTo({ center : entry.centroid })
+        map.flyTo({ center : entry[0].centroid.coordinates, zoom : 13 })
       })
     }
 
