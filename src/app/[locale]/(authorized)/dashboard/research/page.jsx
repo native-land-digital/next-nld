@@ -20,9 +20,7 @@ export default async function Page({ params : { locale }, searchParams }) {
 
   let query = db.selectFrom('Entry')
     .select(['id', 'name', 'category'])
-    .distinctOn('id')
-    .orderBy('id')
-    .orderBy('createdAt')
+    .orderBy('updatedAt', 'desc')
     .limit(25)
     .offset(25 * page)
 

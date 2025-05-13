@@ -1,5 +1,8 @@
 export const availableCategories = [
   'territories',
   'languages',
-  'treaties'
+  'treaties',
+  'placenames',
+  'initiatives',
+  'struggles'
 ]

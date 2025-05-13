@@ -10,6 +10,7 @@ export default async function Sidebar({ children = (<div></div>), picks = 5 }) {
 
   const totalEntries = await db.selectFrom('Entry')
     .select((eb) => eb.fn.count('id').as('num_entries'))
+    .where('Entry.category', '!=', "placenames")
     .execute();
 
   const randomIndex = Math.floor(Math.random() * (totalEntries[0].num_entries - picks));
@@ -33,7 +34,7 @@ export default async function Sidebar({ children = (<div></div>), picks = 5 }) {
       {picks !== 0 ?
         <div>
           <h3 className="pt-0 !mt-0 font-bold text-xl">{picks} {t('random')}</h3>
-          <p className="text-sm mb-2.5 !mt-2.5"><Link prefetch={false} href="/maps">{t('visit-maps')}</Link>.</p>
+          <p className="text-sm mb-2.5 !mt-2.5"><Link prefetch={false} href="/listings">{t('visit-listings')}.</Link></p>
           <div className="grid gap-5">
             {entries.map(entry => {
               return <EntryCard key={`entry-${entry.id}`} entry={entry} />

@@ -2,7 +2,7 @@ import { getTranslations } from '@/i18n/server-i18n';
 
 export default async function ChangelogEditor({ changelog, createdAt, updatedAt }) {
 
-  const t = await getTranslations('Maps');
+  const t = await getTranslations('Listings');
 
   return (
     <>

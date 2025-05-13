@@ -3,7 +3,7 @@ import { getTranslations } from '@/i18n/server-i18n';
 
 export default async function Related({ relatedTo, relatedFrom }) {
 
-  const t = await getTranslations('Maps');
+  const t = await getTranslations('Listings');
 
   if(relatedTo.length === 0 && relatedFrom.length === 0) {
     return (<p>{t('no-related')}</p>)
@@ -25,7 +25,7 @@ export default async function Related({ relatedTo, relatedFrom }) {
         return (
           <div key={`relation-${i}`} className="mb-2.5">
             <p className="text-black">
-              <Link prefetch={false} href={`/maps/${relation.category}/${relation.slug}`}>{relation.name} ({relation.category})</Link> {relation.description ? `- ${relation.description}` : ''}
+              <Link prefetch={false} href={`/listings/${relation.category}/${relation.slug}`}>{relation.name} ({relation.category})</Link> {relation.description ? `- ${relation.description}` : ''}
             </p>
           </div>
         )

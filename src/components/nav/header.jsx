@@ -49,13 +49,15 @@ export default function Header() {
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/how-it-works" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('how-it-works')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/partners-and-contributors" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('partners-contributors')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/roadmap" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('roadmap')}</Link>
+                <a href="https://medium.com/@native-land" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('community-blog')}</a>
+                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/media/media-coverage" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('media-coverage')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/about/faq" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('faq')}</Link>
               </div>
             </div>
           </div>
           <div onMouseLeave={() => setOpenNav(false)}>
-            <div onMouseOver={() => setOpenNav('media')} onClick={() => setOpenNav(openNav === 'media' ? false : 'media')} className="cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">
-              <span className="pointer-events-none">{t('media')}</span>
+            <div onMouseOver={() => setOpenNav('maps')} onClick={() => setOpenNav(openNav === 'maps' ? false : 'maps')} className="cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6">
+              <span className="pointer-events-none">{t('maps')}</span>
               <svg className="w-3 h-3 pointer-events-none mt-1.5 ml-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <title>chevron-down</title>
                 <g fill="none">
@@ -63,10 +65,11 @@ export default function Header() {
                 </g>
               </svg>
             </div>
-            <div className={`${openNav === 'media' ? '' : 'hidden'} absolute w-48 z-10`}>
+            <div className={`${openNav === 'maps' ? '' : 'hidden'} absolute w-48 z-10`}>
               <div className="mt-[23px] border-t-4 border-l border-b border-r md:border-l-0 md:border-b-0 md:border-r-0 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
-                <a href="https://medium.com/@native-land" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('community-blog')}</a>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/media/media-coverage" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('media-coverage')}</Link>
+                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('main-map')}</Link>
+                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/maps/placenames" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('placename-map')}</Link>
+                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/maps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('all-maps')}</Link>
               </div>
             </div>
           </div>
@@ -106,9 +109,9 @@ export default function Header() {
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/resources/teachers-guide" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('teachers-guide')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/resources/mobile-apps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('mobile-apps')}</Link>
                 <a href="https://api-docs.native-land.ca" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('api')}</a>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/maps/territories" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('territories-list')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/maps/languages" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('languages-list')}</Link>
-                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/maps/treaties" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('treaties-list')}</Link>
+                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/listings/territories" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('territories-list')}</Link>
+                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/listings/languages" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('languages-list')}</Link>
+                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/listings/treaties" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('treaties-list')}</Link>
               </div>
             </div>
           </div>

@@ -64,8 +64,10 @@ export const handler = async (event) => {
 
   if(geosearch) {
     topSelect = sql`
-      SELECT "Entry".id, "Entry".name, "Entry".category, ST_AsGeoJSON(ST_Centroid("Polygon".geometry)) as centroid, ST_AsGeoJSON(ST_Envelope("Polygon".geometry)) as bounds
+      SELECT "Entry".id, "Entry".name, "Entry".category, ST_AsGeoJSON("Point".geometry) as point, ST_AsGeoJSON(ST_Centroid("Polygon".geometry)) as centroid, ST_AsGeoJSON(ST_Envelope("Polygon".geometry)) as bounds
       FROM "Entry"
+      LEFT JOIN "Point"
+      ON "Entry".id = "Point"."entryId"
       LEFT JOIN "Polygon"
       ON "Entry".id = "Polygon"."entryId"
     `
@@ -118,6 +120,13 @@ export const handler = async (event) => {
           name : row.name,
           centroid : JSON.parse(row.centroid),
           bounds : JSON.parse(row.bounds)
+        })
+      } else if(row.point) {
+        responseList.push({
+          id : row.id,
+          category : row.category,
+          name : row.name,
+          centroid : JSON.parse(row.point)
         })
       } else {
         responseList.push({

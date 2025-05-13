@@ -37,18 +37,27 @@ export default async function Footer() {
                 <Link prefetch={false} href="/about/roadmap" className="text-gray-600 hover:text-gray-900">{t('roadmap')}</Link>
               </li>
               <li className="mb-3">
+                <a href="https://medium.com/@native-land" className="text-gray-600 hover:text-gray-900">{t('community-blog')}</a>
+              </li>
+              <li className="mb-3">
+                <Link prefetch={false} href="/media/media-coverage" className="text-gray-600 hover:text-gray-900">{t('media-coverage')}</Link>
+              </li>
+              <li className="mb-3">
                 <Link prefetch={false} href="/about/faq" className="text-gray-600 hover:text-gray-900">{t('faq')}</Link>
               </li>
             </ul>
           </div>
           <div className="lg:mx-auto text-left">
-            <h4 className="text-lg text-gray-900 font-medium mb-7">{t('media')}</h4>
+            <h4 className="text-lg text-gray-900 font-medium mb-7">{t('maps')}</h4>
             <ul className="text-sm  transition-all duration-500">
               <li className="mb-3">
-                <a href="https://medium.com/@native-land" className="text-gray-600 hover:text-gray-900">{t('community-blog')}</a>
+               <Link prefetch={false} href="/" className="text-gray-600 hover:text-gray-900">{t('main-map')}</Link>
               </li>
               <li className="mb-3">
-                <Link prefetch={false} href="/media/media-coverage" className="text-gray-600 hover:text-gray-900">{t('media-coverage')}</Link>
+                <Link prefetch={false} href="/maps/placenames" className="text-gray-600 hover:text-gray-900">{t('placename-map')}</Link>
+              </li>
+              <li className="mb-3">
+                <Link prefetch={false} href="/maps" className="text-gray-600 hover:text-gray-900">{t('all-maps')}</Link>
               </li>
             </ul>
           </div>
