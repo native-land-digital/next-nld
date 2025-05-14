@@ -29,7 +29,7 @@ export default async function Page({ params : { locale }} : { params : { locale:
         <Sidebar />
         <div className="col-span-2 bg-white rounded-t shadow-lg mt-5">
           <div className="w-full max-h-[200px] overflow-hidden rounded-t">
-            <img src="https://d75cfcm8x0ifj.cloudfront.net/jobs-top.webp" alt="Jobs Header Image" className="object-cover object-center rounded-t" />
+            <img src="https://d75cfcm8x0ifj.cloudfront.net/jobsJ.webp" alt="Jobs Header Image" className="object-cover object-center rounded-t" />
           </div>
           <div className="px-4 pb-4 break-words">
             <Content />
