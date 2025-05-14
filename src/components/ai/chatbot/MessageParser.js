@@ -17,7 +17,7 @@ const MessageParser = ({ children, actions }) => {
         placeholder : "Search for a place you're interested in..."
       });
       geocoder.on('result', async (e) => {
-        const apiResponse = await fetch(`https://native-land.ca/api/index.php?maps=territories&position=${e.result.center[1]},${e.result.center[0]}`)
+        const apiResponse = await fetch(`https://native-land.ca/api/index.php?maps=territories&position=${e.result.center[1]},${e.result.center[0]}&key=LqUXbHEtWUcZJ7ikBX-xo`)
         const parsedResponse = await apiResponse.json();
         const nations = parsedResponse.map(feature => feature.properties["Name"]);
         apiNations.current = nations;
