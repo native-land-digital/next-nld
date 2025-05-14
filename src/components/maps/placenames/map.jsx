@@ -17,6 +17,9 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
+    if (mapboxgl.getRTLTextPluginStatus() === 'unavailable') {
+      mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.3.0/mapbox-gl-rtl-text.js', null, true);
+    }
     mapboxgl.clearStorage();
     const newMap = new mapboxgl.Map({
       ...randomPlacenameStartingPosition(),
