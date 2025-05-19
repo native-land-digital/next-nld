@@ -18,6 +18,8 @@ export type Change = {
 export type Entry = {
     id: Generated<number>;
     name: string;
+    verified: Generated<boolean>;
+    verified_text: string | null;
     slug: string | null;
     color: string | null;
     sources: string | null;

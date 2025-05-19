@@ -101,6 +101,8 @@ model Polygon {
 model Entry {
 	id              Int @id @default(autoincrement())
 	name            String
+  verified        Boolean @default(false)
+  verified_text   String?
   slug            String? @unique
   color           String?
   sources         String?

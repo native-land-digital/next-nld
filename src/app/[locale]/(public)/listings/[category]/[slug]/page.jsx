@@ -75,7 +75,7 @@ export default async function Page({ params : { locale, category, slug }}) {
     .leftJoin('Line', 'Line.entryId', 'Entry.id')
     .leftJoin('Point', 'Point.entryId', 'Entry.id')
     .select((eb) => [
-      'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.language', 'Entry.sources', 'Entry.disclaimer', 'Entry.createdAt', 'Entry.updatedAt',
+      'Entry.id', 'Entry.name', 'Entry.verified', 'Entry.category', 'Entry.slug', 'Entry.language', 'Entry.sources', 'Entry.disclaimer', 'Entry.createdAt', 'Entry.updatedAt',
       eb.fn('COALESCE', [
         eb.fn('ST_AsGeoJSON', 'Polygon.geometry'),
         eb.fn('ST_AsGeoJSON', 'Line.geometry'),
@@ -143,7 +143,11 @@ export default async function Page({ params : { locale, category, slug }}) {
 
   return (
     <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={entry.name} crumbs={[{ url : "/listings", title : "Listings" }, { url : `/listings/${category}`, title : category }]} />
+      <SubHeader 
+        title={entry.name} 
+        crumbs={[{ url : "/listings", title : "Listings" }, { url : `/listings/${category}`, title : category }]} 
+        verified={entry.verified}
+      />
       <div className="grid gap-5 grid-cols-1 md:grid-cols-3 min-h-screen w-full md:w-2/3 px-5 md:px-0 m-auto -mt-12 text-black">
         <Sidebar picks={category !== "greetings" ? 3 : 0}>
           <ol className="hidden md:block list-inside text-gray-400">

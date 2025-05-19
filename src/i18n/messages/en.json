@@ -252,6 +252,8 @@
     "usage-placeholder" : "Enter usage description",
     "parent" : "Enter parent greeting (for responses)",
     "public" : "Public",
+    "verified" : "Verified",
+    "verified-text" : "Verification Details",
     "published" : "Published",
     "create-user" : "Create New User",
     "saved-user" : "User saved successfully",
