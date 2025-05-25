@@ -19,9 +19,9 @@ export default function SubHeaderVerification({ verification }) {
             content={
                 <div className="ml-2 bg-white/75 px-2.5 py-1 rounded-lg shadow-lg text-black text-sm">
                     {verification.details && verification.details !== "" ? 
-                        <span>{t('verified')}: {verification.details} ({new Date(verification.updatedAt).toLocaleDateString()})</span>
+                        <span>{t('verified')}: {verification.details} ({new Date(verification.updatedAt).toLocaleDateString('en-US', { year: "numeric", month: "long", day: "numeric",})})</span>
                     :
-                        <span>{t('verified')}: {new Date(verification.updatedAt).toLocaleDateString()}</span>
+                        <span>{t('verified')}: {new Date(verification.updatedAt).toLocaleDateString('en-US', { year: "numeric", month: "long", day: "numeric",})}</span>
                     }
                 </div>
             }
