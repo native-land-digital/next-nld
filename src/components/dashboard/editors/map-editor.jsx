@@ -26,8 +26,9 @@ export default function MapEditor({ geometry_type, geometry, setGeometry }) {
       container: "nld-research-mapbox-map",
       style: process.env.NEXT_PUBLIC_MAPBOX_STYLE_RESEARCH,
     });
-    setMap(newMap)
-
+    newMap.on('load', () => {
+      setMap(newMap)
+    })
   }, [])
 
   useEffect(() => {
@@ -85,6 +86,7 @@ export default function MapEditor({ geometry_type, geometry, setGeometry }) {
   }, [map])
 
   const setGeometryFromShapes = () => {
+    console.log(drawn_shapes)
     if(drawn_shapes.current.length > 0) {
       const featureCollection = { type : "FeatureCollection", features : drawn_shapes.current }
       if(geometry_type !== "Point") {

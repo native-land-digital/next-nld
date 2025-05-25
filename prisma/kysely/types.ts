@@ -137,6 +137,14 @@ export type UsersOnIssues = {
     issueId: number;
     userId: number;
 };
+export type Verification = {
+    id: Generated<number>;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Timestamp;
+    verified: Generated<boolean>;
+    details: string | null;
+    entryId: number;
+};
 export type Website = {
     id: Generated<number>;
     url: string;
@@ -164,5 +172,6 @@ export type DB = {
     Relation: Relation;
     User: User;
     UsersOnIssues: UsersOnIssues;
+    Verification: Verification;
     Website: Website;
 };

@@ -66,6 +66,16 @@ model Change {
   entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
 }
 
+model Verification {
+  id              Int @id @default(autoincrement())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  verified        Boolean @default(true)
+  details         String?
+  entryId         Int @unique
+  entry           Entry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+}
+
 model Relation {
   id              Int @id @default(autoincrement())
   description     String?
@@ -109,6 +119,7 @@ model Entry {
   category        String?
   language        String?
   published       Boolean @default(false)
+  verification    Verification?
   media           Media[]
   websites        Website[]
   changelog       Change[]

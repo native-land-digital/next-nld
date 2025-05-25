@@ -1,14 +1,21 @@
 import { getTranslations } from '@/i18n/server-i18n';
 import Link from 'next/link'
 
-export default async function SubHeader({ title, crumbs = [] }) {
+import SubHeaderVerification from '@/components/nav/sub-header-verification';
+
+export default async function SubHeader({ title, crumbs = [], verification = false }) {
 
   const t = await getTranslations('Navigation');
 
   return (
     <div className="bg-blue-900 h-60 flex items-center py-6 px-10 md:px-0">
       <div className="w-full md:w-2/3 m-auto capitalize">
-        <h2 className="font-semibold text-3xl">{title}</h2>
+        <h2 className="font-semibold text-3xl">
+          {title}
+          <span>
+            <SubHeaderVerification verification={verification} />
+          </span>
+        </h2>
         <div className="text-sm mt-1.5">
           <Link prefetch={false} className="text-white hover:text-slate-300" href="/">{t('home')}</Link>
           {crumbs.map(crumb => {

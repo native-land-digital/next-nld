@@ -14,6 +14,7 @@ import GreetingsEditor from '@/components/dashboard/editors/greeting-editor';
 import MediaEditor from '@/components/dashboard/editors/media-editor';
 import WebsiteEditor from '@/components/dashboard/editors/website-editor';
 import ChangelogEditor from '@/components/dashboard/editors/changelog-editor';
+import VerificationEditor from '@/components/dashboard/editors/verification-editor';
 import RelationEditor from '@/components/dashboard/editors/relation-editor';
 
 import { availableCategories } from '@/lib/map/categories';
@@ -21,7 +22,7 @@ import { availableCategories } from '@/lib/map/categories';
 export default function EditEntry({ entry }) {
 
   const t = useTranslations('Dashboard');
-  const tMaps = useTranslations('Maps');
+  const tMaps = useTranslations('Listings');
   const tCommon = useTranslations('Common');
   const { data : session } = useSession();
 
@@ -32,6 +33,7 @@ export default function EditEntry({ entry }) {
   const [ pronunciations, setPronunciations ] = useState(entry.pronunciations);
   const [ color, setColor ] = useState(entry.color);
   const [ published, setPublished ] = useState(entry.published);
+  const [ verification, setVerification ] = useState(entry.verification);
   const [ greetings, setGreetings ] = useState(entry.greetings);
   const [ media, setMedia ] = useState(entry.media);
   const [ websites, setWebsites ] = useState(entry.websites);
@@ -73,6 +75,7 @@ export default function EditEntry({ entry }) {
         color : color,
         pronunciations : pronunciations,
         published : published,
+        verification : verification,
         websites : websites,
         greetings : greetings,
         media : media,
@@ -95,6 +98,7 @@ export default function EditEntry({ entry }) {
         setPronunciations(results.entry.pronunciations)
         setColor(results.entry.color)
         setPublished(results.entry.published)
+        setVerification(results.entry.verification)
         setGreetings(results.entry.greetings)
         setMedia(results.entry.media)
         setWebsites(results.entry.websites)
@@ -143,7 +147,7 @@ export default function EditEntry({ entry }) {
 
         {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('name') > -1 ?
           <div className="mt-2.5">
-            <label className="text-gray-800 text-sm mb-1 block">{t('name')}</label>
+            <label className="text-gray-800 text-normal mb-1 block font-bold">{t('name')}</label>
             <div className="relative flex items-center">
               <input value={name} onChange={(e) => setName(e.target.value)} name="name" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('enter-name')} />
             </div>
@@ -152,7 +156,7 @@ export default function EditEntry({ entry }) {
 
         {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('category') > -1 ?
           <div className="mt-2.5">
-            <label className="text-gray-800 text-sm mb-1 block">{t('category')}</label>
+            <label className="text-gray-800 text-normal mb-1 block font-bold">{t('category')}</label>
             <div className="relative flex items-center">
               <select onChange={(e) => setCategory(e.target.value)} value={category ? category : ""} className="text-sm capitalize h-12 border border-gray-300 text-gray-600 text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none" >
                 <option>({t('none')})</option>
@@ -169,7 +173,7 @@ export default function EditEntry({ entry }) {
           <div>
             {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('color') > -1 ?
               <div className="mt-2.5">
-                <label className="text-gray-800 text-sm mb-1 block">{t('color')}</label>
+                <label className="text-gray-800 text-normal mb-1 block font-bold">{t('color')}</label>
                 <div className="relative flex items-center">
                   <div className="w-10 h-10" style={{backgroundColor : color }}></div>
                   <button className="ml-2.5 py-1 px-2.5 text-sm tracking-wide rounded-lg text-black bg-gray-100 hover:bg-gray-200 focus:outline-none" onClick={() => setShowSwatches(true)}>{t('pick-color')}</button>
@@ -188,14 +192,14 @@ export default function EditEntry({ entry }) {
 
         {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('pronunciations') > -1 ?
           <div className="mt-2.5">
-            <label className="text-gray-800 text-sm mb-1 block">{t('pronunciations')}</label>
+            <label className="text-gray-800 text-normal mb-1 block font-bold">{t('pronunciations')}</label>
             <PronunciationsEditor pronunciations={pronunciations} setPronunciations={setPronunciations} />
           </div>
         : false}
 
         {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('published') > -1 ?
           <div className="mt-2.5">
-            <label className="text-gray-800 text-sm mb-1 block">{t('public')}</label>
+            <label className="text-gray-800 text-normal mb-1 block font-bold">{t('public')}</label>
             <div className="relative">
               <label htmlFor="published" className='capitalize text-sm'>
                 <input id="published" type="checkbox" checked={published} name="published" onChange={(e) => setPublished(e.target.checked)} className="mr-1.5" />
@@ -205,12 +209,16 @@ export default function EditEntry({ entry }) {
           </div>
         : false}
 
+        {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('verified') > -1 ?
+          <VerificationEditor verification={verification} setVerification={setVerification} />
+        : false}
+
       </div>
 
       {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('sources') > -1 ?
         <div className="w-full">
           <div className="mt-2.5">
-            <label className="text-gray-800 text-sm mb-1 block">{tMaps('sources')}</label>
+            <label className="text-gray-800 text-normal mb-1 block font-bold">{tMaps('sources')}</label>
             <WYSIWYGEDitor id="sources" text={sources} setText={setSources} />
           </div>
         </div>
@@ -219,7 +227,7 @@ export default function EditEntry({ entry }) {
       {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('disclaimer') > -1 ?
         <div className="w-full">
           <div className="mt-2.5">
-            <label className="text-gray-800 text-sm mb-1 block">{tMaps('disclaimer')}</label>
+            <label className="text-gray-800 text-normal mb-1 block font-bold">{tMaps('disclaimer')}</label>
             <WYSIWYGEDitor id="disclaimer" text={disclaimer} setText={setDisclaimer} />
           </div>
         </div>
@@ -229,7 +237,7 @@ export default function EditEntry({ entry }) {
         <div>
           {category === 'languages' ?
             <div className="mt-6">
-              <label className="text-gray-800 text-normal mb-1 block">{tMaps('greetings')}</label>
+              <label className="text-gray-800 text-normal mb-1 block font-bold">{tMaps('greetings')}</label>
               <GreetingsEditor greetings={greetings} setGreetings={setGreetings} />
             </div>
           : false}
@@ -238,28 +246,28 @@ export default function EditEntry({ entry }) {
 
       {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('media') > -1 ?
         <div className="mt-6">
-          <label className="text-gray-800 text-normal mb-1 block">{tMaps('media')}</label>
+          <label className="text-gray-800 text-normal mb-1 block font-bold">{tMaps('media')}</label>
           <MediaEditor media={media} setMedia={setMedia} />
         </div>
       : false}
 
       {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('websites') > -1 ?
         <div className="mt-6">
-          <label className="text-gray-800 text-normal mb-1 block">{tMaps('websites')}</label>
+          <label className="text-gray-800 text-normal mb-1 block font-bold">{tMaps('websites')}</label>
           <WebsiteEditor websites={websites} setWebsites={setWebsites} />
         </div>
       : false}
 
       {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('relatedTo') > -1 ?
         <div className="mt-6">
-          <label className="text-gray-800 text-normal mb-1 block">{tMaps('related')}</label>
+          <label className="text-gray-800 text-normal mb-1 block font-bold">{tMaps('related')}</label>
           <RelationEditor relatedTo={relatedTo} setRelatedTo={setRelatedTo} />
         </div>
       : false}
 
       {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('changelog') > -1 ?
         <div className="mt-6">
-          <label className="text-gray-800 text-normal mb-1 block">{tMaps('changelog')}</label>
+          <label className="text-gray-800 text-normal mb-1 block font-bold">{tMaps('changelog')}</label>
           <ChangelogEditor changelog={changelog} setChangelog={setChangelog} />
         </div>
       : false}

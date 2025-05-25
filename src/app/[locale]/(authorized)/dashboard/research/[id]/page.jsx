@@ -1,5 +1,5 @@
 import { db } from '@/lib/db/kysely'
-import { jsonArrayFrom } from 'kysely/helpers/postgres'
+import { jsonObjectFrom, jsonArrayFrom } from 'kysely/helpers/postgres'
 import { notFound } from 'next/navigation';
 import { getServerSession } from "next-auth/next"
 
@@ -37,6 +37,11 @@ export default async function Page({ params : { locale, id } }) {
           .select(['id', 'url', 'text'])
           .whereRef('Pronunciation.entryId', '=', 'Entry.id')
       ).as('pronunciations'),
+      jsonObjectFrom(
+        eb.selectFrom('Verification')
+          .select(['id', 'verified', 'details', 'updatedAt'])
+          .whereRef('Verification.entryId', '=', 'Entry.id')
+      ).as('verification'),
       jsonArrayFrom(
         eb.selectFrom('Greeting')
           .select(['id', 'url', 'text', 'translation', 'usage', 'parentId'])
