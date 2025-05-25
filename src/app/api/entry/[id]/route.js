@@ -1,6 +1,6 @@
 import { db } from '@/lib/db/kysely'
 import { sql } from 'kysely';
-import { jsonArrayFrom } from 'kysely/helpers/postgres'
+import { jsonObjectFrom, jsonArrayFrom } from 'kysely/helpers/postgres'
 import { submitRevalidation } from '@/lib/actions'
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
@@ -147,6 +147,30 @@ export const PATCH = async (req, route) => {
                 .execute();
             }
             delete body.pronunciations;
+
+            // Updating, adding verification
+            const verification = body.verification;
+            if (verification.id) {
+              await trx.updateTable('Verification')
+                .set({
+                  verified: verification.verified,
+                  details: verification.details,
+                  updatedAt: new Date()
+                })
+                .where('id', '=', verification.id)
+                .execute();
+            }
+            if(verification && !verification.id) {
+              await trx.insertInto('Verification')
+                .values({
+                  entryId : parseInt(entryId),
+                  verified: verification.verified,
+                  details: verification.details,
+                  updatedAt: new Date()
+                })
+                .execute();
+            }
+            delete body.verification;
 
             // Deleting, updating, adding websites
       			const websites = body.websites;
@@ -371,14 +395,25 @@ export const PATCH = async (req, route) => {
           const entry = await db.selectFrom('Entry')
             .where('Entry.id', '=', parseInt(entryId))
             .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
+            .leftJoin('Line', 'Line.entryId', 'Entry.id')
+            .leftJoin('Point', 'Point.entryId', 'Entry.id')
             .select((eb) => [
               'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug', 'Entry.color', 'Entry.published', 'Entry.sources', 'Entry.disclaimer', 'Entry.createdAt', 'Entry.updatedAt',
-              eb.fn('ST_AsGeoJSON', 'Polygon.geometry').as('geometry'),
+              eb.fn('COALESCE', [
+                eb.fn('ST_AsGeoJSON', 'Polygon.geometry'),
+                eb.fn('ST_AsGeoJSON', 'Line.geometry'),
+                eb.fn('ST_AsGeoJSON', 'Point.geometry')
+              ]).as('geometry'),
               jsonArrayFrom(
                 eb.selectFrom('Pronunciation')
                   .select(['id', 'url', 'text'])
                   .whereRef('Pronunciation.entryId', '=', 'Entry.id')
               ).as('pronunciations'),
+              jsonObjectFrom(
+                eb.selectFrom('Verification')
+                  .select(['id', 'verified', 'details', 'updatedAt'])
+                  .whereRef('Verification.entryId', '=', 'Entry.id')
+              ).as('verification'),
               jsonArrayFrom(
                 eb.selectFrom('Greeting')
                   .select(['id', 'url', 'text', 'translation', 'usage', 'parentId'])

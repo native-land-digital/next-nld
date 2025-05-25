@@ -14,6 +14,7 @@ import GreetingsEditor from '@/components/dashboard/editors/greeting-editor';
 import MediaEditor from '@/components/dashboard/editors/media-editor';
 import WebsiteEditor from '@/components/dashboard/editors/website-editor';
 import ChangelogEditor from '@/components/dashboard/editors/changelog-editor';
+import VerificationEditor from '@/components/dashboard/editors/verification-editor';
 import RelationEditor from '@/components/dashboard/editors/relation-editor';
 
 import { availableCategories } from '@/lib/map/categories';
@@ -32,8 +33,7 @@ export default function EditEntry({ entry }) {
   const [ pronunciations, setPronunciations ] = useState(entry.pronunciations);
   const [ color, setColor ] = useState(entry.color);
   const [ published, setPublished ] = useState(entry.published);
-  const [ verified, setVerified ] = useState(entry.verified);
-  const [ verified_text, setVerifiedText ] = useState(entry.verified_text);
+  const [ verification, setVerification ] = useState(entry.verification);
   const [ greetings, setGreetings ] = useState(entry.greetings);
   const [ media, setMedia ] = useState(entry.media);
   const [ websites, setWebsites ] = useState(entry.websites);
@@ -75,8 +75,7 @@ export default function EditEntry({ entry }) {
         color : color,
         pronunciations : pronunciations,
         published : published,
-        verified : verified,
-        verified_text : verified_text,
+        verification : verification,
         websites : websites,
         greetings : greetings,
         media : media,
@@ -99,8 +98,7 @@ export default function EditEntry({ entry }) {
         setPronunciations(results.entry.pronunciations)
         setColor(results.entry.color)
         setPublished(results.entry.published)
-        setVerified(results.entry.verified)
-        setVerifiedText(results.entry.verified_text)
+        setVerification(results.entry.verification)
         setGreetings(results.entry.greetings)
         setMedia(results.entry.media)
         setWebsites(results.entry.websites)
@@ -212,22 +210,7 @@ export default function EditEntry({ entry }) {
         : false}
 
         {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('verified') > -1 ?
-          <div>
-            <div className="mt-2.5">
-              <label className="text-gray-800 text-normal mb-1 block font-bold">{t('verified')}</label>
-              <div className="relative">
-                <label htmlFor="verified" className='capitalize text-sm'>
-                  <input id="verified" type="checkbox" checked={verified} name="verified" onChange={(e) => setVerified(e.target.checked)} className="mr-1.5" />
-                  {t('verified')}
-                </label>
-              </div>
-            </div>
-            <div className="mt-2.5">
-              <div className="relative flex items-center">
-                <input value={verified_text} onChange={(e) => setVerifiedText(e.target.value)} name="verified_text" type="text" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder={t('verified-text')} />
-              </div>
-            </div>
-          </div>
+          <VerificationEditor verification={verification} setVerification={setVerification} />
         : false}
 
       </div>
