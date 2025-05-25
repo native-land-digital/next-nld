@@ -24,7 +24,7 @@ export default function VerificationEditor({ verification, setVerification }) {
             <div className="relative">
             <label htmlFor="verified" className='capitalize text-sm'>
                 <input id="verified" type="checkbox" checked={verification ? verification.verified : false} name="verified" onChange={(e) => changeVerification(e.target.checked, 'verified')} className="mr-1.5" />
-                {t('verified')} ({new Date(verification.updatedAt).toLocaleDateString()})
+                {t('verified')} {verification && verification.updatedAt ? `(${new Date(verification.updatedAt).toLocaleDateString('en-US', { year: "numeric", month: "long", day: "numeric",})})` : ''}
             </label>
             </div>
         </div>
