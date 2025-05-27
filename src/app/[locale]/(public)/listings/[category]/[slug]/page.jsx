@@ -147,7 +147,7 @@ export default async function Page({ params : { locale, category, slug }}) {
   }
 
   return (
-    <div className="font-[sans-serif] bg-white pb-5">
+    <div className="bg-white pb-5">
       <SubHeader 
         title={entry.name} 
         crumbs={[{ url : "/listings", title : "Listings" }, { url : `/listings/${category}`, title : category }]} 
