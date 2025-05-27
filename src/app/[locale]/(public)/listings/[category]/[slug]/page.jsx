@@ -1,5 +1,5 @@
 import { db } from '@/lib/db/kysely'
-import { jsonArrayFrom } from 'kysely/helpers/postgres'
+import { jsonObjectFrom, jsonArrayFrom } from 'kysely/helpers/postgres'
 import SubHeader from '@/components/nav/sub-header'
 import Sidebar from '@/components/static/sidebar';
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
@@ -92,6 +92,11 @@ export default async function Page({ params : { locale, category, slug }}) {
           .select(['id', 'url', 'text'])
           .whereRef('Pronunciation.entryId', '=', 'Entry.id')
       ).as('pronunciations'),
+      jsonObjectFrom(
+        eb.selectFrom('Verification')
+          .select(['id', 'verified', 'details', 'updatedAt'])
+          .whereRef('Verification.entryId', '=', 'Entry.id')
+      ).as('verification'),
       jsonArrayFrom(
         eb.selectFrom('Greeting')
           .select(['id', 'url', 'text', 'translation', 'usage', 'parentId'])
@@ -142,8 +147,12 @@ export default async function Page({ params : { locale, category, slug }}) {
   }
 
   return (
-    <div className="font-[sans-serif] bg-white pb-5">
-      <SubHeader title={entry.name} crumbs={[{ url : "/listings", title : "Listings" }, { url : `/listings/${category}`, title : category }]} />
+    <div className="bg-white pb-5">
+      <SubHeader 
+        title={entry.name} 
+        crumbs={[{ url : "/listings", title : "Listings" }, { url : `/listings/${category}`, title : category }]} 
+        verification={entry.verification}
+      />
       <div className="grid gap-5 grid-cols-1 md:grid-cols-3 min-h-screen w-full md:w-2/3 px-5 md:px-0 m-auto -mt-12 text-black">
         <Sidebar picks={category !== "greetings" ? 3 : 0}>
           <ol className="hidden md:block list-inside text-gray-400">

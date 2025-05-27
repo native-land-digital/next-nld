@@ -15,6 +15,7 @@ export const editableColumns = {
     "pronunciations",
     "category",
     "published",
+    "verified",
     "media",
     "websites",
     "greetings",
