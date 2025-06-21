@@ -150,7 +150,7 @@ export const PATCH = async (req, route) => {
 
             // Updating, adding verification
             const verification = body.verification;
-            if (verification.id) {
+            if (verification && verification.id) {
               await trx.updateTable('Verification')
                 .set({
                   verified: verification.verified,
