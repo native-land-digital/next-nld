@@ -20,6 +20,7 @@ export default async function sitemap() {
     '/resources/mobile-apps',
     '/resources/teachers-guide',
     '/resources/territory-acknowledgement',
+    '/search',
     '/support',
     '/support/supporters-circle',
   ]
