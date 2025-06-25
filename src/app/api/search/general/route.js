@@ -13,7 +13,7 @@ export const GET = async (req) => {
 
     try {
 
-      const page = req.nextUrl.searchParams.get('page');
+      // const page = req.nextUrl.searchParams.get('page');
       const search = req.nextUrl.searchParams.get('s');
 
       let totalQuery = db.selectFrom('Entry')
