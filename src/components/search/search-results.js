@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
-import { toast } from 'react-toastify';
 import Link from 'next/link'
 
 export default function SearchResults() {
