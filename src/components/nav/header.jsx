@@ -32,7 +32,7 @@ export default function Header() {
         </button>
       </div>
       <div className={`${hamburgerToggled ? 'block' : 'hidden'} md:block w-full block flex-grow justify-end lg:flex lg:items-center lg:w-auto`}>
-        <div className="text-base justify-end md:flex">
+        <div className="text-base justify-end items-center md:flex">
           <div onMouseLeave={() => setOpenNav(false)}>
             <div onMouseOver={() => setOpenNav('about')} onClick={() => setOpenNav(openNav === 'about' ? false : 'about')} className={`about-dropdown cursor-pointer flex block mt-4 lg:mt-0 text-slate-600 hover:text-slate-400 mr-6`}>
               <span className="pointer-events-none">{t('about')}</span>
@@ -153,6 +153,16 @@ export default function Header() {
                 <Link href="/yo" prefetch={false} className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('yoruba')}</Link>
               </div>
             </div>
+          </div>
+          <div className="mr-2.5 flex-grow justify-end place-center">
+            <Link href="/search" prefetch={false}> 
+              <div className="w-[150px] text-sm border border-gray-300 px-4 py-2 text-slate-500 rounded-md outline-blue-600 cursor-pointer hover:bg-slate-100">
+                <svg className="inline mr-2.5" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0 0 50 50">
+                  <path d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"></path>
+                </svg>
+                Search...
+              </div>
+            </Link>
           </div>
         </div>
         <div>
