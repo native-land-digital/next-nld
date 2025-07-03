@@ -69,6 +69,7 @@ export default function Header() {
               <div className="mt-[23px] border-t-4 border-l border-b border-r md:border-l-0 md:border-b-0 md:border-r-0 border-solid border-blue-700 pt-2 pb-2 bg-white rounded-b text-slate-600">
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('main-map')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/maps/placenames" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('placename-map')}</Link>
+                <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/maps/reciprocity" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('reciprocity-map')}</Link>
                 <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/maps" className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('all-maps')}</Link>
               </div>
             </div>

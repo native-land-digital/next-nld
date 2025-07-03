@@ -71,3 +71,5 @@ const index = lunr(function () {
 });
 
 fs.writeFileSync('public/search-index.json', JSON.stringify(index));
+
+console.log("Generated search index.")

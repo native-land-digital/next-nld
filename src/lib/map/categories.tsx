@@ -3,6 +3,6 @@ export const availableCategories = [
   'languages',
   'treaties',
   'placenames',
-  'initiatives',
-  'struggles'
+  'risks',
+  'renewals'
 ]
