@@ -29,7 +29,7 @@ export default async function Page({ params : { locale }} : { params : { locale:
         <Sidebar />
         <div className="col-span-2 bg-white rounded-t shadow-lg mt-5">
           <div className="w-full max-h-[200px] overflow-hidden rounded-t">
-            <img src="https://d75cfcm8x0ifj.cloudfront.net/teachersguide_header.webp" alt="Teachers Guide Header Image" className="object-cover rounded-t" />
+            <img src="https://d75cfcm8x0ifj.cloudfront.net/teachers_guideJ.webp" alt="Teachers Guide Header Image" className="object-cover rounded-t" />
           </div>
           <div className="px-4 pb-4 break-words">
             <Content />
