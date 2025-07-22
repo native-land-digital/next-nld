@@ -4,7 +4,7 @@ import { useState } from "react";
 import Map from '@/components/maps/reciprocity/map';
 import SelectorControl from '@/components/maps/reciprocity/map-selector-control';
 
-export default function MapContainer() {
+export default function MapContainer({ risksRenewalsOptions }) {
   const [map, setMap] = useState(false);
   const [selectedFeature, setSelectedFeature] = useState(false);
 
@@ -14,6 +14,7 @@ export default function MapContainer() {
         map={map}
         selectedFeature={selectedFeature}
         setSelectedFeature={setSelectedFeature}
+        risksRenewalsOptions={risksRenewalsOptions}
       />
       <Map
         map={map}

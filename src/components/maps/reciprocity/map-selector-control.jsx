@@ -7,7 +7,7 @@ import { isMobile } from '@/components/front-map/map-utils';
 
 import '@/components/front-map/map.geocoder.css';
 
-export default function SelectorControl({ map, selectedFeature }) {
+export default function SelectorControl({ map, selectedFeature, risksRenewalsOptions }) {
 
     const t = useTranslations('FrontMap');
     const tMaps = useTranslations('Maps');
@@ -54,6 +54,7 @@ export default function SelectorControl({ map, selectedFeature }) {
           <AsyncSelect
             instanceId="risks-renewals-select"
             placeholder={t('search-risks-renewals')}
+            defaultOptions={risksRenewalsOptions.map(riskRenewal => { return { value : riskRenewal.id, label : riskRenewal.name }})}
             onChange={(e) => selectDropdown(e.value)}
             cacheOptions
             loadOptions={loadRisksRenewalsOptions} />
