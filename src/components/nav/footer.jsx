@@ -57,6 +57,9 @@ export default async function Footer() {
                 <Link prefetch={false} href="/maps/placenames" className="text-gray-600 hover:text-gray-900">{t('placename-map')}</Link>
               </li>
               <li className="mb-3">
+                <Link prefetch={false} href="/maps/reciprocity" className="text-gray-600 hover:text-gray-900">{t('reciprocity-map')}</Link>
+              </li>
+              <li className="mb-3">
                 <Link prefetch={false} href="/maps" className="text-gray-600 hover:text-gray-900">{t('all-maps')}</Link>
               </li>
             </ul>

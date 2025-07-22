@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma migrate deploy && next build",
+    "build": "prisma generate && prisma migrate deploy && node ./generate-search-index.mjs && next build",
     "start": "next start",
     "lambda": "node ./lambdas/testHandler.mjs",
     "postinstall": "prisma generate",

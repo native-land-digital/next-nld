@@ -29,6 +29,10 @@ export default async function Page({ params : { locale }}) {
               <Link prefetch={false} href={'/maps/placenames'}>{t('placenames-map')}</Link>
             </h2>
             <p>This map displays a collection of placenames from Indigenous nations around the world. You can search for names or click to learn more about any placename shown on the map.</p>
+            <h2 className="text-xl mt-4">
+              <Link prefetch={false} href={'/maps/reciprocity'}>{t('reciprocity-map')}</Link>
+            </h2>
+            <p>This map shows a collection of risks and renewals related to Indigenous nations and land. This is a great place to learn more about how you can get involved and reciprocate.</p>
           </div>
         </div>
       </div>
