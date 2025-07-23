@@ -65,19 +65,16 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
   }
 
   const addEventListeners = () => {
-    let hoveredId = false;
     reciprocityLayers.forEach(reciprocityLayer => {
-      map.on('mouseover', reciprocityLayer, (e) => {
-        hoveredId = e.features[0].id;
+      map.on('mouseover', reciprocityLayer, () => {
         map.getCanvas().style.cursor = 'pointer'
       })
       map.on('mouseout', reciprocityLayer, () => {
-        hoveredId = false;
         map.getCanvas().style.cursor = ''
       })
     })
     
-    map.on("click", (e) => {
+    map.on("click", () => {
       const featuresUnderMouse = map.queryRenderedFeatures(e.point, { layers: ["next-nld-risks-source-layer", "next-nld-renewals-source-layer"] });
       const noDuplicates = getUniqueFeatures(featuresUnderMouse, 'id');
       setSelectedFeature(noDuplicates[0]);

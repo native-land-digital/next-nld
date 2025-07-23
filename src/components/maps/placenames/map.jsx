@@ -62,19 +62,16 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
   }
 
   const addEventListeners = () => {
-    let hoveredId = false;
     placenameLayers.forEach(placenameLayer => {
-      map.on('mouseover', placenameLayer, (e) => {
-        hoveredId = e.features[0].id;
+      map.on('mouseover', placenameLayer, () => {
         map.getCanvas().style.cursor = 'pointer'
       })
       map.on('mouseout', placenameLayer, () => {
-        hoveredId = false;
         map.getCanvas().style.cursor = ''
       })
     })
     
-    map.on("click", (e) => {
+    map.on("click", () => {
       const featuresUnderMouse = map.queryRenderedFeatures(e.point, { layers: ["next-nld-placenames-major", "next-nld-placenames-minor", "next-nld-placenames-mini"] });
       const noDuplicates = getUniqueFeatures(featuresUnderMouse, 'id');
       console.log(noDuplicates)
