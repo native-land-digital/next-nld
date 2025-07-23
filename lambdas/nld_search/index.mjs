@@ -84,12 +84,11 @@ export const handler = async (event) => {
       categoryWhere = sql`"Entry".category = ${category}`
     } else {
       const categoryList = category.split(',');
-      const categoryConditions = categoryList.map(
-        (cat) => sql`"Entry".category = ${cat}`
-      )
-      categoryWhere = categoryConditions.length
-        ? sql.join(categoryConditions, sql` OR `)
-        : null;
+      if(categoryList.length > 1) {
+        categoryWhere = sql`"Entry".category = ANY(${categoryList})`;
+      } else {
+        categoryWhere = sql`"Entry".category = ${categoryList[0]}`
+      }
     }
   }
 

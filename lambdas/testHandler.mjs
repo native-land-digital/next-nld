@@ -106,3 +106,23 @@ if(searchResponseBody.error) {
   console.log(searchResponseBody.length);
 }
 console.log("--- END SEARCH RESPONSE TEST ---");
+
+let search_multiple_response = await search({
+  httpMethod : "GET",
+  queryStringParameters : {
+    s : 'test',
+    category : "risks,renewals",
+    // id : 87742,
+    // geosearch : true
+  }
+});
+const searchMultiResponseBody = JSON.parse(search_multiple_response.body);
+console.log("--- START MULTI SEARCH RESPONSE TEST ---");
+if(searchMultiResponseBody.error) {
+  console.log(searchMultiResponseBody.error)
+} else {
+  console.log(searchMultiResponseBody)
+  console.log(searchMultiResponseBody.map(row => row.name));
+  console.log(searchMultiResponseBody.length);
+}
+console.log("--- END MULTI SEARCH RESPONSE TEST ---");
