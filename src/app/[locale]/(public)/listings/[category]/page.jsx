@@ -13,6 +13,8 @@ export const generateStaticParams = () => {
     { locale : 'en', category : 'languages' },
     { locale : 'en', category : 'treaties' },
     { locale : 'en', category : 'placenames' },
+    { locale : 'en', category : 'risks' },
+    { locale : 'en', category : 'renewals' },
     { locale : 'en', category : 'greetings' }
   ]
 }
@@ -21,7 +23,7 @@ export const revalidate = false;
 
 export default async function Page({ searchParams, params : { locale, category }}) {
 
-  let allowedCategories = ["territories", "languages", "treaties", "placenames", "greetings"]
+  let allowedCategories = ["territories", "languages", "treaties", "placenames", "risks", "renewals", "greetings"]
   if(!allowedCategories.includes(category)) {
     notFound()
   }
@@ -84,6 +86,8 @@ export default async function Page({ searchParams, params : { locale, category }
             <li className="mb-2.5"><Link prefetch={false} href="/listings/treaties">{t('treaties-list')}</Link></li>
             <li className="mb-2.5"><Link prefetch={false} href="/listings/greetings">{t('greetings-list')}</Link></li>
             <li className="mb-2.5"><Link prefetch={false} href="/listings/placenames">{t('placenames-list')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/listings/risks">{t('risks-list')}</Link></li>
+            <li className="mb-2.5"><Link prefetch={false} href="/listings/renewals">{t('renewals-list')}</Link></li>
           </ol>
           <span />
         </Sidebar>

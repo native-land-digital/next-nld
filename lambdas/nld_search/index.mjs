@@ -80,7 +80,16 @@ export const handler = async (event) => {
 
   let categoryWhere = false;
   if(category) {
-    categoryWhere = sql`"Entry".category = ${category}`
+    if(category.indexOf(',') === -1) {
+      categoryWhere = sql`"Entry".category = ${category}`
+    } else {
+      const categoryList = category.split(',');
+      if(categoryList.length > 1) {
+        categoryWhere = sql`"Entry".category = ANY(${categoryList})`;
+      } else {
+        categoryWhere = sql`"Entry".category = ${categoryList[0]}`
+      }
+    }
   }
 
   let searchWhere = false;

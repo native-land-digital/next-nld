@@ -40,7 +40,7 @@ export const GET = async (req) => {
           }
 
           // Point layers
-          if(category === 'placenames') {
+          if(category === 'placenames' || category === 'risks' || category === 'renewals') {
             entriesQuery = db.selectFrom('Entry')
               .where('category', '=', categoryToSearch)
               .where('published', '=', true)
@@ -78,6 +78,14 @@ export const GET = async (req) => {
                       Slug : entry.slug,
                       Name : entry.name,
                       type : entry.type,
+                      description : process.env.NEXTAUTH_URL + `/listings/${category}/${entry.slug}`
+                    }
+                  }
+                  if(category === 'risks' || category === 'renewals') {
+                    properties = {
+                      id : entry.id,
+                      Slug : entry.slug,
+                      Name : entry.name,
                       description : process.env.NEXTAUTH_URL + `/listings/${category}/${entry.slug}`
                     }
                   }
@@ -130,6 +138,10 @@ export const GET = async (req) => {
               tilesetName = process.env.GREETINGS_TILESET_NAME;
             } else if(category === 'placenames') {
               tilesetName = process.env.PLACENAMES_TILESET_NAME;
+            } else if(category === 'risks') {
+              tilesetName = process.env.RISKS_TILESET_NAME;
+            } else if(category === 'renewals') {
+              tilesetName = process.env.RENEWALS_TILESET_NAME;
             }
             const tileset_source = tilesetName + "_source";
             const tileset = mapbox_username + '.' + tilesetName + '_layer';

@@ -3,7 +3,7 @@ import { useTranslations } from '@/i18n/client-i18n';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-import { randomPlacenameStartingPosition, getUniqueFeatures } from '@/components/front-map/map-utils';
+import { getUniqueFeatures } from '@/components/front-map/map-utils';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -13,7 +13,7 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
   const t = useTranslations('FrontMap');
 
   const [ popup, setPopup ] = useState(false);
-  const placenameLayers = ["next-nld-placenames-major", "next-nld-placenames-minor", "next-nld-placenames-mini"];
+  const reciprocityLayers = ["next-nld-risks", "next-nld-renewals"];
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
@@ -22,10 +22,10 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
     }
     mapboxgl.clearStorage();
     const newMap = new mapboxgl.Map({
-      ...randomPlacenameStartingPosition(),
+      center : [-36.38964382502621, 45.652294519950345],
       zoom : 3,
-      container: "nld-placenames-map",
-      style: process.env.NEXT_PUBLIC_MAPBOX_STYLE_PLACENAMES,
+      container: "nld-reciprocity-map",
+      style: process.env.NEXT_PUBLIC_MAPBOX_STYLE_RISKS_RENEWALS,
       showZoom: false,
       showCompass: false,
       preserveDrawingBuffer: true,
@@ -45,43 +45,45 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
       addControls();
 
       map.on('load', () => {
-        addLayerStyles();
         addEventListeners();
+        pointAnimation(map)
       })
     }
   }, [map, popup])
 
-  const addLayerStyles = () => {
-    placenameLayers.forEach(placenameLayer => {
-      map.setPaintProperty(placenameLayer, 'text-color', [
-        "case",
-        ["boolean", ["feature-state", "hover"], false], '#333333',
-        '#000000',
-      ]);
-    });
+  const pointAnimation = (map) => {
+    let risksWidth = 1;
+    setInterval(() => {
+      risksWidth = risksWidth >= 5 ? 1 : risksWidth + 0.2;
+      map.setPaintProperty('next-nld-risks-source-layer', 'circle-stroke-width', risksWidth);
+    }, 30);
+    let renewalsWidth = 1;
+    setInterval(() => {
+      renewalsWidth = renewalsWidth >= 5 ? 1 : renewalsWidth + 0.2;
+      map.setPaintProperty('next-nld-renewals-source-layer', 'circle-stroke-width', renewalsWidth);
+    }, 50);
   }
 
   const addEventListeners = () => {
-    placenameLayers.forEach(placenameLayer => {
-      map.on('mouseover', placenameLayer, () => {
+    reciprocityLayers.forEach(reciprocityLayer => {
+      map.on('mouseover', reciprocityLayer, () => {
         map.getCanvas().style.cursor = 'pointer'
       })
-      map.on('mouseout', placenameLayer, () => {
+      map.on('mouseout', reciprocityLayer, () => {
         map.getCanvas().style.cursor = ''
       })
     })
     
     map.on("click", () => {
-      const featuresUnderMouse = map.queryRenderedFeatures(e.point, { layers: ["next-nld-placenames-major", "next-nld-placenames-minor", "next-nld-placenames-mini"] });
+      const featuresUnderMouse = map.queryRenderedFeatures(e.point, { layers: ["next-nld-risks-source-layer", "next-nld-renewals-source-layer"] });
       const noDuplicates = getUniqueFeatures(featuresUnderMouse, 'id');
-      console.log(noDuplicates)
       setSelectedFeature(noDuplicates[0]);
     });
   }
   
     const entryQuery = async (query) => {
       if(query && query.length > 2) {
-        return fetch(`/api/entry/searcher?s=${query}&geosearch=true&category=placenames`)
+        return fetch(`/api/entry/searcher?s=${query}&geosearch=true&category=risks,renewals`)
           .then(resp => resp.json())
           .then(response => {
             const features = response.map((entry, i) => {
@@ -116,6 +118,6 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
   }
 
   return (
-    <div id="nld-placenames-map" className="w-full h-full"></div>
+    <div id="nld-reciprocity-map" className="w-full h-full"></div>
   );
 }
