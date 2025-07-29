@@ -1,4 +1,4 @@
-import { createChatBotMessage, createCustomMessage, createClientMessage } from 'react-chatbot-kit';
+import { createChatBotMessage, createCustomMessage } from 'react-chatbot-kit';
 import Markdown from 'react-markdown'
 
 /*

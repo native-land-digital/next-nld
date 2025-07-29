@@ -1,7 +1,5 @@
 'use client'
-import React, { useEffect } from 'react';
-import mapboxgl from 'mapbox-gl';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import React from 'react';
 
 const MessageParser = ({ children, actions }) => {
 
