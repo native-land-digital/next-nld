@@ -51,6 +51,13 @@ export default async function DashboardMenu() {
                 </Link>
               </li>
             : false }
+            {session.user.global_permissions.find(perm => perm.entity === "ai") || session.user.item_permissions.find(perm => perm.entity === "ai") ?
+              <li>
+                <Link prefetch={false} href="/dashboard/experimental-ai" className="shadow group relative flex items-center gap-2.5 rounded px-4 py-2 font-medium text-white duration-300 ease-in-out bg-white bg-opacity-20 hover:bg-opacity-30 ">
+                  {tDash('experimental-ai')}
+                </Link>
+              </li>
+            : false }
             {session.user.global_permissions.find(perm => perm.entity === "users") || session.user.item_permissions.find(perm => perm.entity === "users") ?
               <li>
                 <Link prefetch={false} href="/dashboard/users" className="shadow group relative flex items-center gap-2.5 rounded px-4 py-2 font-medium text-white duration-300 ease-in-out bg-white bg-opacity-20 hover:bg-opacity-30 ">
