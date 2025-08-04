@@ -21,7 +21,69 @@ export default async function FrontPage() {
     .execute()
 
   return (
-    <div className="font-[sans-serif] bg-white pb-10 text-center">
+    <div>
+      <div className="min-h-screen w-full nld-bg-blue-800 bg-right bg-no-repeat" style={{backgroundImage : "url(/images/map-bg.png)"}}>
+        <div className="grid grid-cols-2 text-left px-12 items-center h-screen">
+          <div>
+            <p className="nld-font-jost nld-font-h2 nld-text-grey-200">Welcome to</p>
+            <h2 className="nld-font-jost nld-font-display mt-4">Native Land Digital</h2>
+            <p className="mt-4 nld-font-lg">A space where the stories of land and waters are carried by those who walk in ancestral relationship with them.</p>
+            <div className="mt-4 grid grid-cols-5 gap-4 w-full">
+              <div className="col-span-4">
+                <div className="absolute ml-[7px] mt-[5px]">
+                  <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="16" fill="#CCDFE3" fill-opacity="0.15"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15 6C19.9706 6 24 10.0294 24 15C24 17.125 23.2619 19.0766 22.0303 20.6162L25.707 24.293C26.0974 24.6835 26.0975 25.3166 25.707 25.707C25.3166 26.0975 24.6835 26.0974 24.293 25.707L20.6162 22.0303C19.0766 23.2619 17.125 24 15 24C10.0294 24 6 19.9706 6 15C6 10.0294 10.0294 6 15 6ZM15 8C11.134 8 8 11.134 8 15C8 18.866 11.134 22 15 22C18.866 22 22 18.866 22 15C22 11.134 18.866 8 15 8Z" fill="#A0C6CD"/>
+                  </svg>
+                </div>
+                <input type="text" className="rounded-full border nld-border-teal-100 w-full p-2 nld-bg-blue-800 pl-12" placeholder="Search your address" />
+              </div>
+              <div className="col-span-1">
+                <button className="rounded-full nld-bg-green-500 nld-text-grey-500 font-semibold px-4 py-2.5 text-center">Explore Map</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="nld-bg-teal-500">
+        <div className="grid grid-cols-3 p-12 gap-12">
+          <div className="col-span-1">
+            <h2 className="nld-font-jost nld-font-h1 text-white font-semibold">We're glad you're here.</h2>
+            <p className="nld-font-md text-white mt-8">See an error? Let us know!</p>
+            <button className="mt-4 px-4 py-3 text-center text-white border border-white nld-button-md rounded-full">Contact</button>
+          </div>
+          <div className="col-span-2">
+            <h3 className="nld-font-jost nld-font-h2 text-white font-medium">Native Land is an app to help map Indigenous territories, treaties, and languages.</h3>
+            <hr className="border-white/20 my-8" />
+            <div className="mt-4 grid grid-cols-3 gap-8">
+              <div>
+                <h3 className="nld-font-jost text-center nld-font-h3 text-white font-medium">100M+</h3>
+                <p className="nld-text-sm text-center">visitors</p>
+              </div>
+              <div>
+                <h3 className="nld-font-jost text-center nld-font-h3 text-white font-medium">100M+</h3>
+                <p className="nld-text-sm text-center">visitors</p>
+              </div>
+              <div>
+                <h3 className="nld-font-jost text-center nld-font-h3 text-white font-medium">100M+</h3>
+                <p className="nld-text-sm text-center">visitors</p>
+              </div>
+              <div>
+                <h3 className="nld-font-jost text-center nld-font-h3 text-white font-medium">100M+</h3>
+                <p className="nld-text-sm text-center">visitors</p>
+              </div>
+              <div>
+                <h3 className="nld-font-jost text-center nld-font-h3 text-white font-medium">100M+</h3>
+                <p className="nld-text-sm text-center">visitors</p>
+              </div>
+              <div>
+                <h3 className="nld-font-jost text-center nld-font-h3 text-white font-medium">100M+</h3>
+                <p className="nld-text-sm text-center">visitors</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="m-auto">
         <section className="w-full px-5 md:px-0 m-auto mb-5 bg-blue-600 py-5">
           <div className="grid grid-cols-2 md:grid-cols-6 m-auto w-full md:w-2/3 gap-5">

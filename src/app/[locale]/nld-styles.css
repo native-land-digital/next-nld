@@ -1,0 +1,231 @@
+/* Special from NLD designs */
+
+/* Fonts */
+.nld-font-jost {
+  font-family: "Jost", sans-serif;
+}
+.nld-font-noto {
+  font-family: "Noto Sans", sans-serif;
+}
+
+/* Typography */
+.nld-font-display {
+  font-size: 80px;
+  line-height: 96px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+.nld-font-h1 {
+  font-size: 48px;
+  line-height: 56px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+.nld-font-h2 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+.nld-font-h3 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+.nld-font-h4 {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+
+.nld-text-sm {
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+.nld-text-md {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+.nld-text-lg {
+  font-size: 20px;
+  line-height: 32px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+
+.nld-tag-sm, .nld-label-sm {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+.nld-tag-md, .nld-label-md {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+.nld-label-lg, .nld-rating-lg {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+.nld-button-md {
+  font-size: 18px;
+  line-height: 18px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+.nld-button-lg {
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+
+/* Blue */
+.nld-bg-blue-800 {
+  background-color : #000E1D;
+}
+
+/* Teal */
+.nld-text-teal-50 {
+  color : #CCDFE3;
+}
+.nld-bg-teal-50 {
+  background-color : #CCDFE3;
+}
+.nld-border-teal-100 {
+  border-color : #A0C6CD;
+}
+.nld-text-teal-100 {
+  color : #A0C6CD;
+}
+.nld-bg-teal-100 {
+  background-color : #A0C6CD;
+}
+.nld-text-teal-500 {
+  color : #29646F;
+}
+.nld-bg-teal-500 {
+  background-color : #29646F;
+}
+.nld-text-teal-600 {
+  color : #1B4F58;
+}
+.nld-bg-teal-600 {
+  background-color : #1B4F58;
+}
+
+/* Green */
+.nld-text-green-50 {
+  color : #E6E9DC;
+}
+.nld-bg-green-50 {
+  background-color : #E6E9DC;
+}
+.nld-text-green-500 {
+  color : #99B16D;
+}
+.nld-bg-green-500 {
+  background-color : #99B16D;
+}
+.nld-text-green-600 {
+  color : #869E59;
+}
+.nld-bg-green-600 {
+  background-color : #869E59;
+}
+
+/* Yellow */
+.nld-text-yellow-500 {
+  color : #DEC170;
+}
+.nld-bg-yellow-500 {
+  background-color : #DEC170;
+}
+.nld-text-yellow-600 {
+  color : #D8B961;
+}
+.nld-bg-yellow-600 {
+  background-color : #D8B961;
+}
+
+/* Brown */
+.nld-text-brown-50 {
+  color : #EBDFD8;
+}
+.nld-bg-brown-50 {
+  background-color : #EBDFD8;
+}
+.nld-text-brown-500 {
+  color : #76533C;
+}
+.nld-bg-brown-500 {
+  background-color : #76533C;
+}
+
+/* Grey */
+.nld-text-grey-50 {
+  color : #EFEFEF;
+}
+.nld-bg-grey-50 {
+  background-color : #EFEFEF;
+}
+.nld-text-grey-100 {
+  color : #DCDEDF;
+}
+.nld-bg-grey-100 {
+  background-color : #DCDEDF;
+}
+.nld-text-grey-200 {
+  color : #ABBBC5;
+}
+.nld-bg-grey-200 {
+  background-color : #ABBBC5;
+}
+.nld-text-grey-300 {
+  color : #5E6569;
+}
+.nld-bg-grey-300 {
+  background-color : #5E6569;
+}
+.nld-text-grey-400 {
+  color : #4E5458;
+}
+.nld-bg-grey-400 {
+  background-color : #4E5458;
+}
+.nld-text-grey-500 {
+  color : #23282B;
+}
+.nld-bg-grey-500 {
+  background-color : #23282B;
+}
+.nld-text-grey-700 {
+  color : #0F1C23;
+}
+.nld-bg-grey-700 {
+  background-color : #0F1C23;
+}
+
+/* White */
+.nld-text-white-20 {
+  color : rgba(249, 248, 248, 0.2);
+}
+.nld-bg-white-20 {
+  background-color : rgba(249, 248, 248, 0.2);
+}
+.nld-text-white-100 {
+  color : #F9F8F8;
+}
+.nld-bg-white-100 {
+  background-color : #F9F8F8;
+}

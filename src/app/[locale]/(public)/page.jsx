@@ -42,11 +42,11 @@ export default async function Home({ params : { locale } }) {
     .execute()
 
   return (
-    <div className="font-[family-name:var(--font-geist-sans)]">
-      <MapModal headerText="disclaimer-header" bodyText="disclaimer" footerText="disclaimer-close" />
-      <MapContainer territoryOptions={territoryOptions} languageOptions={languageOptions} treatyOptions={treatyOptions} />
+    <div>
       <FrontPage />
-      <AIChatbot />
     </div>
   );
 }
+      // <MapModal headerText="disclaimer-header" bodyText="disclaimer" footerText="disclaimer-close" />
+      // <MapContainer territoryOptions={territoryOptions} languageOptions={languageOptions} treatyOptions={treatyOptions} />
+      // <AIChatbot />
