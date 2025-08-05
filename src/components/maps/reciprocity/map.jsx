@@ -13,7 +13,7 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
   const t = useTranslations('FrontMap');
 
   const [ popup, setPopup ] = useState(false);
-  const reciprocityLayers = ["next-nld-risks", "next-nld-renewals"];
+  const reciprocityLayers = ["next-nld-risks-source-layer", "next-nld-renewals-source-layer"];
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
@@ -22,7 +22,7 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
     }
     mapboxgl.clearStorage();
     const newMap = new mapboxgl.Map({
-      center : [-36.38964382502621, 45.652294519950345],
+      center : [151.48, -34.21],
       zoom : 3,
       container: "nld-reciprocity-map",
       style: process.env.NEXT_PUBLIC_MAPBOX_STYLE_RISKS_RENEWALS,
@@ -74,7 +74,7 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
       })
     })
     
-    map.on("click", () => {
+    map.on("click", (e) => {
       const featuresUnderMouse = map.queryRenderedFeatures(e.point, { layers: ["next-nld-risks-source-layer", "next-nld-renewals-source-layer"] });
       const noDuplicates = getUniqueFeatures(featuresUnderMouse, 'id');
       setSelectedFeature(noDuplicates[0]);
