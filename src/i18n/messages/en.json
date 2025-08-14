@@ -119,7 +119,7 @@
     "open-data-header" : "Open Map Data",
     "open-data" : "We provide geoJSONs and <a href='/resources/api-docs/'>a comprehensive API</a> for free.",
     "education-header" : "Education",
-    "education" : "Need help using Native Land in the classroom or office? <a href='/resources/teachers-guide/'>Check out our guides</a>.",
+    "education" : "Need help using Native Land in the classroom or office? <br /><br /> <a class='nld-text-teal-500' href='/resources/teachers-guide/'>Check out our guides</a>.",
     "land-acknowledgement-header" : "Land Acknowledgement",
     "land-acknowledgement" : "Take a look at <a href='/resources/territory-acknowledgement/'>our Land Acknowledgement</a> page to learn more about doing it right.",
     "research-header" : "Research references",
