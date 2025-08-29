@@ -94,6 +94,9 @@
 .nld-bg-blue-800 {
   background-color : #000E1D;
 }
+.nld-bg-footer {
+  background-color : #141C28;
+}
 
 /* Teal */
 .nld-text-teal-50 {
@@ -228,4 +231,14 @@
 }
 .nld-bg-white-100 {
   background-color : #F9F8F8;
+}
+
+/* Accents */
+.nld-text-grey-200-muted {
+  color: #ABBBC5;
+}
+
+/* Borders */
+.nld-border-light {
+  border-color : rgba(249, 248, 248, 0.2);
 }

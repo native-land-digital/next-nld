@@ -216,168 +216,120 @@ export default async function FrontPage() {
           </div>
         </div>
       </div>
-        <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
-          <h3 className="text-black text-3xl font-bold pb-16">{t('partners-supporters')}</h3>
-          <div className="grid grid-cols-2 md:grid-cols-5 pad-5">
-            <div className="w-1/2 m-auto mt-5 h-32 overflow-hidden">
-              <a href="https://kalliopeia.org/">
-                <img className="w-full" src="https://d75cfcm8x0ifj.cloudfront.net/kalliopeia-logo.webp" alt="Kalliopeia logo" />
-              </a>
-            </div>
-            <div className="w-1/2 m-auto mt-5 h-32 overflow-hidden">
-              <a href="https://mapbox.com/">
-                <img src="https://d75cfcm8x0ifj.cloudfront.net/mapbox-logo.webp" alt="Mapbox logo" />
-              </a>
-            </div>
-            <div className="w-1/2 m-auto mt-5 h-32 overflow-hidden flex items-center">
-              <a href="https://awana.digital/">
-                <img src="https://d75cfcm8x0ifj.cloudfront.net/awana-digital-logo.png" alt="Awana Digital logo" />
-              </a>
-            </div>
-            <div className="w-1/2 m-auto mt-5 h-32 overflow-hidden">
-              <a href="https://mapster.me/">
-                <img src="https://d75cfcm8x0ifj.cloudfront.net/mapster-tech-logo.webp" alt="Mapster Technology Inc logo" />
-              </a>
-            </div>
-            <div className="w-1/2 m-auto mt-5 h-32 overflow-hidden">
-              <a href="https://www.vancity.com/">
-                <img src="https://d75cfcm8x0ifj.cloudfront.net/vancity-logo.webp" alt="Vancity logo" />
-              </a>
-            </div>
-          </div>
-        </section>
-        <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24 text-black">
-          <h3 className="text-3xl font-bold pb-16">{t('latest-updates')}</h3>
-          <div className="grid grid-cols-1 md:grid-cols-5 pad-5">
-            {latestUpdates.map(entry => {
-              return (
-                <div key={`entry-${entry.id}`}>
-                  <Link prefetch={false} href={`listings/${entry.category}/${entry.slug}`}>
-                    {entry.media_url ?
-                      <div className="w-1/2 m-auto mt-5 h-[100px] bg-cover mb-2.5" style={{backgroundImage : `url(${entry.media_url})`}}></div>
-                    :
-                      <div className="w-1/2 m-auto mt-5 h-[100px] bg-cover mb-2.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 504 504" width="100px" height="100px">
-                          <g><path fill="#fefefe" d="M -0.5,-0.5 C 167.5,-0.5 335.5,-0.5 503.5,-0.5C 503.5,167.5 503.5,335.5 503.5,503.5C 335.5,503.5 167.5,503.5 -0.5,503.5C -0.5,335.5 -0.5,167.5 -0.5,-0.5 Z"/></g>
-                          <g><path fill="#474955" d="M 237.5,382.5 C 236.306,381.223 234.64,380.556 232.5,380.5C 230.631,380.507 228.964,380.84 227.5,381.5C 201.487,382.501 176.487,388.001 152.5,398C 147.107,400.726 142.274,404.226 138,408.5C 136.517,411.702 136.183,415.036 137,418.5C 143.503,426.313 151.669,431.813 161.5,435C 198.254,446.909 235.92,451.243 274.5,448C 302.141,446.742 328.474,440.408 353.5,429C 359.788,425.881 364.121,421.048 366.5,414.5C 364.121,407.952 359.788,403.119 353.5,400C 334.192,390.756 313.859,385.089 292.5,383C 295.294,377.912 297.961,372.745 300.5,367.5C 327.734,368.522 352.4,377.022 374.5,393C 387.759,407.335 387.759,421.668 374.5,436C 358.099,448.037 339.766,456.037 319.5,460C 267.085,470.102 215.085,468.436 163.5,455C 147.719,450.53 134.219,442.363 123,430.5C 115.571,416.308 117.405,403.475 128.5,392C 148.092,378.575 169.759,370.242 193.5,367C 204.768,365.128 216.102,363.961 227.5,363.5C 201.166,307.831 173.999,252.497 146,197.5C 125.741,141.974 138.241,95.4744 183.5,58C 224.24,31.5327 266.24,29.5327 309.5,52C 340.732,71.2563 359.232,99.0896 365,135.5C 367.097,154.313 365.097,172.646 359,190.5C 323.225,263.716 287.225,336.716 251,409.5C 246.487,400.473 241.987,391.473 237.5,382.5 Z"/></g>
-                          <g><path fill="#fdfdfd" d="M 243.5,88.5 C 272.254,87.1119 290.754,100.112 299,127.5C 301.985,155.706 290.151,174.539 263.5,184C 233.632,188.77 213.799,176.937 204,148.5C 199.905,117.002 213.072,97.0018 243.5,88.5 Z"/></g>
-                          <g><path fill="#adb1b4" d="M 227.5,381.5 C 228.964,380.84 230.631,380.507 232.5,380.5C 234.64,380.556 236.306,381.223 237.5,382.5C 234.272,381.586 230.939,381.253 227.5,381.5 Z"/></g>
-                        </svg>
-                      </div>
-                    }
-                  </Link>
-                  <p className="uppercase text-gray-300 text-xs pb-2.5">{entry.category}</p>
-                  <Link prefetch={false} href={`listings/${entry.category}/${entry.slug}`}>
-                    <h5 className="text-xl font-bold">{entry.name}</h5>
-                  </Link>
-                  <p className="text-sm pt-2.5">{new Date(entry.updatedAt).toLocaleDateString()}</p>
-                </div>
-              )
-            })}
-          </div>
-        </section>
-
-        <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <img src="https://d75cfcm8x0ifj.cloudfront.net/disclaimer-3.webp" alt="disclaimer" className="w-full h-auto" />
-            </div>
-            <div className="flex flex-col justify-center align-center text-black text-left p-2.5">
-              <h3 className="text-4xl font-bold mb-5">{t('disclaimer-header')}</h3>
-              <p className="text-slate-400 mr-16 mb-5">{t('disclaimer')}</p>
-              <Link prefetch={false} className="text-blue-600" href="/contact">{t('disclaimer-link')}</Link>
-            </div>
-          </div>
-        </section>
-        <section className="w-full md:w-3/4 m-auto my-24">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-black text-left">
-            <div className="p-5">
-              <div className="flex">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17.302 11.35L12.002 20.55H21.202C21.802 20.55 22.202 19.85 21.902 19.35L17.302 11.35Z" fill="#1e88e5"></path>
-                  <path opacity="0.3" d="M12.002 20.55H2.802C2.202 20.55 1.80202 19.85 2.10202 19.35L6.70203 11.45L12.002 20.55ZM11.302 3.45L6.70203 11.35H17.302L12.702 3.45C12.402 2.85 11.602 2.85 11.302 3.45Z" fill="#1e88e5"></path>
+      <div className="nld-bg-teal-600">
+        <div className="pt-16 text-center">
+          <h2 className="nld-font-jost nld-font-h2 text-white font-medium">Know Where You Stand</h2>
+          <p className="nld-font-lg text-white mt-4">Explore your relationship to place and create an acknowledgment grounded in care, respect, and commitment.</p>
+        </div>
+        <div className="rounded-lg p-8">
+          <div className="rounded-lg bg-white/80 p-4">
+            <div className="flex gap-4">
+              <div>
+                <svg width="65" height="69" viewBox="0 0 65 69" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_223_905)">
+                    <path d="M40.4394 30.3903C40.5761 31.4528 39.8008 32.437 38.7062 32.5894C37.6117 32.7431 36.6131 32.0056 36.4765 30.9445C36.3047 29.6124 35.6024 28.7697 34.7027 28.3733C33.5364 27.8623 32.0711 28.0227 30.9562 28.585C29.7006 29.22 28.698 30.4483 28.5546 32.2051C28.4356 33.6653 28.8036 35.0918 29.5558 36.343C30.3907 37.7317 31.6205 38.8239 33.0304 39.6099C35.2358 40.8382 37.5034 41.182 39.5884 40.8638C41.8953 40.5119 44.0073 39.3564 45.5958 37.6926C46.8054 36.4239 47.7105 34.8626 48.1624 33.1395C48.5846 31.5364 48.617 29.7822 48.1448 27.9823L48.0745 27.718C46.896 23.5019 44.1656 20.1528 40.6776 18.1384C32.9478 13.6702 23.2075 16.5097 18.8062 24.1774C13.4578 33.4995 18.6235 44.9896 27.4032 50.0672C32.1861 52.8312 38.0094 53.7791 43.7746 52.2771L44.1386 52.1814C55.972 48.8834 62.8602 36.5722 59.7672 24.7801L59.6495 24.3459C57.5956 16.9775 52.8222 11.126 46.7242 7.60155L46.7174 7.60425C37.1124 2.0493 25.2316 2.82996 16.387 9.26669C13.612 11.2864 11.2415 13.7915 9.36896 16.6256C2.10737 27.6182 3.24254 40.7735 10.9276 51.0892C13.3712 54.371 16.4222 57.2577 19.913 59.5471C27.4925 64.5209 37.1422 66.6539 47.1463 63.898C48.2111 63.6 49.3071 64.1946 49.5939 65.2233C49.8807 66.2534 49.2502 67.3307 48.1854 67.6287C36.9392 70.7284 26.1138 68.3433 17.6277 62.7749C13.7717 60.2455 10.3932 57.0473 7.68041 53.4042C-0.977495 41.7793 -2.13973 26.9212 6.02432 14.5641C8.15261 11.3444 10.8586 8.48873 14.0409 6.17371C24.179 -1.20277 37.7943 -2.12365 48.8092 4.24701C55.742 8.26356 61.1689 14.9012 63.5001 23.2471L63.6368 23.7446C67.275 37.6185 59.0826 52.0371 45.1912 55.908L44.7528 56.0294C37.9012 57.8145 30.9914 56.6927 25.3263 53.4177C14.6876 47.2668 8.90759 33.517 15.3222 22.3383C20.8316 12.7385 33.0858 9.19658 42.7558 14.7866C47.0841 17.289 50.4679 21.4242 51.9265 26.6192L52.0158 26.9468C52.6612 29.4101 52.6125 31.8222 52.0307 34.0388C51.4042 36.4212 50.1595 38.5731 48.4966 40.3151C46.302 42.6139 43.3687 44.213 40.1513 44.7037C37.2031 45.1541 34.0343 44.6862 30.9954 42.9955C29.016 41.8926 27.2598 40.2921 26.0894 38.3466C24.9177 36.3983 24.3901 34.2329 24.5768 31.9665C24.8447 28.682 26.7632 26.3643 29.1729 25.1482C31.3905 24.0264 34.1006 23.8161 36.4007 24.8286C38.4749 25.7414 40.0768 27.5737 40.4394 30.3903Z" fill="#1B4F58"/>
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_223_905">
+                      <rect width="64" height="69" fill="white" transform="translate(0.5)"/>
+                    </clipPath>
+                  </defs>
                 </svg>
-                <h5 className="text-lg font-bold mb-2.5 ml-2.5">{t('mobile-apps-header')}</h5>
-              </div>
-              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t('mobile-apps') }} /></p>
-            </div>
-            <div className="p-5">
-              <div className="flex">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path opacity="0.3" d="M21 2H13C12.4 2 12 2.4 12 3V13C12 13.6 12.4 14 13 14H21C21.6 14 22 13.6 22 13V3C22 2.4 21.6 2 21 2ZM15.7 8L14 10.1V5.80005L15.7 8ZM15.1 4H18.9L17 6.40002L15.1 4ZM17 9.59998L18.9 12H15.1L17 9.59998ZM18.3 8L20 5.90002V10.2L18.3 8ZM9 2H3C2.4 2 2 2.4 2 3V21C2 21.6 2.4 22 3 22H9C9.6 22 10 21.6 10 21V3C10 2.4 9.6 2 9 2ZM4.89999 12L4 14.8V9.09998L4.89999 12ZM4.39999 4H7.60001L6 8.80005L4.39999 4ZM6 15.2L7.60001 20H4.39999L6 15.2ZM7.10001 12L8 9.19995V14.9L7.10001 12Z" fill="#1e88e5"></path>
-                  <path d="M21 18H13C12.4 18 12 17.6 12 17C12 16.4 12.4 16 13 16H21C21.6 16 22 16.4 22 17C22 17.6 21.6 18 21 18ZM19 21C19 20.4 18.6 20 18 20H13C12.4 20 12 20.4 12 21C12 21.6 12.4 22 13 22H18C18.6 22 19 21.6 19 21Z" fill="#1e88e5"></path>
-                </svg>
-                <h5 className="text-lg font-bold mb-2.5 ml-2.5">{t('open-data-header')}</h5>
-              </div>
-              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t('open-data') }} /></p>
-            </div>
-            <div className="p-5">
-              <div className="flex">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path opacity="0.3" fillRule="evenodd" clipRule="evenodd" d="M4.85714 1H11.7364C12.0911 1 12.4343 1.12568 12.7051 1.35474L17.4687 5.38394C17.8057 5.66895 18 6.08788 18 6.5292V19.0833C18 20.8739 17.9796 21 16.1429 21H4.85714C3.02045 21 3 20.8739 3 19.0833V2.91667C3 1.12612 3.02045 1 4.85714 1ZM7 13C7 12.4477 7.44772 12 8 12H15C15.5523 12 16 12.4477 16 13C16 13.5523 15.5523 14 15 14H8C7.44772 14 7 13.5523 7 13ZM8 16C7.44772 16 7 16.4477 7 17C7 17.5523 7.44772 18 8 18H11C11.5523 18 12 17.5523 12 17C12 16.4477 11.5523 16 11 16H8Z" fill="#1e88e5"></path>
-                  <path fillRule="evenodd" clipRule="evenodd" d="M6.85714 3H14.7364C15.0911 3 15.4343 3.12568 15.7051 3.35474L20.4687 7.38394C20.8057 7.66895 21 8.08788 21 8.5292V21.0833C21 22.8739 20.9796 23 19.1429 23H6.85714C5.02045 23 5 22.8739 5 21.0833V4.91667C5 3.12612 5.02045 3 6.85714 3ZM7 13C7 12.4477 7.44772 12 8 12H15C15.5523 12 16 12.4477 16 13C16 13.5523 15.5523 14 15 14H8C7.44772 14 7 13.5523 7 13ZM8 16C7.44772 16 7 16.4477 7 17C7 17.5523 7.44772 18 8 18H11C11.5523 18 12 17.5523 12 17C12 16.4477 11.5523 16 11 16H8Z" fill="#1e88e5"></path>
-                </svg>
-                <h5 className="text-lg font-bold mb-2.5 ml-2.5">{t('education-header')}</h5>
-              </div>
-              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t('education') }} /></p>
-            </div>
-            <div className="p-5">
-              <div className="flex">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="#1e88e5"></path>
-                  <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="#1e88e5"></path>
-                </svg>
-                <h5 className="text-lg font-bold mb-2.5 ml-2.5">{t('land-acknowledgement-header')}</h5>
-              </div>
-              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t('land-acknowledgement') }} /></p>
-            </div>
-            <div className="p-5">
-              <div className="flex">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M15 19.5229C15 20.265 15.9624 20.5564 16.374 19.9389L22.2227 11.166C22.5549 10.6676 22.1976 10 21.5986 10H17V4.47708C17 3.73503 16.0376 3.44363 15.626 4.06106L9.77735 12.834C9.44507 13.3324 9.80237 14 10.4014 14H15V19.5229Z" fill="#1e88e5"></path>
-                  <path opacity="0.3" fillRule="evenodd" clipRule="evenodd" d="M3 6.5C3 5.67157 3.67157 5 4.5 5H9.5C10.3284 5 11 5.67157 11 6.5C11 7.32843 10.3284 8 9.5 8H4.5C3.67157 8 3 7.32843 3 6.5ZM3 18.5C3 17.6716 3.67157 17 4.5 17H9.5C10.3284 17 11 17.6716 11 18.5C11 19.3284 10.3284 20 9.5 20H4.5C3.67157 20 3 19.3284 3 18.5ZM2.5 11C1.67157 11 1 11.6716 1 12.5C1 13.3284 1.67157 14 2.5 14H6.5C7.32843 14 8 13.3284 8 12.5C8 11.6716 7.32843 11 6.5 11H2.5Z" fill="#1e88e5"></path>
-                </svg>
-                <h5 className="text-lg font-bold mb-2.5 ml-2.5">{t('research-header')}</h5>
-              </div>
-              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t('research') }} /></p>
-            </div>
-            <div className="p-5">
-              <div className="flex">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path opacity="0.3" d="M5 8.04999L11.8 11.95V19.85L5 15.85V8.04999Z" fill="#1e88e5"></path>
-                  <path d="M20.1 6.65L12.3 2.15C12 1.95 11.6 1.95 11.3 2.15L3.5 6.65C3.2 6.85 3 7.15 3 7.45V16.45C3 16.75 3.2 17.15 3.5 17.25L11.3 21.75C11.5 21.85 11.6 21.85 11.8 21.85C12 21.85 12.1 21.85 12.3 21.75L20.1 17.25C20.4 17.05 20.6 16.75 20.6 16.45V7.45C20.6 7.15 20.4 6.75 20.1 6.65ZM5 15.85V7.95L11.8 4.05L18.6 7.95L11.8 11.95V19.85L5 15.85Z" fill="#1e88e5"></path>
-                </svg>
-                <h5 className="text-lg font-bold mb-2.5 ml-2.5">{t('blogs-header')}</h5>
-              </div>
-              <p className="text-slate-400"><span dangerouslySetInnerHTML={{ __html : t('blogs') }} /></p>
-            </div>
-          </div>
-        </section>
-        <section className="w-full md:w-3/4 px-5 md:px-0 m-auto my-24">
-          <Link prefetch={false} href="/support-us" className="py-2.5 px-5 bg-blue-600 rounded mb-5 text-white">{t('support-button')}</Link>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-12 text-black">
-            <div className="grid grid-cols-2 rounded shadow-lg">
-              <div className="flex flex-col justify-center text-left p-5">
-                <h5 className="text-xl font-bold mt-5">{t('patreon-header')}</h5>
-                <p className="mt-5 mb-5 text-slate-500">{t('patreon')}</p>
-                <Link prefetch={false} href="https://www.patreon.com/nativeland">{t('patreon-link')}</Link>
               </div>
               <div>
-                <img className="w-full h-auto p-7" src="https://d75cfcm8x0ifj.cloudfront.net/patreon.webp" alt="patreon" />
+                <h2 className="nld-font-jost nld-font-h2 text-black font-medium">Meet Kōrero</h2>
+                <p className="nld-font-h3 nld-text-grey-300">A Land and Waters Acknowledgment Guide</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 rounded shadow-lg">
-              <div className="flex flex-col justify-center text-left p-5">
-                <h5 className="text-xl font-bold mt-5">{t('supporters-circle-header')}</h5>
-                <p className="mt-5 mb-5 text-slate-500">{t('supporters-circle')}</p>
-                <Link prefetch={false} href="/support/supporters-circle">{t('supporters-circle-link')}</Link>
-              </div>
-              <div>
-                <img src="https://d75cfcm8x0ifj.cloudfront.net/768px-Circle_-_black_simple.svg_.webp" alt="supporters-circle" />
-              </div>
-            </div>
+            <p className="text-black nld-font-lg mt-4">Kōrero isn’t just about writing a land acknowledgment — it’s about starting from the heart. Through a series of thoughtful questions, it invites you to slow down, listen, and reflect on where you are, whose land you're on, and how you can show respect and care.</p>
+            <p className="text-black nld-font-lg mt-4"> Let Kōrero guide you in creating a meaningful land or water acknowledgment rooted in connection and responsibility.</p>
           </div>
-        </section>
+        </div>
+        <div className="text-center pb-16">
+          <Link prefetch={false} className="text-white rounded-full border border-white px-4 py-2.5 font-semibold items-center inline-flex" href="/">
+            Explore the full guide to Meet Kōrero
+            <svg className="ml-2.5 inline" width="20" height="20" viewBox="0 0 20 20" fill="none" fillColor="#FFF" stroke="#FFF" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.41073 3.57757C9.73616 3.25214 10.2637 3.25214 10.5891 3.57757L16.4224 9.41091C16.4623 9.45075 16.4979 9.49471 16.5291 9.54193C16.5497 9.57317 16.5676 9.60561 16.5836 9.63877C16.6017 9.67643 16.6176 9.71541 16.63 9.75596C16.6351 9.77287 16.6389 9.79009 16.643 9.80723C16.6577 9.86919 16.6666 9.93364 16.6666 10.0001C16.6666 10.0693 16.6564 10.136 16.6405 10.2003C16.6371 10.2144 16.6342 10.2287 16.63 10.2426C16.6175 10.2834 16.6018 10.3227 16.5836 10.3606C16.5669 10.3953 16.5476 10.4289 16.5258 10.4615C16.5153 10.4772 16.5039 10.4922 16.4924 10.5071C16.4707 10.5353 16.4483 10.5635 16.4224 10.5893L10.5891 16.4226C10.2637 16.748 9.73614 16.748 9.41073 16.4226C9.08531 16.0972 9.08535 15.5697 9.41073 15.2442L13.8215 10.8334H4.16659C3.70637 10.8334 3.33329 10.4603 3.33325 10.0001C3.33325 9.53986 3.70635 9.16677 4.16659 9.16677H13.8215L9.41073 4.75596C9.08531 4.43054 9.08535 3.90302 9.41073 3.57757Z" fill="#23282B"/>
+            </svg>
+          </Link>
+        </div>
       </div>
+      <div className="nld-bg-grey-50">
+        <div className="pt-16 text-center">
+          <h2 className="nld-font-jost nld-font-h2 text-black font-medium">Our Partners</h2>
+          <p className="nld-font-lg text-black mt-4">Many organizations and individuals have helped in the creation of Native Land.</p>
+          <p className="mt-4"><a className="nld-text-teal-500 font-semibold" href="">Learn more about our partners.</a></p>
+        </div>
+        <div className="grid grid-cols-3 gap-8 w-2/3 m-auto mt-8">
+          <div>
+            <a href="https://kalliopeia.org/">
+              <img className="m-auto w-40" src="https://d75cfcm8x0ifj.cloudfront.net/kalliopeia-logo.webp" alt="Kalliopeia logo" />
+            </a>
+          </div>
+          <div>
+            <a href="https://mapbox.com/">
+              <img className="m-auto w-40" src="https://d75cfcm8x0ifj.cloudfront.net/mapbox-logo.webp" alt="Mapbox logo" />
+            </a>
+          </div>
+          <div>
+            <a href="https://www.vancity.com/">
+              <img className="m-auto w-40" src="https://d75cfcm8x0ifj.cloudfront.net/vancity-logo.webp" alt="Vancity logo" />
+            </a>
+          </div>
+        </div>
+        <div className="grid grid-cols-4 gap-8 w-2/3 m-auto mt-8 pb-16">
+          <div></div>
+          <div>
+            <a href="https://mapster.me/">
+              <img className="m-auto w-40" src="https://d75cfcm8x0ifj.cloudfront.net/mapster-tech-logo.webp" alt="Mapster Technology Inc logo" />
+            </a>
+          </div>
+          <div className="flex items-center">
+            <a href="https://awana.digital/">
+              <img className="m-auto" src="https://d75cfcm8x0ifj.cloudfront.net/awana-digital-logo.png" alt="Awana Digital logo" />
+            </a>
+          </div>
+          <div></div>
+        </div>
+      </div>
+      <div className="bg-white pb-16">
+        <div className="pt-16 text-center">
+          <h2 className="nld-font-jost nld-font-h2 text-black font-medium">Help Native Land Digital Grow</h2>
+          <p className="nld-font-lg text-black mt-4">Every contribution helps us improve the map, expand global coverage, and deepen partnerships with Indigenous communities.</p>
+          <p className="mt-4"><a className="nld-text-teal-500 font-semibold" href="">Learn more about supporting Native Land.</a></p>
+        </div>
+        <div className="grid grid-cols-2 gap-8 w-2/3 m-auto mt-8">
+          <div className="nld-bg-green-500 rounded-lg p-8">
+            <div className="flex">
+              <svg width="33" height="36" viewBox="0 0 33 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M32.1623 10.503C32.1623 6.01731 28.6923 2.36429 24.6352 1.04813C19.5905 -0.590355 12.9443 -0.348611 8.11314 1.93452C2.26768 4.70115 0.452653 10.7716 0.372578 16.8421C0.319195 21.8112 0.799645 34.946 8.16652 35.0266C13.6383 35.1071 14.439 28.016 16.9747 24.6047C18.7631 22.1873 21.0852 21.4889 23.9412 20.7905C28.8525 19.5818 32.1889 15.6871 32.1623 10.5299V10.503Z" fill="#23282B"/>
+              </svg>
+              <h2 className="uppercase nld-font-h3 text-black ml-4">Patreon</h2>
+            </div>
+            <p className="mt-4 text-black nld-font-lg">Come join us on Patreon and support our organization (and get some perks!).</p>
+            <div className="mt-4">
+              <Link prefetch={false} className="text-black rounded-full border border-black px-4 py-2.5 font-semibold items-center inline-flex" href="/">
+                Donate
+                <svg className="ml-2.5 inline" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.16699 3.33301C9.62708 3.33318 10 3.70686 10 4.16699C9.99982 4.62697 9.62697 4.99982 9.16699 5H4.16699C3.94598 5 3.73343 5.08786 3.57715 5.24414C3.42105 5.40033 3.33309 5.61219 3.33301 5.83301V15.833C3.33301 16.054 3.42087 16.2666 3.57715 16.4229C3.73343 16.5791 3.94598 16.667 4.16699 16.667H14.167C14.3878 16.6669 14.5997 16.579 14.7559 16.4229C14.9121 16.2666 15 16.054 15 15.833V10.833C15.0002 10.373 15.373 10.0002 15.833 10C16.2931 10 16.6668 10.3729 16.667 10.833V15.833C16.667 16.4959 16.4032 17.1318 15.9346 17.6006C15.4658 18.0693 14.8299 18.3329 14.167 18.333H4.16699C3.50395 18.333 2.86825 18.0694 2.39941 17.6006C1.93057 17.1317 1.66699 16.496 1.66699 15.833V5.83301C1.66708 5.17008 1.93065 4.53419 2.39941 4.06543C2.86822 3.59679 3.5041 3.33301 4.16699 3.33301H9.16699ZM17.5 1.66699C17.5419 1.66699 17.5828 1.67176 17.623 1.67773C17.637 1.67982 17.6512 1.6808 17.665 1.68359C17.6796 1.68652 17.6937 1.69066 17.708 1.69434C17.7184 1.69701 17.729 1.69907 17.7393 1.70215C17.7525 1.70612 17.7653 1.71121 17.7783 1.71582C17.8917 1.75596 17.9982 1.82044 18.0889 1.91113C18.1188 1.94103 18.1455 1.97286 18.1699 2.00586C18.1782 2.01712 18.1866 2.02835 18.1943 2.04004C18.2322 2.09711 18.2618 2.15785 18.2842 2.2207C18.2888 2.23367 18.2939 2.24651 18.2979 2.25977C18.3093 2.29789 18.3164 2.33686 18.3223 2.37598C18.3283 2.41653 18.333 2.45776 18.333 2.5V7.5C18.333 7.96024 17.9602 8.33301 17.5 8.33301C17.0398 8.33301 16.667 7.96024 16.667 7.5V4.51074L10.5889 10.5889C10.2634 10.9143 9.73656 10.9143 9.41113 10.5889C9.08572 10.2634 9.08573 9.73657 9.41113 9.41113L15.4893 3.33301H12.5C12.0398 3.33301 11.667 2.96024 11.667 2.5C11.667 2.03976 12.0398 1.66699 12.5 1.66699H17.5Z" fill="#23282B"/>
+                </svg>
+              </Link>
+            </div>
+          </div>
+          <div className="nld-bg-yellow-500 rounded-lg p-8">
+            <h2 className="nld-font-h3 text-black ml-4">Supporter's Circle</h2>
+            <p className="mt-4 text-black nld-font-lg">Join our Supporter’s Circle and help be a part of the connections between Indigenous communities..</p>
+            <div className="mt-4">
+              <Link prefetch={false} className="text-black rounded-full border border-black px-4 py-2.5 font-semibold items-center inline-flex" href="/">
+                Learn more
+                <svg className="ml-2.5 inline" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.41073 3.57757C9.73616 3.25214 10.2637 3.25214 10.5891 3.57757L16.4224 9.41091C16.4623 9.45075 16.4979 9.49471 16.5291 9.54193C16.5497 9.57317 16.5676 9.60561 16.5836 9.63877C16.6017 9.67643 16.6176 9.71541 16.63 9.75596C16.6351 9.77287 16.6389 9.79009 16.643 9.80723C16.6577 9.86919 16.6666 9.93364 16.6666 10.0001C16.6666 10.0693 16.6564 10.136 16.6405 10.2003C16.6371 10.2144 16.6342 10.2287 16.63 10.2426C16.6175 10.2834 16.6018 10.3227 16.5836 10.3606C16.5669 10.3953 16.5476 10.4289 16.5258 10.4615C16.5153 10.4772 16.5039 10.4922 16.4924 10.5071C16.4707 10.5353 16.4483 10.5635 16.4224 10.5893L10.5891 16.4226C10.2637 16.748 9.73614 16.748 9.41073 16.4226C9.08531 16.0972 9.08535 15.5697 9.41073 15.2442L13.8215 10.8334H4.16659C3.70637 10.8334 3.33329 10.4603 3.33325 10.0001C3.33325 9.53986 3.70635 9.16677 4.16659 9.16677H13.8215L9.41073 4.75596C9.08531 4.43054 9.08535 3.90302 9.41073 3.57757Z" fill="#23282B"/>
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
