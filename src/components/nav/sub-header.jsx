@@ -8,15 +8,15 @@ export default async function SubHeader({ title, crumbs = [], verification = fal
   const t = await getTranslations('Navigation');
 
   return (
-    <div className="bg-blue-900 h-60 flex items-center py-6 px-10 md:px-0">
-      <div className="w-full md:w-2/3 m-auto capitalize">
-        <h2 className="font-semibold text-3xl">
+    <div className="bg-cover h-[380px] flex items-center py-6 px-10 md:px-0" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/hero.png')"}}>
+      <div className="pt-24 w-full md:w-2/3 m-auto capitalize">
+        <h2 className="nld-font-jost nld-font-h1 text-center font-semibold">
           {title}
           <span>
             <SubHeaderVerification verification={verification} />
           </span>
         </h2>
-        <div className="text-sm mt-1.5">
+        <div className="text-center text-sm mt-1.5">
           <Link prefetch={false} className="text-white hover:text-slate-300" href="/">{t('home')}</Link>
           {crumbs.map(crumb => {
             return (

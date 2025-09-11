@@ -17,14 +17,16 @@ export default function MapContainer({
 }) {
   const allLayers = ["territories", "languages", "treaties", "greetings"];
   const [map, setMap] = useState(false);
+  const [ modalOpen, setModalOpen ] = useState(false);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [currentLayers, setCurrentLayers] = useState(["territories"]);
 
   return (
-    <div className="w-90 h-[90vh] min-h-120 relative">
+    <div className="w-90 h-[100vh] min-h-120 relative">
       {currentLayers.indexOf("greetings") > -1 ?
-        <MapModal headerText="greetings-disclaimer-header" bodyText="greetings-disclaimer" footerText="greetings-disclaimer-close" />
+        <MapModal setModalOpen={setModalOpen} modalOpen={modalOpen} headerText="greetings-disclaimer-header" bodyText="greetings-disclaimer" footerText="greetings-disclaimer-close" />
       : false}
+      <MapModal setModalOpen={setModalOpen} modalOpen={modalOpen} headerText="disclaimer-header" bodyText="disclaimer" footerText="disclaimer-close" />
       <SelectorControl
         allLayers={allLayers}
         map={map}
@@ -36,7 +38,7 @@ export default function MapContainer({
         languageOptions={languageOptions}
         treatyOptions={treatyOptions}
       />
-      <TogglesControl allLayers={allLayers} map={map} />
+      <TogglesControl allLayers={allLayers} map={map} setModalOpen={setModalOpen} />
       <Map
         allLayers={allLayers}
         map={map}

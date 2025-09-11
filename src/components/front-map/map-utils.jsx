@@ -32,7 +32,7 @@ export const randomStartingPosition = () => {
   if (window.innerWidth < 500) {
     return {
       center: [-103.4216601, 49.2173029],
-      zoom: 3,
+      zoom: 2,
     };
   } else {
     const possibleStarts = [
@@ -42,7 +42,7 @@ export const randomStartingPosition = () => {
     ];
     return {
       center: possibleStarts[Math.floor(Math.random() * possibleStarts.length)],
-      zoom: 3,
+      zoom: 2,
     };
   }
 }

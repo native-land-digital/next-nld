@@ -25,12 +25,8 @@ export default async function Page({ params : { locale }} : { params : { locale:
   return (
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={t('supporters-circle')} crumbs={[{ url : "/support", title : "Support" }]} />
-      <div className="grid gap-5 grid-cols-1 md:grid-cols-3 px-5 md:px-0 w-full md:w-2/3 min-h-screen m-auto -mt-12 text-black static-page">
-        <Sidebar />
-        <div className="col-span-2 bg-white rounded-t shadow-lg mt-5">
-          <div className="w-full max-h-[200px] overflow-hidden rounded-t">
-            <img src="https://d75cfcm8x0ifj.cloudfront.net/circle-top.webp" alt="Supporter's Circle Header Image" className="object-cover object-center rounded-t" />
-          </div>
+      <div className="w-full md:w-3/5 min-h-screen m-auto mt-12 text-black static-page">
+        <div className="col-span-2 mt-5">
           <div className="px-4 pb-4 break-words">
             <Content />
           </div>

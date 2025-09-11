@@ -39,6 +39,18 @@
   font-weight: "regular";
   font-style: "regular";
 }
+.nld-font-h5 {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: "regular";
+  font-style: "regular";
+}
+.nld-font-h6 {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: "regular";
+  font-style: "regular";
+}
 
 .nld-text-sm {
   font-size: 16px;
@@ -90,7 +102,15 @@
   font-style: "regular";
 }
 
+/* White */
+.nld-bg-white-10 {
+  background-color: rgba(204, 223, 227, 0.15)
+}
+
 /* Blue */
+.nld-bg-blue-800-10 {
+  background-color: rgba(12, 20, 39, 0.8)
+}
 .nld-bg-blue-800 {
   background-color : #000E1D;
 }
@@ -140,6 +160,9 @@
 .nld-bg-green-500 {
   background-color : #99B16D;
 }
+.nld-border-green-500 {
+  border-color : #99B16D;
+}
 .nld-text-green-600 {
   color : #869E59;
 }
@@ -173,6 +196,9 @@
 }
 .nld-bg-brown-500 {
   background-color : #76533C;
+}
+.nld-border-brown-500 {
+  border-color : #76533C;
 }
 
 /* Grey */
@@ -241,4 +267,156 @@
 /* Borders */
 .nld-border-light {
   border-color : rgba(249, 248, 248, 0.2);
+}
+
+/* General styles */
+
+/* Necessary styles for HTML */
+.front-page-modal p {
+  @apply mt-2.5;
+}
+
+/* On static pages where we are setting HTML directly */
+.static-page h1 {
+  @apply nld-font-jost;
+  @apply nld-font-h1;
+  @apply font-semibold;
+  @apply mt-5;
+}
+.static-page h2 {
+  @apply nld-font-jost;
+  @apply nld-font-h2;
+  @apply font-semibold;
+  @apply mt-5;
+}
+.static-page h3 {
+  @apply text-xl;
+  @apply font-bold;
+  @apply mt-5;
+}
+.static-page p {
+  @apply nld-text-md;
+  @apply nld-font-noto;
+  @apply mt-4;
+}
+.static-page ul {
+  @apply mt-4;
+  @apply ml-6;
+  @apply list-disc;
+  @apply list-outside;
+}
+.static-page ul li {
+  @apply mt-1.5;
+  @apply nld-text-md;
+  @apply nld-font-noto;
+}
+.static-page a img {
+  @apply pt-2.5;
+}
+.static-page img {
+  @apply mt-2.5;
+}
+.static-page img:first-child {
+  @apply -mt-4;
+  /* @apply -ml-4; */
+  @apply -mr-8;
+}
+.static-page hr {
+  @apply mt-4;
+}
+.static-page a {
+  @apply nld-text-teal-500;
+  @apply font-semibold;
+}
+
+/* on HTML sections on maps */
+.sources-text h5 {
+  @apply text-base;
+  @apply font-bold;
+  @apply mt-5;
+}
+.sources-text p {
+  @apply mt-4;
+}
+.sources-text ul {
+  @apply mt-4;
+  @apply ml-6;
+  @apply list-disc;
+  @apply list-outside;
+}
+
+/* Geocoder */
+#nld_geocoder .mapboxgl-ctrl-geocoder {
+  @apply w-full;
+  @apply mt-2.5;
+  @apply shadow-none;
+  @apply bg-none;
+  @apply bg-transparent;
+  @apply border;
+  @apply rounded-full;
+  @apply nld-border-teal-100;
+  @apply nld-text-teal-100;
+  @apply text-[16px]
+}
+#nld_geocoder .mapboxgl-ctrl-geocoder--input {
+  @apply h-[30px];
+  @apply md:h-[40px];
+  @apply py-[3px];
+  @apply md:py-[6px];
+  @apply border;
+  @apply rounded-full;
+  @apply nld-border-teal-100;
+  @apply nld-bg-blue-800-10;
+  @apply nld-text-teal-100;
+}
+#nld_geocoder .mapboxgl-ctrl-geocoder--input::placeholder {
+  @apply nld-text-teal-100;
+}
+#nld_geocoder .mapboxgl-ctrl-geocoder--icon-search {
+  @apply top-[4px];
+  @apply md:top-[11px];
+}
+#nld_geocoder .mapboxgl-ctrl-geocoder--icon-close {
+  @apply mt-[0];
+  @apply md:mt-[8px];
+}
+.nld-select .nld-select__control {
+  @apply border;
+  @apply rounded-full;
+  @apply nld-border-teal-100;
+  @apply nld-bg-blue-800-10;
+  @apply nld-text-teal-100;
+}
+.nld-select .nld-select__placeholder {
+  @apply nld-text-teal-100;
+  @apply nld-text-sm;
+}
+.nld-select .nld-select__input-container {
+  @apply nld-text-teal-100;
+}
+.nld-select .nld-select__single-value {
+  @apply nld-text-teal-100;
+}
+.nld-select .nld-select__menu {
+  @apply border;
+  @apply nld-border-teal-100;
+  @apply nld-bg-blue-800;
+  @apply nld-text-teal-100;
+  @apply nld-text-sm;
+}
+.nld-select .nld-select__option:hover, .nld-select .nld-select__option--is-focused {
+  @apply nld-bg-grey-700;
+}
+
+/* FAQ page */
+.faq-page h2 {
+  @apply mt-8;
+  @apply nld-font-h2;
+  @apply nld-font-jost;
+  @apply text-center;
+}
+.faq-page h3 {
+  @apply nld-text-teal-500;
+  @apply font-semibold;
+  @apply nld-font-noto;
 }

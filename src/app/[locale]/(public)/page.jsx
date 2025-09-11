@@ -19,28 +19,6 @@ export default async function Home({ params : { locale } }) {
 
   setLocaleCache(locale);
 
-  // Querying for select2 list initial options
-  const territoryOptions = await db.selectFrom('Entry')
-    .where('category', '=', 'territories')
-    .where('published', '=', true)
-    .select(['id', 'name'])
-    .limit(25)
-    .execute()
-
-  const languageOptions = await db.selectFrom('Entry')
-    .where('category', '=', 'languages')
-    .where('published', '=', true)
-    .select(['id', 'name'])
-    .limit(25)
-    .execute()
-
-  const treatyOptions = await db.selectFrom('Entry')
-    .where('category', '=', 'treaties')
-    .where('published', '=', true)
-    .select(['id', 'name'])
-    .limit(25)
-    .execute()
-
   return (
     <div>
       <FrontPage />

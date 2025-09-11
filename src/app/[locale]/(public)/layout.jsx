@@ -1,5 +1,5 @@
-import "../globals.css";
 import "../nld-styles.css";
+import "../globals.css";
 import { getMessages } from '@/i18n/server-i18n';
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { ToastContainer } from 'react-toastify';

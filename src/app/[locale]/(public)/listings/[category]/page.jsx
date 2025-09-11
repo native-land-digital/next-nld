@@ -30,6 +30,7 @@ export default async function Page({ searchParams, params : { locale, category }
 
   setLocaleCache(locale);
   const t = await getTranslations('Listings');
+  const tNav = await getTranslations('Navigation');
   const tCommon = await getTranslations('Common');
 
   let page = 0;
@@ -77,37 +78,42 @@ export default async function Page({ searchParams, params : { locale, category }
   return (
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={category} crumbs={[{ url : "/listings", title : "Listings" }]} />
-      <div className="grid gap-5 grid-cols-1 md:grid-cols-3 px-5 md:px-0 w-full md:w-2/3 min-h-screen m-auto -mt-12 text-black static-page">
-        <Sidebar>
-          <ol className="list-inside text-gray-400">
-            <li className="mb-2.5"><Link prefetch={false} href="/listings">{t('all-maps')}</Link></li>
-            <li className="mb-2.5"><Link prefetch={false} href="/listings/territories">{t('territories-list')}</Link></li>
-            <li className="mb-2.5"><Link prefetch={false} href="/listings/languages">{t('languages-list')}</Link></li>
-            <li className="mb-2.5"><Link prefetch={false} href="/listings/treaties">{t('treaties-list')}</Link></li>
-            <li className="mb-2.5"><Link prefetch={false} href="/listings/greetings">{t('greetings-list')}</Link></li>
-            <li className="mb-2.5"><Link prefetch={false} href="/listings/placenames">{t('placenames-list')}</Link></li>
-            <li className="mb-2.5"><Link prefetch={false} href="/listings/risks">{t('risks-list')}</Link></li>
-            <li className="mb-2.5"><Link prefetch={false} href="/listings/renewals">{t('renewals-list')}</Link></li>
-          </ol>
-          <span />
-        </Sidebar>
-        <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
-          <div className="flex w-full mb-5 bg-gray-100 p-2.5 rounded">
-            <div className="w-full">
-              <form className="flex">
-                <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" />
-                <button className="border border-gray-300 px-4 py-3 rounded ml-2.5">{tCommon('search')}</button>
-                {search ?
-                  <Link prefetch={false} className="border border-gray-300 px-4 py-3 rounded ml-2.5 text-slate-600" href="/listings/territories">{tCommon('clear')}</Link>
-                : false}
-              </form>
+      <div className="w-full nld-bg-brown-500 text-center px-8 py-16">
+        <div className="w-full md:w-2/3 m-auto">
+          <p className="nld-text-lg font-semibold text-white">Search for a listing below of use the filters to browse.</p>
+          <form className="flex items-center mt-4">
+            <div className="w-full bg-white rounded-full flex items-center">
+              <svg className="ml-2.5" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="32" height="32" rx="16" fill="#EBDFD8"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M15 6C19.9706 6 24 10.0294 24 15C24 17.125 23.2619 19.0766 22.0303 20.6162L25.707 24.293C26.0974 24.6835 26.0975 25.3166 25.707 25.707C25.3166 26.0975 24.6835 26.0974 24.293 25.707L20.6162 22.0303C19.0766 23.2619 17.125 24 15 24C10.0294 24 6 19.9706 6 15C6 10.0294 10.0294 6 15 6ZM15 8C11.134 8 8 11.134 8 15C8 18.866 11.134 22 15 22C18.866 22 22 18.866 22 15C22 11.134 18.866 8 15 8Z" fill="#76533C"/>
+              </svg>
+              <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="nld-button-md nld-text-brown-500 w-full px-4 py-3 rounded-full outline-none" />
             </div>
-          </div>
-          <p className="mb-2.5 text-sm">{totalEntries[0].num_entries} {category}.</p>
-          <div className="grid grid-cols-1 md:grid-cols-2  gap-5">
-            {entries.map(entry => {
-              return <EntryCard key={`entry-${entry.id}`} entry={entry} />
-            })}
+            <button className="nld-bg-yellow-500 nld-text-brown-500 px-4 py-3 rounded-full ml-4 nld-button-md font-semibold">{tCommon('search')}</button>
+          </form>
+        </div>
+      </div>
+
+      <div className="w-full md:w-4/5 min-h-screen m-auto mt-12 text-black">
+        <div className="col-span-2 mt-5">
+          <div className="px-4 pb-4 break-words">
+            <div className="flex gap-4 justify-center">
+              <Link className="nld-bg-grey-50 px-4 py-3 nld-button-md nld-text-grey-300 rounded-full" prefetch={false} href="/listings">{tNav('all-listings')}</Link>
+              <Link className="nld-bg-grey-50 px-4 py-3 nld-button-md nld-text-grey-300 rounded-full" prefetch={false} href="/listings/territories">{tNav('territories-list')}</Link>
+              <Link className="nld-bg-grey-50 px-4 py-3 nld-button-md nld-text-grey-300 rounded-full" prefetch={false} href="/listings/languages">{tNav('languages-list')}</Link>
+              <Link className="nld-bg-grey-50 px-4 py-3 nld-button-md nld-text-grey-300 rounded-full" prefetch={false} href="/listings/treaties">{tNav('treaties-list')}</Link>
+              <Link className="nld-bg-grey-50 px-4 py-3 nld-button-md nld-text-grey-300 rounded-full" prefetch={false} href="/listings/placenames">{tNav('placenames-list')}</Link>
+              <Link className="nld-bg-grey-50 px-4 py-3 nld-button-md nld-text-grey-300 rounded-full" prefetch={false} href="/listings/risks">{tNav('risks-list')}</Link>
+              <Link className="nld-bg-grey-50 px-4 py-3 nld-button-md nld-text-grey-300 rounded-full" prefetch={false} href="/listings/renewals">{tNav('renewals-list')}</Link>
+            </div>
+            <div className="mt-8">
+              <p className="nld-font-jost nld-text-grey-300 nld-font-h5 uppercase">{new Intl.NumberFormat().format(totalEntries[0].num_entries)} {t('total-all')}</p>
+            </div>
+            <div className="grid grid-cols-3 gap-4 mt-4">
+              {entries.map(entry => {
+                return <EntryCard key={`entry-${entry.id}`} entry={entry} />
+              })}
+            </div>
             {entries.length >= 24 || page > 0 ?
               <nav className="flex items-center mt-2.5" aria-label="Pagination">
                 {page > 0 ?

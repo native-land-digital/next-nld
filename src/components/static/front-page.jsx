@@ -142,7 +142,7 @@ export default async function FrontPage() {
           <p className="nld-font-lg text-black mt-4">Dive into a growing collection of maps that bring Indigenous lands, languages, and stories to life. Explore each map to learn more and see history from a new perspective.</p>
         </div>
         <div className="grid grid-cols-2 p-12 px-12 gap-12">
-          <div className="nld-bg-grey-50 rounded-lg p-4">
+          <div className="nld-bg-grey-50 rounded-lg p-4 bg-no-repeat bg-right-top" style={{ backgroundImage: "url('https://d75cfcm8x0ifj.cloudfront.net/main-globe-cut.png')"}} >
             <div className="w-full md:w-1/2">
               <h3 className="nld-font-jost nld-font-h3 text-black font-medium">Native Land Map</h3>
               <p className="nld-font-lg mt-4 text-black">Our classic searchable map of Indigenous territories, treaties, and languages.</p>
@@ -328,6 +328,19 @@ export default async function FrontPage() {
               </Link>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="p-16 bg-cover" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/c7743991f8c89811632b8b1f749c4f314fd3b0e0.png')"}}>
+        <div className="rounded-xl bg-white p-8 w-full">
+          <h2 className="nld-font-h3 nld-text-teal-500 flex items-center">
+            <svg className="inline mr-2" width="30" height="30" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.0001 17.3332C19.9206 17.3332 20.6667 18.0794 20.6667 18.9998V25.6665C20.6667 26.587 19.9206 27.3332 19.0001 27.3332C18.0796 27.3332 17.3334 26.587 17.3334 25.6665V18.9998C17.3334 18.0794 18.0796 17.3332 19.0001 17.3332Z" fill="#29646F"/>
+              <path d="M19.0164 10.6665C19.9368 10.6665 20.683 11.4127 20.683 12.3332C20.683 13.2536 19.9368 13.9998 19.0164 13.9998H19.0001C18.0796 13.9998 17.3334 13.2536 17.3334 12.3332C17.3334 11.4127 18.0796 10.6665 19.0001 10.6665H19.0164Z" fill="#29646F"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M19.0001 0.666504C29.1253 0.666504 37.3334 8.87462 37.3334 18.9998C37.3334 29.1251 29.1253 37.3332 19.0001 37.3332C8.87486 37.3332 0.666748 29.1251 0.666748 18.9998C0.666748 8.87462 8.87486 0.666504 19.0001 0.666504ZM19.0001 3.99984C10.7158 3.99984 4.00008 10.7156 4.00008 18.9998C4.00008 27.2841 10.7158 33.9998 19.0001 33.9998C27.2844 33.9998 34.0001 27.2841 34.0001 18.9998C34.0001 10.7156 27.2844 3.99984 19.0001 3.99984Z" fill="#29646F"/>
+            </svg>
+            {t('disclaimer-header')}
+          </h2>
+          <p className="mt-4 text-black">{t('disclaimer')}</p>
         </div>
       </div>
     </div>

@@ -16,9 +16,8 @@ export default async function Page({ params : { locale }}) {
   return (
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={t('maps')} />
-      <div className="grid gap-5 grid-cols-1 md:grid-cols-3 px-5 md:px-0 w-full md:w-2/3 min-h-screen m-auto -mt-12 text-black static-page">
-        <Sidebar />
-        <div className="col-span-2 bg-white rounded-t shadow-lg mt-5">
+      <div className="w-full md:w-3/5 min-h-screen m-auto mt-12 text-black static-page">
+        <div className="col-span-2 mt-5">
           <div className="px-4 py-4 break-words">
             <p>Native Land is in the process of creating more complex and diverse maps and ways to visualize and imagine Indigenous territory. Please keep an eye on this space as we add more maps in the months to come!</p>
             <h2 className="text-xl mt-4">
