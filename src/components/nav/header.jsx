@@ -347,7 +347,7 @@ export default function Header() {
                       <path d="M3.00977 5C3.56205 5 4.00977 5.44772 4.00977 6C4.00977 6.55228 3.56205 7 3.00977 7H3C2.44772 7 2 6.55228 2 6C2 5.44772 2.44772 5 3 5H3.00977Z" fill="#5E6569"/>
                       <path d="M21 5C21.5523 5 22 5.44772 22 6C22 6.55228 21.5523 7 21 7H8C7.44772 7 7 6.55228 7 6C7 5.44772 7.44772 5 8 5H21Z" fill="#5E6569"/>
                     </svg>
-                    <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/listings" className="ml-2.5 nld-text-md nld-text-grey-500">{t('territories-list')}</Link>
+                    <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/listings" className="ml-2.5 nld-text-md nld-text-grey-500">{t('map-listings')}</Link>
                   </div>
                 </div>
                 <div>

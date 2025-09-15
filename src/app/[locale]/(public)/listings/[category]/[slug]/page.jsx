@@ -153,115 +153,79 @@ export default async function Page({ params : { locale, category, slug }}) {
         crumbs={[{ url : "/listings", title : "Listings" }, { url : `/listings/${category}`, title : category }]} 
         verification={entry.verification}
       />
-      <div className="grid gap-5 grid-cols-1 md:grid-cols-3 min-h-screen w-full md:w-2/3 px-5 md:px-0 m-auto -mt-12 text-black">
-        <Sidebar picks={category !== "greetings" ? 3 : 0}>
-          <ol className="hidden md:block list-inside text-gray-400">
-            <li className="mb-2.5"><a href="#map">{t('map')}</a></li>
-            {entry.language && entry.language !== "" ?
-              <li className="mb-2.5"><a href="#language">{t('language')}</a></li>
-            : false}
-            {entry.websites.length > 0 ?
-              <li className="mb-2.5"><a href="#websites">{t('websites')}</a></li>
-            : false}
-            {entry.pronunciations.length > 0 ?
-              <li className="mb-2.5"><a href="#pronunciations">{t('pronunciations')}</a></li>
-            : false}
-            {entry.greetings.length > 0 ?
-              <li className="mb-2.5"><a href="#greetings">{t('greetings')}</a></li>
-            : false}
-            {entry.media.length > 0 ?
-              <li className="mb-2.5"><a href="#media">{t('media')}</a></li>
-            : false}
-            <li className="mb-2.5"><a href="#sources">{t('sources')}</a></li>
-            {entry.relatedTo.length > 0 || entry.relatedFrom.length > 0 ?
-              <li className="mb-2.5"><a href="#related-maps">{t('related')}</a></li>
-            : false}
-            {entry.changelog.length > 0 ?
-              <li className="mb-2.5"><a href="#changelog">{t('changelog')}</a></li>
-            : false}
-            <li className="mb-2.5"><a href="#send-correction">{t('correction')}</a></li>
-          </ol>
-          <span />
-          {category === 'greetings' ?
-            <div>
-              <hr className="my-2.5" />
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="greetings">About this Project</h3>
-                <p>This project is a collaboration between the Canadian Commission for UNESCO, nativeland.ca and Dr. Onowa McIvor, President’s Chair at the University of Victoria and supports the UN International Decade of Indigenous Languages. Read more here (link to UNESCO landing page).</p>
-              </section>
-            </div>
-          : false}
-        </Sidebar>
-        <div className="col-span-2 bg-white rounded-t shadow-lg p-4 mt-5">
-          {category !== 'greetings' ?
-            <div>
-              <Map geometry={entry.geometry} geometry_type={entry.geometry_type} category={entry.category} />
-              {entry.language && entry.language !== "" ?
+      <div className="w-full md:w-3/5 min-h-screen m-auto mt-12 text-black">
+        <div className="col-span-2 mt-5">
+          <div className="px-4 pb-4 break-words">
+            {category !== 'greetings' ?
+              <div>
+                <Map geometry={entry.geometry} geometry_type={entry.geometry_type} category={entry.category} />
+                {entry.language && entry.language !== "" ?
+                  <section className="mt-5">
+                    <h2 className="nld-font-jost nld-font-h2" id="language">{t('language')}</h2>
+                    <p>{entry.language}</p>
+                  </section>
+                : false}
+                {entry.websites.length > 0 ?
+                  <section className="mt-5">
+                    <h2 className="nld-font-jost nld-font-h2" id="websites">{t('websites')}</h2>
+                    <Websites websites={entry.websites} />
+                  </section>
+                : false}
+                {entry.pronunciations.length > 0 ?
+                  <section className="mt-5">
+                    <h2 className="nld-font-jost nld-font-h2" id="pronunciations">{tDash('pronunciations')}</h2>
+                    <Pronunciations pronunciations={entry.pronunciations} />
+                  </section>
+                : false}
+                {entry.greetings.length > 0 ?
+                  <section className="hidden mt-5">
+                    <h2 className="nld-font-jost nld-font-h2" id="greetings">{t('greetings')}</h2>
+                    <Greetings greetings={entry.greetings} />
+                  </section>
+                : false}
+                {entry.relatedTo.length > 0 || entry.relatedFrom.length > 0 ?
+                  <section className="mt-5">
+                    <h2 className="nld-font-jost nld-font-h2" id="related-maps">{t('related')}</h2>
+                    <Related relatedTo={entry.relatedTo} relatedFrom={entry.relatedFrom} />
+                  </section>
+                : false}
+                {entry.media.length > 0 ?
+                  <section className="mt-5">
+                    <h2 className="nld-font-jost nld-font-h2" id="media">{t('media')}</h2>
+                    <Media media={entry.media} />
+                  </section>
+                : false}
+                {entry.sources !== "" ?
+                  <section className="mt-5">
+                    <h2 className="nld-font-jost nld-font-h2" id="sources">{t('sources')}</h2>
+                    <div className="sources-text mt-4" dangerouslySetInnerHTML={{ __html : entry.sources }} />
+                  </section>
+                : false}
+                {entry.changelog.length > 0 ?
+                  <section className="mt-5">
+                    <h2 className="nld-font-jost nld-font-h2" id="changelog">{t('changelog')}</h2>
+                    <Changelog changelog={entry.changelog} createdAt={entry.createdAt} updatedAt={entry.updatedAt} />
+                  </section>
+                : false}
+                {entry.disclaimer && entry.disclaimer !== "" ?
+                  <Disclaimer disclaimer={entry.disclaimer} />
+                : false}
                 <section className="mt-5">
-                  <h3 className="text-xl font-bold mb-3" id="language">{t('language')}</h3>
-                  <p>{entry.language}</p>
+                  <h2 className="nld-font-jost nld-font-h2" id="send-correction">{t('correction')}</h2>
+                  <p>{t('contact')}</p>
                 </section>
-              : false}
-              {entry.websites.length > 0 ?
+              </div>
+            : false}
+            {category === 'greetings' ?
+              <div>
+                <h2 className="nld-font-jost nld-font-h2" id="greetings">{t('greetings')}</h2>
+                <Greetings greetings={entry.greetings} />
                 <section className="mt-5">
-                  <h3 className="text-xl font-bold mb-3" id="websites">{t('websites')}</h3>
-                  <Websites websites={entry.websites} />
+                  <Map geometry={entry.geometry} />
                 </section>
-              : false}
-              {entry.pronunciations.length > 0 ?
-                <section className="mt-5">
-                  <h3 className="text-xl font-bold mb-3" id="pronunciations">{tDash('pronunciations')}</h3>
-                  <Pronunciations pronunciations={entry.pronunciations} />
-                </section>
-              : false}
-              {entry.greetings.length > 0 ?
-                <section className="hidden mt-5">
-                  <h3 className="text-xl font-bold mb-3" id="greetings">{t('greetings')}</h3>
-                  <Greetings greetings={entry.greetings} />
-                </section>
-              : false}
-              {entry.relatedTo.length > 0 || entry.relatedFrom.length > 0 ?
-                <section className="mt-5">
-                  <h3 className="text-xl font-bold mb-3" id="related-maps">{t('related')}</h3>
-                  <Related relatedTo={entry.relatedTo} relatedFrom={entry.relatedFrom} />
-                </section>
-              : false}
-              {entry.media.length > 0 ?
-                <section className="mt-5">
-                  <h3 className="text-xl font-bold mb-3" id="media">{t('media')}</h3>
-                  <Media media={entry.media} />
-                </section>
-              : false}
-              {entry.sources !== "" ?
-                <section className="mt-5">
-                  <h3 className="text-xl font-bold mb-3" id="sources">{t('sources')}</h3>
-                  <div className="sources-text" dangerouslySetInnerHTML={{ __html : entry.sources }} />
-                </section>
-              : false}
-              {entry.changelog.length > 0 ?
-                <section className="mt-5">
-                  <h3 className="text-xl font-bold mb-3" id="changelog">{t('changelog')}</h3>
-                  <Changelog changelog={entry.changelog} createdAt={entry.createdAt} updatedAt={entry.updatedAt} />
-                </section>
-              : false}
-              {entry.disclaimer && entry.disclaimer !== "" ?
-                <Disclaimer disclaimer={entry.disclaimer} />
-              : false}
-              <section className="mt-5">
-                <h3 className="text-xl font-bold mb-3" id="send-correction">{t('correction')}</h3>
-                <p>{t('contact')}</p>
-              </section>
-            </div>
-          : false}
-          {category === 'greetings' ?
-            <div>
-              <h3 className="text-xl font-bold mb-3" id="greetings">{t('greetings')}</h3>
-              <Greetings greetings={entry.greetings} />
-              <section className="mt-5">
-                <Map geometry={entry.geometry} />
-              </section>
-            </div>
-          : false}
+              </div>
+            : false}
+          </div>
         </div>
       </div>
     </div>

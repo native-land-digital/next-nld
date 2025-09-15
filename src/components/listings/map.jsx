@@ -70,7 +70,7 @@ export default function Map({ geometry, category, geometry_type }) {
 
   return (
     <div id="map">
-      <div id="nld-maps-mapbox-map" className="w-full h-[50vh]"></div>
+      <div id="nld-maps-mapbox-map" className="w-full h-[50vh] rounded-xl"></div>
     </div>
   )
 }
