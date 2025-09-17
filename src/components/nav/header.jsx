@@ -8,6 +8,7 @@ export default function Header() {
 
   const { data : session } = useSession();
   const t = useTranslations('Navigation');
+  const tFront = useTranslations('FrontPage');
   const tDash = useTranslations('Dashboard');
 
   const [ hamburgerToggled, setHamburgerToggled ] = useState(false)
@@ -151,7 +152,7 @@ export default function Header() {
         <div className={`${openNav ? '' : 'hidden'} absolute z-30`}>
           {openNav === 'about' ? 
             <div onMouseLeave={() => setOpenNav(false)} onMouseOver={() => setOpenNav('about')} className="shadow p-4 bg-white rounded-lg text-slate-600">
-              <div><h4 className="uppercase nld-font-h4 nld-font-jost">About</h4></div>
+              <div><h4 className="uppercase nld-font-h4 nld-font-jost">{t('about')}</h4></div>
               <div className="grid grid-cols-2 gap-12 mt-2">
                 <div>
                   <div className="flex items-center p-2.5">
@@ -213,15 +214,15 @@ export default function Header() {
           : false}
           {openNav === 'maps' ? 
             <div onMouseLeave={() => setOpenNav(false)} onMouseOver={() => setOpenNav('maps')}  className="shadow p-4 bg-white rounded-lg text-slate-600 -ml-[300px]">
-              <div><h4 className="uppercase nld-font-h4 nld-font-jost">Maps</h4></div>
+              <div><h4 className="uppercase nld-font-h4 nld-font-jost">{t('maps')}</h4></div>
               <div className="grid grid-cols-2 gap-4 mt-2">
                 <div className="nld-bg-grey-50 rounded-lg p-4 bg-no-repeat bg-right-top" style={{ backgroundImage: "url('https://d75cfcm8x0ifj.cloudfront.net/main-globe-cut.png')"}} >
                   <div className="w-full md:w-1/2">
-                    <h3 className="nld-font-jost nld-font-h4 text-black font-medium">Native Land Map</h3>
-                    <p className="nld-text-sm mt-4 text-black">Our classic searchable map of Indigenous territories, treaties, and languages.</p>
+                    <h3 className="nld-font-jost nld-font-h4 text-black font-medium">{tFront('native-land-map')}</h3>
+                    <p className="nld-text-sm mt-4 text-black">{tFront('native-land-map-blurb')}</p>
                     <div className="mt-8">
                       <Link prefetch={false} className="text-black rounded-full border border-black px-4 py-2.5 font-semibold items-center inline-flex" href="/maps/native-land">
-                        View Map
+                        {tFront('view-map')}
                         <svg className="ml-2.5 inline" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M9.16699 3.33301C9.62708 3.33318 10 3.70686 10 4.16699C9.99982 4.62697 9.62697 4.99982 9.16699 5H4.16699C3.94598 5 3.73343 5.08786 3.57715 5.24414C3.42105 5.40033 3.33309 5.61219 3.33301 5.83301V15.833C3.33301 16.054 3.42087 16.2666 3.57715 16.4229C3.73343 16.5791 3.94598 16.667 4.16699 16.667H14.167C14.3878 16.6669 14.5997 16.579 14.7559 16.4229C14.9121 16.2666 15 16.054 15 15.833V10.833C15.0002 10.373 15.373 10.0002 15.833 10C16.2931 10 16.6668 10.3729 16.667 10.833V15.833C16.667 16.4959 16.4032 17.1318 15.9346 17.6006C15.4658 18.0693 14.8299 18.3329 14.167 18.333H4.16699C3.50395 18.333 2.86825 18.0694 2.39941 17.6006C1.93057 17.1317 1.66699 16.496 1.66699 15.833V5.83301C1.66708 5.17008 1.93065 4.53419 2.39941 4.06543C2.86822 3.59679 3.5041 3.33301 4.16699 3.33301H9.16699ZM17.5 1.66699C17.5419 1.66699 17.5828 1.67176 17.623 1.67773C17.637 1.67982 17.6512 1.6808 17.665 1.68359C17.6796 1.68652 17.6937 1.69066 17.708 1.69434C17.7184 1.69701 17.729 1.69907 17.7393 1.70215C17.7525 1.70612 17.7653 1.71121 17.7783 1.71582C17.8917 1.75596 17.9982 1.82044 18.0889 1.91113C18.1188 1.94103 18.1455 1.97286 18.1699 2.00586C18.1782 2.01712 18.1866 2.02835 18.1943 2.04004C18.2322 2.09711 18.2618 2.15785 18.2842 2.2207C18.2888 2.23367 18.2939 2.24651 18.2979 2.25977C18.3093 2.29789 18.3164 2.33686 18.3223 2.37598C18.3283 2.41653 18.333 2.45776 18.333 2.5V7.5C18.333 7.96024 17.9602 8.33301 17.5 8.33301C17.0398 8.33301 16.667 7.96024 16.667 7.5V4.51074L10.5889 10.5889C10.2634 10.9143 9.73656 10.9143 9.41113 10.5889C9.08572 10.2634 9.08573 9.73657 9.41113 9.41113L15.4893 3.33301H12.5C12.0398 3.33301 11.667 2.96024 11.667 2.5C11.667 2.03976 12.0398 1.66699 12.5 1.66699H17.5Z" fill="#23282B"/>
                         </svg>
@@ -231,11 +232,11 @@ export default function Header() {
                 </div>
                 <div className="nld-bg-grey-50 rounded-lg p-4 bg-no-repeat bg-right-top" style={{ backgroundImage: "url('https://d75cfcm8x0ifj.cloudfront.net/placename-globe-cut.png')"}} >
                   <div className="w-full md:w-1/2">
-                    <h3 className="nld-font-jost nld-font-h3 text-black font-medium">Placenames Map</h3>
-                    <p className="nld-text-sm mt-4 text-black">Explore a collection of placenames from Indigenous nations around the world.</p>
+                    <h3 className="nld-font-jost nld-font-h3 text-black font-medium">{tFront('placenames-map')}</h3>
+                    <p className="nld-text-sm mt-4 text-black">{tFront('placenames-map-blurb')}</p>
                     <div className="mt-8">
                       <Link prefetch={false} className="text-black rounded-full border border-black px-4 py-2.5 font-semibold items-center inline-flex" href="/">
-                        View Map
+                        {tFront('view-map')}
                         <svg className="ml-2.5 inline" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M9.16699 3.33301C9.62708 3.33318 10 3.70686 10 4.16699C9.99982 4.62697 9.62697 4.99982 9.16699 5H4.16699C3.94598 5 3.73343 5.08786 3.57715 5.24414C3.42105 5.40033 3.33309 5.61219 3.33301 5.83301V15.833C3.33301 16.054 3.42087 16.2666 3.57715 16.4229C3.73343 16.5791 3.94598 16.667 4.16699 16.667H14.167C14.3878 16.6669 14.5997 16.579 14.7559 16.4229C14.9121 16.2666 15 16.054 15 15.833V10.833C15.0002 10.373 15.373 10.0002 15.833 10C16.2931 10 16.6668 10.3729 16.667 10.833V15.833C16.667 16.4959 16.4032 17.1318 15.9346 17.6006C15.4658 18.0693 14.8299 18.3329 14.167 18.333H4.16699C3.50395 18.333 2.86825 18.0694 2.39941 17.6006C1.93057 17.1317 1.66699 16.496 1.66699 15.833V5.83301C1.66708 5.17008 1.93065 4.53419 2.39941 4.06543C2.86822 3.59679 3.5041 3.33301 4.16699 3.33301H9.16699ZM17.5 1.66699C17.5419 1.66699 17.5828 1.67176 17.623 1.67773C17.637 1.67982 17.6512 1.6808 17.665 1.68359C17.6796 1.68652 17.6937 1.69066 17.708 1.69434C17.7184 1.69701 17.729 1.69907 17.7393 1.70215C17.7525 1.70612 17.7653 1.71121 17.7783 1.71582C17.8917 1.75596 17.9982 1.82044 18.0889 1.91113C18.1188 1.94103 18.1455 1.97286 18.1699 2.00586C18.1782 2.01712 18.1866 2.02835 18.1943 2.04004C18.2322 2.09711 18.2618 2.15785 18.2842 2.2207C18.2888 2.23367 18.2939 2.24651 18.2979 2.25977C18.3093 2.29789 18.3164 2.33686 18.3223 2.37598C18.3283 2.41653 18.333 2.45776 18.333 2.5V7.5C18.333 7.96024 17.9602 8.33301 17.5 8.33301C17.0398 8.33301 16.667 7.96024 16.667 7.5V4.51074L10.5889 10.5889C10.2634 10.9143 9.73656 10.9143 9.41113 10.5889C9.08572 10.2634 9.08573 9.73657 9.41113 9.41113L15.4893 3.33301H12.5C12.0398 3.33301 11.667 2.96024 11.667 2.5C11.667 2.03976 12.0398 1.66699 12.5 1.66699H17.5Z" fill="#23282B"/>
                         </svg>
@@ -244,8 +245,8 @@ export default function Header() {
                   </div>
                 </div>
               </div>
-              <Link prefetch={false} className="mt-4 text-black rounded-full border border-black px-4 py-2.5 font-semibold items-center inline-flex" href="/maps/native-land">
-                About Our Maps
+              <Link prefetch={false} className="mt-4 text-black rounded-full border border-black px-4 py-2.5 font-semibold items-center inline-flex" href="/maps">
+                {t('about-maps')}
                 <svg className="ml-2.5 inline" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M9.41073 3.57757C9.73616 3.25214 10.2637 3.25214 10.5891 3.57757L16.4224 9.41091C16.4623 9.45075 16.4979 9.49471 16.5291 9.54193C16.5497 9.57317 16.5676 9.60561 16.5836 9.63877C16.6017 9.67643 16.6176 9.71541 16.63 9.75596C16.6351 9.77287 16.6389 9.79009 16.643 9.80723C16.6577 9.86919 16.6666 9.93364 16.6666 10.0001C16.6666 10.0693 16.6564 10.136 16.6405 10.2003C16.6371 10.2144 16.6342 10.2287 16.63 10.2426C16.6175 10.2834 16.6018 10.3227 16.5836 10.3606C16.5669 10.3953 16.5476 10.4289 16.5258 10.4615C16.5153 10.4772 16.5039 10.4922 16.4924 10.5071C16.4707 10.5353 16.4483 10.5635 16.4224 10.5893L10.5891 16.4226C10.2637 16.748 9.73614 16.748 9.41073 16.4226C9.08531 16.0972 9.08535 15.5697 9.41073 15.2442L13.8215 10.8334H4.16659C3.70637 10.8334 3.33329 10.4603 3.33325 10.0001C3.33325 9.53986 3.70635 9.16677 4.16659 9.16677H13.8215L9.41073 4.75596C9.08531 4.43054 9.08535 3.90302 9.41073 3.57757Z" fill="#23282B"/>
                 </svg>
@@ -254,7 +255,7 @@ export default function Header() {
           : false}
           {openNav === 'contribute' ? 
             <div onMouseLeave={() => setOpenNav(false)} onMouseOver={() => setOpenNav('contribute')} className="p-4 bg-white rounded-lg text-slate-600">
-              <div><h4 className="uppercase nld-font-h4 nld-font-jost">Contribute</h4></div>
+              <div><h4 className="uppercase nld-font-h4 nld-font-jost">{t('contribute')}</h4></div>
               <div className="grid grid-cols-5 gap-4 mt-2 w-[600px]">
                 <div className="col-span-2">
                   <div className="flex items-center p-2.5">
@@ -294,13 +295,13 @@ export default function Header() {
                         <svg width="15" height="17" viewBox="0 0 33 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M32.1623 10.503C32.1623 6.01731 28.6923 2.36429 24.6352 1.04813C19.5905 -0.590355 12.9443 -0.348611 8.11314 1.93452C2.26768 4.70115 0.452653 10.7716 0.372578 16.8421C0.319195 21.8112 0.799645 34.946 8.16652 35.0266C13.6383 35.1071 14.439 28.016 16.9747 24.6047C18.7631 22.1873 21.0852 21.4889 23.9412 20.7905C28.8525 19.5818 32.1889 15.6871 32.1623 10.5299V10.503Z" fill="#23282B"/>
                         </svg>
-                        <h2 className="uppercase nld-font-h5 nld-text-grey-500 ml-2">Patreon</h2>
+                        <h2 className="uppercase nld-font-h5 nld-text-grey-500 ml-2">{tFront('patreon')}</h2>
                       </div>
-                      <p className="mt-4 nld-text-grey-300 nld-text-sm">Come join us on Patreon and support our organization!</p>
+                      <p className="mt-4 nld-text-grey-300 nld-text-sm">{t('patreon-short')}</p>
                     </div>
                   </a>
                   <div className="mt-2.5 flex items-center p-2.5">
-                    <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/support" className="nld-text-sm nld-text-grey-500">Learn more about supporting Native Land</Link>
+                    <Link prefetch={false} onClick={() => setHamburgerToggled(false)} href="/support" className="nld-text-sm nld-text-grey-500">{t('support-learn-more')}</Link>
                     <svg className="ml-2.5 inline" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M9.41073 3.57757C9.73616 3.25214 10.2637 3.25214 10.5891 3.57757L16.4224 9.41091C16.4623 9.45075 16.4979 9.49471 16.5291 9.54193C16.5497 9.57317 16.5676 9.60561 16.5836 9.63877C16.6017 9.67643 16.6176 9.71541 16.63 9.75596C16.6351 9.77287 16.6389 9.79009 16.643 9.80723C16.6577 9.86919 16.6666 9.93364 16.6666 10.0001C16.6666 10.0693 16.6564 10.136 16.6405 10.2003C16.6371 10.2144 16.6342 10.2287 16.63 10.2426C16.6175 10.2834 16.6018 10.3227 16.5836 10.3606C16.5669 10.3953 16.5476 10.4289 16.5258 10.4615C16.5153 10.4772 16.5039 10.4922 16.4924 10.5071C16.4707 10.5353 16.4483 10.5635 16.4224 10.5893L10.5891 16.4226C10.2637 16.748 9.73614 16.748 9.41073 16.4226C9.08531 16.0972 9.08535 15.5697 9.41073 15.2442L13.8215 10.8334H4.16659C3.70637 10.8334 3.33329 10.4603 3.33325 10.0001C3.33325 9.53986 3.70635 9.16677 4.16659 9.16677H13.8215L9.41073 4.75596C9.08531 4.43054 9.08535 3.90302 9.41073 3.57757Z" fill="#23282B"/>
                     </svg>

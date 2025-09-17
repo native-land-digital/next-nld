@@ -283,12 +283,14 @@
 .static-page h1 {
   @apply nld-font-jost;
   @apply nld-font-h1;
+  @apply nld-text-grey-500;
   @apply font-semibold;
   @apply mt-5;
 }
 .static-page h2 {
   @apply nld-font-jost;
   @apply nld-font-h2;
+  @apply nld-text-grey-500;
   @apply font-semibold;
   @apply mt-8;
 }
@@ -296,11 +298,13 @@
   @apply nld-font-jost;
   @apply nld-font-h3;
   @apply font-semibold;
+  @apply nld-text-grey-500;
   @apply mt-5;
 }
 .static-page p {
   @apply nld-text-md;
   @apply nld-font-noto;
+  @apply nld-text-grey-500;
   @apply mt-4;
 }
 .static-page ul {
@@ -319,6 +323,7 @@
 }
 .static-page img {
   @apply mt-2.5;
+  @apply rounded-xl;
 }
 .static-page img:first-child {
   @apply -mt-4;
@@ -326,7 +331,8 @@
   @apply -mr-8;
 }
 .static-page hr {
-  @apply mt-4;
+  @apply my-8;
+  @apply nld-border-teal-100;
 }
 .static-page a {
   @apply nld-text-teal-500;

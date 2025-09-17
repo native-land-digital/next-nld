@@ -161,49 +161,49 @@ export default async function Page({ params : { locale, category, slug }}) {
                 <Map geometry={entry.geometry} geometry_type={entry.geometry_type} category={entry.category} />
                 {entry.language && entry.language !== "" ?
                   <section className="mt-5">
-                    <h2 className="nld-font-jost nld-font-h2" id="language">{t('language')}</h2>
-                    <p>{entry.language}</p>
+                    <h2 className="nld-font-jost nld-font-h2 font-semibold" id="language">{t('language')}</h2>
+                    <p className="mt-4">{entry.language}</p>
                   </section>
                 : false}
                 {entry.websites.length > 0 ?
                   <section className="mt-5">
-                    <h2 className="nld-font-jost nld-font-h2" id="websites">{t('websites')}</h2>
+                    <h2 className="nld-font-jost nld-font-h2 font-semibold" id="websites">{t('websites')}</h2>
                     <Websites websites={entry.websites} />
                   </section>
                 : false}
                 {entry.pronunciations.length > 0 ?
                   <section className="mt-5">
-                    <h2 className="nld-font-jost nld-font-h2" id="pronunciations">{tDash('pronunciations')}</h2>
+                    <h2 className="nld-font-jost nld-font-h2 font-semibold" id="pronunciations">{tDash('pronunciations')}</h2>
                     <Pronunciations pronunciations={entry.pronunciations} />
                   </section>
                 : false}
                 {entry.greetings.length > 0 ?
                   <section className="hidden mt-5">
-                    <h2 className="nld-font-jost nld-font-h2" id="greetings">{t('greetings')}</h2>
+                    <h2 className="nld-font-jost nld-font-h2 font-semibold" id="greetings">{t('greetings')}</h2>
                     <Greetings greetings={entry.greetings} />
                   </section>
                 : false}
                 {entry.relatedTo.length > 0 || entry.relatedFrom.length > 0 ?
                   <section className="mt-5">
-                    <h2 className="nld-font-jost nld-font-h2" id="related-maps">{t('related')}</h2>
+                    <h2 className="nld-font-jost nld-font-h2 font-semibold" id="related-maps">{t('related')}</h2>
                     <Related relatedTo={entry.relatedTo} relatedFrom={entry.relatedFrom} />
                   </section>
                 : false}
                 {entry.media.length > 0 ?
                   <section className="mt-5">
-                    <h2 className="nld-font-jost nld-font-h2" id="media">{t('media')}</h2>
+                    <h2 className="nld-font-jost nld-font-h2 font-semibold" id="media">{t('media')}</h2>
                     <Media media={entry.media} />
                   </section>
                 : false}
                 {entry.sources !== "" ?
                   <section className="mt-5">
-                    <h2 className="nld-font-jost nld-font-h2" id="sources">{t('sources')}</h2>
+                    <h2 className="nld-font-jost nld-font-h2 font-semibold" id="sources">{t('sources')}</h2>
                     <div className="sources-text mt-4" dangerouslySetInnerHTML={{ __html : entry.sources }} />
                   </section>
                 : false}
                 {entry.changelog.length > 0 ?
                   <section className="mt-5">
-                    <h2 className="nld-font-jost nld-font-h2" id="changelog">{t('changelog')}</h2>
+                    <h2 className="nld-font-jost nld-font-h2 font-semibold" id="changelog">{t('changelog')}</h2>
                     <Changelog changelog={entry.changelog} createdAt={entry.createdAt} updatedAt={entry.updatedAt} />
                   </section>
                 : false}
@@ -211,14 +211,14 @@ export default async function Page({ params : { locale, category, slug }}) {
                   <Disclaimer disclaimer={entry.disclaimer} />
                 : false}
                 <section className="mt-5">
-                  <h2 className="nld-font-jost nld-font-h2" id="send-correction">{t('correction')}</h2>
-                  <p>{t('contact')}</p>
+                  <h2 className="nld-font-jost nld-font-h2 font-semibold" id="send-correction">{t('correction')}</h2>
+                  <p className="mt-4">{t('contact')}</p>
                 </section>
               </div>
             : false}
             {category === 'greetings' ?
               <div>
-                <h2 className="nld-font-jost nld-font-h2" id="greetings">{t('greetings')}</h2>
+                <h2 className="nld-font-jost nld-font-h2 font-semibold" id="greetings">{t('greetings')}</h2>
                 <Greetings greetings={entry.greetings} />
                 <section className="mt-5">
                   <Map geometry={entry.geometry} />
