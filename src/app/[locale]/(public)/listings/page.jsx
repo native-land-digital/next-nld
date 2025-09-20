@@ -55,14 +55,14 @@ export default async function Page({ searchParams, params : { locale } }) {
       <SubHeader title="Listings" />
       <div className="w-full nld-bg-brown-500 text-center px-8 py-16">
         <div className="w-full md:w-2/3 m-auto">
-          <p className="nld-text-lg font-semibold text-white">Search for a listing below of use the filters to browse.</p>
+          <p className="nld-text-lg font-semibold text-white">{t('search-text')}</p>
           <form className="flex items-center mt-4">
             <div className="w-full bg-white rounded-full flex items-center">
               <svg className="ml-2.5" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="32" height="32" rx="16" fill="#EBDFD8"/>
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M15 6C19.9706 6 24 10.0294 24 15C24 17.125 23.2619 19.0766 22.0303 20.6162L25.707 24.293C26.0974 24.6835 26.0975 25.3166 25.707 25.707C25.3166 26.0975 24.6835 26.0974 24.293 25.707L20.6162 22.0303C19.0766 23.2619 17.125 24 15 24C10.0294 24 6 19.9706 6 15C6 10.0294 10.0294 6 15 6ZM15 8C11.134 8 8 11.134 8 15C8 18.866 11.134 22 15 22C18.866 22 22 18.866 22 15C22 11.134 18.866 8 15 8Z" fill="#76533C"/>
               </svg>
-              <input type="text" defaultValue={search ? search : ""} name="search" placeholder="Enter name to search" className="nld-button-md nld-text-brown-500 w-full px-4 py-3 rounded-full outline-none" />
+              <input type="text" defaultValue={search ? search : ""} name="search" placeholder={t('search-placeholder')} className="nld-button-md nld-text-brown-500 w-full px-4 py-3 rounded-full outline-none" />
             </div>
             <button className="nld-bg-yellow-500 nld-text-brown-500 px-4 py-3 rounded-full ml-4 nld-button-md font-semibold">{tCommon('search')}</button>
           </form>

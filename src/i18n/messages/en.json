@@ -32,10 +32,14 @@
     "maps" : "Maps",
     "about-maps" : "About Our Maps",
     "all-maps" : "All Maps",
+    "main-map" : "Classic Map",
+    "placename-map" : "Placename Map",
+    "reciprocity-map" : "Reciprocity Map",
     "community-blog" : "Community & Blog",
     "media-coverage" : "Media Coverage",
     "contribute" : "Contribute",
     "patreon-short" : "Come join us on Patreon and support our organization!",
+    "support-learn-more" : "Learn more about supporting Native Land",
     "jobs" : "Jobs",
     "volunteer" : "Volunteer",
     "fixes-adding-maps" : "Fixes & Adding Maps",
@@ -255,7 +259,9 @@
     "updated" : "last updated",
     "correction" : "Send a Correction",
     "contact" : "If something is wrong here, we would love to hear from you so we can fix it. Send us an email to research@native-land.ca.",
-    "changelog-note" : "* older dates may be inaccurate due to tech changes along the way"
+    "changelog-note" : "* older dates may be inaccurate due to tech changes along the way",
+    "search-text" : "Search for a listing below of use the filters to browse.",
+    "search-placeholder" : "Enter name to search"
   },
   "Dashboard" : {
     "dashboard" : "Dashboard",

@@ -105,7 +105,7 @@ export default async function Footer() {
             <h4 className="nld-font-h4 nld-font-jost nld-text-grey-200-muted uppercase font-medium mb-3">{t('maps')}</h4>
             <ul className="text-sm  transition-all duration-500">
               <li className="mb-3">
-               <Link prefetch={false} href="/" className="text-white hover:nld-text-grey-200-muted">{t('main-map')}</Link>
+               <Link prefetch={false} href="/maps/native-land" className="text-white hover:nld-text-grey-200-muted">{t('main-map')}</Link>
               </li>
               <li className="mb-3">
                 <Link prefetch={false} href="/maps/placenames" className="text-white hover:nld-text-grey-200-muted">{t('placename-map')}</Link>

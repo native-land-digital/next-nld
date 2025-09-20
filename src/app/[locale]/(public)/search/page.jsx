@@ -12,12 +12,7 @@ export default async function Page({ params : { locale }}) {
   return (
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={t('search')} />
-      <div className="grid gap-5 grid-cols-1 md:grid-cols-3 px-5 md:px-0 w-full md:w-2/3 min-h-screen m-auto -mt-12 text-black static-page">
-        <Sidebar />
-        <div className="col-span-2 mt-5">
-          <SearchResults />
-        </div>
-      </div>
+      <SearchResults />
     </div>
   );
 

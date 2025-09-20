@@ -5,8 +5,6 @@ import Link from 'next/link'
 
 import { isMobile } from '@/components/front-map/map-utils';
 
-import '@/components/front-map/map.geocoder.css';
-
 export default function SelectorControl({ map, selectedFeature }) {
 
     const t = useTranslations('FrontMap');
