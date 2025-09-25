@@ -2,8 +2,6 @@ import { db } from '@/lib/db/kysely'
 
 import { availableLocales } from '@/i18n/config'
 import { setLocaleCache } from '@/i18n/server-i18n';
-import MapContainer from '@/components/front-map/map-container';
-import MapModal from '@/components/front-map/modal';
 import FrontPage from '@/components/static/front-page';
 import AIChatbot from '@/components/ai/chatbot';
 
@@ -22,9 +20,7 @@ export default async function Home({ params : { locale } }) {
   return (
     <div>
       <FrontPage />
+      <AIChatbot />
     </div>
   );
 }
-      // <MapModal headerText="disclaimer-header" bodyText="disclaimer" footerText="disclaimer-close" />
-      // <MapContainer territoryOptions={territoryOptions} languageOptions={languageOptions} treatyOptions={treatyOptions} />
-      // <AIChatbot />

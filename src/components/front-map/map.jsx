@@ -3,7 +3,7 @@ import { useTranslations } from '@/i18n/client-i18n';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-import { randomStartingPosition, createSetFeatureCollection, makeBoundsFromPoly, getUniqueFeatures, isMobile } from '@/components/front-map/map-utils';
+import { randomStartingPosition, createSetFeatureCollection, entryQuery, getUniqueFeatures, isMobile } from '@/components/front-map/map-utils';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -65,27 +65,6 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
       })
     }
   }, [currentLayers])
-
-  const entryQuery = async (query) => {
-    if(query && query.length > 2) {
-      return fetch(`/api/entry/searcher?s=${query}&geosearch=true`)
-        .then(resp => resp.json())
-        .then(response => {
-          const features = response.map((entry, i) => {
-            return {
-              type : "Feature",
-              id : `feature-from-db-${i}`,
-              place_name : entry.name + ` (${entry.category})`,
-              center : entry.centroid.coordinates,
-              bbox : makeBoundsFromPoly(entry)
-            }
-          })
-          return Promise.resolve(features);
-        })
-    } else {
-      return []
-    }
-  }
 
   const addControls = () => {
     const nav = new mapboxgl.NavigationControl();

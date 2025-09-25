@@ -23,7 +23,7 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
     mapboxgl.clearStorage();
     const newMap = new mapboxgl.Map({
       center : [-36.38964382502621, 45.652294519950345],
-      zoom : 3,
+      zoom : 2,
       container: "nld-reciprocity-map",
       style: process.env.NEXT_PUBLIC_MAPBOX_STYLE_RISKS_RENEWALS,
       showZoom: false,

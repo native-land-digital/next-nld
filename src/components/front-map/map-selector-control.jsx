@@ -50,6 +50,10 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
         const bounds = makeBoundsFromPoly(entry[0])
         map.fitBounds(bounds, { padding : 20 })
         adjustCurrentLayers(true, category);
+        map.once('moveend', () => {
+          const latlng = { lat : entry[0].centroid.coordinates[1], lng : entry[0].centroid.coordinates[0] }
+          map.fire('click', { latLng : latlng, point: map.project(latlng), originalEvent : {} });
+        }, 500)
       })
     }
 

@@ -23,7 +23,7 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
     mapboxgl.clearStorage();
     const newMap = new mapboxgl.Map({
       ...randomPlacenameStartingPosition(),
-      zoom : 3,
+      zoom : 2,
       container: "nld-placenames-map",
       style: process.env.NEXT_PUBLIC_MAPBOX_STYLE_PLACENAMES,
       showZoom: false,
@@ -71,7 +71,7 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
       })
     })
     
-    map.on("click", () => {
+    map.on("click", (e) => {
       const featuresUnderMouse = map.queryRenderedFeatures(e.point, { layers: ["next-nld-placenames-major", "next-nld-placenames-minor", "next-nld-placenames-mini"] });
       const noDuplicates = getUniqueFeatures(featuresUnderMouse, 'id');
       console.log(noDuplicates)

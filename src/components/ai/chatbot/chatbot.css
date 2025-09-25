@@ -23,6 +23,8 @@
   @apply m-auto;
   @apply border;
   @apply border-black;
+  @apply max-w-full;
+  @apply w-full;
 }
 .react-chatbot-kit-chat-bot-message-container h3 {
   @apply text-lg;

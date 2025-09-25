@@ -2,6 +2,8 @@ import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
 import { getTranslations } from '@/i18n/server-i18n';
 
+import FrontPageGeocoder from '@/components/front-map/front-page-geocoder';
+
 export const revalidate = false;
 export const dynamic = 'force-static';
 export const dynamicParams = false;
@@ -9,7 +11,6 @@ export const dynamicParams = false;
 export default async function FrontPage() {
 
   const t = await getTranslations('FrontPage');
-  const tMap = await getTranslations('FrontMap');
   const tNav = await getTranslations('Navigation');
 
   const latestUpdates = await db.selectFrom('Entry')
@@ -32,16 +33,10 @@ export default async function FrontPage() {
             <p className="mt-4 nld-font-lg">{t('welcome-blurb')}</p>
             <div className="mt-4 grid grid-cols-6 gap-4 w-full">
               <div className="col-span-4">
-                <div className="absolute ml-[7px] mt-[5px]">
-                  <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="32" height="32" rx="16" fill="#CCDFE3" fill-opacity="0.15"/>
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15 6C19.9706 6 24 10.0294 24 15C24 17.125 23.2619 19.0766 22.0303 20.6162L25.707 24.293C26.0974 24.6835 26.0975 25.3166 25.707 25.707C25.3166 26.0975 24.6835 26.0974 24.293 25.707L20.6162 22.0303C19.0766 23.2619 17.125 24 15 24C10.0294 24 6 19.9706 6 15C6 10.0294 10.0294 6 15 6ZM15 8C11.134 8 8 11.134 8 15C8 18.866 11.134 22 15 22C18.866 22 22 18.866 22 15C22 11.134 18.866 8 15 8Z" fill="#A0C6CD"/>
-                  </svg>
-                </div>
-                <input type="text" className="rounded-full border nld-border-teal-100 w-full p-2 nld-bg-blue-800 pl-12" placeholder={tMap('search')} />
+                <FrontPageGeocoder />
               </div>
               <div className="col-span-2">
-                <button className="rounded-full nld-bg-green-500 nld-text-grey-500 font-semibold px-4 py-2.5 text-center">{t('explore-map')}</button>
+                <Link prefetch={false} href="/maps/native-land" className="block rounded-full nld-bg-green-500 nld-text-grey-500 font-semibold px-4 py-2.5 text-center">{t('explore-map')}</Link>
               </div>
             </div>
           </div>

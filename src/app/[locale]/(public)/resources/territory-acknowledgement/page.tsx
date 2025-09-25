@@ -2,6 +2,7 @@ import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 
 import SubHeader from '@/components/nav/sub-header'
 import Sidebar from '@/components/static/sidebar';
+import AIChatbot from '@/components/ai/chatbot';
 
 import defaultContent from "./en.mdx"
 
@@ -25,6 +26,7 @@ export default async function Page({ params : { locale }} : { params : { locale:
   return (
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={t('territory-acknowledgement')} crumbs={[{ url : "/resources", title : "Resources" }]} />
+      <Sidebar />
       <div className="w-full md:w-3/5 min-h-screen m-auto mt-12 text-black static-page">
         <div className="col-span-2 mt-5">
           <div className="px-4 pb-4 break-words">
@@ -32,6 +34,7 @@ export default async function Page({ params : { locale }} : { params : { locale:
           </div>
         </div>
       </div>
+      <AIChatbot />
     </div>
   );
 
