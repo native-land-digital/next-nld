@@ -43,16 +43,17 @@ export default async function FrontPage() {
         </div>
       </div>
       <div className="nld-bg-teal-500">
-        <div className="grid grid-cols-3 p-12 py-20 gap-12">
-          <div className="col-span-1 border-r border-white/20">
+        <div className="grid grid-cols-1 md:grid-cols-3 p-4 md:p-12 py-20 gap-0 md:gap-12">
+          <div className="col-span-1 border-0 md:border-r md:border-white/20">
             <h2 className="nld-font-jost nld-font-h1 text-white font-semibold">{t('welcome-glad')}</h2>
             <p className="nld-font-md text-white mt-8">{t('welcome-contact')}</p>
             <Link prefetch={false} href="/contact" className="inline-block mt-4 px-6 py-3 text-center text-white border border-white nld-button-md rounded-full">{tNav('contact')}</Link>
           </div>
           <div className="col-span-2">
+            <hr className="md:hidden border-white/20 my-8" />
             <h3 className="nld-font-jost nld-font-h2 text-white font-medium">{t('welcome-blurb-2')}</h3>
             <hr className="border-white/20 my-8" />
-            <div className="mt-4 grid grid-cols-3 gap-8">
+            <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-8">
               <div>
                 <h3 className="nld-font-jost text-center nld-font-h3 text-white font-medium">100M+</h3>
                 <p className="nld-text-sm text-center">{t('visitors')}</p>
@@ -82,7 +83,7 @@ export default async function FrontPage() {
         </div>
       </div>
       <div className="bg-white bg-cover bg-no-repeat" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/river-bg-small-trans.png')" }}>
-        <div className="grid grid-cols-2 py-36 px-16 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 py-36 px-4 md:px-16 gap-12">
           <div className="items-center flex h-full">
             <div>
               <h2 className="nld-font-jost nld-font-h2 nld-text-grey-500 font-medium">{t('our-mission-header')}</h2>
@@ -106,7 +107,7 @@ export default async function FrontPage() {
         <div className="pt-16">
           <h2 className="nld-font-jost nld-font-h2 nld-text-grey-500 font-medium text-center">{t('how-it-works-header')}</h2>
         </div>
-        <div className="grid grid-cols-3 p-12 px-12 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 p-12 px-12 gap-8">
           <div className="nld-bg-grey-50 rounded-lg text-center p-4">
             <svg className="m-auto" width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path opacity="0.2" d="M34.8333 15C34.8333 25.5 24.3333 31.5 24.3333 31.5C24.3333 31.5 13.8333 25.5 13.8333 15C13.8333 12.2152 14.9395 9.54451 16.9086 7.57538C18.8778 5.60625 21.5485 4.5 24.3333 4.5C27.118 4.5 29.7887 5.60625 31.7579 7.57538C33.727 9.54451 34.8333 12.2152 34.8333 15Z" fill="#29646F"/>
@@ -138,13 +139,13 @@ export default async function FrontPage() {
           <h2 className="nld-font-jost nld-font-h2 nld-text-grey-500 font-medium">{t('our-maps-header')}</h2>
           <p className="nld-font-lg nld-text-grey-500 mt-4">{t('our-maps-mapping')}</p>
         </div>
-        <div className="grid grid-cols-2 p-12 px-12 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 p-12 px-12 gap-12">
           <div className="nld-bg-grey-50 rounded-lg p-4 bg-no-repeat bg-right-top" style={{ backgroundImage: "url('https://d75cfcm8x0ifj.cloudfront.net/main-globe-cut.png')"}} >
             <div className="w-full md:w-1/2">
               <h3 className="nld-font-jost nld-font-h3 nld-text-grey-500 font-medium">{t('native-land-map')}</h3>
-              <p className="nld-font-lg mt-4 nld-text-grey-500">{t('native-land-map-blurb')}</p>
+              <p className="bg-slate-100/50 p-2.5 md:p-0 rounded-xl md:bg-transparent nld-font-lg mt-4 nld-text-grey-500">{t('native-land-map-blurb')}</p>
               <div className="mt-8">
-                <Link prefetch={false} className="nld-text-grey-500 rounded-full border border-black px-4 py-2.5 font-semibold items-center inline-flex" href="/maps/native-land">
+                <Link prefetch={false} className="bg-slate-100/50 md:bg-transparent nld-text-grey-500 rounded-full border border-black px-4 py-2.5 font-semibold items-center inline-flex" href="/maps/native-land">
                   {t('view-map')}
                   <svg className="ml-2.5 inline" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.41073 3.57757C9.73616 3.25214 10.2637 3.25214 10.5891 3.57757L16.4224 9.41091C16.4623 9.45075 16.4979 9.49471 16.5291 9.54193C16.5497 9.57317 16.5676 9.60561 16.5836 9.63877C16.6017 9.67643 16.6176 9.71541 16.63 9.75596C16.6351 9.77287 16.6389 9.79009 16.643 9.80723C16.6577 9.86919 16.6666 9.93364 16.6666 10.0001C16.6666 10.0693 16.6564 10.136 16.6405 10.2003C16.6371 10.2144 16.6342 10.2287 16.63 10.2426C16.6175 10.2834 16.6018 10.3227 16.5836 10.3606C16.5669 10.3953 16.5476 10.4289 16.5258 10.4615C16.5153 10.4772 16.5039 10.4922 16.4924 10.5071C16.4707 10.5353 16.4483 10.5635 16.4224 10.5893L10.5891 16.4226C10.2637 16.748 9.73614 16.748 9.41073 16.4226C9.08531 16.0972 9.08535 15.5697 9.41073 15.2442L13.8215 10.8334H4.16659C3.70637 10.8334 3.33329 10.4603 3.33325 10.0001C3.33325 9.53986 3.70635 9.16677 4.16659 9.16677H13.8215L9.41073 4.75596C9.08531 4.43054 9.08535 3.90302 9.41073 3.57757Z" fill="#23282B"/>
@@ -156,9 +157,9 @@ export default async function FrontPage() {
           <div className="nld-bg-grey-50 rounded-lg p-4 bg-no-repeat bg-right-top" style={{ backgroundImage: "url('https://d75cfcm8x0ifj.cloudfront.net/placename-globe-cut.png')"}} >
             <div className="w-full md:w-1/2">
               <h3 className="nld-font-jost nld-font-h3 nld-text-grey-500 font-medium">{t('placenames-map')}</h3>
-              <p className="nld-font-lg mt-4 nld-text-grey-500">{t('placenames-map-blurb')}</p>
+              <p className="bg-slate-100/50 p-2.5 md:p-0 nld-font-lg mt-4 nld-text-grey-500">{t('placenames-map-blurb')}</p>
               <div className="mt-8">
-                <Link prefetch={false} className="nld-text-grey-500 rounded-full border border-black px-4 py-2.5 font-semibold items-center inline-flex" href="/maps/placenames">
+                <Link prefetch={false} className="bg-slate-100/50 md:bg-transparent nld-text-grey-500 rounded-full border border-black px-4 py-2.5 font-semibold items-center inline-flex" href="/maps/placenames">
                   {t('view-map')}
                   <svg className="ml-2.5 inline" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.41073 3.57757C9.73616 3.25214 10.2637 3.25214 10.5891 3.57757L16.4224 9.41091C16.4623 9.45075 16.4979 9.49471 16.5291 9.54193C16.5497 9.57317 16.5676 9.60561 16.5836 9.63877C16.6017 9.67643 16.6176 9.71541 16.63 9.75596C16.6351 9.77287 16.6389 9.79009 16.643 9.80723C16.6577 9.86919 16.6666 9.93364 16.6666 10.0001C16.6666 10.0693 16.6564 10.136 16.6405 10.2003C16.6371 10.2144 16.6342 10.2287 16.63 10.2426C16.6175 10.2834 16.6018 10.3227 16.5836 10.3606C16.5669 10.3953 16.5476 10.4289 16.5258 10.4615C16.5153 10.4772 16.5039 10.4922 16.4924 10.5071C16.4707 10.5353 16.4483 10.5635 16.4224 10.5893L10.5891 16.4226C10.2637 16.748 9.73614 16.748 9.41073 16.4226C9.08531 16.0972 9.08535 15.5697 9.41073 15.2442L13.8215 10.8334H4.16659C3.70637 10.8334 3.33329 10.4603 3.33325 10.0001C3.33325 9.53986 3.70635 9.16677 4.16659 9.16677H13.8215L9.41073 4.75596C9.08531 4.43054 9.08535 3.90302 9.41073 3.57757Z" fill="#23282B"/>
@@ -170,12 +171,12 @@ export default async function FrontPage() {
         </div>
       </div>
       <div className="bg-white">
-        <div className="pt-16 text-center">
+        <div className="px-4 md:px-16 pt-16 text-center">
           <h2 className="nld-font-jost nld-font-h2 nld-text-grey-500 font-medium">{t('explore-more')}</h2>
           <p className="nld-font-lg nld-text-grey-500 mt-4">{t('explore-more-blurb')}</p>
         </div>
-        <div className="grid grid-cols-3 p-12 px-12 gap-12">
-          <div className="border-r-2 nld-border-teal-100">
+        <div className="grid grid-cols-1 md:grid-cols-3 py-12 p-4 md:px-12 gap-12">
+          <div className="border-0 md:border-r-2 nld-border-teal-100">
             <h3 className="nld-font-jost nld-font-h3 nld-text-grey-500 font-medium">{t('open-data-header')}</h3>
             <p className="nld-font-lg mt-4 nld-text-grey-500" ><span dangerouslySetInnerHTML={{ __html : t('open-data') }} /></p>
             <div className="mt-8">
@@ -186,8 +187,9 @@ export default async function FrontPage() {
                 </svg>
               </Link>
             </div>
+            <hr className="md:hidden nld-border-teal-100 mt-8" />
           </div>
-          <div className="border-r-2 nld-border-teal-100">
+          <div className="border-0 md:border-r-2 nld-border-teal-100">
             <h3 className="nld-font-jost nld-font-h3 nld-text-grey-500 font-medium">{t('research-header')}</h3>
             <p className="nld-font-lg mt-4 nld-text-grey-500" ><span dangerouslySetInnerHTML={{ __html : t('research') }} /></p>
             <div className="mt-8">
@@ -198,6 +200,7 @@ export default async function FrontPage() {
                 </svg>
               </Link>
             </div>
+            <hr className="md:hidden nld-border-teal-100 mt-8" />
           </div>
           <div>
             <h3 className="nld-font-jost nld-font-h3 nld-text-grey-500 font-medium">{t('blogs-header')}</h3>
@@ -214,11 +217,11 @@ export default async function FrontPage() {
         </div>
       </div>
       <div className="nld-bg-teal-600 py-8 bg-cover bg-no-repeat" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/water-bg-small-trans.png')" }}>
-        <div className="pt-16 text-center">
+        <div className="px-4 md:px-16 pt-16 text-center">
           <h2 className="nld-font-jost nld-font-h2 text-white font-medium">{t('where-you-stand')}</h2>
           <p className="nld-font-lg text-white mt-4">{t('where-you-stand-blurb')}</p>
         </div>
-        <div className="m-auto my-8 w-4/5 lg:w-2/3 rounded-lg p-8 bg-cover bg-no-repeat bg-center" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/waterfall-bg.png')" }}>
+        <div className="m-auto my-8 px-4 md:w-4/5 lg:w-2/3 rounded-lg md:p-8 !bg-none md:bg-cover md:bg-no-repeat md:bg-center" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/waterfall-bg.png')" }}>
           <div className="rounded-lg bg-white/90 p-4">
             <div className="flex gap-4">
               <div>
@@ -253,12 +256,12 @@ export default async function FrontPage() {
         </div>
       </div>
       <div className="nld-bg-grey-50">
-        <div className="pt-16 text-center">
+        <div className="px-4 md:px-16 pt-16 text-center">
           <h2 className="nld-font-jost nld-font-h2 nld-text-grey-500 font-medium">{t('our-partners')}</h2>
           <p className="nld-font-lg nld-text-grey-500 mt-4">{t('our-partners-text')}</p>
           <p className="mt-4"><a className="nld-text-teal-500 font-semibold" href="">{t('our-partners-link')}</a></p>
         </div>
-        <div className="grid grid-cols-3 gap-8 w-2/3 m-auto mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-2/3 m-auto mt-8">
           <div>
             <a href="https://kalliopeia.org/">
               <img className="m-auto w-40" src="https://d75cfcm8x0ifj.cloudfront.net/kalliopeia-logo.webp" alt="Kalliopeia logo" />
@@ -275,7 +278,7 @@ export default async function FrontPage() {
             </a>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-8 w-2/3 m-auto mt-8 pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 w-2/3 m-auto mt-8 pb-16">
           <div></div>
           <div>
             <a href="https://mapster.me/">
@@ -291,12 +294,12 @@ export default async function FrontPage() {
         </div>
       </div>
       <div className="bg-white py-24 pb-40 bg-cover bg-no-repeat" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/river-bg-small-trans.png')" }}>
-        <div className="pt-16 text-center">
+        <div className="px-4 md:px-16 pt-16 text-center">
           <h2 className="nld-font-jost nld-font-h2 nld-text-grey-500 font-medium">{t('help-nld')}</h2>
           <p className="nld-font-lg nld-text-grey-500 mt-4">{t('help-nld-text')}</p>
           <p className="mt-4"><a className="nld-text-teal-500 font-semibold" href="">{t('help-nld-link')}</a></p>
         </div>
-        <div className="grid grid-cols-2 gap-8 w-2/3 m-auto mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 md:px-0 md:w-2/3 m-auto mt-8">
           <div className="nld-bg-green-500 rounded-lg p-8">
             <div className="flex">
               <svg width="33" height="36" viewBox="0 0 33 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -328,7 +331,7 @@ export default async function FrontPage() {
           </div>
         </div>
       </div>
-      <div className="p-16 bg-cover" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/c7743991f8c89811632b8b1f749c4f314fd3b0e0.png')"}}>
+      <div className="p-4 md:p-16 bg-cover" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/c7743991f8c89811632b8b1f749c4f314fd3b0e0.png')"}}>
         <div className="rounded-xl bg-white p-8 w-full">
           <h2 className="nld-font-h3 nld-text-teal-500 flex items-center font-semibold">
             <svg className="inline mr-2" width="30" height="30" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
