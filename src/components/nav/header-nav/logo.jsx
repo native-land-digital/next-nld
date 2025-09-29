@@ -2,7 +2,7 @@
 import { useTranslations } from '@/i18n/client-i18n';
 import Link from 'next/link'
 
-export default function Logo() {
+export default function Logo({ textColor = "nld-text-yellow-500" }) {
 
   const t = useTranslations('Navigation');
 
@@ -45,8 +45,8 @@ export default function Logo() {
         </svg>
       </Link>
       <Link prefetch={false} href="/">
-        <div className="nld-font-jost uppercase font-medium leading-none text-xl ml-2.5 nld-text-yellow-500">{t('native')}</div>
-        <div className="nld-font-jost uppercase font-medium ml-2.5 nld-text-yellow-500">{t('land-digital')}</div>
+        <div className={`nld-font-jost uppercase font-medium leading-none text-xl ml-2.5 ${textColor}`}>{t('native')}</div>
+        <div className={`nld-font-jost uppercase font-medium ml-2.5  ${textColor}`}>{t('land-digital')}</div>
       </Link>
     </div>
   );

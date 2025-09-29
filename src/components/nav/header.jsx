@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <nav className="flex items-center justify-between flex-wrap py-4 px-3 md:px-6 absolute z-99 w-full">
       <Logo />
-      <MobileMenu />
+      <MobileMenu session={session} />
       <div className={`hidden bg-white p-4 rounded-xl absolute right-0 top-0 mt-20 mx-4 md:bg-transparent md:p-0 md:block w-auto justify-end `}>
         <div className="hidden justify-end ml-auto md:flex mb-4">
           {session ?
