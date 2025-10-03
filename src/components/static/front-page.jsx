@@ -25,17 +25,17 @@ export default async function FrontPage() {
 
   return (
     <div>
-      <div className="min-h-screen w-full nld-bg-blue-800 bg-right bg-no-repeat" style={{backgroundImage : "url(/images/map-bg.png)"}}>
-        <div className="grid grid-cols-2 text-left px-12 items-center h-screen">
-          <div>
+      <div className="min-h-screen w-full nld-bg-blue-800 bg-cover md:bg-right bg-no-repeat bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg-mobile-2.png')] md:bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg.png')]">
+        <div className="grid grid-cols-1 md:grid-cols-2 text-left px-4 md:px-12 items-start md:items-center h-screen">
+          <div className="pt-40 md:pt-0">
             <p className="nld-font-jost nld-font-h2 nld-text-grey-200">{t('welcome')}</p>
-            <h2 className="nld-font-jost nld-font-display mt-4">{t('native-land-digital')}</h2>
+            <h2 className="nld-font-jost nld-font-display-mobile md:text-80px/[96px] md: mt-4">{t('native-land-digital')}</h2>
             <p className="mt-4 nld-font-lg">{t('welcome-blurb')}</p>
-            <div className="mt-4 grid grid-cols-6 gap-4 w-full">
-              <div className="col-span-4">
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-6 gap-4 w-full">
+              <div className="col-span-1 md:col-span-4">
                 <FrontPageGeocoder />
               </div>
-              <div className="col-span-2">
+              <div className="col-span-1 md:col-span-2">
                 <Link prefetch={false} href="/maps/native-land" className="block rounded-full nld-bg-green-500 nld-text-grey-500 font-semibold px-4 py-2.5 text-center">{t('explore-map')}</Link>
               </div>
             </div>

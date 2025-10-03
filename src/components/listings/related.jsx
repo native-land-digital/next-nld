@@ -20,7 +20,7 @@ export default async function Related({ relatedTo, relatedFrom }) {
   })
 
   return (
-    <div className="grid grid-cols-3 gap-4 mt-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
       {singleRelationSet.map((relation, i) => {
         return (
           <div key={`relation-${i}`} className="nld-bg-grey-50 rounded-xl p-4">

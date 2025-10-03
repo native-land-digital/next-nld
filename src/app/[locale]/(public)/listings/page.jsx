@@ -72,7 +72,7 @@ export default async function Page({ searchParams, params : { locale } }) {
       <div className="w-full md:w-4/5 min-h-screen m-auto mt-12 text-black">
         <div className="col-span-2 mt-5">
           <div className="px-4 pb-4 break-words">
-            <div className="flex gap-4 justify-center">
+            <div className="grid grid-cols-2 md:grid-cols-7 gap-4 justify-center text-center">
               <Link className="nld-bg-grey-50 px-4 py-3 nld-button-md nld-text-grey-300 rounded-full" prefetch={false} href="/listings">{tNav('all-listings')}</Link>
               <Link className="nld-bg-grey-50 px-4 py-3 nld-button-md nld-text-grey-300 rounded-full" prefetch={false} href="/listings/territories">{tNav('territories-list')}</Link>
               <Link className="nld-bg-grey-50 px-4 py-3 nld-button-md nld-text-grey-300 rounded-full" prefetch={false} href="/listings/languages">{tNav('languages-list')}</Link>
@@ -84,7 +84,7 @@ export default async function Page({ searchParams, params : { locale } }) {
             <div className="mt-8">
               <p className="nld-font-jost nld-text-grey-300 nld-font-h5 uppercase">{new Intl.NumberFormat().format(totalEntries[0].num_entries)} {t('total-all')}</p>
             </div>
-            <div className="grid grid-cols-3 gap-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               {entries.map(entry => {
                 return <EntryCard key={`entry-${entry.id}`} entry={entry} />
               })}
