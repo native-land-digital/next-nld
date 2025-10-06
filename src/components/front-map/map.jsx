@@ -67,8 +67,10 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
   }, [currentLayers])
 
   const addControls = () => {
-    const nav = new mapboxgl.NavigationControl();
-    map.addControl(nav, "bottom-right");
+    if(window.innerWidth >= 768) {
+      const nav = new mapboxgl.NavigationControl();
+      map.addControl(nav, "bottom-right");
+    }
     const geocoder = new MapboxGeocoder({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
       mapboxgl: mapboxgl,

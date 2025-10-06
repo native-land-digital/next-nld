@@ -21,7 +21,7 @@ export default function AIChatbot({ startMinimized = true, startClosed = false }
 
   return (
     <>
-      <div className={`fixed right-0 bottom-0 m-5 ${minimized ? 'w-0 h-0 -z-10' : 'z-50 w-6/7 md:w-1/2'}`}>
+      <div className={`fixed left-0 bottom-0 m-5 ${minimized ? 'w-0 h-0 -z-10' : 'z-[5] md:z-50 w-6/7 md:w-1/2'}`}>
         <Chatbot
           config={config(setMinimized)}
           messageParser={MessageParser}
@@ -29,7 +29,7 @@ export default function AIChatbot({ startMinimized = true, startClosed = false }
         />
       </div>
       {minimized ?
-        <div className="fixed left-0 bottom-0 m-2.5 mb-2.5 ml-4 md:ml-2.5 z-50">
+        <div className="fixed left-0 bottom-0 m-2.5 mb-2.5 ml-4 md:ml-2.5 z-[5] md:z-50">
           <div className="rounded-full border nld-border-teal-100 nld-bg-blue-800 p-1 cursor-pointer hover:bg-sky-800">
             <div className="hidden md:inline-flex py-2 pl-2.5 text-white" onClick={() => setMinimized(false)}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
