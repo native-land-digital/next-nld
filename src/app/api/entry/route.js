@@ -9,10 +9,10 @@ export const GET = async (req) => {
 	if(secret === process.env.MOBILE_APP_SECRET) {
 
 		try {
-
-		  let entries = db.selectFrom('Entry')
+			
+		  let entries = await db.selectFrom('Entry')
 		    .select(['id', 'name', 'category'])
-		    .distinctOn('id')
+				.where('published', '=', true)
 		    .orderBy('name')
 				.execute();
 

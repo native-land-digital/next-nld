@@ -31,42 +31,53 @@ export default function SearchResults() {
 
   return (
     <div>
-      <div>
-        <form method="GET" action="/search" className="grid grid-cols-4 gap-2.5">
-          <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" name="q" placeholder={`${t('search')}...`} className="col-span-3 w-full rounded-md border border-gray-300 px-4 py-2 text-slate-500 text-lg outline-blue-600" />
-          <button className="col-span-1 rounded-lg px-4 py-2 bg-blue-800 text-white w-full" type="submit">Search</button>
-        </form>
+      <div className="w-full nld-bg-brown-500 text-center px-8 py-16">
+        <div className="w-full md:w-2/3 m-auto">
+          <form method="GET" action="/search" className="grid grid-cols-4 gap-2.5">
+            <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" name="q" placeholder={`${t('search')}...`} className="col-span-3 w-full rounded-md border border-gray-300 px-4 py-2 text-slate-500 text-lg outline-blue-600" />
+            <button className="col-span-1 nld-bg-yellow-500 nld-text-brown-500 px-4 py-3 rounded-full ml-4 nld-button-md font-semibold" type="submit">Search</button>
+          </form>
+        </div>
       </div>
-      <div className="mt-4 rounded-md shadow-lg px-4 pb-4 break-words">
-        {!results ? 
-          <p>Please search by typing into the box above.</p> 
-        : 
-          <div>
-            <h2>{results.totalResults} results</h2>
-            {results.pages.length > 0 ? 
-              <div>
-                {results.pages.map((pageResult, i) => {
-                  return (
-                    <div key={`page-result-${i}`}>
-                      <p><Link prefetch={false} href={pageResult.ref}>{pageResult.page.name}</Link></p>
+      <div className="w-full md:w-3/5 m-auto mt-12 text-black static-page">
+        <div className="col-span-2 mt-5">
+          <div className="pb-4 break-words">
+            <div className="mt-4 break-words text-left">
+              {!results ? 
+                <p>Please search by typing into the box above.</p> 
+              : false}
+            </div>
+            <div>
+              {results ? 
+                <div>
+                  <h2 className="nld-font-h2">{results.totalResults} results</h2>
+                  {results.pages.length > 0 ? 
+                    <div className="mt-4">
+                      {results.pages.map((pageResult, i) => {
+                        return (
+                          <div key={`page-result-${i}`}>
+                            <p><Link className="nld-text-teal-100 nld-text-lg" prefetch={false} href={pageResult.ref}>{pageResult.page.name}</Link></p>
+                          </div>
+                        )
+                      })}
                     </div>
-                  )
-                })}
-              </div>
-            : false}
-            {results.entries.length > 0 ? 
-              <div>
-                {results.entries.map((entryResult, i) => {
-                  return (
-                    <div key={`entry-result-${i}`}>
-                      <p><Link prefetch={false} href={`/listings/${entryResult.category}/${entryResult.slug}`}>{entryResult.name}</Link> - {entryResult.category}</p>
+                  : false}
+                  {results.entries.length > 0 ? 
+                    <div className="mt-4">
+                      {results.entries.map((entryResult, i) => {
+                        return (
+                          <div key={`entry-result-${i}`}>
+                            <p><Link className="nld-text-teal-100 nld-text-lg" prefetch={false} href={`/listings/${entryResult.category}/${entryResult.slug}`}>{entryResult.name}</Link> - <span className="capitalize">{entryResult.category}</span></p>
+                          </div>
+                        )
+                      })}
                     </div>
-                  )
-                })}
-              </div>
-            : false}
+                  : false}
+                </div>
+              : false }
+            </div>
           </div>
-        }
+        </div>
       </div>
     </div>
   )

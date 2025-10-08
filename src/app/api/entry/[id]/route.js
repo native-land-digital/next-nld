@@ -13,8 +13,8 @@ export const GET = async (req, route) => {
   	try {
 
       const entry = await db.selectFrom('Entry')
-        .where('id', '=', parseInt(entryId))
-        .where('published', '=', true)
+        .where('Entry.id', '=', parseInt(entryId))
+        .where('Entry.published', '=', true)
         .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
         .select((eb) => [
           'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug',

@@ -3,7 +3,7 @@ import { useTranslations } from '@/i18n/client-i18n';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-import { getUniqueFeatures } from '@/components/front-map/map-utils';
+import { getUniqueFeatures, isMobile } from '@/components/front-map/map-utils';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -22,8 +22,8 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
     }
     mapboxgl.clearStorage();
     const newMap = new mapboxgl.Map({
-      center : [151.48, -34.21],
-      zoom : 3,
+      center : [-36.38964382502621, 45.652294519950345],
+      zoom : 2,
       container: "nld-reciprocity-map",
       style: process.env.NEXT_PUBLIC_MAPBOX_STYLE_RISKS_RENEWALS,
       showZoom: false,
@@ -102,8 +102,10 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
     }
 
   const addControls = () => {
-    const nav = new mapboxgl.NavigationControl();
-    map.addControl(nav, "bottom-right");
+    if(!isMobile()) {
+      const nav = new mapboxgl.NavigationControl();
+      map.addControl(nav, "bottom-right");
+    }
     const geocoder = new MapboxGeocoder({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
       mapboxgl: mapboxgl,

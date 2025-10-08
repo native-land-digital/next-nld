@@ -6,6 +6,28 @@ export const isMobile = () => {
   return isMobile;
 }
 
+export const entryQuery = (query) => {
+  if(query && query.length > 2) {
+    return fetch(`/api/entry/searcher?s=${query.toLowerCase()}&category=languages,territories,treaties&geosearch=true`)
+      .then(resp => resp.json())
+      .then(response => {
+        const features = response.map((entry, i) => {
+          return {
+            type : "Feature",
+            id : `feature-from-db-${i}`,
+            place_name : entry.name + ` (${entry.category})`,
+            category : entry.category,
+            center : entry.centroid.coordinates,
+            bbox : makeBoundsFromPoly(entry)
+          }
+        })
+        return Promise.resolve(features);
+      })
+  } else {
+    return []
+  }
+}
+
 export const getUniqueFeatures = (features, comparatorProperty) => {
   const uniqueIds = new Set();
   const uniqueFeatures = [];
@@ -32,7 +54,7 @@ export const randomStartingPosition = () => {
   if (window.innerWidth < 500) {
     return {
       center: [-103.4216601, 49.2173029],
-      zoom: 3,
+      zoom: 2,
     };
   } else {
     const possibleStarts = [
@@ -42,7 +64,7 @@ export const randomStartingPosition = () => {
     ];
     return {
       center: possibleStarts[Math.floor(Math.random() * possibleStarts.length)],
-      zoom: 3,
+      zoom: 2,
     };
   }
 }
