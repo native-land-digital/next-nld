@@ -13,7 +13,7 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
   const t = useTranslations('FrontMap');
 
   const [ popup, setPopup ] = useState(false);
-  const reciprocityLayers = ["next-nld-risks", "next-nld-renewals"];
+  const reciprocityLayers = ["next-nld-risks-source-layer", "next-nld-renewals-source-layer"];
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
