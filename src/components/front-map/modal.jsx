@@ -1,5 +1,4 @@
 'use client';
-import { useState } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
 
 export default function MapModal({ setModalOpen, modalOpen, headerText, bodyText, footerText }) {

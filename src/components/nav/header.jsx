@@ -27,8 +27,8 @@ export default function Header() {
           :
             <Link prefetch={false} href="/auth/login" className="block mt-4 nld-text-sm lg:inline-block lg:mt-0 text-slate-500 md:text-white hover:text-slate-100 mr-6">{t('login')}</Link>
           }
-          <Link prefetch={false} href="/contact" className="block mt-4 nld-text-sm lg:inline-block lg:mt-0 text-slate-500 md:text-white hover:text-slate-100 mr-6">{t('contact')}</Link>
-          <div onMouseLeave={() => setOpenNav(false)}>
+          <Link prefetch={false} href="/contact" className="block mt-4 nld-text-sm lg:inline-block lg:mt-0 text-slate-500 md:text-white hover:text-slate-100">{t('contact')}</Link>
+          {/* <div onMouseLeave={() => setOpenNav(false)}>
             <div onMouseOver={() => setOpenNav('language')} onClick={() => setOpenNav(openNav === 'language' ? false : 'language')} className="cursor-pointer flex nld-text-sm block mt-4 lg:mt-0 text-slate-500 md:text-white hover:text-slate-100">
               <span className="pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-translate m-1" viewBox="0 0 16 16"><path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z"></path><path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31"></path></svg>
@@ -55,7 +55,7 @@ export default function Header() {
                 <Link href="/yo" prefetch={false} className="text-sm block px-3 py-2 text-slate-600 hover:text-slate-400">{t('yoruba')}</Link>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div onMouseLeave={() => setOpenNav(false)} className="flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-base nld-text-md justify-end items-center md:flex">
@@ -244,14 +244,14 @@ export default function Header() {
                     </svg>
                     <Link prefetch={false} href="/how-to-contribute/fixes-and-adding-maps" className="ml-2.5 nld-text-md nld-text-grey-500">{t('fixes-adding-maps')}</Link>
                   </div>
-                  <div className="flex items-center p-2.5">
+                  {/* <div className="flex items-center p-2.5">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M17 11C17.3788 11 17.7251 11.214 17.8945 11.5527L22.8945 21.5527L22.9355 21.6465C23.1153 22.1204 22.9104 22.663 22.4473 22.8945C21.9842 23.1261 21.4276 22.9643 21.1562 22.5361L21.1055 22.4473L19.3818 19H14.6182L12.8945 22.4473C12.6475 22.9412 12.0467 23.1415 11.5527 22.8945C11.0588 22.6475 10.8585 22.0467 11.1055 21.5527L16.1055 11.5527L16.1768 11.4316C16.3617 11.1637 16.6685 11 17 11ZM15.6182 17H18.3818L17 14.2363L15.6182 17Z" fill="#5E6569"/>
                       <path d="M14 4C14.5523 4 15 4.44772 15 5C15 5.55228 14.5523 6 14 6H12.5352L10.832 8.55469C10.7955 8.60948 10.7536 8.66047 10.707 8.70703L8.91406 10.5L11.707 13.293L11.7754 13.3691C12.0957 13.7619 12.0731 14.3409 11.707 14.707C11.3409 15.0731 10.7619 15.0957 10.3691 14.7754L10.293 14.707L7.5 11.9141L4.70703 14.707C4.31651 15.0976 3.68349 15.0975 3.29297 14.707C2.90244 14.3165 2.90244 13.6835 3.29297 13.293L6.08594 10.5L4.29297 8.70703C3.90244 8.31651 3.90244 7.68349 4.29297 7.29297C4.68349 6.90244 5.31651 6.90244 5.70703 7.29297L7.5 9.08594L9.22266 7.36328L10.1318 6H2C1.44772 6 1 5.55228 1 5C1 4.44772 1.44772 4 2 4H14Z" fill="#5E6569"/>
                       <path d="M8 1C8.55228 1 9 1.44772 9 2C9 2.55228 8.55228 3 8 3H7C6.44772 3 6 2.55228 6 2C6 1.44772 6.44772 1 7 1H8Z" fill="#5E6569"/>
                     </svg>
                     <Link prefetch={false} href="/how-to-contribute/translations" className="ml-2.5 nld-text-md nld-text-grey-500">{t('translations')}</Link>
-                  </div>
+                  </div> */}
                   <div className="flex items-center p-2.5">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12ZM23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12Z" fill="#5E6569"/>

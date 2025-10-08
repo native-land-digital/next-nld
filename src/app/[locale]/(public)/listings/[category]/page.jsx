@@ -4,7 +4,6 @@ import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 import { notFound } from 'next/navigation';
 
 import SubHeader from '@/components/nav/sub-header';
-import Sidebar from '@/components/static/sidebar';
 import EntryCard from '@/components/static/entry-card';
 
 export const generateStaticParams = () => {

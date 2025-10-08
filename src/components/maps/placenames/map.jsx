@@ -3,7 +3,7 @@ import { useTranslations } from '@/i18n/client-i18n';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-import { randomPlacenameStartingPosition, getUniqueFeatures } from '@/components/front-map/map-utils';
+import { randomPlacenameStartingPosition, getUniqueFeatures, isMobile } from '@/components/front-map/map-utils';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -100,8 +100,10 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
     }
 
   const addControls = () => {
-    const nav = new mapboxgl.NavigationControl();
-    map.addControl(nav, "bottom-right");
+    if(!isMobile()) {
+      const nav = new mapboxgl.NavigationControl();
+      map.addControl(nav, "bottom-right");
+    }
     const geocoder = new MapboxGeocoder({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
       mapboxgl: mapboxgl,

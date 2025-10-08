@@ -1,12 +1,9 @@
 import { useState } from 'react';
-import { useTranslations } from '@/i18n/client-i18n';
 import Link from 'next/link'
 
 import { exportMap } from '@/components/front-map/map-utils';
 
 export default function TogglesControl({ setModalOpen, allLayers, map }) {
-
-    const t = useTranslations('FrontMap');
 
     const [ textZoomed, setTextZoomed ] = useState(false);
     const [ colorsOn, setColorsOn ] = useState(true);

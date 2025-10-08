@@ -3,7 +3,7 @@ import { useTranslations } from '@/i18n/client-i18n';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-import { getUniqueFeatures } from '@/components/front-map/map-utils';
+import { getUniqueFeatures, isMobile } from '@/components/front-map/map-utils';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -74,7 +74,7 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
       })
     })
     
-    map.on("click", () => {
+    map.on("click", (e) => {
       const featuresUnderMouse = map.queryRenderedFeatures(e.point, { layers: ["next-nld-risks-source-layer", "next-nld-renewals-source-layer"] });
       const noDuplicates = getUniqueFeatures(featuresUnderMouse, 'id');
       setSelectedFeature(noDuplicates[0]);
@@ -102,8 +102,10 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
     }
 
   const addControls = () => {
-    const nav = new mapboxgl.NavigationControl();
-    map.addControl(nav, "bottom-right");
+    if(!isMobile()) {
+      const nav = new mapboxgl.NavigationControl();
+      map.addControl(nav, "bottom-right");
+    }
     const geocoder = new MapboxGeocoder({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
       mapboxgl: mapboxgl,

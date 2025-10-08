@@ -1,9 +1,6 @@
 import Link from 'next/link'
-import { getTranslations } from '@/i18n/server-i18n';
 
-export default async function EntryCard({ entry, hideCategory }) {
-
-  const t = await getTranslations('Listings');
+export default async function EntryCard({ entry }) {
 
   return (
     <div className="nld-bg-grey-50 rounded-xl p-4">

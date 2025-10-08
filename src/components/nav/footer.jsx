@@ -127,9 +127,9 @@ export default async function Footer() {
               <li className="mb-3">
                 <Link prefetch={false} href="/how-to-contribute/fixes-and-adding-maps" className="text-white hover:nld-text-grey-200-muted">{t('fixes-adding-maps')}</Link>
               </li>
-              <li className="mb-3">
+              {/* <li className="mb-3">
                 <Link prefetch={false} href="/how-to-contribute/translations" className="text-white hover:nld-text-grey-200-muted">{t('translations')}</Link>
-              </li>
+              </li> */}
               <li className="mb-3">
                 <Link prefetch={false} href="/support/supporters-circle" className="text-white hover:nld-text-grey-200-muted">{t('supporters-circle')}</Link>
               </li>

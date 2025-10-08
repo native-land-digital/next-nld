@@ -67,7 +67,7 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
   }, [currentLayers])
 
   const addControls = () => {
-    if(window.innerWidth >= 768) {
+    if(!isMobile()) {
       const nav = new mapboxgl.NavigationControl();
       map.addControl(nav, "bottom-right");
     }

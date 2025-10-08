@@ -1,4 +1,3 @@
-import { db } from '@/lib/db/kysely'
 import Link from 'next/link'
 import { getTranslations } from '@/i18n/server-i18n';
 
@@ -13,19 +12,9 @@ export default async function FrontPage() {
   const t = await getTranslations('FrontPage');
   const tNav = await getTranslations('Navigation');
 
-  const latestUpdates = await db.selectFrom('Entry')
-    .where('published', '=', true)
-    .leftJoin('Media', 'Media.entryId', 'Entry.id')
-    .select(['Entry.id as id', 'Entry.name as name', 'Entry.category as category', 'Entry.slug as slug', 'Entry.updatedAt as updatedAt', 'Media.url as media_url'])
-    .distinctOn('Entry.id')
-    .orderBy('Entry.id')
-    .orderBy('Entry.updatedAt', 'desc')
-    .limit(5)
-    .execute()
-
   return (
     <div>
-      <div className="min-h-screen w-full nld-bg-blue-800 bg-cover md:bg-right bg-no-repeat bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg-mobile-2.png')] md:bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg.png')]">
+      <div className="min-h-screen w-full nld-bg-blue-800 bg-cover md:bg-right bg-no-repeat bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg-mobile-2.png')] md:bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg.jpg')]">
         <div className="grid grid-cols-1 md:grid-cols-2 text-left px-4 md:px-12 items-start md:items-center h-screen">
           <div className="pt-40 md:pt-0">
             <p className="nld-font-jost nld-font-h2 nld-text-grey-200">{t('welcome')}</p>
@@ -99,7 +88,7 @@ export default async function FrontPage() {
             </div>
           </div>
           <div>
-            <img src="https://d75cfcm8x0ifj.cloudfront.net/mission.webp" alt="Mission" className="w-full h-auto rounded-lg" />
+            <img src="https://d75cfcm8x0ifj.cloudfront.net/mission-small.png" alt="Mission" className="w-full h-auto rounded-lg" />
           </div>
         </div>
       </div>
@@ -221,7 +210,7 @@ export default async function FrontPage() {
           <h2 className="nld-font-jost nld-font-h2 text-white font-medium">{t('where-you-stand')}</h2>
           <p className="nld-font-lg text-white mt-4">{t('where-you-stand-blurb')}</p>
         </div>
-        <div className="m-auto my-8 px-4 md:w-4/5 lg:w-2/3 rounded-lg md:p-8 !bg-none md:bg-cover md:bg-no-repeat md:bg-center" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/waterfall-bg.png')" }}>
+        <div className="m-auto my-8 px-4 md:w-4/5 lg:w-2/3 rounded-lg md:p-8 !bg-none md:bg-cover md:bg-no-repeat md:bg-center" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/waterfall-bg.jpg')" }}>
           <div className="rounded-lg bg-white/90 p-4">
             <div className="flex gap-4">
               <div>
@@ -331,7 +320,7 @@ export default async function FrontPage() {
           </div>
         </div>
       </div>
-      <div className="p-4 md:p-16 bg-cover" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/c7743991f8c89811632b8b1f749c4f314fd3b0e0.png')"}}>
+      <div className="p-4 md:p-16 bg-cover" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/low-light-hills.jpg')"}}>
         <div className="rounded-xl bg-white p-8 w-full">
           <h2 className="nld-font-h3 nld-text-teal-500 flex items-center font-semibold">
             <svg className="inline mr-2" width="30" height="30" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,7 +1,6 @@
 import { db } from '@/lib/db/kysely'
 import { jsonObjectFrom, jsonArrayFrom } from 'kysely/helpers/postgres'
 import SubHeader from '@/components/nav/sub-header'
-import Sidebar from '@/components/static/sidebar';
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 import { notFound } from 'next/navigation';
 

@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 
 import SubHeader from '@/components/nav/sub-header'
-import Sidebar from '@/components/static/sidebar';
 import EntryCard from '@/components/static/entry-card';
 
 export const revalidate = false;

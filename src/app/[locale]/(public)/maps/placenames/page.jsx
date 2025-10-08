@@ -5,7 +5,7 @@ import { setLocaleCache } from '@/i18n/server-i18n';
 import AIChatbot from '@/components/ai/chatbot';
 import MapContainer from '@/components/maps/placenames/map-container';
 
-import defaultContent from "./en.mdx"
+// import defaultContent from "./en.mdx"
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -26,13 +26,13 @@ export default async function Home({ params : { locale } }) {
     .limit(25)
     .execute()
 
-  let Content = defaultContent;
-  try {
-    const TranslatedContent = (await import(`./${locale}.mdx`)).default;
-    Content = TranslatedContent;
-  } catch {
+  // let Content = defaultContent;
+  // try {
+  //   const TranslatedContent = (await import(`./${locale}.mdx`)).default;
+  //   Content = TranslatedContent;
+  // } catch {
 
-  }
+  // }
 
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">

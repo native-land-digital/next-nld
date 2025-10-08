@@ -1,7 +1,6 @@
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 
 import SubHeader from '@/components/nav/sub-header'
-import Sidebar from '@/components/static/sidebar';
 import SearchResults from '@/components/search/search-results';
 
 export default async function Page({ params : { locale }}) {

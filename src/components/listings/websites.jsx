@@ -12,7 +12,7 @@ export default async function Websites({ websites }) {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
       {websites.map((website, i) => {
         return (
-          <a href={website.url} target="_blank">
+          <a key={`site-${i}`} href={website.url} target="_blank">
             <div className="nld-font-noto nld-text-md nld-bg-grey-50 rounded-xl p-4">
               <div className="flex items-center">
                 <svg className="min-w-[40px]" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">

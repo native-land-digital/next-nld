@@ -10,10 +10,6 @@ export default function MapContainer({
   territoryOptions,
   languageOptions,
   treatyOptions,
-}: {
-  territoryOptions: PolygonDropdownOption[];
-  languageOptions: PolygonDropdownOption[];
-  treatyOptions: PolygonDropdownOption[];
 }) {
   const allLayers = ["territories", "languages", "treaties", "greetings"];
   const [map, setMap] = useState(false);

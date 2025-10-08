@@ -8,8 +8,8 @@ export default async function SubHeader({ title, crumbs = [], verification = fal
   const t = await getTranslations('Navigation');
 
   return (
-    <div className="bg-cover h-[380px] flex items-center py-6 px-10 md:px-0" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/hero.png')"}}>
-      <div className="pt-24 w-full md:w-2/3 m-auto capitalize">
+    <div className="bg-cover h-[380px] flex items-center py-6 px-4 md:px-0" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/hero.png')"}}>
+      <div className="pt-24 w-full md:w-2/3 m-auto capitalize break-words">
         <h2 className="nld-font-jost nld-font-h1 text-center font-semibold">
           {title}
           <span>

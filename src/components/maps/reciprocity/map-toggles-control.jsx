@@ -1,62 +1,12 @@
-import { useState } from 'react';
-import { useTranslations } from '@/i18n/client-i18n';
 import Link from 'next/link'
 
 import { exportMap } from '@/components/front-map/map-utils';
 
-export default function TogglesControl({ setModalOpen, allLayers, map }) {
-
-    const t = useTranslations('FrontMap');
-
-    const [ textZoomed, setTextZoomed ] = useState(false);
-    const [ labelsOn, setLabelsOn ] = useState(false);
-
-    const zoomText = () => {
-      allLayers.forEach(layer => {
-        if(textZoomed) {
-          map.setLayoutProperty(layer, "text-size", {
-            base: 1,
-            stops: [
-              [0, 8],
-              [22, 18],
-            ],
-          });
-        } else {
-          map.setLayoutProperty(layer, "text-size", {
-            base: 1,
-            stops: [
-              [0, 15],
-              [22, 30],
-            ],
-          });
-        }
-      })
-      setTextZoomed(!textZoomed)
-    }
-
-    const toggleLabels = () => {
-      map.getStyle().layers.forEach((layer) => {
-        if((layer.type === "symbol" ||
-          layer["source-layer"] === "admin" ||
-          layer["source-layer"] === "road" ||
-          layer["source-layer"] === "landuse") &&
-        !(
-          layer.id.indexOf("risks") > -1 || 
-          layer.id.indexOf("renewals") > -1
-        )) {
-          if(labelsOn) {
-            map.setLayoutProperty(layer.id, "visibility", "none");
-          } else {
-            map.setLayoutProperty(layer.id, "visibility", "visible");
-          }
-        }
-      });
-      setLabelsOn(!labelsOn)
-    }
+export default function TogglesControl({ setModalOpen, map }) {
 
     return (
       <div>
-        <div className="absolute right-0 top-0 m-4 z-10">
+        <div className="m-4 absolute right-0 bottom-0 mb-16 md:mb-4 md:top-0 z-[5] md:z-10">
           <Link prefetch={false} className="block rounded-full border nld-border-teal-100 nld-bg-blue-800 p-2.5 cursor-pointer hover:bg-sky-800" href="/">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M16 17L21 12L16 7" stroke="#A0C6CD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -72,7 +22,7 @@ export default function TogglesControl({ setModalOpen, allLayers, map }) {
             </svg>
           </div>
         </div>
-        <div className="mr-16 absolute right-0 bottom-0 m-4 z-10 flex gap-4">
+        <div className="mb-48 md:mb-4 md:mr-16 absolute right-0 bottom-0 m-4 z-[5] md:z-10 flex-col flex md:flex-row gap-4">
           <div onClick={() => exportMap(map)} className="hidden md:flex mt-4 items-center rounded-full border nld-text-teal-100 nld-border-teal-100 nld-bg-blue-800 p-2.5 cursor-pointer hover:bg-sky-800">
             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M21.5 14C22.0523 14 22.5 14.4477 22.5 15V19C22.5 19.7957 22.1837 20.5585 21.6211 21.1211C21.0585 21.6837 20.2957 22 19.5 22H5.5C4.70435 22 3.94151 21.6837 3.37891 21.1211C2.8163 20.5585 2.5 19.7957 2.5 19V15C2.5 14.4477 2.94772 14 3.5 14C4.05228 14 4.5 14.4477 4.5 15V19L4.50488 19.0986C4.52757 19.3276 4.62883 19.5429 4.79297 19.707C4.98051 19.8946 5.23478 20 5.5 20H19.5C19.7652 20 20.0195 19.8946 20.207 19.707C20.3946 19.5195 20.5 19.2652 20.5 19V15C20.5 14.4477 20.9477 14 21.5 14Z" fill="#A0C6CD"/>
