@@ -103,11 +103,6 @@ export default async function FrontPage() {
           <h3 className="text-black text-3xl font-bold pb-16">{t('partners-supporters')}</h3>
           <div className="grid grid-cols-2 md:grid-cols-5 pad-5">
             <div className="w-1/2 m-auto mt-5 h-32 overflow-hidden">
-              <a href="https://kalliopeia.org/">
-                <img className="w-full" src="https://d75cfcm8x0ifj.cloudfront.net/kalliopeia-logo.webp" alt="Kalliopeia logo" />
-              </a>
-            </div>
-            <div className="w-1/2 m-auto mt-5 h-32 overflow-hidden">
               <a href="https://mapbox.com/">
                 <img src="https://d75cfcm8x0ifj.cloudfront.net/mapbox-logo.webp" alt="Mapbox logo" />
               </a>
