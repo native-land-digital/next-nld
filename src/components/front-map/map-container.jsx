@@ -18,6 +18,10 @@ export default function MapContainer({
   const [currentLayers, setCurrentLayers] = useState(["territories"]);
 
   useEffect(() => {
+    document.querySelector("body").classList.add("no-footer");
+  }, [])
+
+  useEffect(() => {
     // Autoload from front page search
     if(map) {
       map.on('load', () => {

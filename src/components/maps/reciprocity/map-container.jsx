@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import MapModal from '@/components/front-map/modal';
 import Map from '@/components/maps/reciprocity/map';
@@ -11,6 +11,10 @@ export default function MapContainer({ risksRenewalsOptions }) {
   const [ modalOpen, setModalOpen ] = useState(false);
   const reciprocityLayers = ["next-nld-risks", "next-nld-renewals"];
   const [selectedFeature, setSelectedFeature] = useState(false);
+
+  useEffect(() => {
+    document.querySelector("body").classList.add("no-footer");
+  }, [])
 
   return (
     <div className="w-90 h-[100vh] min-h-120 relative">
