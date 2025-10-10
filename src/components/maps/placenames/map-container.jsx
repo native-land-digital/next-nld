@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import MapModal from '@/components/front-map/modal';
 import Map from '@/components/maps/placenames/map';
@@ -12,6 +12,10 @@ export default function MapContainer({ placenameOptions }) {
   const [ modalOpen, setModalOpen ] = useState(false);
   const placenameLayers = ["next-nld-placenames-major", "next-nld-placenames-minor", "next-nld-placenames-mini"];
   const [selectedFeature, setSelectedFeature] = useState(false);
+
+  useEffect(() => {
+    document.querySelector("body").classList.add("no-footer");
+  }, [])
 
   return (
     <div className="w-90 h-[100vh] min-h-120 relative">
