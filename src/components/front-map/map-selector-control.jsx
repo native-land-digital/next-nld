@@ -119,8 +119,8 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
 
     return (
       <div className="md:h-auto w-full md:w-80 absolute z-10 left-0 top-0 font-noto-sans">
-        <div className="w-full md:w-80">
-          <div className="w-80 m-4 nld-bg-blue-800-10 rounded-full md:rounded-xl p-0 md:p-2.5">
+        <div className="w-full md:w-80 ">
+          <div className="w-72 m-4 nld-bg-blue-800-10 rounded-full md:rounded-xl p-0 md:p-2.5">
             <div className="hidden md:flex">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_612_4906)">
@@ -156,7 +156,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
           </div>
 
           {showFilters ?
-            <div className="w-80 nld-text-sm nld-text-teal-100 m-4 nld-bg-blue-800-10 rounded-xl p-2.5">
+            <div className="w-72 nld-text-sm nld-text-teal-100 m-4 nld-bg-blue-800-10 rounded-xl p-2.5">
               <div className="flex items-center ">
                 <Switch
                   checked={currentLayers.indexOf('territories') > -1}
@@ -278,9 +278,9 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
             !isMobile() ? 
               `nld-text-sm nld-text-teal-100 m-4 mt-0 nld-bg-blue-800-10 rounded-xl p-2.5 relative transition ease-in-out ${resultsSlided ? 'w-full -translate-x-64' : ''}`
             :
-              `fixed h-[33vh] w-full bottom-0 nld-text-sm nld-text-teal-100 bg-white rounded-t-xl p-2.5 z-[999] transition ease-in-out ${resultsSlided ? 'translate-y-[33vh]' : ''}`
+              `pointer-events-none fixed min-h-[33vh] overflow-y-scroll w-full bottom-0 nld-text-sm nld-text-teal-100 bg-white rounded-t-xl p-2.5 z-[999] transition ease-in-out ${resultsSlided ? 'translate-y-[33vh]' : ''}`
           }>
-            <div className="absolute top-0 right-0 block md:hidden p-1" onClick={() => {
+            <div className="absolute top-0 right-0 block md:hidden p-1 pointer-events-auto" onClick={() => {
               if(isMobile()) {
                 setResultsSlided(!resultsSlided)
               } else {
@@ -304,7 +304,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 <ul className="mt-4 list-none">
                   {selectedFeatures.map(feature => {
                     return (
-                      <li key={`selected-features-${feature.properties.Slug}`} className="flex items-center mt-2.5">
+                      <li key={`selected-features-${feature.properties.Slug}`} className="pointer-events-auto flex items-center mt-2.5">
                         <input type="checkbox" checked={toggledFeatures.indexOf(feature.properties.Slug) === -1} className="mr-1" onChange={() => nationToggle(feature.properties.Slug)} />
                         <Link className="nld-text-grey-500 flex items-center" prefetch={false} href={process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'preview' ? feature.properties.description.substring(feature.properties.description.indexOf('/')) : feature.properties.description} target="_blank">
                           {feature.properties.Name}

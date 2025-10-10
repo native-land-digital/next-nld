@@ -47,7 +47,7 @@ export default function SelectorControl({ placenameOptions, map, selectedFeature
     return (
       <div className="md:h-auto w-full md:w-80 absolute z-10 left-0 top-0 font-noto-sans">
         <div className="w-full md:w-80">
-          <div className="w-80 m-4 nld-bg-blue-800-10 rounded-full md:rounded-xl p-0 md:p-2.5">
+          <div className="w-72 m-4 nld-bg-blue-800-10 rounded-full md:rounded-xl p-0 md:p-2.5">
             <div className="hidden md:flex">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_612_4906)">
@@ -83,7 +83,7 @@ export default function SelectorControl({ placenameOptions, map, selectedFeature
           </svg>
         </div>
 
-        <div className={`${showFilters ? 'block' : 'hidden'} md:block p-4 pt-0 w-80`}>
+        <div className={`${showFilters ? 'block' : 'hidden'} md:block p-4 pt-0 w-72`}>
           <div>
             <AsyncSelect
               instanceId="placenames-select"
