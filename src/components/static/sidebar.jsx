@@ -1,12 +1,9 @@
 import { db } from '@/lib/db/kysely'
-import Link from 'next/link'
-import { getTranslations } from '@/i18n/server-i18n';
 
-import EntryCard from '@/components/static/entry-card';
+import ListingButton from '@/components/listings/listing-button';
+import SidebarChatbot from '@/components/ai/sidebar-bot';
 
-export default async function Sidebar({ children = (<div></div>), picks = 5 }) {
-
-  const t = await getTranslations('Sidebar');
+export default async function Sidebar({ picks = 3 }) {
 
   const totalEntries = await db.selectFrom('Entry')
     .select((eb) => eb.fn.count('id').as('num_entries'))
@@ -26,22 +23,10 @@ export default async function Sidebar({ children = (<div></div>), picks = 5 }) {
 
 
   return (
-    <div className="col-span-1 bg-white rounded-t shadow-lg p-4 mt-5 order-last md:order-first">
-      <div>
-        {children}
-      </div>
-      {children.length > 0 ? <hr className="my-2.5" /> : false }
-      {picks !== 0 ?
-        <div>
-          <h3 className="pt-0 !mt-0 font-bold text-xl">{picks} {t('random')}</h3>
-          <p className="text-sm mb-2.5 !mt-2.5"><Link prefetch={false} href="/listings">{t('visit-listings')}.</Link></p>
-          <div className="grid gap-5">
-            {entries.map(entry => {
-              return <EntryCard key={`entry-${entry.id}`} entry={entry} />
-            })}
-          </div>
-        </div>
-      : false}
+    <div className="nld-sidebar hidden md:block absolute pt-12 ml-[10%]">
+      <ListingButton entries={entries} />
+      <SidebarChatbot startHidden={true} />
+      <div className="mt-4 rounded-full w-[7px] h-[7px] nld-bg-teal-100 m-auto" />
     </div>
   )
 }
