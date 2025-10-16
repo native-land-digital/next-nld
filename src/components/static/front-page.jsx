@@ -252,11 +252,6 @@ export default async function FrontPage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-2/3 m-auto mt-8">
           <div>
-            <a href="https://kalliopeia.org/">
-              <img className="m-auto w-40" src="https://d75cfcm8x0ifj.cloudfront.net/kalliopeia-logo.webp" alt="Kalliopeia logo" />
-            </a>
-          </div>
-          <div>
             <a href="https://mapbox.com/">
               <img className="m-auto w-40" src="https://d75cfcm8x0ifj.cloudfront.net/mapbox-logo.webp" alt="Mapbox logo" />
             </a>
