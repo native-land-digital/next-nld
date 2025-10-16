@@ -47,7 +47,7 @@ export default function MapContainer({
   }, [map])
 
   return (
-    <div className="w-90 h-[100vh] min-h-120 relative">
+    <div className="w-90 h-dvh min-h-120 relative">
       {currentLayers.indexOf("greetings") > -1 ?
         <MapModal setModalOpen={setModalOpen} modalOpen={modalOpen} headerText="greetings-disclaimer-header" bodyText="greetings-disclaimer" footerText="greetings-disclaimer-close" />
       : false}

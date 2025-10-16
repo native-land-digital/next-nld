@@ -17,7 +17,7 @@ export default function MapContainer({ risksRenewalsOptions }) {
   }, [])
 
   return (
-    <div className="w-90 h-[100vh] min-h-120 relative">
+    <div className="w-90 h-dvh min-h-120 relative">
       <MapModal setModalOpen={setModalOpen} modalOpen={modalOpen} headerText="disclaimer-header" bodyText="reciprocity-disclaimer" footerText="disclaimer-close" />
       <SelectorControl
         map={map}
