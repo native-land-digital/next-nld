@@ -9,6 +9,7 @@ export default function MobileMenu({ session }) {
 
   const t = useTranslations('Navigation');
   const tFront = useTranslations('FrontPage');
+  const tDash = useTranslations('Dashboard');
 
   const [ hamburgerToggled, setHamburgerToggled ] = useState(false)
   const [ openNav, setOpenNav ] = useState(false);
