@@ -66,15 +66,15 @@ export default function TogglesControl({ setModalOpen, allLayers, map }) {
 
     return (
       <div>
-        <div className="m-4 absolute right-0 bottom-0 mb-16 md:mb-4 md:top-0 z-[5] md:z-10">
-          <Link prefetch={false} className="block rounded-full border nld-border-teal-100 nld-bg-blue-800 p-2.5 cursor-pointer hover:bg-sky-800" href="/">
+        <div className="m-4 absolute right-0 bottom-0 mb-16 md:mb-4 md:top-0 z-[5] md:z-10 pointer-events-none">
+          <Link prefetch={false} className="block rounded-full border nld-border-teal-100 nld-bg-blue-800 p-2.5 cursor-pointer pointer-events-auto hover:bg-sky-800" href="/">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M16 17L21 12L16 7" stroke="#A0C6CD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M21 12H9" stroke="#A0C6CD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="#A0C6CD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </Link>
-          <div onClick={() => setModalOpen(true)} className="mt-4 rounded-full border nld-border-teal-100 nld-bg-blue-800 p-2.5 cursor-pointer hover:bg-sky-800">
+          <div onClick={() => setModalOpen(true)} className="mt-4 rounded-full border nld-border-teal-100 nld-bg-blue-800 p-2.5 cursor-pointer pointer-events-auto hover:bg-sky-800">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 11C12.5523 11 13 11.4477 13 12V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V12C11 11.4477 11.4477 11 12 11Z" fill="#A0C6CD"/>
               <path d="M12.0098 7C12.5621 7 13.0098 7.44772 13.0098 8C13.0098 8.55228 12.5621 9 12.0098 9H12C11.4477 9 11 8.55228 11 8C11 7.44772 11.4477 7 12 7H12.0098Z" fill="#A0C6CD"/>
@@ -82,22 +82,22 @@ export default function TogglesControl({ setModalOpen, allLayers, map }) {
             </svg>
           </div>
         </div>
-        <div className="mb-48 md:mb-4 md:mr-16 absolute right-0 bottom-0 m-4 z-[5] md:z-10 flex-col flex md:flex-row gap-4">
-          <div onClick={() => zoomText()} className="md:mt-4 rounded-full border nld-text-teal-100 nld-border-teal-100 nld-bg-blue-800 p-2.5 flex items-center cursor-pointer hover:bg-sky-800">
+        <div className="mb-48 md:mb-4 md:mr-16 absolute right-0 bottom-0 m-4 z-[5] md:z-10 flex-col flex md:flex-row gap-4 pointer-events-none">
+          <div onClick={() => zoomText()} className="md:mt-4 rounded-full border nld-text-teal-100 nld-border-teal-100 nld-bg-blue-800 p-2.5 flex items-center cursor-pointer pointer-events-auto hover:bg-sky-800">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M6.6117 5.00684C6.86862 5.02589 7.11696 5.11134 7.3324 5.25488C7.57862 5.41908 7.77125 5.65263 7.88514 5.92578L11.9232 15.6162C12.1352 16.1258 11.8947 16.7115 11.3851 16.9238C10.8755 17.1362 10.2901 16.8942 10.0775 16.3848L9.08338 14H3.91736L2.92322 16.3857C2.71049 16.8948 2.12502 17.1359 1.6156 16.9238C1.10605 16.7114 0.865522 16.1258 1.07752 15.6162L5.11658 5.92578L5.16248 5.8252C5.27895 5.59518 5.45376 5.39859 5.66932 5.25488L5.76307 5.19727C5.98766 5.07035 6.24213 5.00195 6.50135 5.00195L6.6117 5.00684ZM4.75135 12H8.25037L6.50037 7.80176L4.75135 12Z" fill="#A0C6CD"/>
               <path d="M18.0209 6.00098C18.0385 6.00133 18.0561 6.00165 18.0736 6.00293C18.0913 6.00421 18.1089 6.00562 18.1263 6.00781C18.1434 6.00996 18.1602 6.01358 18.1771 6.0166C18.1869 6.01835 18.1968 6.01946 18.2064 6.02148C18.234 6.02726 18.2614 6.03388 18.2885 6.04199C18.2921 6.04309 18.2956 6.04476 18.2992 6.0459C18.317 6.05145 18.3344 6.05789 18.3519 6.06445C18.368 6.07049 18.3841 6.07618 18.3998 6.08301C18.5114 6.13159 18.6161 6.20168 18.7074 6.29297L22.7074 10.293C23.0977 10.6835 23.0979 11.3166 22.7074 11.707C22.3169 12.0975 21.6839 12.0973 21.2933 11.707L19.0004 9.41406V16C19.0004 16.5522 18.5526 16.9999 18.0004 17C17.4481 17 17.0004 16.5523 17.0004 16V9.41406L14.7074 11.707C14.3169 12.0975 13.6839 12.0973 13.2933 11.707C12.9028 11.3165 12.9028 10.6835 13.2933 10.293L17.2933 6.29297C17.3386 6.2477 17.3876 6.20587 17.4408 6.16992C17.4934 6.13439 17.5488 6.10452 17.6058 6.08008C17.6512 6.06059 17.6989 6.04587 17.7474 6.0332C17.7614 6.02955 17.7753 6.0255 17.7894 6.02246C17.8033 6.01948 17.8173 6.01704 17.8314 6.01465C17.847 6.01199 17.8626 6.00973 17.8783 6.00781C17.8961 6.00565 17.914 6.00415 17.932 6.00293C17.948 6.00184 17.9639 6.00131 17.9799 6.00098C17.9866 6.00084 17.9936 6 18.0004 6C18.0072 6 18.0141 6.00084 18.0209 6.00098Z" fill="#A0C6CD"/>
             </svg>
             <div className="hidden md:block ml-2">Text Size</div>
           </div>
-          <div onClick={() => exportMap(map)} className="hidden md:flex mt-4 items-center rounded-full border nld-text-teal-100 nld-border-teal-100 nld-bg-blue-800 p-2.5 cursor-pointer hover:bg-sky-800">
+          <div onClick={() => exportMap(map)} className="hidden md:flex mt-4 items-center rounded-full border nld-text-teal-100 nld-border-teal-100 nld-bg-blue-800 p-2.5 cursor-pointer pointer-events-auto hover:bg-sky-800">
             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M21.5 14C22.0523 14 22.5 14.4477 22.5 15V19C22.5 19.7957 22.1837 20.5585 21.6211 21.1211C21.0585 21.6837 20.2957 22 19.5 22H5.5C4.70435 22 3.94151 21.6837 3.37891 21.1211C2.8163 20.5585 2.5 19.7957 2.5 19V15C2.5 14.4477 2.94772 14 3.5 14C4.05228 14 4.5 14.4477 4.5 15V19L4.50488 19.0986C4.52757 19.3276 4.62883 19.5429 4.79297 19.707C4.98051 19.8946 5.23478 20 5.5 20H19.5C19.7652 20 20.0195 19.8946 20.207 19.707C20.3946 19.5195 20.5 19.2652 20.5 19V15C20.5 14.4477 20.9477 14 21.5 14Z" fill="#A0C6CD"/>
               <path d="M12.5 2C13.0523 2 13.5 2.44772 13.5 3V12.5859L16.793 9.29297C17.1835 8.90244 17.8165 8.90244 18.207 9.29297C18.5975 9.6835 18.5975 10.3165 18.207 10.707L13.207 15.707C13.1592 15.7548 13.1065 15.7976 13.0498 15.835C13.0121 15.8599 12.9727 15.8811 12.9326 15.9004C12.8862 15.9227 12.8381 15.942 12.7881 15.957C12.7752 15.9609 12.762 15.9635 12.749 15.9668C12.7306 15.9715 12.7122 15.9768 12.6934 15.9805C12.6863 15.9819 12.679 15.9822 12.6719 15.9834C12.6159 15.9931 12.5587 16 12.5 16C12.4433 16 12.3881 15.9934 12.334 15.9844C12.3236 15.9826 12.3131 15.9816 12.3027 15.9795C12.2912 15.9772 12.2799 15.9744 12.2686 15.9717C12.248 15.9668 12.2273 15.9623 12.207 15.9561C12.1584 15.9412 12.1116 15.9222 12.0664 15.9004C12.0266 15.8812 11.9877 15.8597 11.9502 15.835C11.8935 15.7976 11.8408 15.7548 11.793 15.707L6.79297 10.707C6.40244 10.3165 6.40244 9.68349 6.79297 9.29297C7.18349 8.90244 7.81651 8.90244 8.20703 9.29297L11.5 12.5859V3C11.5 2.44772 11.9477 2 12.5 2Z" fill="#A0C6CD"/>
             </svg>
             <div className="hidden md:block ml-2">Save</div>
           </div>
-          <div onClick={() => toggleColors()} className="md:mt-4 rounded-full flex items-center border nld-text-teal-100 nld-border-teal-100 nld-bg-blue-800 p-2.5 cursor-pointer hover:bg-sky-800">
+          <div onClick={() => toggleColors()} className="md:mt-4 rounded-full flex items-center border nld-text-teal-100 nld-border-teal-100 nld-bg-blue-800 p-2.5 cursor-pointer pointer-events-auto hover:bg-sky-800">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M6.5 11C7.32843 11 8 11.6716 8 12.5C8 13.3284 7.32843 14 6.5 14C5.67157 14 5 13.3284 5 12.5C5 11.6716 5.67157 11 6.5 11Z" fill="#A0C6CD"/>
               <path d="M17.5 9C18.3284 9 19 9.67157 19 10.5C19 11.3284 18.3284 12 17.5 12C16.6716 12 16 11.3284 16 10.5C16 9.67157 16.6716 9 17.5 9Z" fill="#A0C6CD"/>
@@ -107,7 +107,7 @@ export default function TogglesControl({ setModalOpen, allLayers, map }) {
             </svg>
             <div className="hidden md:block ml-2">Colors</div>
           </div>
-          <div onClick={() => toggleLabels()} className="md:mt-4 rounded-full flex items-center border nld-text-teal-100 nld-border-teal-100 nld-bg-blue-800 p-2.5 cursor-pointer hover:bg-sky-800">
+          <div onClick={() => toggleLabels()} className="md:mt-4 rounded-full flex items-center border nld-text-teal-100 nld-border-teal-100 nld-bg-blue-800 p-2.5 cursor-pointer pointer-events-auto hover:bg-sky-800">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_807_5172)">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M1.29297 1.29297C1.68349 0.902444 2.31651 0.902444 2.70703 1.29297L22.707 21.293C23.0975 21.6835 23.0976 22.3165 22.707 22.707C22.3165 23.0976 21.6835 23.0975 21.293 22.707L18.3896 19.8037L13.499 22.6055L13.5 22.6064C13.044 22.8697 12.5265 23.0078 12 23.0078C11.4735 23.0078 10.956 22.8697 10.5 22.6064L2.00293 17.7383C1.69714 17.564 1.44192 17.311 1.26465 17.0068C1.08671 16.7013 0.993199 16.3536 0.993164 16C0.993192 15.6464 1.08665 15.2987 1.26465 14.9932C1.44277 14.6875 1.69904 14.4342 2.00684 14.2598L2.00977 14.2588L3.50977 13.4141C3.99077 13.1433 4.59996 13.3132 4.87109 13.7939C5.14194 14.275 4.9721 14.8851 4.49121 15.1562L2.99316 16L2.99707 16.0029L11.4971 20.8721L11.5 20.874C11.6519 20.9617 11.8246 21.0078 12 21.0078C12.1755 21.0078 12.348 20.9618 12.5 20.874L12.5029 20.8721L16.9248 18.3389L13.2979 14.7119C12.8936 14.9058 12.4503 15.0078 12 15.0078C11.4745 15.0078 10.9583 14.8697 10.5029 14.6074L2.00293 9.73828C1.69718 9.56398 1.44191 9.31094 1.26465 9.00684C1.08676 8.70136 0.993214 8.35351 0.993164 8C0.993212 7.6464 1.08666 7.29871 1.26465 6.99316C1.44196 6.68887 1.697 6.43705 2.00293 6.2627L3.81152 5.22559L1.29297 2.70703C0.902444 2.31651 0.902444 1.68349 1.29297 1.29297ZM2.99707 7.99805L2.99316 8L2.99707 8.00293L11.4072 12.8213L5.27734 6.69141L2.99707 7.99805Z" fill="#A0C6CD"/>
