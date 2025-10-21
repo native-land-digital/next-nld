@@ -27,7 +27,7 @@ export default async function Page({ params : { locale }} : { params : { locale:
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={t('territory-acknowledgement')} crumbs={[{ url : "/resources", title : "Resources" }]} />
       <Sidebar />
-      <div className="w-full md:w-3/5 min-h-screen m-auto mt-12 text-black static-page">
+      <div className="w-full lg:w-3/5 min-h-screen m-auto mt-12 text-black static-page">
         <div className="col-span-2 mt-5">
           <div className="px-4 pb-4 break-words">
             <Content />

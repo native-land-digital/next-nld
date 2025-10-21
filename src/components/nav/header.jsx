@@ -17,19 +17,19 @@ export default function Header() {
   const [ openNav, setOpenNav ] = useState(false);
 
   return (
-    <nav className="flex items-center justify-between flex-wrap py-4 px-3 md:px-6 absolute z-99 w-full">
+    <nav className="flex items-center justify-between flex-wrap py-4 px-3 lg:px-6 absolute z-99 w-full">
       <Logo />
       <MobileMenu session={session} />
-      <div className={`hidden bg-white p-4 rounded-xl absolute right-0 top-0 mt-4 mx-4 md:bg-transparent md:p-0 md:block w-auto justify-end `}>
-        <div className="hidden justify-end ml-auto md:flex mb-4">
+      <div className={`hidden bg-white p-4 rounded-xl absolute right-0 top-0 mt-4 mx-4 lg:bg-transparent lg:p-0 lg:block w-auto justify-end `}>
+        <div className="hidden justify-end ml-auto lg:flex mb-4">
           {session ?
-            <Link prefetch={false} href="/dashboard" className="block mt-4 nld-text-sm lg:inline-block lg:mt-0 text-slate-500 md:text-white hover:text-slate-100 mr-6">{tDash('dashboard')}</Link>
+            <Link prefetch={false} href="/dashboard" className="block mt-4 nld-text-sm lg:inline-block lg:mt-0 text-slate-500 lg:text-white hover:text-slate-100 mr-6">{tDash('dashboard')}</Link>
           :
-            <Link prefetch={false} href="/auth/login" className="block mt-4 nld-text-sm lg:inline-block lg:mt-0 text-slate-500 md:text-white hover:text-slate-100 mr-6">{t('login')}</Link>
+            <Link prefetch={false} href="/auth/login" className="block mt-4 nld-text-sm lg:inline-block lg:mt-0 text-slate-500 lg:text-white hover:text-slate-100 mr-6">{t('login')}</Link>
           }
-          <Link prefetch={false} href="/contact" className="block mt-4 nld-text-sm lg:inline-block lg:mt-0 text-slate-500 md:text-white hover:text-slate-100">{t('contact')}</Link>
+          <Link prefetch={false} href="/contact" className="block mt-4 nld-text-sm lg:inline-block lg:mt-0 text-slate-500 lg:text-white hover:text-slate-100">{t('contact')}</Link>
           {/* <div onMouseLeave={() => setOpenNav(false)}>
-            <div onMouseOver={() => setOpenNav('language')} onClick={() => setOpenNav(openNav === 'language' ? false : 'language')} className="cursor-pointer flex nld-text-sm block mt-4 lg:mt-0 text-slate-500 md:text-white hover:text-slate-100">
+            <div onMouseOver={() => setOpenNav('language')} onClick={() => setOpenNav(openNav === 'language' ? false : 'language')} className="cursor-pointer flex nld-text-sm block mt-4 lg:mt-0 text-slate-500 lg:text-white hover:text-slate-100">
               <span className="pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-translate m-1" viewBox="0 0 16 16"><path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z"></path><path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31"></path></svg>
               </span>
@@ -58,9 +58,9 @@ export default function Header() {
           </div> */}
         </div>
         <div onMouseLeave={() => setOpenNav(false)} className="flex-grow lg:flex lg:items-center lg:w-auto">
-          <div className="text-base nld-text-md justify-end items-center md:flex">
+          <div className="text-base nld-text-md justify-end items-center lg:flex">
             <div>
-              <div onMouseOver={() => setOpenNav('about')} onClick={() => setOpenNav(openNav === 'about' ? false : 'about')} className={`about-dropdown cursor-pointer flex block mt-4 lg:mt-0 nld-text-md text-slate-500 md:text-white hover:text-slate-100 mr-6`}>
+              <div onMouseOver={() => setOpenNav('about')} onClick={() => setOpenNav(openNav === 'about' ? false : 'about')} className={`about-dropdown cursor-pointer flex block mt-4 lg:mt-0 nld-text-md text-slate-500 lg:text-white hover:text-slate-100 mr-6`}>
                 <span className="pointer-events-none">{t('about')}</span>
                 <svg className="mt-2.5 ml-3" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12.2929 0.29297C12.6834 -0.0975548 13.3164 -0.0975548 13.707 0.29297C14.0975 0.683494 14.0975 1.31651 13.707 1.70703L7.70696 7.70703C7.31643 8.09756 6.68342 8.09756 6.29289 7.70703L0.292893 1.70703C-0.0976311 1.31651 -0.0976311 0.683494 0.292893 0.29297C0.683418 -0.0975548 1.31643 -0.0975548 1.70696 0.29297L6.99992 5.58594L12.2929 0.29297Z" fill="#F9F8F8"/>
@@ -68,7 +68,7 @@ export default function Header() {
               </div>
             </div>
             <div>
-              <div onMouseOver={() => setOpenNav('maps')} onClick={() => setOpenNav(openNav === 'maps' ? false : 'maps')} className="cursor-pointer flex block mt-4 lg:mt-0 nld-text-md text-slate-500 md:text-white hover:text-slate-100 mr-6">
+              <div onMouseOver={() => setOpenNav('maps')} onClick={() => setOpenNav(openNav === 'maps' ? false : 'maps')} className="cursor-pointer flex block mt-4 lg:mt-0 nld-text-md text-slate-500 lg:text-white hover:text-slate-100 mr-6">
                 <span className="pointer-events-none">{t('maps')}</span>
                 <svg className="mt-2.5 ml-3" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12.2929 0.29297C12.6834 -0.0975548 13.3164 -0.0975548 13.707 0.29297C14.0975 0.683494 14.0975 1.31651 13.707 1.70703L7.70696 7.70703C7.31643 8.09756 6.68342 8.09756 6.29289 7.70703L0.292893 1.70703C-0.0976311 1.31651 -0.0976311 0.683494 0.292893 0.29297C0.683418 -0.0975548 1.31643 -0.0975548 1.70696 0.29297L6.99992 5.58594L12.2929 0.29297Z" fill="#F9F8F8"/>
@@ -76,7 +76,7 @@ export default function Header() {
               </div>
             </div>
             <div>
-              <div onMouseOver={() => setOpenNav('contribute')} onClick={() => setOpenNav(openNav === 'contribute' ? false : 'contribute')} className="cursor-pointer flex block mt-4 lg:mt-0 nld-text-md text-slate-500 md:text-white hover:text-slate-100 mr-6">
+              <div onMouseOver={() => setOpenNav('contribute')} onClick={() => setOpenNav(openNav === 'contribute' ? false : 'contribute')} className="cursor-pointer flex block mt-4 lg:mt-0 nld-text-md text-slate-500 lg:text-white hover:text-slate-100 mr-6">
                 <span className="pointer-events-none">{t('contribute')}</span>
                 <svg className="mt-2.5 ml-3" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12.2929 0.29297C12.6834 -0.0975548 13.3164 -0.0975548 13.707 0.29297C14.0975 0.683494 14.0975 1.31651 13.707 1.70703L7.70696 7.70703C7.31643 8.09756 6.68342 8.09756 6.29289 7.70703L0.292893 1.70703C-0.0976311 1.31651 -0.0976311 0.683494 0.292893 0.29297C0.683418 -0.0975548 1.31643 -0.0975548 1.70696 0.29297L6.99992 5.58594L12.2929 0.29297Z" fill="#F9F8F8"/>
@@ -84,7 +84,7 @@ export default function Header() {
               </div>
             </div>
             <div>
-              <div onMouseOver={() => setOpenNav('resources')} onClick={() => setOpenNav(openNav === 'resources' ? false : 'resources')} className="cursor-pointer flex block mt-4 lg:mt-0 nld-text-md text-slate-500 md:text-white hover:text-slate-100 mr-6">
+              <div onMouseOver={() => setOpenNav('resources')} onClick={() => setOpenNav(openNav === 'resources' ? false : 'resources')} className="cursor-pointer flex block mt-4 lg:mt-0 nld-text-md text-slate-500 lg:text-white hover:text-slate-100 mr-6">
                 <span className="pointer-events-none">{t('resources')}</span>
                 <svg className="mt-2.5 ml-3" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12.2929 0.29297C12.6834 -0.0975548 13.3164 -0.0975548 13.707 0.29297C14.0975 0.683494 14.0975 1.31651 13.707 1.70703L7.70696 7.70703C7.31643 8.09756 6.68342 8.09756 6.29289 7.70703L0.292893 1.70703C-0.0976311 1.31651 -0.0976311 0.683494 0.292893 0.29297C0.683418 -0.0975548 1.31643 -0.0975548 1.70696 0.29297L6.99992 5.58594L12.2929 0.29297Z" fill="#F9F8F8"/>
@@ -174,7 +174,7 @@ export default function Header() {
               <div><h4 className="uppercase nld-font-h4 nld-font-jost">{t('maps')}</h4></div>
               <div className="grid grid-cols-2 gap-4 mt-2">
                 <div className="nld-bg-grey-50 rounded-lg p-4 bg-no-repeat bg-right-top" style={{ backgroundImage: "url('https://d75cfcm8x0ifj.cloudfront.net/main-globe-cut.png')"}} >
-                  <div className="w-full md:w-1/2">
+                  <div className="w-full lg:w-1/2">
                     <h3 className="nld-font-jost nld-font-h4 text-black font-medium">{tFront('native-land-map')}</h3>
                     <p className="nld-text-sm mt-4 text-black">{tFront('native-land-map-blurb')}</p>
                     <div className="mt-8">
@@ -188,7 +188,7 @@ export default function Header() {
                   </div>
                 </div>
                 <div className="nld-bg-grey-50 rounded-lg p-4 bg-no-repeat bg-right-top" style={{ backgroundImage: "url('https://d75cfcm8x0ifj.cloudfront.net/placename-globe-cut.png')"}} >
-                  <div className="w-full md:w-1/2">
+                  <div className="w-full lg:w-1/2">
                     <h3 className="nld-font-jost nld-font-h3 text-black font-medium">{tFront('placenames-map')}</h3>
                     <p className="nld-text-sm mt-4 text-black">{tFront('placenames-map-blurb')}</p>
                     <div className="mt-8">
@@ -202,7 +202,7 @@ export default function Header() {
                   </div>
                 </div>
                 <div className="nld-bg-grey-50 rounded-lg p-4 bg-no-repeat bg-right-top" style={{ backgroundImage: "url('https://d75cfcm8x0ifj.cloudfront.net/placename-globe-cut.png')"}} >
-                  <div className="w-full md:w-1/2">
+                  <div className="w-full lg:w-1/2">
                     <h3 className="nld-font-jost nld-font-h3 text-black font-medium">{tFront('reciprocity-map')}</h3>
                     <p className="nld-text-sm mt-4 text-black">{tFront('reciprocity-map-blurb')}</p>
                     <div className="mt-8">

@@ -152,7 +152,7 @@ export default async function Page({ params : { locale, category, slug }}) {
         crumbs={[{ url : "/listings", title : "Listings" }, { url : `/listings/${category}`, title : category }]} 
         verification={entry.verification}
       />
-      <div className="w-full md:w-3/5 min-h-screen m-auto mt-12 text-black">
+      <div className="w-full lg:w-3/5 min-h-screen m-auto mt-12 text-black">
         <div className="col-span-2 mt-5">
           <div className="px-4 pb-4 break-words">
             {category !== 'greetings' ?
