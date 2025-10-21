@@ -70,7 +70,7 @@ const nextConfig = {
   redirects: () => {
     let allRedirects = [{
       source: "/about",
-      destination: "/about/our-team",
+      destination: "/about/how-it-works",
       permanent: true
     },{
       source: "/media",
@@ -78,7 +78,7 @@ const nextConfig = {
       permanent: true
     },{
       source: "/how-to-contribute",
-      destination: "/how-to-contribute/volunteer",
+      destination: "/how-to-contribute/fixes-and-adding-maps",
       permanent: true
     },{
       source: "/category/community-blog",
