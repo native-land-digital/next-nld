@@ -32,14 +32,14 @@ export default function SearchResults() {
   return (
     <div>
       <div className="w-full nld-bg-brown-500 text-center px-8 py-16">
-        <div className="w-full md:w-2/3 m-auto">
+        <div className="w-full lg:w-2/3 m-auto">
           <form method="GET" action="/search" className="grid grid-cols-4 gap-2.5">
             <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" name="q" placeholder={`${t('search')}...`} className="col-span-3 w-full rounded-md border border-gray-300 px-4 py-2 text-slate-500 text-lg outline-blue-600" />
             <button className="col-span-1 nld-bg-yellow-500 nld-text-brown-500 px-4 py-3 rounded-full ml-4 nld-button-md font-semibold" type="submit">Search</button>
           </form>
         </div>
       </div>
-      <div className="w-full md:w-3/5 m-auto mt-12 text-black static-page">
+      <div className="w-full lg:w-3/5 m-auto mt-12 text-black static-page">
         <div className="col-span-2 mt-5">
           <div className="pb-4 break-words">
             <div className="mt-4 break-words text-left">

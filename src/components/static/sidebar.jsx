@@ -23,7 +23,7 @@ export default async function Sidebar({ picks = 3 }) {
 
 
   return (
-    <div className="nld-sidebar hidden md:block absolute pt-12 ml-[10%]">
+    <div className="nld-sidebar hidden lg:block absolute pt-12 ml-[10%]">
       <ListingButton entries={entries} />
       <SidebarChatbot startHidden={true} />
       <div className="mt-4 rounded-full w-[7px] h-[7px] nld-bg-teal-100 m-auto" />

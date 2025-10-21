@@ -48,10 +48,10 @@ export default function SelectorControl({ map, selectedFeature, risksRenewalsOpt
 
     return (
 
-      <div className="md:h-auto w-full md:w-80 absolute z-10 left-0 top-0 font-noto-sans">
-        <div className="w-full md:w-80">
-          <div className="w-72 m-4 nld-bg-blue-800-10 rounded-full md:rounded-xl p-0 md:p-2.5">
-            <div className="hidden md:flex">
+      <div className="lg:h-auto w-full lg:w-80 absolute z-10 left-0 top-0 font-noto-sans">
+        <div className="w-full lg:w-80">
+          <div className="w-72 m-4 nld-bg-blue-800-10 rounded-full lg:rounded-xl p-0 lg:p-2.5">
+            <div className="hidden lg:flex">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_612_4906)">
                   <path d="M12.0081 15.3333C12.4684 15.3333 12.8415 15.7064 12.8415 16.1667C12.8415 16.6269 12.4684 17 12.0081 17H12C11.5398 17 11.1667 16.6269 11.1667 16.1667C11.1667 15.7064 11.5398 15.3333 12 15.3333H12.0081Z" fill="#A0C6CD"/>
@@ -64,13 +64,13 @@ export default function SelectorControl({ map, selectedFeature, risksRenewalsOpt
                   </clipPath>
                 </defs>
               </svg>
-              <p className="ml-2.5 hidden md:block nld-text-sm nld-text-teal-100">{tMaps('search-address-risks-renewals')}</p>
+              <p className="ml-2.5 hidden lg:block nld-text-sm nld-text-teal-100">{tMaps('search-address-risks-renewals')}</p>
             </div>
             <div id="nld_geocoder" className="m-0 mt-4" />
           </div>
         </div>
 
-        <div onClick={() => setShowFilters(!showFilters)} className="block md:hidden absolute top-0 right-0 m-4">
+        <div onClick={() => setShowFilters(!showFilters)} className="block lg:hidden absolute top-0 right-0 m-4">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g opacity="0.8">
               <rect width="48" height="48" rx="24" fill="#0C1427" fill-opacity="0.8"/>
@@ -86,7 +86,7 @@ export default function SelectorControl({ map, selectedFeature, risksRenewalsOpt
           </svg>
         </div>
 
-        <div className={`${showFilters ? 'block' : 'hidden'} md:block p-4 pt-0 w-72`}>
+        <div className={`${showFilters ? 'block' : 'hidden'} lg:block p-4 pt-0 w-72`}>
           <div>
             <AsyncSelect
               instanceId="risks-renewals-select"
@@ -117,7 +117,7 @@ export default function SelectorControl({ map, selectedFeature, risksRenewalsOpt
             :
               `fixed h-[33vh] w-full bottom-0 nld-text-sm nld-text-teal-100 bg-white rounded-t-xl p-2.5 z-[999] transition ease-in-out ${resultsSlided ? 'translate-y-[33vh]' : ''}`
           }>
-            <div className="absolute top-0 right-0 block md:hidden p-1" onClick={() => {
+            <div className="absolute top-0 right-0 block lg:hidden p-1" onClick={() => {
               if(isMobile()) {
                 setResultsSlided(!resultsSlided)
               }
