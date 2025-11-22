@@ -175,72 +175,72 @@ export const GET = async (req) => {
 
             // FOR NEW TILESETS
             // CREATES A NEW TILESET
-            const tileset_source_layer = tilesetName + "_source_layer";
-            try {
-              const tilesetSourceCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
-                method : "POST",
-                body : formData
-              });
-              const tilesetSourceCallJSON = await tilesetSourceCall.json();
-            } catch(err) {
-              return NextResponse.json({ error : `Error creating tileset source ${JSON.stringify(err)}` }, { status: 500 });
-            }
-            
-            const recipe = { version : 1, layers : {}}
-            recipe.layers[tileset_source_layer] = {
-              "source": `mapbox://tileset-source/${mapbox_username}/${tileset_source}`,
-              "minzoom": 1,
-              "maxzoom": 10
-            }
-            
-            try {
-              const tilesetCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}?access_token=${secret_access_token}`, {
-                method : "POST",
-                headers : {
-                  "Content-Type" : "application/json"
-                },
-                body : JSON.stringify({
-                  recipe : recipe,
-                  name : tilesetName
-                })
-              });
-              const tilesetCallJSON = await tilesetCall.json();
-            } catch(err) {
-              return NextResponse.json({ error : `Error creating tileset ${JSON.stringify(err)}` }, { status: 500 });
-            }
-            
-            await new Promise(resolve => setTimeout(resolve, 5000)); // Because the tileset takes a moment to register
-            
-            try {
-              const tilesetPublishCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}/publish?access_token=${secret_access_token}`, {
-                method : "POST"
-              });
-              const tilesetPublishCallJSON = await tilesetPublishCall.json();
-            } catch(err) {
-              return NextResponse.json({ error : `Error publishing tileset ${JSON.stringify(err)}` }, { status: 500 });
-            }
-
-
-            // FOR UPDATING
-            // REPLACES THE EXISTING TILESET
+            // const tileset_source_layer = tilesetName + "_source_layer";
             // try {
-            //   const tilesetCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
-            //     method : "PUT",
+            //   const tilesetSourceCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
+            //     method : "POST",
             //     body : formData
             //   });
-            //   await tilesetCall.json();
+            //   const tilesetSourceCallJSON = await tilesetSourceCall.json();
             // } catch(err) {
-            //   return NextResponse.json({ error : `Error updating tileset source ${JSON.stringify(err)}` }, { status: 500 });
+            //   return NextResponse.json({ error : `Error creating tileset source ${JSON.stringify(err)}` }, { status: 500 });
             // }
-
+            
+            // const recipe = { version : 1, layers : {}}
+            // recipe.layers[tileset_source_layer] = {
+            //   "source": `mapbox://tileset-source/${mapbox_username}/${tileset_source}`,
+            //   "minzoom": 1,
+            //   "maxzoom": 10
+            // }
+            
+            // try {
+            //   const tilesetCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}?access_token=${secret_access_token}`, {
+            //     method : "POST",
+            //     headers : {
+            //       "Content-Type" : "application/json"
+            //     },
+            //     body : JSON.stringify({
+            //       recipe : recipe,
+            //       name : tilesetName
+            //     })
+            //   });
+            //   const tilesetCallJSON = await tilesetCall.json();
+            // } catch(err) {
+            //   return NextResponse.json({ error : `Error creating tileset ${JSON.stringify(err)}` }, { status: 500 });
+            // }
+            
+            // await new Promise(resolve => setTimeout(resolve, 5000)); // Because the tileset takes a moment to register
+            
             // try {
             //   const tilesetPublishCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}/publish?access_token=${secret_access_token}`, {
             //     method : "POST"
             //   });
-            //   await tilesetPublishCall.json();
+            //   const tilesetPublishCallJSON = await tilesetPublishCall.json();
             // } catch(err) {
             //   return NextResponse.json({ error : `Error publishing tileset ${JSON.stringify(err)}` }, { status: 500 });
             // }
+
+
+            // FOR UPDATING
+            // REPLACES THE EXISTING TILESET
+            try {
+              const tilesetCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
+                method : "PUT",
+                body : formData
+              });
+              await tilesetCall.json();
+            } catch(err) {
+              return NextResponse.json({ error : `Error updating tileset source ${JSON.stringify(err)}` }, { status: 500 });
+            }
+
+            try {
+              const tilesetPublishCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}/publish?access_token=${secret_access_token}`, {
+                method : "POST"
+              });
+              await tilesetPublishCall.json();
+            } catch(err) {
+              return NextResponse.json({ error : `Error publishing tileset ${JSON.stringify(err)}` }, { status: 500 });
+            }
 
         		return NextResponse.json({
               featuresUpdated : entries.length,
