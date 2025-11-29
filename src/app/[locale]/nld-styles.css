@@ -447,6 +447,12 @@
 .nld-select .nld-select__option:hover, .nld-select .nld-select__option--is-focused {
   @apply nld-bg-grey-700;
 }
+#nld-mapbox-map .mapboxgl-popup-content {
+  background: rgba(255, 255, 255, 0.7);
+}
+#nld-mapbox-map .mapboxgl-popup-tip {
+  border-top-color: rgba(255, 255, 255, 0.7);
+}
 
 /* FAQ page */
 .faq-page h2 {
