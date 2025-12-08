@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link'
 
-import { exportMap } from '@/components/maps/nations/map-utils';
+import { exportMap } from '@/components/maps/peoples/map-utils';
 
 export default function TogglesControl({ setModalOpen, allLayers, map }) {
 

@@ -1,10 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import MapModal from '@/components/maps/nations/modal';
-import Map from '@/components/maps/nations/map';
-import SelectorControl from "@/components/maps/nations/map-selector-control";
-import TogglesControl from "@/components/maps/nations/map-toggles-control";
+import MapModal from '@/components/maps/peoples/modal';
+import Map from '@/components/maps/peoples/map';
+import SelectorControl from "@/components/maps/peoples/map-selector-control";
+import TogglesControl from "@/components/maps/peoples/map-toggles-control";
+
+import { isMobile } from '@/components/maps/peoples/map-utils';
 
 export default function MapContainer({
   territoryOptions,
@@ -19,6 +21,14 @@ export default function MapContainer({
 
   useEffect(() => {
     document.querySelector("body").classList.add("no-footer");
+    document.addEventListener("mousemove", e => {
+      const dot = document.createElement("div");
+      dot.className = isMobile() ? "mobile-trail trail" : "trail";
+      dot.style.left = `${e.clientX}px`;
+      dot.style.top = `${e.clientY}px`;
+      document.body.appendChild(dot);
+      setTimeout(() => dot.remove(), 500); // Clean up
+    });
   }, [])
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import { useTranslations } from '@/i18n/client-i18n';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { useRouter } from 'next/navigation';
 
-import { entryQuery } from '@/components/maps/nations/map-utils';
+import { entryQuery } from '@/components/maps/peoples/map-utils';
 
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 

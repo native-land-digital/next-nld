@@ -468,3 +468,27 @@
   @apply nld-font-h4;
   @apply nld-font-noto;
 }
+
+/* Trails */
+.trail {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: #FFF;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.4;
+  transform: translate(-50%, -50%);
+  animation: fadeOut 0.5s linear forwards;
+}
+.mobile-trail {
+  width: 10px;
+  height: 10px;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+}
