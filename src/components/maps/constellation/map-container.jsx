@@ -2,16 +2,14 @@
 import { useEffect, useState } from "react";
 
 import MapModal from '@/components/maps/modal';
-import Map from '@/components/maps/peoples/map';
-import SelectorControl from "@/components/maps/peoples/map-selector-control";
-import TogglesControl from "@/components/maps/peoples/map-toggles-control";
+import Map from '@/components/maps/constellation/map';
+import SelectorControl from "@/components/maps/constellation/map-selector-control";
+import TogglesControl from "@/components/maps/constellation/map-toggles-control";
 
 import { isMobile } from '@/components/maps/map-utils';
 
 export default function MapContainer({
-  territoryOptions,
-  languageOptions,
-  treatyOptions,
+  territoryOptions
 }) {
   const allLayers = ["territories"];
   const [map, setMap] = useState(false);
@@ -58,7 +56,7 @@ export default function MapContainer({
 
   return (
     <div className="w-90 h-dvh min-h-120 relative">
-      <MapModal setModalOpen={setModalOpen} modalOpen={modalOpen} headerText="peoples-header" bodyText="peoples-disclaimer" readMore="peoples-disclaimer-more" footerText="disclaimer-close" />
+      <MapModal setModalOpen={setModalOpen} modalOpen={modalOpen} headerText="constellation-header" bodyText="constellation-disclaimer" readMore="constellation-disclaimer-more" footerText="disclaimer-close" />
       <SelectorControl
         allLayers={allLayers}
         map={map}
@@ -67,8 +65,6 @@ export default function MapContainer({
         selectedFeatures={selectedFeatures}
         setSelectedFeatures={setSelectedFeatures}
         territoryOptions={territoryOptions}
-        languageOptions={languageOptions}
-        treatyOptions={treatyOptions}
       />
       <TogglesControl allLayers={allLayers} map={map} setModalOpen={setModalOpen} />
       <Map

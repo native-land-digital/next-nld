@@ -28,7 +28,7 @@ export default function FrontPageGeocoder({  }) {
       if(result.category && result.category !== "territories") {
         router.push(`/maps/native-land?${querystring}`);
       } else {
-        router.push(`/maps/peoples?${querystring}`);
+        router.push(`/maps/constellation?${querystring}`);
       }
     })
     geocoder.addTo('#front-page-geocoder');

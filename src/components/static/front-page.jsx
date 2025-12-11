@@ -25,7 +25,7 @@ export default async function FrontPage() {
                 <FrontPageGeocoder />
               </div>
               <div className="col-span-1 lg:col-span-2">
-                <Link prefetch={false} href="/maps/peoples" className="block rounded-full nld-bg-green-500 nld-text-grey-500 font-semibold px-4 py-2.5 text-center">{t('explore-map')}</Link>
+                <Link prefetch={false} href="/maps/constellation" className="block rounded-full nld-bg-green-500 nld-text-grey-500 font-semibold px-4 py-2.5 text-center">{t('explore-map')}</Link>
                 <div className="text-center mt-2.5"><Link className="text-[14px] italic nld-text-grey-200" href="/maps/native-land" prefetch={false}>or visit the classic map</Link></div>
               </div>
             </div>

@@ -29,7 +29,7 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
     const newMap = new mapboxgl.Map({
       ...randomStartingPosition(),
       container: "nld-mapbox-map",
-      style: isMobile() ? process.env.NEXT_PUBLIC_MAPBOX_STYLE_PEOPLES_MOBILE + "?fresh=true" : process.env.NEXT_PUBLIC_MAPBOX_STYLE_PEOPLES,
+      style: isMobile() ? process.env.NEXT_PUBLIC_MAPBOX_STYLE_CONSTELLATIONS_MOBILE : process.env.NEXT_PUBLIC_MAPBOX_STYLE_CONSTELLATIONS,
       showZoom: false,
       showCompass: false,
       preserveDrawingBuffer: true,
