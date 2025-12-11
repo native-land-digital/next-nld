@@ -4,7 +4,7 @@ import { useTranslations } from '@/i18n/client-i18n';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { useRouter } from 'next/navigation';
 
-import { entryQuery } from '@/components/front-map/map-utils';
+import { entryQuery } from '@/components/maps/map-utils';
 
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
@@ -24,7 +24,12 @@ export default function FrontPageGeocoder({  }) {
       if(result.category) {
         querystring += `&category=${result.category}`
       }
-      router.push(`/maps/native-land?${querystring}`);
+      console.log(result.category);
+      if(result.category && result.category !== "territories") {
+        router.push(`/maps/native-land?${querystring}`);
+      } else {
+        router.push(`/maps/peoples?${querystring}`);
+      }
     })
     geocoder.addTo('#front-page-geocoder');
   }, [])

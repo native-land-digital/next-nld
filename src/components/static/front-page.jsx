@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { getTranslations } from '@/i18n/server-i18n';
 
-import FrontPageGeocoder from '@/components/front-map/front-page-geocoder';
+import FrontPageGeocoder from '@/components/maps/front-page-geocoder';
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -14,7 +14,7 @@ export default async function FrontPage() {
 
   return (
     <div>
-      <div className="min-h-screen w-full nld-bg-blue-800 bg-cover bg-bottom lg:bg-right bg-no-repeat bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg-mobile-3.jpg')] lg:bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg.jpg')]">
+      <div className="min-h-screen w-full nld-bg-blue-800 bg-cover bg-bottom lg:bg-right bg-no-repeat bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg-mobile-3-stars.jpg')] lg:bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg-stars.jpg')]">
         <div className="max-w-7xl m-auto grid grid-cols-1 lg:grid-cols-2 text-left px-4 lg:px-12 items-start lg:items-center h-screen">
           <div className="pt-40 lg:pt-0">
             <p className="nld-font-jost nld-font-h2 nld-text-grey-200">{t('welcome')}</p>
@@ -25,7 +25,8 @@ export default async function FrontPage() {
                 <FrontPageGeocoder />
               </div>
               <div className="col-span-1 lg:col-span-2">
-                <Link prefetch={false} href="/maps/native-land" className="block rounded-full nld-bg-green-500 nld-text-grey-500 font-semibold px-4 py-2.5 text-center">{t('explore-map')}</Link>
+                <Link prefetch={false} href="/maps/peoples" className="block rounded-full nld-bg-green-500 nld-text-grey-500 font-semibold px-4 py-2.5 text-center">{t('explore-map')}</Link>
+                <div className="text-center mt-2.5"><Link className="text-[14px] italic nld-text-grey-200" href="/maps/native-land" prefetch={false}>or visit the classic map</Link></div>
               </div>
             </div>
           </div>

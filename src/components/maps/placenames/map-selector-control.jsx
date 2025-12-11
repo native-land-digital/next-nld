@@ -3,7 +3,7 @@ import { useTranslations } from '@/i18n/client-i18n';
 import AsyncSelect from 'react-select/async';
 import Link from 'next/link'
 
-import { isMobile } from '@/components/front-map/map-utils';
+import { isMobile } from '@/components/maps/map-utils';
 
 export default function SelectorControl({ placenameOptions, map, selectedFeature }) {
 

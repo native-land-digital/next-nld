@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import MapModal from '@/components/front-map/modal';
-import Map from '@/components/front-map/map';
-import SelectorControl from "@/components/front-map/map-selector-control";
-import TogglesControl from "@/components/front-map/map-toggles-control";
+import MapModal from '@/components/maps/modal';
+import Map from '@/components/maps/classic/map';
+import SelectorControl from "@/components/maps/classic/map-selector-control";
+import TogglesControl from "@/components/maps/classic/map-toggles-control";
 
 export default function MapContainer({
   territoryOptions,

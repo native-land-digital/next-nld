@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
-import Switch from "react-switch";
 import AsyncSelect from 'react-select/async';
 import Link from 'next/link'
 
-import { makeBoundsFromPoly, isMobile } from '@/components/maps/peoples/map-utils';
+import { makeBoundsFromPoly, isMobile } from '@/components/maps/map-utils';
 
-export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, territoryOptions, languageOptions, treatyOptions }) {
+export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, territoryOptions }) {
 
     const t = useTranslations('FrontMap');
-    const tMaps = useTranslations('Listings');
 
     const [ toggledFeatures, setToggledFeatures ] = useState([])
     const [ showFilters, setShowFilters ] = useState(false)

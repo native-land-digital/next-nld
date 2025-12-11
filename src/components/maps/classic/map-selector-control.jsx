@@ -4,7 +4,7 @@ import Switch from "react-switch";
 import AsyncSelect from 'react-select/async';
 import Link from 'next/link'
 
-import { makeBoundsFromPoly, isMobile } from '@/components/front-map/map-utils';
+import { makeBoundsFromPoly, isMobile } from '@/components/maps/map-utils';
 
 export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, territoryOptions, languageOptions, treatyOptions }) {
 

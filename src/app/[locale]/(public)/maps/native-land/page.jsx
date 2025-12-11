@@ -2,7 +2,7 @@ import { db } from '@/lib/db/kysely'
 import { availableLocales } from '@/i18n/config'
 import { setLocaleCache } from '@/i18n/server-i18n';
 
-import MapContainer from '@/components/front-map/map-container';
+import MapContainer from '@/components/maps/classic/map-container';
 import AIChatbot from '@/components/ai/chatbot';
 
 // import defaultContent from "./en.mdx"

@@ -6,7 +6,7 @@ import bbox from '@turf/bbox';
 import booleanContains from '@turf/boolean-contains';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-import { randomStartingPosition, createSetFeatureCollection, entryQuery, getUniqueFeatures, isMobile } from '@/components/maps/peoples/map-utils';
+import { randomStartingPosition, createSetFeatureCollection, entryQuery, getUniqueFeatures, isMobile } from '@/components/maps/map-utils';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -101,6 +101,58 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
     document.getElementById('nld_geocoder').appendChild(geocoder.onAdd(map));
   }
 
+  const setPulsing = () => {
+    let lastPulseUpdate = new Date().getTime();
+    let pulseTime = 0;
+
+    function animatePulse() {
+      let timestamp = new Date().getTime()
+      if (timestamp - lastPulseUpdate > 50) {
+        pulseTime = (pulseTime + 0.1) % (Math.PI * 2);
+
+        map.setPaintProperty('nation-small-dots', 'circle-radius', [
+          'case',
+          ['boolean', ['feature-state', 'hover'], false],
+          3,
+          [
+            '+',
+            2.5,
+            [
+              'sin',
+              [
+                '+',
+                pulseTime,
+                ['*', ['id'], 0.15] // <-- unique offset from feature ID
+              ]
+            ]
+          ]
+        ]);
+
+        map.setPaintProperty('nation-large-dots', 'circle-radius', [
+          'case',
+          ['boolean', ['feature-state', 'hover'], false],
+          6,
+          [
+            '+',
+            4,
+            [
+              'sin',
+              [
+                '+',
+                pulseTime,
+                ['*', ['id'], 0.15] // <-- unique offset from feature ID
+              ]
+            ]
+          ]
+        ]);
+
+        lastPulseUpdate = new Date().getTime()
+      }
+      requestAnimationFrame(animatePulse);
+    }
+    animatePulse();
+  }
+
   const setLayerEvents = () => {
     const loadCheck = setInterval(() => {
       if(map.loaded()) {
@@ -156,38 +208,7 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
 
         if(!isMobile()) {
 
-          let dotPulse = 0;
-          let largeDotPulse = 0;
-          let lastPulseUpdate = new Date().getTime();
-
-          function animatePulse() {
-            let timestamp = new Date().getTime()
-            if (timestamp - lastPulseUpdate > 50) {
-              dotPulse = (dotPulse + 0.2) % (2 * Math.PI);
-              const dotPulseValue = 3 + Math.sin(dotPulse);
-
-              map.setPaintProperty('nation-small-dots', 'circle-radius', [
-                'case',
-                ['boolean', ['feature-state', 'hover'], false],
-                dotPulseValue, // pulsing value when hovered
-                2
-              ]);
-
-              largeDotPulse = (largeDotPulse + 0.2) % (2 * Math.PI);
-              const largeDotPulseValue = 6 + Math.sin(largeDotPulse);
-
-              map.setPaintProperty('nation-large-dots', 'circle-radius', [
-                'case',
-                ['boolean', ['feature-state', 'hover'], false],
-                largeDotPulseValue, // pulsing value when hovered
-                5
-              ]);
-
-              lastPulseUpdate = new Date().getTime()
-            }
-            requestAnimationFrame(animatePulse);
-          }
-          animatePulse();
+          setPulsing()
 
           map.setPaintProperty('nation-names', 'text-opacity', [
             'case',
@@ -240,9 +261,11 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
   }
 
   const scaleZoomRadius = (zoom) => {
-    const minValue = 1000;
+    const minValue = 2000;
     const maxValue = 10;
-    const maxZoom = 22;
+    const maxZoom = 19;
+
+    console.log(minValue * Math.pow(maxValue / minValue, zoom / maxZoom))
 
     return minValue * Math.pow(maxValue / minValue, zoom / maxZoom);
   }
@@ -252,9 +275,9 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
       <div id="nld-mapbox-map" className="w-full h-dvh lg:h-full"></div>
       {!isMobile() && hoveredFeatures.length > 0 ? 
         <div className="absolute nld-text-sm nld-text-teal-100 m-4 mt-0 nld-bg-blue-800-10 rounded-xl p-2.5 top-0 left-1/2 -translate-x-1/2 mt-8 shadow-lg">
-          {hoveredFeatures.map(feature => {
+          {hoveredFeatures.map((feature, i) => {
             return (
-              <div>{feature.properties.Name}</div>
+              <div key={`result-${i}`} className={`${hoveredFeatures.length - 1 === i ? "mb-0" : "mb-1"}`}>{feature.properties.Name}</div>
             )
           })}
         </div>
