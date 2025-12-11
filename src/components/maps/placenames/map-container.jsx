@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 
-import MapModal from '@/components/front-map/modal';
+import MapModal from '@/components/maps/modal';
 import Map from '@/components/maps/placenames/map';
 import TogglesControl from '@/components/maps/placenames/map-toggles-control';
 import SelectorControl from '@/components/maps/placenames/map-selector-control';

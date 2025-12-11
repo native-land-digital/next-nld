@@ -447,6 +447,12 @@
 .nld-select .nld-select__option:hover, .nld-select .nld-select__option--is-focused {
   @apply nld-bg-grey-700;
 }
+#nld-mapbox-map .mapboxgl-popup-content {
+  background: rgba(255, 255, 255, 0.7);
+}
+#nld-mapbox-map .mapboxgl-popup-tip {
+  border-top-color: rgba(255, 255, 255, 0.7);
+}
 
 /* FAQ page */
 .faq-page h2 {
@@ -461,4 +467,28 @@
   @apply font-semibold;
   @apply nld-font-h4;
   @apply nld-font-noto;
+}
+
+/* Trails */
+.trail {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: #FFF;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.4;
+  transform: translate(-50%, -50%);
+  animation: fadeOut 0.5s linear forwards;
+}
+.mobile-trail {
+  width: 10px;
+  height: 10px;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
 }

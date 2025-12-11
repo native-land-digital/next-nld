@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
-import Switch from "react-switch";
 import AsyncSelect from 'react-select/async';
 import Link from 'next/link'
 
-import { makeBoundsFromPoly, isMobile } from '@/components/front-map/map-utils';
+import { makeBoundsFromPoly, isMobile } from '@/components/maps/map-utils';
 
-export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, territoryOptions, languageOptions, treatyOptions }) {
+export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, territoryOptions }) {
 
     const t = useTranslations('FrontMap');
-    const tMaps = useTranslations('Listings');
 
     const [ toggledFeatures, setToggledFeatures ] = useState([])
     const [ showFilters, setShowFilters ] = useState(false)
@@ -82,41 +80,6 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
       }
     };
 
-    const loadLanguageOptions = (inputValue, callback) => {
-      if(inputValue.length >= 3) {
-        fetch(`/api/entry/searcher?s=${inputValue}&category=languages`).then(resp => resp.json()).then(response => {
-          callback(response.map(entry => {
-            return {
-              value : entry.id,
-              label : entry.name
-            }
-          }));
-        })
-      }
-    };
-
-    const loadTreatyOptions = (inputValue, callback) => {
-      if(inputValue.length >= 3) {
-        fetch(`/api/entry/searcher?s=${inputValue}&category=treaties`).then(resp => resp.json()).then(response => {
-          callback(response.map(entry => {
-            return {
-              value : entry.id,
-              label : entry.name
-            }
-          }));
-        })
-      }
-    };
-
-    const setGreetingsLayer = (checked) => {
-      if(checked && map) {
-        setCurrentLayers(['greetings'])
-        map.flyTo({ center : [-100.1953125, 47.27922900257082] })
-      } else {
-        setCurrentLayers([])
-      }
-    }
-
     return (
       <div className="lg:h-auto w-full lg:w-80 absolute z-10 left-0 top-0 font-noto-sans">
         <div className="w-full lg:w-80 ">
@@ -154,61 +117,6 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
               </g>
             </svg>
           </div>
-
-          {showFilters ?
-            <div className="w-72 nld-text-sm nld-text-teal-100 m-4 nld-bg-blue-800-10 rounded-xl p-2.5">
-              <div className="flex items-center ">
-                <Switch
-                  checked={currentLayers.indexOf('territories') > -1}
-                  onChange={(checked) => adjustCurrentLayers(checked, 'territories')}
-                  width={40}
-                  height={20}
-                  onColor={"#A0C6CD"} // teal-100
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                  handleDiameter={15} />
-                <p className="ml-2.5 inline">{t('territories')}</p>
-              </div>
-              <div className="mt-2.5 flex items-center">
-                <Switch
-                  checked={currentLayers.indexOf('languages') > -1}
-                  onChange={(checked) => adjustCurrentLayers(checked, 'languages')}
-                  width={40}
-                  height={20}
-                  onColor={"#A0C6CD"} // teal-100
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                  handleDiameter={15} />
-                <p className="ml-2.5 inline">{t('languages')}</p>
-              </div>
-              <div className="mt-2.5 flex items-center">
-                <Switch
-                  checked={currentLayers.indexOf('treaties') > -1}
-                  onChange={(checked) => adjustCurrentLayers(checked, 'treaties')}
-                  width={40}
-                  height={20}
-                  onColor={"#A0C6CD"} // teal-100
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                  handleDiameter={15} />
-                <p className="ml-2.5 inline">{t('treaties')}</p>
-              </div>
-              <div className="hidden bg-white rounded lg:absolute lg:right-0 lg:-mr-[90px] lg:shadow-lg lg:p-2.5">
-                <span className="lg:hidden bg-green-700 p-1 rounded text-xs text-white absolute right-0 -mt-4 -mr-4">{t('new')}</span>
-                <Switch
-                  checked={currentLayers.indexOf('greetings') > -1}
-                  onChange={(checked) => setGreetingsLayer(checked)}
-                  width={40}
-                  height={20}
-                  onColor={"#A0C6CD"} // teal-100
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                  handleDiameter={15} />
-                <p>{tMaps('greetings')}</p>
-                <span className="hidden lg:block bg-green-700 p-1 rounded text-xs text-white ml-3.5 absolute mt-1">{t('new')}</span>
-              </div>
-            </div>
-          : false}
         </div>
 
         <div className={`${showFilters ? 'block' : 'hidden'} lg:block p-4 pt-0 w-80 `}>
@@ -225,51 +133,13 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                     <path d="M11.4258 6.11426C11.6999 6.00073 12.002 5.97142 12.293 6.0293C12.5838 6.08723 12.8509 6.22977 13.0605 6.43945C13.2702 6.64913 13.4128 6.91622 13.4707 7.20703C13.5286 7.498 13.4993 7.80013 13.3857 8.07422C13.2722 8.34823 13.0796 8.58229 12.833 8.74707C12.5864 8.91182 12.2966 9 12 9C11.6022 9 11.2208 8.84185 10.9395 8.56055C10.6581 8.27924 10.5 7.89782 10.5 7.5C10.5 7.2034 10.5882 6.91363 10.7529 6.66699C10.9177 6.42038 11.1518 6.2278 11.4258 6.11426Z" fill="#A0C6CD"/>
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.25C13.6576 1.25 15.2468 1.90895 16.4189 3.08105C17.591 4.25316 18.25 5.8424 18.25 7.5C18.25 10.3947 16.8593 12.6447 15.457 14.1777C14.0556 15.7097 12.6257 16.5445 12.501 16.6172L12.499 16.6182C12.3479 16.7045 12.177 16.75 12.0029 16.75C11.8289 16.75 11.658 16.7045 11.5068 16.6182C11.3756 16.5435 9.94508 15.71 8.54395 14.1797C7.14085 12.6472 5.75 10.397 5.75 7.5C5.75 5.8424 6.40895 4.25316 7.58105 3.08105C8.75316 1.90895 10.3424 1.25 12 1.25ZM12 3.25C10.8728 3.25 9.79215 3.69809 8.99512 4.49512C8.19809 5.29215 7.75 6.37283 7.75 7.5C7.75 9.40413 8.5581 10.9965 9.51855 12.2168C10.4039 13.3416 11.4106 14.1377 12 14.5537C12.5889 14.1381 13.5951 13.3425 14.4805 12.2178C15.4412 10.9973 16.25 9.40435 16.25 7.5C16.25 6.37283 15.8019 5.29215 15.0049 4.49512C14.2079 3.69809 13.1272 3.25 12 3.25Z" fill="#A0C6CD"/>
                   </svg>
-                  <div className="ml-2.5">{t('search-territories')}</div>
+                  <div className="ml-2.5">{t('search-nations')}</div>
                 </div>
               }
               onChange={(e) => selectDropdown(e.value, 'territories')}
               defaultOptions={territoryOptions.map(territory => { return { value : territory.id, label : territory.name }})}
               cacheOptions
               loadOptions={loadTerritoryOptions} />
-          </div>
-          <div className="mt-2.5">
-            <AsyncSelect
-              instanceId="languages-select"
-              className="nld-select"
-              classNamePrefix="nld-select"
-              placeholder={
-                <div className="flex items-center">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 17.25H13.5L17.25 9.75L21 17.25ZM9.00001 11.9587C9.94492 11.1153 10.7007 10.0816 11.2178 8.92534C11.7348 7.76911 12.0014 6.51657 12 5.25H6.00001C5.99863 6.51657 6.26521 7.76911 6.78225 8.92534C7.29929 10.0816 8.05509 11.1153 9.00001 11.9587Z" fill="#1B4F58"/>
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.09863 2.00488C9.32763 2.02757 9.54289 2.12883 9.70703 2.29297C9.89457 2.48051 10 2.73478 10 3V4.25H15C15.2652 4.25 15.5195 4.35543 15.707 4.54297C15.8946 4.73051 16 4.98478 16 5.25C16 5.51522 15.8946 5.76949 15.707 5.95703C15.5195 6.14457 15.2652 6.25 15 6.25H12.9473C12.7391 8.33062 11.8824 10.2915 10.498 11.8574C11.6539 12.646 12.9972 13.1163 14.3936 13.2236L16.3555 9.30273C16.4385 9.13675 16.5658 8.99702 16.7236 8.89941C16.8816 8.8018 17.0643 8.75 17.25 8.75C17.4355 8.75009 17.6176 8.80188 17.7754 8.89941C17.9332 8.99702 18.0605 9.13674 18.1436 9.30273L23.3936 19.8027C23.4698 19.9551 23.5066 20.1247 23.499 20.2949C23.4914 20.4651 23.4401 20.6305 23.3506 20.7754C23.2611 20.9203 23.136 21.04 22.9873 21.123C22.8385 21.2061 22.6704 21.2499 22.5 21.25C22.3143 21.2501 22.1326 21.1981 21.9746 21.1006C21.8165 21.003 21.6886 20.8634 21.6055 20.6973L20.3818 18.25H14.1172L12.8936 20.6973C12.7749 20.9345 12.5671 21.1154 12.3154 21.1992C12.0638 21.2829 11.7889 21.2632 11.5518 21.1445C11.3148 21.0259 11.1346 20.8178 11.0508 20.5664C11.0093 20.4418 10.9926 20.3097 11.002 20.1787C11.0113 20.0478 11.0467 19.9201 11.1055 19.8027L13.4434 15.126C11.8311 14.8701 10.3056 14.2235 8.99902 13.2422C7.38267 14.461 5.43617 15.1597 3.41699 15.2422L3 15.25C2.73478 15.25 2.48051 15.1446 2.29297 14.957C2.10543 14.7695 2 14.5152 2 14.25C2 13.9848 2.10543 13.7305 2.29297 13.543C2.48051 13.3554 2.73478 13.25 3 13.25C4.60816 13.2529 6.17645 12.7668 7.50098 11.8623C6.65392 10.9042 5.99628 9.79331 5.56934 8.58594C5.52404 8.46292 5.50266 8.33122 5.50781 8.2002C5.51303 8.06762 5.54552 7.93765 5.60156 7.81738C5.65768 7.69703 5.73667 7.58831 5.83496 7.49902C5.93325 7.40976 6.04867 7.34119 6.17383 7.29688C6.29897 7.25258 6.43192 7.23368 6.56445 7.24121C6.69694 7.24877 6.82701 7.28264 6.94629 7.34082C7.0655 7.39902 7.1723 7.48034 7.25977 7.58008C7.34625 7.67873 7.41191 7.79377 7.4541 7.91797L7.60449 8.30762C7.94258 9.12196 8.41514 9.87343 9 10.5342C10.0613 9.33284 10.736 7.84045 10.9355 6.25H3C2.73478 6.25 2.48051 6.14457 2.29297 5.95703C2.12883 5.79289 2.02757 5.57763 2.00488 5.34863L2 5.25C2 4.98478 2.10543 4.7305 2.29297 4.54297C2.48051 4.35543 2.73478 4.25 3 4.25H8V3C8 2.73478 8.10543 2.48051 8.29297 2.29297C8.4805 2.10543 8.73478 2 9 2L9.09863 2.00488ZM15.1182 16.25H19.3818L17.249 11.9854L15.1182 16.25Z" fill="#A0C6CD"/>
-                  </svg>
-                  <div className="ml-2.5">{t('search-languages')}</div>
-                </div>
-              }
-              cacheOptions
-              onChange={(e) => selectDropdown(e.value, 'languages')}
-              defaultOptions={languageOptions.map(language => { return { value : language.id, label : language.name }})}
-              loadOptions={loadLanguageOptions} />
-          </div>
-          <div className="mt-2.5">
-            <AsyncSelect
-              instanceId="treaties-select"
-              className="nld-select"
-              classNamePrefix="nld-select"
-              placeholder={
-                <div className="flex items-center">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.82208 4.99985L3.0379 13.6239L9.20685 19.7928C9.41709 20.0031 9.7025 20.1209 9.99982 20.1209C10.2972 20.1209 10.5825 20.0031 10.7928 19.7928C11.0031 19.5825 11.1209 19.2972 11.1209 18.9998C11.1209 18.7396 11.0306 18.4884 10.867 18.2889L10.7928 18.2069L10.2928 17.7069C9.90244 17.3163 9.90233 16.6833 10.2928 16.2928C10.6588 15.9268 11.2379 15.9043 11.6307 16.2245L11.7068 16.2928L13.7068 18.2928C13.8109 18.3969 13.9351 18.4796 14.0711 18.536C14.207 18.5922 14.3528 18.6209 14.4998 18.6209C14.6469 18.6209 14.7926 18.5922 14.9285 18.536C15.0646 18.4796 15.1887 18.3969 15.2928 18.2928C15.3969 18.1887 15.4796 18.0646 15.5359 17.9286C15.5922 17.7926 15.6209 17.6469 15.6209 17.4998C15.6209 17.3528 15.5922 17.207 15.5359 17.0711C15.4938 16.9693 15.4366 16.8738 15.367 16.7889L15.3006 16.7157L13.2928 14.7079C12.9023 14.3174 12.9024 13.6834 13.2928 13.2928C13.6832 12.9026 14.3163 12.9027 14.7068 13.2928L17.2068 15.7928C17.4171 16.0029 17.7026 16.1219 17.9998 16.1219C18.2971 16.1219 18.5825 16.003 18.7928 15.7928C19.0028 15.5827 19.1207 15.2979 19.1209 15.0008C19.1209 14.7036 19.0029 14.4181 18.7928 14.2079L14.9129 10.327C14.5379 9.9526 14.0297 9.74302 13.4998 9.74301C12.9699 9.74307 12.4617 9.95349 12.0867 10.328L12.0858 10.327L11.2068 11.2079C10.6215 11.7929 9.8274 12.1219 8.99982 12.1219C8.17222 12.1219 7.37806 11.793 6.79279 11.2079C6.20761 10.6227 5.87893 9.82836 5.87872 9.00082C5.87872 8.17306 6.20751 7.37816 6.79279 6.79282L8.58673 4.99985H3.82208Z" fill="#1B4F58"/>
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5682 2.05061C15.0671 1.8659 16.5852 2.18615 17.8817 2.96077L18.3514 3.24104L18.5018 3.31624C18.6515 3.37627 18.8142 3.39917 18.9754 3.38265L19.0672 3.36897L20.0115 3.17854L20.0037 3.09065L19.9998 2.98811C20.0052 2.48149 20.3936 2.05082 20.909 2.00374C21.4247 1.95685 21.8847 2.31074 21.9813 2.80843L21.9959 2.90901L22.9959 13.909C23.0214 14.1888 22.9276 14.4672 22.7381 14.6746C22.5487 14.8819 22.2806 14.9998 21.9998 14.9998H21.1209C21.1207 15.8274 20.792 16.6227 20.2069 17.2078C19.6216 17.7929 18.8274 18.1219 17.9998 18.1219C17.8529 18.1219 17.7071 18.111 17.5633 18.0907C17.5236 18.2969 17.4644 18.4992 17.3836 18.6942C17.2268 19.0729 16.9967 19.417 16.7069 19.7069C16.417 19.9967 16.0729 20.2268 15.6942 20.3836C15.3155 20.5404 14.9096 20.6209 14.4998 20.6209C14.09 20.6209 13.6841 20.5404 13.3055 20.3836C13.1617 20.3241 13.0232 20.2536 12.8905 20.1737C12.735 20.5566 12.5048 20.9089 12.2069 21.2069C11.6215 21.7922 10.8276 22.1209 9.99983 22.1209C9.17208 22.1209 8.37811 21.7922 7.79279 21.2069L1.29279 14.7069C1.08306 14.497 0.976871 14.2045 1.00373 13.909L2.00373 2.90901C2.05393 2.35928 2.54086 1.95388 3.09065 2.00374C3.60999 2.05109 4.00017 2.48815 3.99983 2.99983H10.8553C11.6768 2.49691 12.6002 2.16993 13.5682 2.05061ZM3.82209 4.99983L3.03791 13.6239L9.20686 19.7928C9.4171 20.003 9.70251 20.1209 9.99983 20.1209C10.2972 20.1209 10.5825 20.0031 10.7928 19.7928C11.0031 19.5825 11.1209 19.2972 11.1209 18.9998C11.1209 18.7396 11.0306 18.4884 10.867 18.2889L10.7928 18.2069L10.2928 17.7069C9.90244 17.3163 9.90234 16.6833 10.2928 16.2928C10.6589 15.9267 11.2379 15.9043 11.6307 16.2244L11.7069 16.2928L13.7069 18.2928C13.8109 18.3969 13.9352 18.4796 14.0711 18.536C14.207 18.5922 14.3528 18.6209 14.4998 18.6209C14.6469 18.6209 14.7926 18.5922 14.9285 18.536C15.0646 18.4796 15.1887 18.3969 15.2928 18.2928C15.3969 18.1887 15.4796 18.0646 15.536 17.9285C15.5922 17.7926 15.6209 17.6469 15.6209 17.4998C15.6209 17.3528 15.5922 17.207 15.536 17.0711C15.4938 16.9693 15.4366 16.8738 15.367 16.7889L15.3006 16.7157L13.2928 14.7078C12.9023 14.3174 12.9024 13.6833 13.2928 13.2928C13.6832 12.9025 14.3163 12.9027 14.7069 13.2928L17.2069 15.7928C17.4171 16.0029 17.7026 16.1218 17.9998 16.1219C18.2971 16.1219 18.5825 16.003 18.7928 15.7928C19.0028 15.5827 19.1207 15.2979 19.1209 15.0008C19.1209 14.7036 19.0029 14.4181 18.7928 14.2078L14.9129 10.327C14.5379 9.95258 14.0297 9.74301 13.4998 9.743C12.9699 9.74306 12.4617 9.95348 12.0867 10.328L12.0858 10.327L11.2069 11.2078C10.6216 11.7929 9.8274 12.1219 8.99983 12.1219C8.17223 12.1218 7.37807 11.793 6.79279 11.2078C6.20762 10.6227 5.87894 9.82835 5.87873 9.00081C5.87873 8.17305 6.20752 7.37815 6.79279 6.7928L8.58674 4.99983H3.82209ZM16.8572 4.67854C15.9425 4.13162 14.8711 3.90568 13.8133 4.03597C12.7555 4.16632 11.7711 4.64564 11.0164 5.39827L8.20686 8.20784C7.99687 8.41808 7.87873 8.70365 7.87873 9.00081C7.87894 9.29774 7.99698 9.58274 8.20686 9.7928C8.41707 10.0029 8.7026 10.1218 8.99983 10.1219C9.29714 10.1219 9.58253 10.003 9.79279 9.7928L10.6727 8.91292C11.4226 8.16395 12.4399 7.74306 13.4998 7.743C14.4937 7.74301 15.4498 8.11265 16.1834 8.7762L16.327 8.91292L20.2069 12.7928C20.2731 12.8591 20.3357 12.9284 20.3953 12.9998H20.9041L20.1932 5.18147L19.4569 5.33089L19.453 5.33186C18.7229 5.47555 17.9655 5.34209 17.328 4.95882L16.8582 4.67952L16.8572 4.67854Z" fill="#A0C6CD"/>
-                  </svg>
-                  <div className="ml-2.5">{t('search-treaties')}</div>
-                </div>
-              }
-              cacheOptions
-              onChange={(e) => selectDropdown(e.value, 'treaties')}
-              defaultOptions={treatyOptions.map(treaty => { return { value : treaty.id, label : treaty.name }})}
-              loadOptions={loadTreatyOptions} />
           </div>
         </div>
 

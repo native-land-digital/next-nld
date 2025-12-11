@@ -2,7 +2,7 @@ import { db } from '@/lib/db/kysely'
 import { availableLocales } from '@/i18n/config'
 import { setLocaleCache } from '@/i18n/server-i18n';
 
-import MapContainer from '@/components/maps/classic/map-container';
+import MapContainer from '@/components/maps/constellation/map-container';
 import AIChatbot from '@/components/ai/chatbot';
 
 // import defaultContent from "./en.mdx"
@@ -27,20 +27,6 @@ export default async function Home({ params : { locale } }) {
     .limit(25)
     .execute()
 
-  const languageOptions = await db.selectFrom('Entry')
-    .where('category', '=', 'languages')
-    .where('published', '=', true)
-    .select(['id', 'name'])
-    .limit(25)
-    .execute()
-
-  const treatyOptions = await db.selectFrom('Entry')
-    .where('category', '=', 'treaties')
-    .where('published', '=', true)
-    .select(['id', 'name'])
-    .limit(25)
-    .execute()
-
   // let Content = defaultContent;
   // try {
   //   const TranslatedContent = (await import(`./${locale}.mdx`)).default;
@@ -51,7 +37,7 @@ export default async function Home({ params : { locale } }) {
 
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
-      <MapContainer territoryOptions={territoryOptions} languageOptions={languageOptions} treatyOptions={treatyOptions} />
+      <MapContainer territoryOptions={territoryOptions} />
       <AIChatbot />
     </div>
   );
