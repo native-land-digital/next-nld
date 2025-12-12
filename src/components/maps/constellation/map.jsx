@@ -111,38 +111,29 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
       if (timestamp - lastPulseUpdate > 50) {
         pulseTime = (pulseTime + 0.1) % (Math.PI * 2);
 
-        map.setPaintProperty('nation-small-dots', 'circle-radius', [
-          'case',
-          ['boolean', ['feature-state', 'hover'], false],
-          3,
+        map.setPaintProperty('nation-small-dots', 'circle-radius', 
+        [
+          '+',
+          2.5,
           [
-            '+',
-            2.5,
+            'sin',
             [
-              'sin',
-              [
-                '+',
-                pulseTime,
-                ['*', ['id'], 0.15] // <-- unique offset from feature ID
-              ]
+              '+',
+              pulseTime,
+              ['*', ['id'], 0.15] // <-- unique offset from feature ID
             ]
           ]
         ]);
 
         map.setPaintProperty('nation-large-dots', 'circle-radius', [
-          'case',
-          ['boolean', ['feature-state', 'hover'], false],
-          6,
+          '+',
+          4,
           [
-            '+',
-            4,
+            'sin',
             [
-              'sin',
-              [
-                '+',
-                pulseTime,
-                ['*', ['id'], 0.15] // <-- unique offset from feature ID
-              ]
+              '+',
+              pulseTime,
+              ['*', ['id'], 0.15] // <-- unique offset from feature ID
             ]
           ]
         ]);
