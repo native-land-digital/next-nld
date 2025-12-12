@@ -217,8 +217,6 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
             0
           ]);
 
-          console.log(map.getStyle().layers)
-
           const pointLayer = map.getStyle().layers.find(layer => layer['source-layer'].indexOf('nld_terr_p') > -1)
           const pointLayerSource = pointLayer['source-layer'];
 
@@ -256,7 +254,6 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
                   { hover: true }
                 );
               })
-              console.log(newHoveredFeatures)
             }
           })
         } else {
