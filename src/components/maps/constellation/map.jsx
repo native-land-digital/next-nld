@@ -218,8 +218,10 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
             0
           ]);
 
-          const pointLayer = map.getStyle().layers.find(layer => layer['source-layer'].indexOf('nld_terr_p') > -1)
+          console.log(map.getStyle().layers)
+          const pointLayer = map.getStyle().layers.find(layer => layer['source-layer'].indexOf('nld_terr_p_') > -1)
           const pointLayerSource = pointLayer['source-layer'];
+          console.log(pointLayerSource)
 
           let storedFeatureIDs = []
           map.on('mousemove', (e) => {
