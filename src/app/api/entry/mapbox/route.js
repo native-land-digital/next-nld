@@ -7,6 +7,8 @@ import { polygonToLine } from '@turf/polygon-to-line';
 import { booleanIntersects } from '@turf/boolean-intersects';
 import { getToken } from "next-auth/jwt"
 
+export const maxDuration = 30;
+
 export const GET = async (req) => {
   const token = await getToken({ req })
 
