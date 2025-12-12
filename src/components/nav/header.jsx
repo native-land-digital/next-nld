@@ -341,8 +341,8 @@ export default function Header() {
                     <div><h2 className="uppercase nld-font-h5 nld-text-grey-500 nld-font-jost uppercase">{t('for-developers')}</h2></div>
                     <div className="flex items-center mt-2.5">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 18L22 12L16 6" stroke="#5E6569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M8 6L2 12L8 18" stroke="#5E6569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16 18L22 12L16 6" stroke="#5E6569" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M8 6L2 12L8 18" stroke="#5E6569" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                       <Link prefetch={false} href="https://api-docs.native-land.ca/" className="ml-2.5 nld-text-md nld-text-grey-500">
                         {t('api')}

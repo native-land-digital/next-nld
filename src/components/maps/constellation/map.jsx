@@ -217,6 +217,11 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
             0
           ]);
 
+          console.log(map.getStyle().layers)
+
+          const pointLayer = map.getStyle().layers.find(layer => layer['source-layer'].indexOf('nld_terr_p') > -1)
+          const pointLayerSource = pointLayer['source-layer'];
+
           let storedFeatureIDs = []
           map.on('mousemove', (e) => {
             let newHoveredFeatures = []
@@ -237,7 +242,7 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
 
             storedFeatureIDs.forEach(id => {
               map.setFeatureState(
-                { source: 'composite', sourceLayer : "next_nld_terr_p_dev_source_layer", id: id },
+                { source: 'composite', sourceLayer : pointLayerSource, id: id },
                 { hover: false }
               );
             })
@@ -247,10 +252,11 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
               newHoveredFeatures = circleFeatures.map(feature => feature.id);
               newHoveredFeatures.forEach(id => {
                 map.setFeatureState(
-                  { source: 'composite', sourceLayer : "next_nld_terr_p_dev_source_layer", id: id },
+                  { source: 'composite', sourceLayer : pointLayerSource, id: id },
                   { hover: true }
                 );
               })
+              console.log(newHoveredFeatures)
             }
           })
         } else {
@@ -264,8 +270,6 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
     const minValue = 2000;
     const maxValue = 10;
     const maxZoom = 19;
-
-    console.log(minValue * Math.pow(maxValue / minValue, zoom / maxZoom))
 
     return minValue * Math.pow(maxValue / minValue, zoom / maxZoom);
   }
