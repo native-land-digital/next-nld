@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import MapModal from '@/components/front-map/modal';
+import MapModal from '@/components/maps/modal';
 
 export default function Disclaimer({ disclaimer }) {
 

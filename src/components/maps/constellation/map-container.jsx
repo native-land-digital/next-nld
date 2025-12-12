@@ -1,24 +1,32 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import MapModal from '@/components/front-map/modal';
-import Map from '@/components/front-map/map';
-import SelectorControl from "@/components/front-map/map-selector-control";
-import TogglesControl from "@/components/front-map/map-toggles-control";
+import MapModal from '@/components/maps/modal';
+import Map from '@/components/maps/constellation/map';
+import SelectorControl from "@/components/maps/constellation/map-selector-control";
+import TogglesControl from "@/components/maps/constellation/map-toggles-control";
+
+import { isMobile } from '@/components/maps/map-utils';
 
 export default function MapContainer({
-  territoryOptions,
-  languageOptions,
-  treatyOptions,
+  territoryOptions
 }) {
-  const allLayers = ["territories", "languages", "treaties", "greetings"];
+  const allLayers = ["territories"];
   const [map, setMap] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(true);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [currentLayers, setCurrentLayers] = useState(["territories"]);
 
   useEffect(() => {
     document.querySelector("body").classList.add("no-footer");
+    document.addEventListener("mousemove", e => {
+      const dot = document.createElement("div");
+      dot.className = isMobile() ? "mobile-trail trail" : "trail";
+      dot.style.left = `${e.clientX}px`;
+      dot.style.top = `${e.clientY}px`;
+      document.body.appendChild(dot);
+      setTimeout(() => dot.remove(), 500); // Clean up
+    });
   }, [])
 
   useEffect(() => {
@@ -48,10 +56,7 @@ export default function MapContainer({
 
   return (
     <div className="w-90 h-dvh min-h-120 relative">
-      {currentLayers.indexOf("greetings") > -1 ?
-        <MapModal setModalOpen={setModalOpen} modalOpen={modalOpen} headerText="greetings-disclaimer-header" bodyText="greetings-disclaimer" footerText="greetings-disclaimer-close" />
-      : false}
-      <MapModal setModalOpen={setModalOpen} modalOpen={modalOpen} headerText="disclaimer-header" bodyText="disclaimer" footerText="disclaimer-close" />
+      <MapModal setModalOpen={setModalOpen} modalOpen={modalOpen} headerText="constellation-header" bodyText="constellation-disclaimer" readMore="constellation-disclaimer-more" footerText="disclaimer-close" />
       <SelectorControl
         allLayers={allLayers}
         map={map}
@@ -60,8 +65,6 @@ export default function MapContainer({
         selectedFeatures={selectedFeatures}
         setSelectedFeatures={setSelectedFeatures}
         territoryOptions={territoryOptions}
-        languageOptions={languageOptions}
-        treatyOptions={treatyOptions}
       />
       <TogglesControl allLayers={allLayers} map={map} setModalOpen={setModalOpen} />
       <Map

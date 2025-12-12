@@ -1,7 +1,7 @@
 'use client';
 import { useTranslations } from '@/i18n/client-i18n';
 
-export default function MapModal({ setModalOpen, modalOpen, headerText, bodyText, footerText }) {
+export default function MapModal({ setModalOpen, modalOpen, headerText, bodyText, readMore = false, footerText }) {
 
   const t = useTranslations('DisclaimerModal');
 
@@ -26,8 +26,14 @@ export default function MapModal({ setModalOpen, modalOpen, headerText, bodyText
               </svg>
             </button>
           </div>
-          <div className="p-4 overflow-y-auto">
+          <div className="p-4 overflow-y-auto max-h-[70vh]">
             <div className="nld-text-md nld-text-grey-500" dangerouslySetInnerHTML={{ __html : t(bodyText) ? t(bodyText) : bodyText}} />
+            {readMore ? 
+              <details>
+                <summary className="mt-4 cursor-pointer hover:nld-text-grey-300 nld-text-md nld-text-grey-500">{t('read-more')}</summary>
+                <div className="nld-text-md nld-text-grey-500" dangerouslySetInnerHTML={{ __html : t(readMore) ? t(readMore) : readMore}} />
+              </details>
+            : false}
           </div>
           <div className="flex justify-center items-center gap-x-2 py-3 px-4">
             <button onClick={() => setModalOpen(false)} type="button" className="py-3 px-4 inline-flex items-center gap-x-2 nld-text-sm font-medium rounded-full nld-bg-green-500 nld-text-grey-500 focus:outline-none disabled:opacity-50 disabled:pointer-events-none">

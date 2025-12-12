@@ -105,6 +105,20 @@ export default function MobileMenu({ session }) {
             </div>
             {openNav === 'maps' ?
               <div>
+                <div className="mt-4 nld-bg-grey-50 rounded-lg p-4 bg-no-repeat bg-right-top" style={{ backgroundImage: "url('https://d75cfcm8x0ifj.cloudfront.net/star-globe-cut.png')"}} >
+                  <div className="w-full lg:w-1/2">
+                    <h3 className="nld-font-jost nld-font-h3 nld-text-grey-500 font-medium">{tFront('constellation-map')}</h3>
+                    <p className="bg-slate-100/50 p-2.5 lg:p-0 rounded-xl lg:bg-transparent mt-4 nld-text-grey-500">{tFront('constellation-map-blurb')}</p>
+                    <div className="mt-8">
+                      <Link onClick={() => setHamburgerToggled(false)} prefetch={false} className="bg-slate-100/50 lg:bg-transparent nld-text-grey-500 rounded-full border border-black px-4 py-2.5 font-semibold items-center inline-flex" href="/maps/constellation">
+                        {tFront('view-map')}
+                        <svg className="ml-2.5 inline" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9.41073 3.57757C9.73616 3.25214 10.2637 3.25214 10.5891 3.57757L16.4224 9.41091C16.4623 9.45075 16.4979 9.49471 16.5291 9.54193C16.5497 9.57317 16.5676 9.60561 16.5836 9.63877C16.6017 9.67643 16.6176 9.71541 16.63 9.75596C16.6351 9.77287 16.6389 9.79009 16.643 9.80723C16.6577 9.86919 16.6666 9.93364 16.6666 10.0001C16.6666 10.0693 16.6564 10.136 16.6405 10.2003C16.6371 10.2144 16.6342 10.2287 16.63 10.2426C16.6175 10.2834 16.6018 10.3227 16.5836 10.3606C16.5669 10.3953 16.5476 10.4289 16.5258 10.4615C16.5153 10.4772 16.5039 10.4922 16.4924 10.5071C16.4707 10.5353 16.4483 10.5635 16.4224 10.5893L10.5891 16.4226C10.2637 16.748 9.73614 16.748 9.41073 16.4226C9.08531 16.0972 9.08535 15.5697 9.41073 15.2442L13.8215 10.8334H4.16659C3.70637 10.8334 3.33329 10.4603 3.33325 10.0001C3.33325 9.53986 3.70635 9.16677 4.16659 9.16677H13.8215L9.41073 4.75596C9.08531 4.43054 9.08535 3.90302 9.41073 3.57757Z" fill="#23282B"/>
+                        </svg>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
                 <div className="mt-4 nld-bg-grey-50 rounded-lg p-4 bg-no-repeat bg-right-top" style={{ backgroundImage: "url('https://d75cfcm8x0ifj.cloudfront.net/main-globe-cut.png')"}} >
                   <div className="w-full lg:w-1/2">
                     <h3 className="nld-font-jost nld-font-h3 nld-text-grey-500 font-medium">{tFront('native-land-map')}</h3>
@@ -243,8 +257,8 @@ export default function MobileMenu({ session }) {
                 </div>
                 <div className="mt-4 flex items-center">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 18L22 12L16 6" stroke="#5E6569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 6L2 12L8 18" stroke="#5E6569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16 18L22 12L16 6" stroke="#5E6569" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M8 6L2 12L8 18" stroke="#5E6569" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                   <Link onClick={() => setHamburgerToggled(false)} prefetch={false} href="https://api-docs.native-land.ca/" className="ml-2.5 nld-text-md nld-text-grey-500">{t('api')}</Link>
                 </div>
