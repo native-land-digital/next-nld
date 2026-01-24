@@ -185,6 +185,9 @@ export const GET = async (req) => {
             // Do the MTS dance
             const lineDelimitedGeoJSON = features.map(feature => { return JSON.stringify(feature) }).join('\n');
             const mapbox_username = process.env.MAPBOX_USERNAME;
+            if (!process.env.MAPBOX_SECRET_TOKEN) {
+              throw new Error("Missing MAPBOX_SECRET_TOKEN");
+            }
             const secret_access_token = process.env.MAPBOX_SECRET_TOKEN;
             let tilesetName = "";
             if(category === 'territories') {
@@ -268,7 +271,6 @@ export const GET = async (req) => {
             // FOR UPDATING
             // REPLACES THE EXISTING TILESET
             try {
-              console.log(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`)
               const tilesetCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
                 method : "PUT",
                 body : formData
