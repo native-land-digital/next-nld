@@ -270,29 +270,33 @@ export const GET = async (req) => {
 
             // FOR UPDATING
             // REPLACES THE EXISTING TILESET
-            try {
-              const tilesetCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
-                method : "PUT",
-                body : formData
-              });
-              await tilesetCall.json();
-            } catch(err) {
-              return NextResponse.json({ error : `Error updating tileset source ${JSON.stringify(err)}` }, { status: 500 });
-            }
-
-            try {
-              const tilesetPublishCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}/publish?access_token=${secret_access_token}`, {
-                method : "POST"
-              });
-              await tilesetPublishCall.json();
-            } catch(err) {
-              return NextResponse.json({ error : `Error publishing tileset ${JSON.stringify(err)}` }, { status: 500 });
-            }
-
         		return NextResponse.json({
-              featuresUpdated : entries.length,
-              updateSuccessful : true
+              fetch : `https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`,
+              fetch2 : `https://api.mapbox.com/tilesets/v1/${tileset}/publish?access_token=${secret_access_token}`
             });
+            // try {
+            //   const tilesetCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
+            //     method : "PUT",
+            //     body : formData
+            //   });
+            //   await tilesetCall.json();
+            // } catch(err) {
+            //   return NextResponse.json({ error : `Error updating tileset source ${JSON.stringify(err)}` }, { status: 500 });
+            // }
+
+            // try {
+            //   const tilesetPublishCall = await fetch(`https://api.mapbox.com/tilesets/v1/${tileset}/publish?access_token=${secret_access_token}`, {
+            //     method : "POST"
+            //   });
+            //   await tilesetPublishCall.json();
+            // } catch(err) {
+            //   return NextResponse.json({ error : `Error publishing tileset ${JSON.stringify(err)}` }, { status: 500 });
+            // }
+
+        		// return NextResponse.json({
+            //   featuresUpdated : entries.length,
+            //   updateSuccessful : true
+            // });
           } else {
             return NextResponse.json({ error : `No entry found with this id` }, { status: 500 });
           }
