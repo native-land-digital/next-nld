@@ -268,6 +268,7 @@ export const GET = async (req) => {
             // FOR UPDATING
             // REPLACES THE EXISTING TILESET
             try {
+              console.log(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`)
               const tilesetCall = await fetch(`https://api.mapbox.com/tilesets/v1/sources/${mapbox_username}/${tileset_source}?access_token=${secret_access_token}`, {
                 method : "PUT",
                 body : formData
