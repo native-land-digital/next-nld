@@ -35,6 +35,7 @@
     "@turf/boolean-intersects": "^7.3.1",
     "@turf/circle": "^7.3.1",
     "@turf/combine": "^7.1.0",
+    "@turf/length": "^7.3.2",
     "@turf/polygon-to-line": "^7.3.1",
     "@turf/tin": "^7.3.1",
     "@types/crypto-js": "^4.2.2",
