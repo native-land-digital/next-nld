@@ -144,7 +144,7 @@ export const GET = async (req) => {
               const tinPoints = tin({ type : "FeatureCollection", features : features })
               const revisedTin = { type : "FeatureCollection", features : [] }
               tinPoints.features.forEach(line => {
-                if(length(line) <= 1350) {
+                if(length(line) <= 1500) {
                   revisedTin.features.push(line);
                 }
                 // let isContained = true;
