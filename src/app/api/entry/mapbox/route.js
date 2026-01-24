@@ -146,7 +146,7 @@ export const GET = async (req) => {
               const revisedTin = { type : "FeatureCollection", features : [] }
               tinPoints.features.forEach(line => {
                 let isContained = true;
-                if(length(line) <= 3500) {
+                if(length(line) <= 3000) {
                   bigLineCollections.features.forEach(bigLine => {
                     if(booleanIntersects(bigLine, line)) {
                       isContained = false
