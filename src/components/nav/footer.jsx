@@ -99,6 +99,9 @@ export default async function Footer() {
               <li className="mb-3">
                 <Link prefetch={false} href="/about/faq" className="text-white hover:nld-text-grey-200-muted">{t('faq')}</Link>
               </li>
+              <li className="mb-3">
+                <Link prefetch={false} href="/about/agm-reports" className="text-white hover:nld-text-grey-200-muted">{t('agm-reports')}</Link>
+              </li>
             </ul>
           </div>
           <div className="lg:mx-auto text-left">
