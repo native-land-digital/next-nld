@@ -4,15 +4,51 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   : ColumnType<T, T | undefined, T>;
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
-export type CategoriesOnIssues = {
+export type CategoriesOnContributions = {
     id: Generated<number>;
-    issueId: number;
+    contributionId: number;
     categoryId: number;
 };
 export type Change = {
     id: Generated<number>;
     createdAt: Timestamp;
     description: string | null;
+    entryId: number;
+};
+export type Contribution = {
+    id: Generated<number>;
+    name: string;
+    open: Generated<boolean>;
+    stageId: number;
+    createdAt: Generated<Timestamp>;
+    authorId: number | null;
+};
+export type ContributionCategory = {
+    id: Generated<number>;
+    name: string;
+    color: string;
+};
+export type ContributionComment = {
+    id: Generated<number>;
+    comment: string;
+    contributionId: number;
+    authorId: number;
+    createdAt: Generated<Timestamp>;
+    updatedAt: Timestamp;
+};
+export type ContributionMedia = {
+    id: Generated<number>;
+    url: string;
+    contributionCommentId: number;
+};
+export type ContributionStage = {
+    id: Generated<number>;
+    name: string;
+    color: string;
+};
+export type EntriesOnContributions = {
+    id: Generated<number>;
+    contributionId: number;
     entryId: number;
 };
 export type Entry = {
@@ -43,32 +79,6 @@ export type Greeting = {
     usage: string | null;
     parentId: number | null;
     entryId: number;
-};
-export type Issue = {
-    id: Generated<number>;
-    name: string;
-    open: Generated<boolean>;
-    createdAt: Generated<Timestamp>;
-    entryId: number | null;
-    authorId: number | null;
-};
-export type IssueCategory = {
-    id: Generated<number>;
-    name: string;
-    color: string;
-};
-export type IssueComment = {
-    id: Generated<number>;
-    comment: string;
-    issueId: number;
-    authorId: number;
-    createdAt: Generated<Timestamp>;
-    updatedAt: Timestamp;
-};
-export type IssueMedia = {
-    id: Generated<number>;
-    url: string;
-    issueCommentId: number;
 };
 export type ItemPermission = {
     id: Generated<number>;
@@ -132,9 +142,9 @@ export type User = {
     agreed_treaty: Generated<boolean>;
     api_key: Generated<string | null>;
 };
-export type UsersOnIssues = {
+export type UsersOnContributions = {
     id: Generated<number>;
-    issueId: number;
+    contributionId: number;
     userId: number;
 };
 export type Verification = {
@@ -152,15 +162,17 @@ export type Website = {
     entryId: number;
 };
 export type DB = {
-    CategoriesOnIssues: CategoriesOnIssues;
+    CategoriesOnContributions: CategoriesOnContributions;
     Change: Change;
+    Contribution: Contribution;
+    ContributionCategory: ContributionCategory;
+    ContributionComment: ContributionComment;
+    ContributionMedia: ContributionMedia;
+    ContributionStage: ContributionStage;
+    EntriesOnContributions: EntriesOnContributions;
     Entry: Entry;
     GlobalPermission: GlobalPermission;
     Greeting: Greeting;
-    Issue: Issue;
-    IssueCategory: IssueCategory;
-    IssueComment: IssueComment;
-    IssueMedia: IssueMedia;
     ItemPermission: ItemPermission;
     Line: Line;
     Media: Media;
@@ -171,7 +183,7 @@ export type DB = {
     Pronunciation: Pronunciation;
     Relation: Relation;
     User: User;
-    UsersOnIssues: UsersOnIssues;
+    UsersOnContributions: UsersOnContributions;
     Verification: Verification;
     Website: Website;
 };

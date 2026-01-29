@@ -134,7 +134,7 @@ model Entry {
   polygon         Polygon?
 
   itemPerms       ItemPermission[]
-  issues          Issue[]
+  contributions   EntriesOnContributions[]
 
   @@index([slug])
 }
@@ -192,71 +192,91 @@ model User {
   agreed_treaty        Boolean @default(false)
   api_key              String? @default(dbgenerated("nanoid()")) @db.VarChar(22)
 
-  issueAuthor          Issue[]
-  issueUser            UsersOnIssues[]
-  comments             IssueComment[]
+  contributionsAuthored   Contribution[]
+  contributionsTagged     UsersOnContributions[]
+  comments                ContributionComment[]
 
   @@index([email])
 }
 
-model IssueMedia {
-	id               Int @id @default(autoincrement())
-  url              String
-  issueCommentId   Int
-  issueComment     IssueComment @relation(fields: [issueCommentId], references: [id], onDelete: Cascade)
+model ContributionMedia {
+	id                      Int @id @default(autoincrement())
+  url                     String
+  contributionCommentId   Int
+  contributionComment     ContributionComment @relation(fields: [contributionCommentId], references: [id], onDelete: Cascade)
 }
 
-model IssueComment {
+model ContributionComment {
 	id              Int @id @default(autoincrement())
   comment         String
-  media           IssueMedia[]
-  issueId         Int
-  issue           Issue @relation(fields: [issueId], references: [id])
+  media           ContributionMedia[]
+  contributionId  Int
+  contribution    Contribution @relation(fields: [contributionId], references: [id])
   authorId        Int
   author          User @relation(fields: [authorId], references: [id])
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 }
 
-model IssueCategory {
+model ContributionStage {
 	id              Int @id @default(autoincrement())
 	name            String @unique
   color           String
-  posts           CategoriesOnIssues[]
+  contributions   Contribution[]
 
   @@index([name])
 }
 
-model CategoriesOnIssues {
+model ContributionCategory {
 	id              Int @id @default(autoincrement())
-  issueId         Int
-  issue           Issue @relation(fields: [issueId], references: [id])
-  categoryId      Int
-  category        IssueCategory @relation(fields: [categoryId], references: [id])
+	name            String @unique
+  color           String
+  contributions   CategoriesOnContributions[]
 
-  @@index([issueId, categoryId])
+  @@index([name])
 }
 
-model UsersOnIssues {
+model CategoriesOnContributions {
 	id              Int @id @default(autoincrement())
-  issueId         Int
-  issue           Issue @relation(fields: [issueId], references: [id])
+  contributionId  Int
+  contribution    Contribution @relation(fields: [contributionId], references: [id])
+  categoryId      Int
+  category        ContributionCategory @relation(fields: [categoryId], references: [id])
+
+  @@index([contributionId, categoryId])
+}
+
+model UsersOnContributions {
+	id              Int @id @default(autoincrement())
+  contributionId  Int
+  contribution    Contribution @relation(fields: [contributionId], references: [id])
   userId          Int
   user            User @relation(fields: [userId], references: [id])
 
-  @@index([issueId, userId])
+  @@index([contributionId, userId])
 }
 
-model Issue {
+model EntriesOnContributions {
+	id              Int @id @default(autoincrement())
+  contributionId  Int
+  contribution    Contribution @relation(fields: [contributionId], references: [id])
+  entryId         Int
+  entry           Entry? @relation(fields: [entryId], references: [id])
+
+  @@index([contributionId, entryId])
+}
+
+model Contribution {
 	id              Int @id @default(autoincrement())
 	name            String
   open            Boolean @default(true)
-  categories      CategoriesOnIssues[]
-  users           UsersOnIssues[]
-  comments        IssueComment[]
+  stageId         Int 
+  stage           ContributionStage @relation(fields: [stageId], references: [id])          
+  categories      CategoriesOnContributions[]
+  users           UsersOnContributions[]
+  comments        ContributionComment[]
   createdAt       DateTime  @default(now())
-  entryId         Int?
-  entry           Entry? @relation(fields: [entryId], references: [id])
+  entries         EntriesOnContributions[]
   authorId        Int?
   author          User? @relation(fields: [authorId], references: [id])
 }
