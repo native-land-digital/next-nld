@@ -44,6 +44,13 @@ export default async function DashboardMenu() {
                 </Link>
               </li>
             : false }
+            {session.user.global_permissions.find(perm => perm.entity === "contributions") || session.user.item_permissions.find(perm => perm.entity === "contributions") ?
+              <li>
+                <Link prefetch={false} href="/dashboard/contributions" className="shadow group relative flex items-center gap-2.5 rounded px-4 py-2 font-medium text-white duration-300 ease-in-out bg-white bg-opacity-20 hover:bg-opacity-30 ">
+                  {tDash('contributions')}
+                </Link>
+              </li>
+            : false }
             {session.user.global_permissions.find(perm => perm.entity === "mapbox") || session.user.item_permissions.find(perm => perm.entity === "mapbox") ?
               <li>
                 <Link prefetch={false} href="/dashboard/mapbox" className="shadow group relative flex items-center gap-2.5 rounded px-4 py-2 font-medium text-white duration-300 ease-in-out bg-white bg-opacity-20 hover:bg-opacity-30 ">
