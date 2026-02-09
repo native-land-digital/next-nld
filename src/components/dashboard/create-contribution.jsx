@@ -4,25 +4,26 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useTranslations } from '@/i18n/client-i18n';
 
-export default function CreatePolygon() {
+export default function CreatePolygon({ user }) {
 
   const t = useTranslations('Dashboard');
   const router = useRouter();
 
-  const makeNewContribution = (type) => {
+  const makeNewContribution = () => {
     const name = window.prompt(t('enter-name'));
     if(name) {
       fetch('/api/contribution', {
         method : "POST",
         headers : { 'Content-Type': 'application/json' },
         body : JSON.stringify({
-          name : name
+          name : name,
+          authorId : user.id
         })
       }).then(resp => resp.json()).then(results => {
         if(results.error) {
           toast(results.error)
         } else {
-          router.push(`/dashboard/contribution/${results.id}`);
+          router.push(`/dashboard/contributions/${results.id}`);
         }
       });
     }

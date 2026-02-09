@@ -26,6 +26,39 @@ export const PATCH = async (req, route) => {
 
         await db.transaction().execute(async (trx) => {
 
+          const categories = body.categories;
+          await trx.deleteFrom('CategoriesOnContributions')
+            .where('contributionId', '=', Number(contributionId))
+            .execute();
+          if(categories.length > 0) {
+            for(const category of categories) {
+              await trx.insertInto('CategoriesOnContributions')
+                .values({
+                  contributionId : parseInt(contributionId),
+                  categoryId: category
+                })
+                .execute();
+            }
+          }
+          delete body.categories;
+
+          const entries = body.entries;
+          await trx.deleteFrom('EntriesOnContributions')
+            .where('contributionId', '=', Number(contributionId))
+            .execute();
+          if(entries.length > 0) {
+            for(const entry of entries) {
+              console.log(entry.id)
+              await trx.insertInto('EntriesOnContributions')
+                .values({
+                  contributionId : parseInt(contributionId),
+                  entryId: entry.id
+                })
+                .execute();
+            }
+          }
+          delete body.entries;
+
           // The rest of stuff updated flexibly
           await trx.updateTable('Contribution')
             .set(body)
@@ -71,13 +104,15 @@ export const DELETE = async (req, route) => {
 		if(token.global_permissions.find(perm => perm.entity === "contributions")) {
   		const { id: contributionId } = route.params;
 
+      console.log(contributionId)
+
   		try {
 
-        const contribution = await db.deleteFrom('Contribution')
+        await db.deleteFrom('Contribution')
           .where('id', '=', Number(contributionId))
           .execute();
 
-  			return NextResponse.json({ contribution });
+  			return NextResponse.json({ contributionId });
   		} catch (error) {
   			console.error(error);
 

@@ -17,10 +17,18 @@ export const POST = async (req) => {
 
 	  	try {
 	      // Inserting into db
+				const stage = await db.selectFrom('ContributionStage')
+					.select(['id'])
+					.where('name', "=", "Submitted")
+					.executeTakeFirst();
+				
+					console.log(stage)
+
 				const [contribution] = await db.insertInto('Contribution')
 				  .values({
 	  				name: body.name,
-						open : true
+						stageId : stage.id,
+						authorId : body.authorId
 				  })
 					.returningAll()
 				  .execute()

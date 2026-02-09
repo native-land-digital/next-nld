@@ -54,7 +54,7 @@ export default async function Page({ params : { locale }, searchParams }) {
             </div>
           </form>
           <div className="col-span-4 md:col-span-1 text-sm justify-end">
-            <CreateContribution />
+            <CreateContribution user={session.user} />
           </div>
         </div>
       </div>

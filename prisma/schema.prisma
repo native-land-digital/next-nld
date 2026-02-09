@@ -261,7 +261,7 @@ model EntriesOnContributions {
   contributionId  Int
   contribution    Contribution @relation(fields: [contributionId], references: [id])
   entryId         Int
-  entry           Entry? @relation(fields: [entryId], references: [id])
+  entry           Entry @relation(fields: [entryId], references: [id])
 
   @@index([contributionId, entryId])
 }
@@ -269,7 +269,6 @@ model EntriesOnContributions {
 model Contribution {
 	id              Int @id @default(autoincrement())
 	name            String
-  open            Boolean @default(true)
   stageId         Int 
   stage           ContributionStage @relation(fields: [stageId], references: [id])          
   categories      CategoriesOnContributions[]
