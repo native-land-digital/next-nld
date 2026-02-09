@@ -1,4 +1,3 @@
-import { db } from '@/lib/db/kysely'
 import { NextResponse } from "next/server";
 import { createPresignedPost } from '@aws-sdk/s3-presigned-post'
 import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
