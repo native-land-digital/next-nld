@@ -1,4 +1,5 @@
 import { db } from '@/lib/db/kysely'
+import { NextResponse } from "next/server";
 import { createPresignedPost } from '@aws-sdk/s3-presigned-post'
 import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { getToken } from "next-auth/jwt"
@@ -22,7 +23,6 @@ export async function POST(req) {
             ['starts-with', '$Content-Type', contentType],
           ],
           Fields: {
-            acl: 'public-read',
             'Content-Type': contentType,
           },
           Expires: 600, // Seconds before the presigned post expires. 3600 by default.
@@ -50,7 +50,7 @@ export async function DELETE(req) {
       .select(['permissions'])
       .executeTakeFirst()
 
-		if(user.permissions.includes('research')) {
+		if(token.global_permissions.find(perm => perm.entity === "research")) {
     	const key = req.nextUrl.searchParams.get('key');
       if(key) {
         const bucketParams = { Bucket: process.env.AWS_NEXT_BUCKET_NAME, Key: key };
