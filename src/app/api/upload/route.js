@@ -45,11 +45,6 @@ export async function DELETE(req) {
 
 	if(token && token.id) {
 
-    const user = await db.selectFrom('User')
-      .where('id', '=', Number(token.id))
-      .select(['permissions'])
-      .executeTakeFirst()
-
 		if(token.global_permissions.find(perm => perm.entity === "research")) {
     	const key = req.nextUrl.searchParams.get('key');
       if(key) {
