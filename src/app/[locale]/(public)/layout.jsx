@@ -36,6 +36,9 @@ export default async function RootLayout({ children, params : { locale }}) {
       <body className="antialiased nld-font-noto">
         <LocaleProvider messages={messages}>
           <div>
+            <div className="absolute z-[10] w-full lg:rounded-b-xl lg:w-1/2 lg:ml-[25%] bg-red-100 text-center text-xs p-2 text-gray-800">
+              NLD maps are not official sources. <span className="underline text-blue-500">Learn what we are mapping</span>.
+            </div>
             <HeaderSessionProvider>
               <Header />
             </HeaderSessionProvider>

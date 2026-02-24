@@ -17,7 +17,7 @@ export default function Header() {
   const [ openNav, setOpenNav ] = useState(false);
 
   return (
-    <nav className="flex items-center justify-between flex-wrap py-4 px-3 lg:px-6 absolute z-99 w-full">
+    <nav className="mt-8 lg:mt-0 flex items-center justify-between flex-wrap py-4 px-3 lg:px-6 absolute z-99 w-full">
       <Logo />
       <MobileMenu session={session} />
       <div className={`hidden bg-white p-4 rounded-xl absolute right-0 top-0 mt-4 mx-4 lg:bg-transparent lg:p-0 lg:block w-auto justify-end `}>
@@ -92,7 +92,7 @@ export default function Header() {
               </div>
             </div>
             <div onMouseOver={() => setOpenNav(false)} className="mr-4 flex-grow justify-end place-center">
-              <Link href="/search" prefetch={false}> 
+              <Link href="/search" prefetch={false}>
                 <div className="rounded-full nld-bg-white-10 p-[8px]">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M11 2C15.9706 2 20 6.02944 20 11C20 13.125 19.2619 15.0766 18.0303 16.6162L21.707 20.293C22.0974 20.6835 22.0975 21.3166 21.707 21.707C21.3166 22.0975 20.6835 22.0974 20.293 21.707L16.6162 18.0303C15.0766 19.2619 13.125 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2ZM11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4Z" fill="#F9F8F8"/>
@@ -107,7 +107,7 @@ export default function Header() {
         </div>
 
         <div className={`${openNav ? '' : 'hidden'} absolute z-30`}>
-          {openNav === 'about' ? 
+          {openNav === 'about' ?
             <div onMouseLeave={() => setOpenNav(false)} onMouseOver={() => setOpenNav('about')} className="shadow p-4 bg-white rounded-lg text-slate-600">
               <div><h4 className="uppercase nld-font-h4 nld-font-jost">{t('about')}</h4></div>
               <div className="grid grid-cols-2 gap-12 mt-2">
@@ -179,7 +179,7 @@ export default function Header() {
               </div>
             </div>
           : false}
-          {openNav === 'maps' ? 
+          {openNav === 'maps' ?
             <div onMouseLeave={() => setOpenNav(false)} onMouseOver={() => setOpenNav('maps')}  className="shadow p-4 bg-white rounded-lg text-slate-600 -ml-[300px]">
               <div><h4 className="uppercase nld-font-h4 nld-font-jost">{t('maps')}</h4></div>
               <div className="grid grid-cols-2 gap-4 mt-2">
@@ -248,7 +248,7 @@ export default function Header() {
               </Link>
             </div>
           : false}
-          {openNav === 'contribute' ? 
+          {openNav === 'contribute' ?
             <div onMouseLeave={() => setOpenNav(false)} onMouseOver={() => setOpenNav('contribute')} className="p-4 bg-white rounded-lg text-slate-600">
               <div><h4 className="uppercase nld-font-h4 nld-font-jost">{t('contribute')}</h4></div>
               <div className="grid grid-cols-5 gap-4 mt-2 w-[600px]">
@@ -305,7 +305,7 @@ export default function Header() {
               </div>
             </div>
           : false}
-          {openNav === 'resources' ? 
+          {openNav === 'resources' ?
             <div onMouseLeave={() => setOpenNav(false)} onMouseOver={() => setOpenNav('resources')} className="p-4 bg-white rounded-lg text-slate-600">
               <div><h4 className="uppercase nld-font-h4 nld-font-jost">{t('resources')}</h4></div>
               <div className="grid grid-cols-2 gap-12 mt-2">

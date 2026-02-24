@@ -81,7 +81,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
     };
 
     return (
-      <div className="lg:h-auto w-full lg:w-80 absolute z-10 left-0 top-0 font-noto-sans">
+      <div className="mt-8 lg:mt-0 lg:h-auto w-full lg:w-80 absolute z-10 left-0 top-0 font-noto-sans">
         <div className="w-full lg:w-80 ">
           <div className="w-72 m-4 nld-bg-blue-800-10 rounded-full lg:rounded-xl p-0 lg:p-2.5">
             <div className="hidden lg:flex">
@@ -145,7 +145,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
 
         {selectedFeatures.length > 0 ?
           <div className={
-            !isMobile() ? 
+            !isMobile() ?
               `nld-text-sm nld-text-teal-100 m-4 mt-0 nld-bg-blue-800-10 rounded-xl p-2.5 relative transition ease-in-out ${resultsSlided ? 'w-full -translate-x-64' : ''}`
             :
               `pointer-events-none fixed min-h-[33vh] overflow-y-scroll w-full bottom-0 nld-text-sm nld-text-teal-100 bg-white rounded-t-xl p-2.5 z-[999] transition ease-in-out ${resultsSlided ? 'translate-y-[33vh]' : ''}`
@@ -167,7 +167,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 </svg>
               }
             </div>
-            {isMobile() ? 
+            {isMobile() ?
               <div>
                 <h3 className="nld-text-md nld-text-grey-500 font-semibold">Listings</h3>
                 <p className="mt-2.5 italic nld-text-grey-300">{t('contact-nations')}</p>
@@ -186,7 +186,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                   })}
                 </ul>
               </div>
-             : 
+             :
               <div>
                 <p className="font-italic lg:font-normal mb-1.5">{t('contact-nations')}</p>
                 <ul className="list-none">
