@@ -8,6 +8,8 @@ import Select from 'react-select';
 import AsyncSelect from 'react-select/async';
 import Link from 'next/link'
 
+import WYSIWYGEditor from './editors/wysiwyg-editor';
+
 export default function EditContribution({ contribution, availableCategories, availableStages }) {
 
   const t = useTranslations('Dashboard');
@@ -17,9 +19,18 @@ export default function EditContribution({ contribution, availableCategories, av
   const [ name, setName ] = useState(contribution.name);
   const [ stageId, setStageId ] = useState(contribution.stageId);
   const [ categories, setCategories ] = useState(contribution.categories.map(cat => cat.id));
-  const [ entries, setEntries ] = useState(contribution.entries)
+  const [entries, setEntries] = useState(contribution.entries)
+  const [comment, setComment] = useState("")
 
-  const [ allowedColumns, setAllowedColumns ] = useState([]);
+  const [allowedColumns, setAllowedColumns] = useState([]);
+
+  useEffect(() => {
+    if (contribution) {
+      if (contribution.comments.length > 0) {
+        setComment(contribution.comments[0].comment)
+      }
+    }
+  }, [contribution])
 
   useEffect(() => {
     if(session && session.user) {
@@ -48,7 +59,11 @@ export default function EditContribution({ contribution, availableCategories, av
         name : name,
         stageId : stageId,
         categories : categories,
-        entries : entries
+        entries: entries,
+        comments: [{
+          authorId : session.user.id,
+          comment: comment
+        }]
       })
     }).then(resp => resp.json()).then(results => {
       if(results.error) {
@@ -128,7 +143,7 @@ export default function EditContribution({ contribution, availableCategories, av
           <div className="mt-2.5">
             <label className="text-gray-800 text-normal mb-1 block font-bold">{t('categories')}</label>
             <div className="relative flex items-center">
-              <Select 
+              <Select
                 className="w-full"
                 isMulti={true}
                 onChange={(e) => setCategories(e.map(category => category.value))}
@@ -149,19 +164,27 @@ export default function EditContribution({ contribution, availableCategories, av
           <div className="mt-2.5">
             <label className="text-gray-800 text-normal mb-1 block font-bold">{t('associated-research')}</label>
             <div className="relative flex items-center">
-              <AsyncSelect 
+              <AsyncSelect
                 className="w-full"
                 isMulti={true}
-                value={entries.map(entry => { return { value : entry.id, label : entry.name }})} 
-                onChange={(e) => setEntries(e.map(entry => { return { id : entry.value, name : entry.label } }))} 
-                cacheOptions 
-                loadOptions={loadOptions} 
+                value={entries.map(entry => { return { value : entry.id, label : entry.name }})}
+                onChange={(e) => setEntries(e.map(entry => { return { id : entry.value, name : entry.label } }))}
+                cacheOptions
+                loadOptions={loadOptions}
                 placeholder={t('type-search')} />
             </div>
           </div>
-        : false}
+          : false}
 
+      </div>
+      <div className="w-full">
 
+        <div className="mt-2.5">
+          <div className="mt-2.5">
+            <label className="text-gray-800 text-normal mb-1 block font-bold">{t('starting-comment')}</label>
+            <WYSIWYGEditor text={comment} setText={(text) => setComment(text)} />
+          </div>
+        </div>
 
       </div>
 

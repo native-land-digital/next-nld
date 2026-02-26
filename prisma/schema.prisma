@@ -208,6 +208,7 @@ model ContributionMedia {
 
 model ContributionComment {
 	id              Int @id @default(autoincrement())
+	approved        Boolean @default(false)
   comment         String
   media           ContributionMedia[]
   contributionId  Int
@@ -269,8 +270,8 @@ model EntriesOnContributions {
 model Contribution {
 	id              Int @id @default(autoincrement())
 	name            String
-  stageId         Int 
-  stage           ContributionStage @relation(fields: [stageId], references: [id])          
+  stageId         Int
+  stage           ContributionStage @relation(fields: [stageId], references: [id])
   categories      CategoriesOnContributions[]
   users           UsersOnContributions[]
   comments        ContributionComment[]

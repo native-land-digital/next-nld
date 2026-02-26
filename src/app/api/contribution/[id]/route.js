@@ -59,6 +59,47 @@ export const PATCH = async (req, route) => {
           }
           delete body.entries;
 
+          const comments = body.comments;
+          const updatedCommentIds = comments.map(comment => { return comment.id; });
+          if(updatedCommentIds.length > 0) {
+            await trx.deleteFrom('ContributionComment')
+              .where('contributionId', '=', parseInt(contributionId))
+              .where('id', 'not in', updatedCommentIds)
+              .execute();
+          } else {
+            await trx.deleteFrom('ContributionComment')
+              .where('contributionId', '=', parseInt(contributionId))
+              .execute();
+          }
+
+          for (const comment of comments) {
+            if (comment.id) {
+              await trx.updateTable('ContributionComment')
+                .set({
+                  comment: comment.comment,
+                  updatedAt: new Date()
+                })
+                .where('id', '=', comment.id)
+                .execute();
+            }
+          }
+
+          const newComments = comments.filter(comment => !comment.id);
+          if (newComments.length > 0) {
+            await trx.insertInto('ContributionComment')
+              .values(
+                newComments.map(comment => ({
+                  contributionId: parseInt(contributionId),
+                  comment: comment.comment,
+                  authorId : comment.authorId,
+                  createdAt: new Date(),
+                  updatedAt: new Date()
+                }))
+              )
+              .execute();
+          }
+          delete body.comments;
+
           // The rest of stuff updated flexibly
           await trx.updateTable('Contribution')
             .set(body)

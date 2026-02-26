@@ -8,6 +8,7 @@
     "clear" : "Clear",
     "not-found" : "404 Not Found",
     "save" : "Save",
+    "cancel" : "Cancel",
     "delete" : "Delete",
     "back" : "Back"
   },
@@ -308,7 +309,10 @@
     "deleted-contribution" : "Contribution deleted successfully",
     "contribution-created" : "Contribution created",
     "saved-contribution" : "Contribution saved successfully",
+    "add-comment" : "Add Comment",
+    "saved-comment": "Comment saved successfully",
     "contribution-updated" : "Contribution updated",
+    "starting-comment" : "Starting Comment",
     "point" : "Point",
     "line" : "Line",
     "polygon" : "Polygon",
