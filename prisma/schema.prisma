@@ -212,7 +212,7 @@ model ContributionComment {
   comment         String
   media           ContributionMedia[]
   contributionId  Int
-  contribution    Contribution @relation(fields: [contributionId], references: [id])
+  contribution    Contribution @relation(fields: [contributionId], references: [id], onDelete: Cascade)
   authorId        Int
   author          User @relation(fields: [authorId], references: [id])
   createdAt       DateTime  @default(now())
@@ -260,7 +260,7 @@ model UsersOnContributions {
 model EntriesOnContributions {
 	id              Int @id @default(autoincrement())
   contributionId  Int
-  contribution    Contribution @relation(fields: [contributionId], references: [id])
+  contribution    Contribution @relation(fields: [contributionId], references: [id], onDelete: Cascade)
   entryId         Int
   entry           Entry @relation(fields: [entryId], references: [id])
 

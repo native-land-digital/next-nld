@@ -59,11 +59,7 @@ export default function EditContribution({ contribution, availableCategories, av
         name : name,
         stageId : stageId,
         categories : categories,
-        entries: entries,
-        comments: [{
-          authorId : session.user.id,
-          comment: comment
-        }]
+        entries: entries
       })
     }).then(resp => resp.json()).then(results => {
       if(results.error) {
@@ -160,12 +156,27 @@ export default function EditContribution({ contribution, availableCategories, av
           </div>
         : false}
 
+      </div>
+      {/* <div className="w-full">
+
+        <div className="mt-2.5">
+          <div className="mt-2.5">
+            <label className="text-gray-800 text-normal mb-1 block font-bold">{t('starting-comment')}</label>
+            <WYSIWYGEditor text={comment} setText={(text) => setComment(text)} />
+          </div>
+        </div>
+
+      </div>*/}
+
+
+      <div className="w-full md:w-1/2">
+
         {allowedColumns.indexOf('all') > -1 || allowedColumns.indexOf('entries') > -1 ?
           <div className="mt-2.5">
             <label className="text-gray-800 text-normal mb-1 block font-bold">{t('associated-research')}</label>
             <div className="relative flex items-center">
               <AsyncSelect
-                className="w-full"
+                className="w-full z-999"
                 isMulti={true}
                 value={entries.map(entry => { return { value : entry.id, label : entry.name }})}
                 onChange={(e) => setEntries(e.map(entry => { return { id : entry.value, name : entry.label } }))}
@@ -177,18 +188,8 @@ export default function EditContribution({ contribution, availableCategories, av
           : false}
 
       </div>
-      <div className="w-full">
 
-        <div className="mt-2.5">
-          <div className="mt-2.5">
-            <label className="text-gray-800 text-normal mb-1 block font-bold">{t('starting-comment')}</label>
-            <WYSIWYGEditor text={comment} setText={(text) => setComment(text)} />
-          </div>
-        </div>
-
-      </div>
-
-      <div className="flex">
+        <div className="flex">
         <div className="w-full md:w-1/2">
           <div className="!mt-8">
             <button onClick={() => saveContribution()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">

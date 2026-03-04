@@ -18,7 +18,7 @@ export default async function Page({ params : { locale, id }}) {
   const contribution = await db.selectFrom('Contribution')
     .where('Contribution.id', '=', parseInt(id))
     .select((eb) => [
-      'Contribution.id', 'Contribution.name', 'Contribution.open', 'Contribution.createdAt', 'Contribution.stageId',
+      'Contribution.id', 'Contribution.name', 'Contribution.createdAt', 'Contribution.stageId',
       jsonObjectFrom(
         eb.selectFrom('User')
           .select(['User.id', 'User.name', 'User.organization'])

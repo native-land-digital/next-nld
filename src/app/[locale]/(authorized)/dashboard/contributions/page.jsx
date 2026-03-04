@@ -19,7 +19,8 @@ export default async function Page({ params : { locale }, searchParams }) {
   }
 
   let query = db.selectFrom('Contribution')
-    .select(['id', 'name', 'open'])
+    .innerJoin("ContributionStage", "ContributionStage.id", "Contribution.stageId")
+    .select(['Contribution.id', 'Contribution.name', 'ContributionStage.name as stageName'])
     .orderBy('createdAt', 'desc')
     .limit(25)
     .offset(25 * page)
@@ -63,7 +64,7 @@ export default async function Page({ params : { locale }, searchParams }) {
           <tr className="hidden md:table-row">
             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">{t('id')}</th>
             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">{t('name')}</th>
-            <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">{t('open')}</th>
+            <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">{t('stage')}</th>
             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">{t('edit')}</th>
           </tr>
         </thead>
@@ -73,7 +74,7 @@ export default async function Page({ params : { locale }, searchParams }) {
               <tr className="grid md:table-row grid-cols-1 md:grid-cols-none bg-gray-100 m-2.5 md:m-0 md:odd:bg-white md:even:bg-gray-100" key={`contribution-row-${contribution.id}`}>
                 <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{contribution.id}</td>
                 <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{contribution.name}</td>
-                <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{contribution.open ? "Open" : "Closed"}</td>
+                <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black">{contribution.stageName}</td>
                 <td className="px-2.5 py-2.5 md:px-6 md:py-4 text-sm font-medium text-black"><Link prefetch={false} href={`/dashboard/contributions/${contribution.id}`}>➜</Link></td>
               </tr>
             )

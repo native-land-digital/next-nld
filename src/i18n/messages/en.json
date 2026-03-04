@@ -274,8 +274,8 @@
     "changelog" : "Changelog",
     "added" : "Added",
     "updated" : "last updated",
-    "correction" : "Send a Correction",
-    "contact" : "If something is wrong here, we would love to hear from you so we can fix it. Join our Discord by visiting the contact link in the menu.",
+    "correction" : "Contributed Corrections",
+    "contact" : "Due to changes in the organization, we are no longer able to keep up with changes and fixes. You can read more about this at our blog post on the subject. However, if there is a problem or update needed to the information above, we encourage you to submit a Contribution below and to visit the contributions of others. These are still lightly moderated to ensure they are done in good faith.",
     "changelog-note" : "* older dates may be inaccurate due to tech changes along the way",
     "search-text" : "Search for a listing below of use the filters to browse.",
     "search-placeholder" : "Enter name to search"

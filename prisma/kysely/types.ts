@@ -18,7 +18,6 @@ export type Change = {
 export type Contribution = {
     id: Generated<number>;
     name: string;
-    open: Generated<boolean>;
     stageId: number;
     createdAt: Generated<Timestamp>;
     authorId: number | null;
@@ -30,6 +29,7 @@ export type ContributionCategory = {
 };
 export type ContributionComment = {
     id: Generated<number>;
+    approved: Generated<boolean>;
     comment: string;
     contributionId: number;
     authorId: number;
