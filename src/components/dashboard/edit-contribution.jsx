@@ -8,8 +8,6 @@ import Select from 'react-select';
 import AsyncSelect from 'react-select/async';
 import Link from 'next/link'
 
-import WYSIWYGEditor from './editors/wysiwyg-editor';
-
 export default function EditContribution({ contribution, availableCategories, availableStages }) {
 
   const t = useTranslations('Dashboard');
@@ -87,6 +85,22 @@ export default function EditContribution({ contribution, availableCategories, av
     }
   }
 
+  const deleteComment = (comment) => {
+    if(window.confirm(t('delete-comment-confirm'))) {
+      fetch(`/api/contribution/comment/${comment.id}`, {
+        method : "DELETE"
+      }).then(resp => resp.json()).then(results => {
+        if(results.error) {
+          toast(results.error)
+        } else {
+          setTimeout(() => {
+            window.location.reload();
+          }, 500)
+        }
+      })
+    }
+  }
+
   const loadOptions = (inputValue, callback) => {
     if(inputValue.length >= 2) {
       fetch(`/api/entry/searcher?s=${inputValue}`).then(resp => resp.json()).then(response => {
@@ -157,16 +171,6 @@ export default function EditContribution({ contribution, availableCategories, av
         : false}
 
       </div>
-      {/* <div className="w-full">
-
-        <div className="mt-2.5">
-          <div className="mt-2.5">
-            <label className="text-gray-800 text-normal mb-1 block font-bold">{t('starting-comment')}</label>
-            <WYSIWYGEditor text={comment} setText={(text) => setComment(text)} />
-          </div>
-        </div>
-
-      </div>*/}
 
 
       <div className="w-full md:w-1/2">
@@ -189,7 +193,29 @@ export default function EditContribution({ contribution, availableCategories, av
 
       </div>
 
-        <div className="flex">
+      <div className="w-full md:1/2 mt-8">
+        {contribution.comments.map((comment, i) => {
+          return (
+            <div key={`comment-${i}`} className="mb-4">
+              <div key={`comment-${i}`} className="border border-gray-100 rounded-lg p-4 shadow-sm">
+                <div dangerouslySetInnerHTML={{ __html: comment.comment }} />
+                <button onClick={() => deleteComment(comment)} className="mt-2 py-1 px-2 text-sm tracking-wide rounded-lg text-white bg-red-600 hover:bg-red-700 focus:outline-none">
+                  {tCommon('delete')}
+                </button>
+              </div>
+              <div className="grid grid-cols-2">
+                <div className="text-left text-[10px] mt-1 text-gray-400 italic">
+                </div>
+                <div className="text-right text-[10px] mt-1 text-gray-400 italic">
+                  {comment.author.name} ({new Date(comment.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })})
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      <div className="flex">
         <div className="w-full md:w-1/2">
           <div className="!mt-8">
             <button onClick={() => saveContribution()} className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">

@@ -49,6 +49,7 @@ export default async function Page({ params : { locale, id } }) {
                 .whereRef('ContributionComment.id', '=', 'ContributionMedia.contributionCommentId')
             ).as('media'),
           ])
+          .orderBy('ContributionComment.createdAt')
           .whereRef('Contribution.id', '=', 'ContributionComment.contributionId')
       ).as('comments'),
       jsonArrayFrom(

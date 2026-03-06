@@ -43,15 +43,15 @@ export default function SearchResults() {
         <div className="col-span-2 mt-5">
           <div className="pb-4 break-words">
             <div className="mt-4 break-words text-left">
-              {!results ? 
-                <p>Please search by typing into the box above.</p> 
+              {!results ?
+                <p>Please search by typing into the box above.</p>
               : false}
             </div>
             <div>
-              {results ? 
+              {results ?
                 <div>
                   <h2 className="nld-font-h2">{results.totalResults} results</h2>
-                  {results.pages.length > 0 ? 
+                  {results.pages.length > 0 ?
                     <div className="mt-4">
                       {results.pages.map((pageResult, i) => {
                         return (
@@ -62,7 +62,7 @@ export default function SearchResults() {
                       })}
                     </div>
                   : false}
-                  {results.entries.length > 0 ? 
+                  {results.entries.length > 0 ?
                     <div className="mt-4">
                       {results.entries.map((entryResult, i) => {
                         return (

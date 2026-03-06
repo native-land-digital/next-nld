@@ -53,3 +53,31 @@ export const PATCH = async (req, route) => {
     return NextResponse.json({ error : `You do not have permission to access this endpoint` }, { status: 500 });
   }
 }
+
+export const DELETE = async (req, route) => {
+  const token = await getToken({ req })
+
+	if(token && token.id) {
+
+		if(token.global_permissions.find(perm => perm.entity === "contributions")) {
+  		const { id: commentId } = route.params;
+
+  		try {
+
+        await db.deleteFrom('ContributionComment')
+          .where('id', '=', Number(commentId))
+          .execute();
+
+  			return NextResponse.json({ commentId });
+  		} catch (error) {
+  			console.error(error);
+
+  			return NextResponse.json({ error : "Something went wrong deleting the comment" }, { status: 500 });
+  		}
+  	} else {
+      return NextResponse.json({ error : `You do not have permission to access this endpoint` }, { status: 500 });
+  	}
+	} else {
+    return NextResponse.json({ error : `You do not have permission to access this endpoint` }, { status: 500 });
+	}
+}
