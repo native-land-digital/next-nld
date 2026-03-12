@@ -1,6 +1,9 @@
 import { db } from '@/lib/db/kysely'
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
+import ContributionTemplate from '@/root/emails/contribution-template'
+import * as React from 'react'
+import { sendEmail } from '@/lib/auth/email-actions'
 
 export const POST = async (req) => {
   const token = await getToken({ req })
@@ -13,8 +16,6 @@ export const POST = async (req) => {
 	  	if (!body.name) {
 	  		return NextResponse.json({ error : "Please provide a name" }, { status: 400 });
       }
-
-    console.log(body)
 
 	  	try {
 	      // Inserting into db
@@ -64,6 +65,12 @@ export const POST = async (req) => {
   					.returningAll()
   				  .execute()
         }
+
+        await sendEmail({
+    			 to: "victor@native-land.ca",
+    			 subject: 'New Contribution Created',
+           react: React.createElement(ContributionTemplate, { comment: body.comment, contributionId : contribution.id }),
+  			})
 
         return NextResponse.json({
 	  			id : contribution.id
