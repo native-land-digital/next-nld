@@ -258,14 +258,6 @@ export default async function FrontPage() {
             </a>
           </div>
           <div>
-            <a href="https://www.vancity.com/">
-              <img className="m-auto w-40" src="https://d75cfcm8x0ifj.cloudfront.net/vancity-logo.webp" alt="Vancity logo" />
-            </a>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 w-2/3 m-auto mt-8 pb-16">
-          <div></div>
-          <div>
             <a href="https://mapster.me/">
               <img className="m-auto w-40" src="https://d75cfcm8x0ifj.cloudfront.net/mapster-tech-logo.webp" alt="Mapster Technology Inc logo" />
             </a>
@@ -275,7 +267,6 @@ export default async function FrontPage() {
               <img className="m-auto" src="https://d75cfcm8x0ifj.cloudfront.net/awana-digital-logo.png" alt="Awana Digital logo" />
             </a>
           </div>
-          <div></div>
         </div>
       </div>
       <div className="bg-white py-24 pb-40 bg-cover bg-no-repeat" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/river-bg-small-trans.png')" }}>
