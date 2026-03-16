@@ -101,7 +101,7 @@ export default async function Page({ params : { locale, id }}) {
                 )
               })}
             </div>
-            <AddComment contributionId={contribution.id} />
+            {/* <AddComment contributionId={contribution.id} />*/}
           </div>
         </div>
       </HeaderSessionProvider>

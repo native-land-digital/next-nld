@@ -8,7 +8,7 @@ export const isMobile = () => {
 
 export const entryQuery = (query) => {
   if(query && query.length > 2) {
-    return fetch(`/api/entry/searcher?s=${query.toLowerCase()}&category=languages,territories,treaties&geosearch=true`)
+    return fetch(`/api/entry/searcher?s=${query.toLowerCase()}&category=languages,treaties&geosearch=true`)
       .then(resp => resp.json())
       .then(response => {
         const features = response.map((entry, i) => {

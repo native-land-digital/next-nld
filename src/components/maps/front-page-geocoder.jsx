@@ -20,16 +20,8 @@ export default function FrontPageGeocoder({  }) {
       externalGeocoder : entryQuery
     });
     geocoder.on('result', ({ result }) => {
-      let querystring = `bbox=${JSON.stringify(result.bbox)}&center=${result.center}`
-      if(result.category) {
-        querystring += `&category=${result.category}`
-      }
-      console.log(result.category);
-      if(result.category && result.category !== "territories") {
-        router.push(`/maps/native-land?${querystring}`);
-      } else {
-        router.push(`/maps/constellation?${querystring}`);
-      }
+      let querystring = `center=${result.center}`
+      router.push(`/place?${querystring}`);
     })
     geocoder.addTo('#front-page-geocoder');
   }, [])

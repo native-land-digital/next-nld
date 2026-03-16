@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 import { makeBoundsFromPoly, isMobile } from '@/components/maps/map-utils';
 
-export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, territoryOptions, languageOptions, treatyOptions }) {
+export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, languageOptions, treatyOptions }) {
 
     const t = useTranslations('FrontMap');
     const tMaps = useTranslations('Listings');
@@ -69,18 +69,18 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
       })
     }
 
-    const loadTerritoryOptions = (inputValue, callback) => {
-      if(inputValue.length >= 3) {
-        fetch(`/api/entry/searcher?s=${inputValue}&category=territories`).then(resp => resp.json()).then(response => {
-          callback(response.map(entry => {
-            return {
-              value : entry.id,
-              label : entry.name
-            }
-          }));
-        })
-      }
-    };
+    // const loadTerritoryOptions = (inputValue, callback) => {
+    //   if(inputValue.length >= 3) {
+    //     fetch(`/api/entry/searcher?s=${inputValue}&category=territories`).then(resp => resp.json()).then(response => {
+    //       callback(response.map(entry => {
+    //         return {
+    //           value : entry.id,
+    //           label : entry.name
+    //         }
+    //       }));
+    //     })
+    //   }
+    // };
 
     const loadLanguageOptions = (inputValue, callback) => {
       if(inputValue.length >= 3) {
@@ -157,7 +157,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
 
           {showFilters ?
             <div className="w-72 nld-text-sm nld-text-teal-100 m-4 nld-bg-blue-800-10 rounded-xl p-2.5">
-              <div className="flex items-center ">
+              {/* <div className="flex items-center ">
                 <Switch
                   checked={currentLayers.indexOf('territories') > -1}
                   onChange={(checked) => adjustCurrentLayers(checked, 'territories')}
@@ -168,8 +168,8 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                   checkedIcon={false}
                   handleDiameter={15} />
                 <p className="ml-2.5 inline">{t('territories')}</p>
-              </div>
-              <div className="mt-2.5 flex items-center">
+              </div>*/}
+              <div className="flex items-center">
                 <Switch
                   checked={currentLayers.indexOf('languages') > -1}
                   onChange={(checked) => adjustCurrentLayers(checked, 'languages')}
@@ -212,7 +212,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
         </div>
 
         <div className={`${showFilters ? 'block' : 'hidden'} lg:block p-4 pt-0 w-80 `}>
-          <div>
+          {/* <div>
             <AsyncSelect
               instanceId="territories-select"
               className="nld-select"
@@ -232,7 +232,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
               defaultOptions={territoryOptions.map(territory => { return { value : territory.id, label : territory.name }})}
               cacheOptions
               loadOptions={loadTerritoryOptions} />
-          </div>
+          </div> */}
           <div className="mt-2.5">
             <AsyncSelect
               instanceId="languages-select"
@@ -275,7 +275,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
 
         {selectedFeatures.length > 0 ?
           <div className={
-            !isMobile() ? 
+            !isMobile() ?
               `nld-text-sm nld-text-teal-100 m-4 mt-0 nld-bg-blue-800-10 rounded-xl p-2.5 relative transition ease-in-out ${resultsSlided ? 'w-full -translate-x-64' : ''}`
             :
               `pointer-events-none fixed min-h-[33vh] overflow-y-scroll w-full bottom-0 nld-text-sm nld-text-teal-100 bg-white rounded-t-xl p-2.5 z-[999] transition ease-in-out ${resultsSlided ? 'translate-y-[33vh]' : ''}`
@@ -297,7 +297,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 </svg>
               }
             </div>
-            {isMobile() ? 
+            {isMobile() ?
               <div>
                 <h3 className="nld-text-md nld-text-grey-500 font-semibold">Listings</h3>
                 <p className="mt-2.5 italic nld-text-grey-300">{t('contact-nations')}</p>
@@ -316,7 +316,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                   })}
                 </ul>
               </div>
-             : 
+             :
               <div>
                 <p className="font-italic lg:font-normal mb-1.5">{t('contact-nations')}</p>
                 <ul className="list-none">
