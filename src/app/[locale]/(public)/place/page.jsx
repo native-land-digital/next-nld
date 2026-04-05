@@ -35,8 +35,6 @@ export default async function Home({ params: { locale }, searchParams: { center,
       .execute()
   }
 
-  console.log(entries);
-
   const territories = entries.filter(entry => entry.category === "territories");
   const languages = entries.filter(entry => entry.category === "languages");
   const treaties = entries.filter(entry => entry.category === "treaties");
@@ -54,6 +52,9 @@ export default async function Home({ params: { locale }, searchParams: { center,
             {!center || center.length < 2 ?
               <div>Search a place above to see results.</div>
               : false}
+            {entries && entries.length === 0 ?
+              <div className="mt-8 text-lg">No results found for this search.</div>
+            : false}
             <div className="grid grid-cols-1 md:grid-cols-3">
               {territories.length > 0 ?
                 <div>

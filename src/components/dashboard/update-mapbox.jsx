@@ -9,6 +9,7 @@ export default function UpdateMapbox() {
   const updateMapbox = async (category) => {
     if(window.confirm(`Are you sure you want to update the ${category} tileset? This may take up to 30 seconds to complete, please be patient.`)) {
       fetch(`/api/entry/mapbox?category=${category}`).then(resp => resp.json()).then(results => {
+        console.log(results)
         if(results.error) {
           toast(results.error)
         } else {
@@ -35,6 +36,8 @@ export default function UpdateMapbox() {
       <div className="grid grid-cols-1 md:grid-cols-6 mt-2.5 h-20">
         <button className="mt-2.5 md:mt-0 md:col-span-1 border bg-gray-100 hover:bg-gray-300 border-gray-300 px-4 py-3 rounded md:ml-2.5" onClick={() => updateMapbox('territories-points')}>Update Peoples Points</button>
         <button className="mt-2.5 md:mt-0 md:col-span-1 border bg-gray-100 hover:bg-gray-300 border-gray-300 px-4 py-3 rounded md:ml-2.5" onClick={() => updateMapbox('territories-tin')}>Update Peoples Network</button>
+        <button className="mt-2.5 md:mt-0 md:col-span-1 border bg-gray-100 hover:bg-gray-300 border-gray-300 px-4 py-3 rounded md:ml-2.5" onClick={() => updateMapbox('languages-points')}>Update Peoples Points (Language)</button>
+        <button className="mt-2.5 md:mt-0 md:col-span-1 border bg-gray-100 hover:bg-gray-300 border-gray-300 px-4 py-3 rounded md:ml-2.5" onClick={() => updateMapbox('languages-tin')}>Update Peoples Network (Language)</button>
       </div>
     </div>
   );
