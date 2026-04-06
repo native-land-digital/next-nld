@@ -50,9 +50,9 @@ export default async function Home({ params: { locale }, searchParams: { center,
               <FrontPageGeocoder initialValue={placename} />
             </div>
             {!center || center.length < 2 ?
-              <div>Search a place above to see results.</div>
-              : false}
-            {entries && entries.length === 0 ?
+              <div className="mt-8 text-lg">Search a place above to see results.</div>
+            : false}
+            {center && entries && entries.length === 0 ?
               <div className="mt-8 text-lg">No results found for this search.</div>
             : false}
             <div className="grid grid-cols-1 md:grid-cols-3">

@@ -19,6 +19,9 @@ export const searchableFiles = [{
   name : "Why It Matters",
   path : 'about/why-it-matters/en.mdx'
 },{
+  name : "What We Map",
+  path : 'about/what-we-map/en.mdx'
+},{
   name : "Contact",
   path : 'contact/en.mdx'
 },{
