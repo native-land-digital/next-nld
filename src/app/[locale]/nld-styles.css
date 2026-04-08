@@ -326,7 +326,7 @@
   @apply list-disc;
   @apply list-outside;
 }
-.static-page ul li {
+.static-page ul:not(.suggestions) li {
   @apply mt-1.5;
   @apply nld-text-md;
   @apply nld-font-noto;

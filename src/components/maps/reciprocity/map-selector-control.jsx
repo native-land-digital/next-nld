@@ -48,7 +48,7 @@ export default function SelectorControl({ map, selectedFeature, risksRenewalsOpt
 
     return (
 
-      <div className="lg:h-auto w-full lg:w-80 absolute z-10 left-0 top-0 font-noto-sans">
+      <div className="mt-8 lg:mt-0 lg:h-auto w-full lg:w-80 absolute z-10 left-0 top-0 font-noto-sans">
         <div className="w-full lg:w-80">
           <div className="w-72 m-4 nld-bg-blue-800-10 rounded-full lg:rounded-xl p-0 lg:p-2.5">
             <div className="hidden lg:flex">
@@ -109,10 +109,10 @@ export default function SelectorControl({ map, selectedFeature, risksRenewalsOpt
               loadOptions={loadRisksRenewalsOptions} />
           </div>
         </div>
-        
+
         {selectedFeature ?
           <div className={
-            !isMobile() ? 
+            !isMobile() ?
               `nld-text-sm nld-text-teal-100 m-4 mt-0 nld-bg-blue-800-10 rounded-xl p-2.5 relative transition ease-in-out ${resultsSlided ? 'w-full -translate-x-64' : ''}`
             :
               `fixed h-[33vh] w-full bottom-0 nld-text-sm nld-text-teal-100 bg-white rounded-t-xl p-2.5 z-[999] transition ease-in-out ${resultsSlided ? 'translate-y-[33vh]' : ''}`
@@ -132,14 +132,14 @@ export default function SelectorControl({ map, selectedFeature, risksRenewalsOpt
                 </svg>
               }
             </div>
-            {isMobile() ? 
+            {isMobile() ?
               <div>
                 <h3 className="nld-text-md nld-text-grey-500 font-semibold">Listings</h3>
                 <p className="mt-2.5 italic nld-text-grey-300">{t('contact-nations')}</p>
                 <ul className="mt-4 list-none">
                   <li>
                     <Link className="nld-text-grey-500 flex items-center" prefetch={false} href={process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'preview' ? selectedFeature.properties.description.substring(selectedFeature.properties.description.indexOf('/')) : selectedFeature.properties.description} target="_blank">
-                      {selectedFeature.properties.Name} 
+                      {selectedFeature.properties.Name}
                       <svg className="ml-2.5" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7.33301 2.66699C7.70109 2.66699 7.99982 2.96497 8 3.33301C8 3.7012 7.7012 4 7.33301 4H3.33301C3.15639 4.00009 2.98724 4.07047 2.8623 4.19531C2.73728 4.32034 2.66699 4.49018 2.66699 4.66699V12.667C2.66708 12.8437 2.73736 13.0127 2.8623 13.1377C2.98725 13.2626 3.15631 13.3329 3.33301 13.333H11.333C11.5098 13.333 11.6797 13.2627 11.8047 13.1377C11.9295 13.0128 11.9999 12.8436 12 12.667V8.66699C12 8.2988 12.2988 8 12.667 8C13.035 8.00018 13.333 8.29891 13.333 8.66699V12.667C13.3329 13.1973 13.1221 13.7061 12.7471 14.0811C12.372 14.4559 11.8633 14.667 11.333 14.667H3.33301C2.80269 14.6669 2.29394 14.4561 1.91895 14.0811C1.54395 13.7061 1.33309 13.1973 1.33301 12.667V4.66699C1.33301 4.13671 1.54408 3.62797 1.91895 3.25293C2.29394 2.87793 2.80269 2.66708 3.33301 2.66699H7.33301ZM14 1.33301C14.0426 1.33301 14.085 1.33856 14.127 1.34668C14.1505 1.35122 14.1727 1.35926 14.1953 1.36621C14.2155 1.3724 14.2362 1.37662 14.2559 1.38477C14.2762 1.39322 14.2943 1.40568 14.3135 1.41602C14.332 1.42599 14.3514 1.43443 14.3691 1.44629C14.4423 1.49514 14.5049 1.55773 14.5537 1.63086C14.5656 1.6486 14.574 1.66797 14.584 1.68652C14.5943 1.70575 14.6068 1.72384 14.6152 1.74414C14.6234 1.76375 14.6276 1.78453 14.6338 1.80469C14.6529 1.86677 14.667 1.93165 14.667 2V6C14.667 6.36819 14.3682 6.66699 14 6.66699C13.6318 6.66699 13.333 6.36819 13.333 6V3.61035L8.47168 8.47168C8.21133 8.73201 7.78866 8.73202 7.52832 8.47168C7.26799 8.21134 7.26799 7.78867 7.52832 7.52832L12.3896 2.66699H10C9.63181 2.66699 9.33301 2.36819 9.33301 2C9.33301 1.63181 9.63181 1.33301 10 1.33301H14Z" fill="#29646F"/>
                       </svg>
@@ -147,7 +147,7 @@ export default function SelectorControl({ map, selectedFeature, risksRenewalsOpt
                   </li>
                 </ul>
               </div>
-            : 
+            :
               <ul className="list-none">
                 <li>
                   <Link className="font-semibold nld-text-teal-100 hover:underline" prefetch={false} href={process.env.VERCEL_ENV && process.env.VERCEL_ENV === 'preview' ? selectedFeature.properties.description.substring(selectedFeature.properties.description.indexOf('/')) : selectedFeature.properties.description} target="_blank">{selectedFeature.properties.Name} ↗</Link>

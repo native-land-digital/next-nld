@@ -9,13 +9,13 @@ import TogglesControl from "@/components/maps/constellation/map-toggles-control"
 import { isMobile } from '@/components/maps/map-utils';
 
 export default function MapContainer({
-  territoryOptions
+  languageOptions
 }) {
-  const allLayers = ["territories"];
+  const allLayers = ["languages"];
   const [map, setMap] = useState(false);
   const [modalOpen, setModalOpen] = useState(true);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
-  const [currentLayers, setCurrentLayers] = useState(["territories"]);
+  const [currentLayers, setCurrentLayers] = useState(["languages"]);
 
   useEffect(() => {
     document.querySelector("body").classList.add("no-footer");
@@ -34,7 +34,7 @@ export default function MapContainer({
     if(map) {
       map.on('load', () => {
         const urlParams = new URLSearchParams(window.location.search);
-        
+
         const categoryParam = urlParams.get('category');
         if(categoryParam) {
           setCurrentLayers([categoryParam]);
@@ -64,7 +64,7 @@ export default function MapContainer({
         setCurrentLayers={setCurrentLayers}
         selectedFeatures={selectedFeatures}
         setSelectedFeatures={setSelectedFeatures}
-        territoryOptions={territoryOptions}
+        languageOptions={languageOptions}
       />
       <TogglesControl allLayers={allLayers} map={map} setModalOpen={setModalOpen} />
       <Map

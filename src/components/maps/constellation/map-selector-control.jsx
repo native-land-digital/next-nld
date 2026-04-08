@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import { makeBoundsFromPoly, isMobile } from '@/components/maps/map-utils';
 
-export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, territoryOptions }) {
+export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, languageOptions }) {
 
     const t = useTranslations('FrontMap');
 
@@ -67,9 +67,9 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
       })
     }
 
-    const loadTerritoryOptions = (inputValue, callback) => {
+    const loadLanguageOptions = (inputValue, callback) => {
       if(inputValue.length >= 3) {
-        fetch(`/api/entry/searcher?s=${inputValue}&category=territories`).then(resp => resp.json()).then(response => {
+        fetch(`/api/entry/searcher?s=${inputValue}&category=languages`).then(resp => resp.json()).then(response => {
           callback(response.map(entry => {
             return {
               value : entry.id,
@@ -81,7 +81,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
     };
 
     return (
-      <div className="lg:h-auto w-full lg:w-80 absolute z-10 left-0 top-0 font-noto-sans">
+      <div className="mt-8 lg:mt-0 lg:h-auto w-full lg:w-80 absolute z-10 left-0 top-0 font-noto-sans">
         <div className="w-full lg:w-80 ">
           <div className="w-72 m-4 nld-bg-blue-800-10 rounded-full lg:rounded-xl p-0 lg:p-2.5">
             <div className="hidden lg:flex">
@@ -122,7 +122,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
         <div className={`${showFilters ? 'block' : 'hidden'} lg:block p-4 pt-0 w-80 `}>
           <div>
             <AsyncSelect
-              instanceId="territories-select"
+              instanceId="languages-select"
               className="nld-select"
               classNamePrefix="nld-select"
               placeholder={
@@ -133,19 +133,19 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                     <path d="M11.4258 6.11426C11.6999 6.00073 12.002 5.97142 12.293 6.0293C12.5838 6.08723 12.8509 6.22977 13.0605 6.43945C13.2702 6.64913 13.4128 6.91622 13.4707 7.20703C13.5286 7.498 13.4993 7.80013 13.3857 8.07422C13.2722 8.34823 13.0796 8.58229 12.833 8.74707C12.5864 8.91182 12.2966 9 12 9C11.6022 9 11.2208 8.84185 10.9395 8.56055C10.6581 8.27924 10.5 7.89782 10.5 7.5C10.5 7.2034 10.5882 6.91363 10.7529 6.66699C10.9177 6.42038 11.1518 6.2278 11.4258 6.11426Z" fill="#A0C6CD"/>
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.25C13.6576 1.25 15.2468 1.90895 16.4189 3.08105C17.591 4.25316 18.25 5.8424 18.25 7.5C18.25 10.3947 16.8593 12.6447 15.457 14.1777C14.0556 15.7097 12.6257 16.5445 12.501 16.6172L12.499 16.6182C12.3479 16.7045 12.177 16.75 12.0029 16.75C11.8289 16.75 11.658 16.7045 11.5068 16.6182C11.3756 16.5435 9.94508 15.71 8.54395 14.1797C7.14085 12.6472 5.75 10.397 5.75 7.5C5.75 5.8424 6.40895 4.25316 7.58105 3.08105C8.75316 1.90895 10.3424 1.25 12 1.25ZM12 3.25C10.8728 3.25 9.79215 3.69809 8.99512 4.49512C8.19809 5.29215 7.75 6.37283 7.75 7.5C7.75 9.40413 8.5581 10.9965 9.51855 12.2168C10.4039 13.3416 11.4106 14.1377 12 14.5537C12.5889 14.1381 13.5951 13.3425 14.4805 12.2178C15.4412 10.9973 16.25 9.40435 16.25 7.5C16.25 6.37283 15.8019 5.29215 15.0049 4.49512C14.2079 3.69809 13.1272 3.25 12 3.25Z" fill="#A0C6CD"/>
                   </svg>
-                  <div className="ml-2.5">{t('search-nations')}</div>
+                  <div className="ml-2.5">{t('search-languages')}</div>
                 </div>
               }
-              onChange={(e) => selectDropdown(e.value, 'territories')}
-              defaultOptions={territoryOptions.map(territory => { return { value : territory.id, label : territory.name }})}
+              onChange={(e) => selectDropdown(e.value, 'languages')}
+              defaultOptions={languageOptions.map(language => { return { value : language.id, label : language.name }})}
               cacheOptions
-              loadOptions={loadTerritoryOptions} />
+              loadOptions={loadLanguageOptions} />
           </div>
         </div>
 
         {selectedFeatures.length > 0 ?
           <div className={
-            !isMobile() ? 
+            !isMobile() ?
               `nld-text-sm nld-text-teal-100 m-4 mt-0 nld-bg-blue-800-10 rounded-xl p-2.5 relative transition ease-in-out ${resultsSlided ? 'w-full -translate-x-64' : ''}`
             :
               `pointer-events-none fixed min-h-[33vh] overflow-y-scroll w-full bottom-0 nld-text-sm nld-text-teal-100 bg-white rounded-t-xl p-2.5 z-[999] transition ease-in-out ${resultsSlided ? 'translate-y-[33vh]' : ''}`
@@ -167,7 +167,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                 </svg>
               }
             </div>
-            {isMobile() ? 
+            {isMobile() ?
               <div>
                 <h3 className="nld-text-md nld-text-grey-500 font-semibold">Listings</h3>
                 <p className="mt-2.5 italic nld-text-grey-300">{t('contact-nations')}</p>
@@ -186,7 +186,7 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
                   })}
                 </ul>
               </div>
-             : 
+             :
               <div>
                 <p className="font-italic lg:font-normal mb-1.5">{t('contact-nations')}</p>
                 <ul className="list-none">

@@ -20,8 +20,8 @@ export default async function Home({ params : { locale } }) {
   setLocaleCache(locale);
 
   // Querying for select2 list initial options
-  const territoryOptions = await db.selectFrom('Entry')
-    .where('category', '=', 'territories')
+  const languageOptions = await db.selectFrom('Entry')
+    .where('category', '=', 'languages')
     .where('published', '=', true)
     .select(['id', 'name'])
     .limit(25)
@@ -37,7 +37,7 @@ export default async function Home({ params : { locale } }) {
 
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
-      <MapContainer territoryOptions={territoryOptions} />
+      <MapContainer languageOptions={languageOptions} />
       <AIChatbot />
     </div>
   );
