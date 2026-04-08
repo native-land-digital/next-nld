@@ -1,6 +1,5 @@
 import { db } from '@/lib/db/kysely'
 import { sql } from 'kysely';
-import { availableLocales } from '@/i18n/config'
 import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
 import Link from 'next/link'
 
@@ -23,7 +22,7 @@ export default async function Home({ params: { locale }, searchParams: { center,
     const centerPoint = center.split(',');
     entries = await db.selectFrom('Entry')
       .leftJoin('Polygon', 'Polygon.entryId', 'Entry.id')
-      .select((eb) => [
+      .select([
         'Entry.id', 'Entry.name', 'Entry.category', 'Entry.slug',
       ])
       .where(sql`

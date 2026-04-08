@@ -18,17 +18,17 @@ export default function EditContribution({ contribution, availableCategories, av
   const [ stageId, setStageId ] = useState(contribution.stageId);
   const [ categories, setCategories ] = useState(contribution.categories.map(cat => cat.id));
   const [entries, setEntries] = useState(contribution.entries)
-  const [comment, setComment] = useState("")
+  // const [comment, setComment] = useState("")
 
   const [allowedColumns, setAllowedColumns] = useState([]);
 
-  useEffect(() => {
-    if (contribution) {
-      if (contribution.comments.length > 0) {
-        setComment(contribution.comments[0].comment)
-      }
-    }
-  }, [contribution])
+  // useEffect(() => {
+  //   if (contribution) {
+  //     if (contribution.comments.length > 0) {
+  //       setComment(contribution.comments[0].comment)
+  //     }
+  //   }
+  // }, [contribution])
 
   useEffect(() => {
     if(session && session.user) {

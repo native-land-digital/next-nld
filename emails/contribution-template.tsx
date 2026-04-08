@@ -1,8 +1,8 @@
-import { Body, Container, Column, Head, Heading, Html, Img, Link, Preview, Row, Section, Text } from "@react-email/components";
+import { Body, Container, Head, Heading, Html, Img, Preview, Section, Text } from "@react-email/components";
 
 interface ContributionEmailProps {
   comment?: string;
-  contributionId?: int;
+  contributionId?: number;
 }
 
 const baseUrl = process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL : "";

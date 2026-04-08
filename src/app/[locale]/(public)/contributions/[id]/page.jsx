@@ -1,19 +1,14 @@
 import { db } from '@/lib/db/kysely'
 import { jsonObjectFrom, jsonArrayFrom } from 'kysely/helpers/postgres'
 import SubHeader from '@/components/nav/sub-header'
-import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
-import { authOptions } from "@/root/auth";
+import { setLocaleCache } from '@/i18n/server-i18n';
 import { HeaderSessionProvider } from '@/lib/auth/session-provider'
-import { getServerSession } from "next-auth/next"
 
-import AddComment from '@/components/contributions/add-comment';
 import EditComment from '@/components/contributions/edit-comment';
 
 export default async function Page({ params : { locale, id }}) {
 
   setLocaleCache(locale);
-  const session = await getServerSession(authOptions);
-  const t = await getTranslations('Contributions');
 
   const contribution = await db.selectFrom('Contribution')
     .where('Contribution.id', '=', parseInt(id))

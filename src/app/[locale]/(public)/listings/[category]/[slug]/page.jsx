@@ -10,7 +10,7 @@ import Pronunciations from '@/components/listings/pronunciations';
 import Greetings from '@/components/listings/greetings';
 import Websites from '@/components/listings/websites';
 import Related from '@/components/listings/related';
-import Media from '@/components/listings/media';
+// import Media from '@/components/listings/media';
 import Changelog from '@/components/listings/changelog';
 import Disclaimer from '@/components/listings/disclaimer';
 import AddContribution from '@/components/contributions/add-contribution';
