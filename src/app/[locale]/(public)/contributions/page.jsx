@@ -1,13 +1,10 @@
-import { db } from '@/lib/db/kysely'
-import { jsonObjectFrom, jsonArrayFrom } from 'kysely/helpers/postgres'
 import SubHeader from '@/components/nav/sub-header'
-import { setLocaleCache, getTranslations } from '@/i18n/server-i18n';
+import { setLocaleCache } from '@/i18n/server-i18n';
 import { HeaderSessionProvider } from '@/lib/auth/session-provider'
 
 export default async function Page({ params: { locale } }) {
 
   setLocaleCache(locale);
-  const t = await getTranslations('Contributions');
 
   return (
     <div className="bg-white pb-5">

@@ -1,10 +1,9 @@
 
 'use client'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
 import { useSession } from "next-auth/react";
 import { toast } from 'react-toastify';
-import { navigate } from '@/lib/actions'
 
 import WYSIWYGEditor from '@/components/dashboard/editors/wysiwyg-editor';
 

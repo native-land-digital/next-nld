@@ -1,6 +1,4 @@
 import { db } from '@/lib/db/kysely'
-import { sql } from 'kysely';
-import { jsonObjectFrom, jsonArrayFrom } from 'kysely/helpers/postgres'
 import { submitRevalidation } from '@/lib/actions'
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt"
@@ -110,7 +108,7 @@ export const PATCH = async (req, route) => {
         // Return full modified entry
         const entry = await db.selectFrom('Contribution')
           .where('Contribution.id', '=', parseInt(contributionId))
-          .select((eb) => [
+          .select([
             'Contribution.id', 'Contribution.name'
           ])
           .executeTakeFirst()
@@ -118,7 +116,7 @@ export const PATCH = async (req, route) => {
         // Ensure associated paths are now invalidated for next load
         submitRevalidation(`/dashboard/contributions`);
         submitRevalidation(`/dashboard/contributions/${contributionId}`);
-        const result = submitRevalidation(`/contributions/${contributionId}`);
+        submitRevalidation(`/contributions/${contributionId}`);
         submitRevalidation(`/en/contributions/${contributionId}`);
 
         return NextResponse.json({ entry });
