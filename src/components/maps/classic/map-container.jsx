@@ -7,15 +7,14 @@ import SelectorControl from "@/components/maps/classic/map-selector-control";
 import TogglesControl from "@/components/maps/classic/map-toggles-control";
 
 export default function MapContainer({
-  territoryOptions,
   languageOptions,
   treatyOptions,
 }) {
-  const allLayers = ["territories", "languages", "treaties", "greetings"];
+  const allLayers = ["languages", "treaties", "greetings"];
   const [map, setMap] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
-  const [currentLayers, setCurrentLayers] = useState(["territories"]);
+  const [currentLayers, setCurrentLayers] = useState(["languages"]);
 
   useEffect(() => {
     document.querySelector("body").classList.add("no-footer");
@@ -26,7 +25,7 @@ export default function MapContainer({
     if(map) {
       map.on('load', () => {
         const urlParams = new URLSearchParams(window.location.search);
-        
+
         const categoryParam = urlParams.get('category');
         if(categoryParam) {
           setCurrentLayers([categoryParam]);
@@ -59,7 +58,6 @@ export default function MapContainer({
         setCurrentLayers={setCurrentLayers}
         selectedFeatures={selectedFeatures}
         setSelectedFeatures={setSelectedFeatures}
-        territoryOptions={territoryOptions}
         languageOptions={languageOptions}
         treatyOptions={treatyOptions}
       />

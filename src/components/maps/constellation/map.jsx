@@ -111,7 +111,7 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
       if (timestamp - lastPulseUpdate > 50) {
         pulseTime = (pulseTime + 0.1) % (Math.PI * 2);
 
-        map.setPaintProperty('nation-small-dots', 'circle-radius', 
+        map.setPaintProperty('nation-small-dots', 'circle-radius',
         [
           '+',
           2.5,
@@ -209,7 +209,7 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
             0
           ]);
 
-          const pointLayer = map.getStyle().layers.find(layer => layer['source-layer'].indexOf('nld_terr_p_') > -1)
+          const pointLayer = map.getStyle().layers.find(layer => layer['source-layer'].indexOf('nld_lang_p_') > -1)
           const pointLayerSource = pointLayer['source-layer'];
 
           let storedFeatureIDs = []
@@ -266,7 +266,7 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
   return (
     <>
       <div id="nld-mapbox-map" className="w-full h-dvh lg:h-full"></div>
-      {!isMobile() && hoveredFeatures.length > 0 ? 
+      {!isMobile() && hoveredFeatures.length > 0 ?
         <div className="absolute nld-text-sm nld-text-teal-100 m-4 mt-0 nld-bg-blue-800-10 rounded-xl p-2.5 top-0 left-1/2 -translate-x-1/2 mt-8 shadow-lg">
           {hoveredFeatures.map((feature, i) => {
             return (

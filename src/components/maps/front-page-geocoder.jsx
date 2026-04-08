@@ -8,7 +8,7 @@ import { entryQuery } from '@/components/maps/map-utils';
 
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-export default function FrontPageGeocoder({  }) {
+export default function FrontPageGeocoder({ initialValue = false }) {
 
   const router = useRouter();
   const t = useTranslations('FrontMap');
@@ -16,20 +16,12 @@ export default function FrontPageGeocoder({  }) {
   useEffect(() => {
     const geocoder = new MapboxGeocoder({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
-      placeholder : t('search-front'),
+      placeholder : initialValue ? initialValue : t('search-front'),
       externalGeocoder : entryQuery
     });
     geocoder.on('result', ({ result }) => {
-      let querystring = `bbox=${JSON.stringify(result.bbox)}&center=${result.center}`
-      if(result.category) {
-        querystring += `&category=${result.category}`
-      }
-      console.log(result.category);
-      if(result.category && result.category !== "territories") {
-        router.push(`/maps/native-land?${querystring}`);
-      } else {
-        router.push(`/maps/constellation?${querystring}`);
-      }
+      let querystring = `center=${result.center}&placename=${result.place_name}`
+      router.push(`/place?${querystring}`);
     })
     geocoder.addTo('#front-page-geocoder');
   }, [])
