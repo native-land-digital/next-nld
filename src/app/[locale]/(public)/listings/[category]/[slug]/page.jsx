@@ -164,7 +164,7 @@ export default async function Page({ params : { locale, category, slug }}) {
       />
       <div className="w-full lg:w-3/5 min-h-screen m-auto mt-12 text-black">
         <div class="p-4 mb-8 text-lg text-white font-semibold rounded-base nld-bg-green-500 rounded-lg" role="alert">
-          <span class="font-medium">Does your nation want control of this page?</span> Fill out this Google Form to start the process of getting direct access.
+          <span class="font-medium">Does your nation want control of this page?</span> Fill out <a href="https://forms.gle/AyU2f1Nke19mgUg79" target="_blank">this Google Form</a> to start the process of getting direct access.
         </div>
         <div className="col-span-2 mt-5">
           <div className="px-4 pb-4 break-words">
