@@ -8,7 +8,7 @@ import { entryQuery } from '@/components/maps/map-utils';
 
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
-export default function FrontPageGeocoder({ initialValue = false }) {
+export default function FrontPageGeocoder({ initialValue = false, placePage = false }) {
 
   const router = useRouter();
   const t = useTranslations('FrontMap');
@@ -27,6 +27,6 @@ export default function FrontPageGeocoder({ initialValue = false }) {
   }, [])
 
   return (
-    <div id="front-page-geocoder" />
+    <div id="front-page-geocoder" className={`${placePage ? "geocoder-place-search" : ""}`} />
   )
 }

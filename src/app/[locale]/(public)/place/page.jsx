@@ -42,57 +42,59 @@ export default async function Home({ params: { locale }, searchParams: { center,
     <div className="font-[sans-serif] bg-white pb-5">
       <SubHeader title={t('place-search')} crumbs={[{ url : "/place", title : "Place Search" }]} />
       <Sidebar />
-      <div className="w-full lg:w-3/5 min-h-screen m-auto mt-12 text-black static-page">
-        <div className="col-span-2 mt-5">
-          <div className="px-4 pb-4 break-words">
-            <div className="text-sm">
-              <FrontPageGeocoder initialValue={placename} />
+      <div className="bg-white bg-cover bg-no-repeat" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/river-bg-small-trans.png')" }}>
+        <div className="w-full lg:w-3/5 min-h-screen m-auto mt-12 text-black static-page">
+          <div className="col-span-2 mt-5">
+            <div className="px-4 pb-4 break-words">
+              <div className="text-sm">
+                <FrontPageGeocoder initialValue={placename} placePage={true} />
+              </div>
+              {!center || center.length < 2 ?
+                <div className="mt-8 text-lg">Search a place above to see results.</div>
+              : false}
+              {center && entries && entries.length === 0 ?
+                <div className="mt-8 text-lg">No results found for this search.</div>
+              : false}
+              <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                {territories.length > 0 ?
+                  <div className="nld-bg-yellow-500 rounded-lg p-6">
+                    <div className="mt-0 text-2xl font-semibold">Nations</div>
+                    {territories.map((entry, i) => {
+                      return (
+                        <div key={`entry-result-${i}`}>
+                          <p><Link className="nld-text-teal-100 nld-text-lg" prefetch={false} href={`/listings/${entry.category}/${entry.slug}`}>{entry.name}</Link></p>
+                        </div>
+                      )
+                    })}
+                  </div>
+                : false}
+                {languages.length > 0 ?
+                  <div className="nld-bg-green-500 rounded-lg p-6">
+                    <div className="mt-0 text-2xl font-semibold">Languages</div>
+                    {languages.map((entry, i) => {
+                      return (
+                        <div key={`entry-result-${i}`}>
+                          <p><Link className="nld-text-teal-100 nld-text-lg" prefetch={false} href={`/listings/${entry.category}/${entry.slug}`}>{entry.name}</Link></p>
+                        </div>
+                      )
+                    })}
+                  </div>
+                : false}
+                {treaties.length > 0 ?
+                  <div className="nld-bg-teal-100 rounded-lg p-6">
+                    <div className="mt-0 text-2xl font-semibold">Treaties</div>
+                    {treaties.map((entry, i) => {
+                      return (
+                        <div key={`entry-result-${i}`}>
+                          <p><Link className="nld-text-teal-100 nld-text-lg" prefetch={false} href={`/listings/${entry.category}/${entry.slug}`}>{entry.name}</Link></p>
+                        </div>
+                      )
+                    })}
+                  </div>
+                : false}
+              </div>
+              <AIChatbot />
             </div>
-            {!center || center.length < 2 ?
-              <div className="mt-8 text-lg">Search a place above to see results.</div>
-            : false}
-            {center && entries && entries.length === 0 ?
-              <div className="mt-8 text-lg">No results found for this search.</div>
-            : false}
-            <div className="grid grid-cols-1 md:grid-cols-3">
-              {territories.length > 0 ?
-                <div>
-                  <h2>Nations</h2>
-                  {territories.map((entry, i) => {
-                    return (
-                      <div key={`entry-result-${i}`}>
-                        <p><Link className="nld-text-teal-100 nld-text-lg" prefetch={false} href={`/listings/${entry.category}/${entry.slug}`}>{entry.name}</Link></p>
-                      </div>
-                    )
-                  })}
-                </div>
-              : false}
-              {languages.length > 0 ?
-                <div>
-                  <h2>Languages</h2>
-                  {languages.map((entry, i) => {
-                    return (
-                      <div key={`entry-result-${i}`}>
-                        <p><Link className="nld-text-teal-100 nld-text-lg" prefetch={false} href={`/listings/${entry.category}/${entry.slug}`}>{entry.name}</Link></p>
-                      </div>
-                    )
-                  })}
-                </div>
-              : false}
-              {treaties.length > 0 ?
-                <div>
-                  <h2>Treaties</h2>
-                  {treaties.map((entry, i) => {
-                    return (
-                      <div key={`entry-result-${i}`}>
-                        <p><Link className="nld-text-teal-100 nld-text-lg" prefetch={false} href={`/listings/${entry.category}/${entry.slug}`}>{entry.name}</Link></p>
-                      </div>
-                    )
-                  })}
-                </div>
-              : false}
-            </div>
-            <AIChatbot />
           </div>
         </div>
       </div>

@@ -20,13 +20,16 @@ export default async function FrontPage() {
             <p className="nld-font-jost nld-font-h2 nld-text-grey-200">{t('welcome')}</p>
             <h2 className="nld-font-jost nld-font-display-mobile lg:text-80px/[96px] lg: mt-4">{t('native-land-digital')}</h2>
             <p className="mt-4 nld-font-lg">{t('welcome-blurb')}</p>
+            <div className="mt-4 w-full">
+              <FrontPageGeocoder />
+            </div>
+            <hr className="mt-4 opacity-40" />
             <div className="mt-4 grid grid-cols-1 lg:grid-cols-6 gap-4 w-full">
-              <div className="col-span-1 lg:col-span-4">
-                <FrontPageGeocoder />
-              </div>
-              <div className="col-span-1 lg:col-span-2">
+              <div className="col-span-1 lg:col-span-3">
                 <Link prefetch={false} href="/maps/constellation" className="block rounded-full nld-bg-green-500 nld-text-grey-500 font-semibold px-4 py-2.5 text-center">{t('explore-map')}</Link>
-                <div className="text-center mt-2.5"><Link className="text-[14px] italic nld-text-grey-200" href="/maps/native-land" prefetch={false}>or visit the classic map</Link></div>
+              </div>
+              <div className="col-span-1 lg:col-span-3">
+                <Link prefetch={false} href="/maps/native-land" className="block rounded-full nld-bg-grey-500 nld-text-green-500 font-semibold px-4 py-2.5 text-center">Explore Classic Map</Link>
               </div>
             </div>
           </div>
@@ -249,22 +252,14 @@ export default async function FrontPage() {
         <div className="max-w-7xl m-auto px-4 lg:px-16 pt-16 text-center">
           <h2 className="nld-font-jost nld-font-h2 nld-text-grey-500 font-medium">{t('our-partners')}</h2>
           <p className="nld-font-lg nld-text-grey-500 mt-4">{t('our-partners-text')}</p>
-          <p className="mt-4"><a className="nld-text-teal-500 font-semibold" href="">{t('our-partners-link')}</a></p>
+          <p className="mt-4"><a className="nld-text-teal-500 font-semibold" href="/about/partners-and-contributors">{t('our-partners-link')}</a></p>
         </div>
-        <div className="max-w-7xl m-auto grid grid-cols-1 lg:grid-cols-3 gap-8 w-2/3 m-auto mt-8">
+        <div className="max-w-7xl m-auto grid grid-cols-1 lg:grid-cols-3 gap-8 w-2/3 m-auto mt-8 pb-8">
           <div>
             <a href="https://mapbox.com/">
               <img className="m-auto w-40" src="https://d75cfcm8x0ifj.cloudfront.net/mapbox-logo.webp" alt="Mapbox logo" />
             </a>
           </div>
-          <div>
-            <a href="https://www.vancity.com/">
-              <img className="m-auto w-40" src="https://d75cfcm8x0ifj.cloudfront.net/vancity-logo.webp" alt="Vancity logo" />
-            </a>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 w-2/3 m-auto mt-8 pb-16">
-          <div></div>
           <div>
             <a href="https://mapster.me/">
               <img className="m-auto w-40" src="https://d75cfcm8x0ifj.cloudfront.net/mapster-tech-logo.webp" alt="Mapster Technology Inc logo" />
@@ -275,7 +270,6 @@ export default async function FrontPage() {
               <img className="m-auto" src="https://d75cfcm8x0ifj.cloudfront.net/awana-digital-logo.png" alt="Awana Digital logo" />
             </a>
           </div>
-          <div></div>
         </div>
       </div>
       <div className="bg-white py-24 pb-40 bg-cover bg-no-repeat" style={{ backgroundImage : "url('https://d75cfcm8x0ifj.cloudfront.net/river-bg-small-trans.png')" }}>
