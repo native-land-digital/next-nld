@@ -479,13 +479,14 @@ export const DELETE = async (req, route) => {
 		if(token.global_permissions.find(perm => perm.entity === "research")) {
   		const { id: entryId } = route.params;
 
-  		try {
+      try {
+        console.log(entryId)
 
         const entry = await db.deleteFrom('Entry')
           .where('id', '=', Number(entryId))
           .execute();
 
-  			return NextResponse.json({ entry });
+  			return NextResponse.json({ success : true });
   		} catch (error) {
   			console.error(error);
 
