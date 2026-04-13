@@ -480,9 +480,8 @@ export const DELETE = async (req, route) => {
   		const { id: entryId } = route.params;
 
       try {
-        console.log(entryId)
 
-        const entry = await db.deleteFrom('Entry')
+        await db.deleteFrom('Entry')
           .where('id', '=', Number(entryId))
           .execute();
 
