@@ -41,6 +41,7 @@
     "@turf/tin": "^7.3.1",
     "@types/crypto-js": "^4.2.2",
     "@types/mdx": "^2.0.13",
+    "@vuvandinh203/react-flipbook": "^1.0.2",
     "ai": "^4.2.2",
     "aws-crt": "^1.22.0",
     "aws-sdk": "^2.1691.0",

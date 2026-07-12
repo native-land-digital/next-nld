@@ -14,7 +14,7 @@ export default async function FrontPage() {
 
   return (
     <div>
-      <div className="min-h-screen w-full nld-bg-blue-800 bg-cover bg-bottom lg:bg-right bg-no-repeat bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg-mobile-3-stars.jpg')] lg:bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg-stars.jpg')]">
+      <div className="relative min-h-screen w-full nld-bg-blue-800 bg-cover bg-bottom lg:bg-right bg-no-repeat bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg-mobile-3-stars.jpg')] lg:bg-[url('https://d75cfcm8x0ifj.cloudfront.net/map-bg-stars.jpg')]">
         <div className="max-w-7xl m-auto grid grid-cols-1 lg:grid-cols-2 text-left px-4 lg:px-12 items-start lg:items-center h-screen">
           <div className="pt-40 lg:pt-0">
             <p className="nld-font-jost nld-font-h2 nld-text-grey-200">{t('welcome')}</p>
@@ -32,10 +32,35 @@ export default async function FrontPage() {
                 <Link prefetch={false} href="/maps/native-land" className="block rounded-full nld-bg-grey-500 nld-text-green-500 font-semibold px-4 py-2.5 text-center">Explore Classic Map</Link>
               </div>
             </div>
+            <div className="mt-4 w-full">
+            </div>
           </div>
         </div>
+        <Link prefetch={false} href="/resources/zine" className="block absolute z-10 group left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:right-[22%]" style={{ bottom: '-80px' }}>
+          <span className="block text-center text-white/60 text-xs tracking-widest uppercase mb-3">The NLD Zine · Vol. 1</span>
+          <div className="relative" style={{ width: '340px', height: '300px' }}>
+            <img
+              src="https://next-nld-uploads.s3.us-west-2.amazonaws.com/zine/1/split-05-L.jpg"
+              alt=""
+              className="absolute bottom-0 rounded shadow-2xl"
+              style={{ width: '200px', left: '0px', transform: 'rotate(-12deg)', transformOrigin: 'bottom center' }}
+            />
+            <img
+              src="https://next-nld-uploads.s3.us-west-2.amazonaws.com/zine/1/split-09-R.jpg"
+              alt=""
+              className="absolute bottom-0 rounded shadow-2xl"
+              style={{ width: '200px', right: '0px', transform: 'rotate(10deg)', transformOrigin: 'bottom center' }}
+            />
+            <img
+              src="https://d75cfcm8x0ifj.cloudfront.net/zine/1/page-01.jpg"
+              alt="NLD Zine cover"
+              className="absolute bottom-0 rounded shadow-2xl transition-transform duration-300 group-hover:-translate-y-3"
+              style={{ width: '200px', left: '70px', transform: 'rotate(-1deg)', transformOrigin: 'bottom center' }}
+            />
+          </div>
+        </Link>
       </div>
-      <div className="nld-bg-teal-500">
+      <div className="nld-bg-teal-500 pt-28">
         <div className="max-w-7xl m-auto grid grid-cols-1 lg:grid-cols-3 p-4 lg:p-12 py-20 gap-0 lg:gap-12">
           <div className="col-span-1 border-0 lg:border-r lg:border-white/20">
             <h2 className="nld-font-jost nld-font-h1 text-white font-semibold">{t('welcome-glad')}</h2>
