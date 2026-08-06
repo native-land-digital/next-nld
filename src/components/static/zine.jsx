@@ -5,11 +5,11 @@ import { ReactFlipBook } from '@vuvandinh203/react-flipbook';
 
 const PAGE_ASPECT = 1100 / 850;
 const MOBILE_BREAKPOINT = 768;
-const TOTAL_PAGES = 65;
+const TOTAL_PAGES = 6;
 
 const pages = [
   'https://next-nld-uploads.s3.us-west-2.amazonaws.com/zine/1/page-01.jpg',
-  ...Array.from({ length: 32 }, (_, i) => {
+  ...Array.from({ length: 3 }, (_, i) => {
     const num = String(i + 2).padStart(2, '0');
     return [`https://next-nld-uploads.s3.us-west-2.amazonaws.com/zine/1/split-${num}-L.jpg`, `https://next-nld-uploads.s3.us-west-2.amazonaws.com/zine/1/split-${num}-R.jpg`];
   }).flat(),
@@ -75,7 +75,7 @@ export default function Zine() {
         )}
       </div>
 
-      <div className="flex items-center gap-2 mt-4 text-sm text-gray-600">
+      {/* <div className="flex items-center gap-2 mt-4 text-sm text-gray-600">
         <span>Page {currentPage} of {TOTAL_PAGES}</span>
         <span>—</span>
         <span>Go to:</span>
@@ -93,7 +93,7 @@ export default function Zine() {
         >
           Go
         </button>
-      </div>
+      </div>*/}
     </div>
   );
 }
