@@ -5,7 +5,7 @@ import { ReactFlipBook } from '@vuvandinh203/react-flipbook';
 
 const PAGE_ASPECT = 1100 / 850;
 const MOBILE_BREAKPOINT = 768;
-const TOTAL_PAGES = 6;
+// const TOTAL_PAGES = 6;
 
 const pages = [
   'https://next-nld-uploads.s3.us-west-2.amazonaws.com/zine/1/page-01.jpg',
@@ -19,8 +19,8 @@ export default function Zine() {
   const containerRef = useRef(null);
   const bookRef = useRef(null);
   const [dims, setDims] = useState(null);
-  const inputRef = useRef(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const inputRef = useRef(null);
+  // const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -31,17 +31,17 @@ export default function Zine() {
     setDims({ pageWidth, pageHeight, isMobile });
   }, []);
 
-  function handlePageChange(page) {
-    setCurrentPage(page + 1);
-  }
+  // function handlePageChange(page) {
+  //   setCurrentPage(page + 1);
+  // }
 
-  function handleGo() {
-    const parsed = parseInt(inputRef.current?.value, 10);
-    if (!isNaN(parsed) && parsed >= 1 && parsed <= TOTAL_PAGES) {
-      bookRef.current?.flip(parsed - 1);
-      inputRef.current.value = '';
-    }
-  }
+  // function handleGo() {
+  //   const parsed = parseInt(inputRef.current?.value, 10);
+  //   if (!isNaN(parsed) && parsed >= 1 && parsed <= TOTAL_PAGES) {
+  //     bookRef.current?.flip(parsed - 1);
+  //     inputRef.current.value = '';
+  //   }
+  // }
 
   return (
     <div className="flex flex-col items-center mt-4 py-4">
@@ -59,7 +59,6 @@ export default function Zine() {
             flippingTime={700}
             drawShadow={true}
             maxShadowOpacity={0.4}
-            onPageChange={handlePageChange}
           >
             {pages.map((src, i) => (
               <div key={i} style={{ width: '100%', height: '100%' }}>
