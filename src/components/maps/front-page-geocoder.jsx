@@ -16,7 +16,8 @@ export default function FrontPageGeocoder({ initialValue = false, placePage = fa
   useEffect(() => {
     const geocoder = new MapboxGeocoder({
       accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
-      placeholder : initialValue ? initialValue : t('search-front'),
+      placeholder: initialValue ? initialValue : t('search-front'),
+      minLength : 4,
       externalGeocoder : entryQuery
     });
     geocoder.on('result', ({ result }) => {
