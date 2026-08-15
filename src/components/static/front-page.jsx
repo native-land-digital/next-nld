@@ -40,13 +40,13 @@ export default async function FrontPage() {
           <span className="block text-center text-white/60 text-xs tracking-widest uppercase mb-3">The NLD Zine · Vol. 1</span>
           <div className="relative" style={{ width: '340px', height: '300px' }}>
             <img
-              src="https://next-nld-uploads.s3.us-west-2.amazonaws.com/zine/1/split-05-L.jpg"
+              src="https://d75cfcm8x0ifj.cloudfront.net/zine/1/split-05-L.jpg"
               alt=""
               className="absolute bottom-0 rounded shadow-2xl"
               style={{ width: '200px', left: '0px', transform: 'rotate(-12deg)', transformOrigin: 'bottom center' }}
             />
             <img
-              src="https://next-nld-uploads.s3.us-west-2.amazonaws.com/zine/1/split-09-R.jpg"
+              src="https://d75cfcm8x0ifj.cloudfront.net/zine/1/split-09-R.jpg"
               alt=""
               className="absolute bottom-0 rounded shadow-2xl"
               style={{ width: '200px', right: '0px', transform: 'rotate(10deg)', transformOrigin: 'bottom center' }}
@@ -118,6 +118,54 @@ export default async function FrontPage() {
           </div>
           <div>
             <img src="https://d75cfcm8x0ifj.cloudfront.net/mission-small.png" alt="Mission" className="w-full h-auto rounded-lg" />
+          </div>
+        </div>
+      </div>
+      <div className="nld-bg-grey-500">
+        <div>
+          <div className="max-w-7xl m-auto grid grid-cols-1 lg:grid-cols-2 py-24 px-4 lg:px-16 gap-12 items-center">
+            <div>
+              <span className="uppercase text-white/60 text-xs tracking-widest">Documentary Short Film</span>
+              <h2 className="nld-font-jost nld-font-h2 text-white font-medium mt-2">AYLLU: Memories and Visions</h2>
+              <p className="nld-font-lg text-white/90 mt-4">An original production executive produced by Native Land Digital, following the Ñamarín Community, Saraguro People, Kichwa Nationality, as they build a water management system rooted in both tradition and innovation.</p>
+              <div className="mt-8">
+                <Link prefetch={false} className="text-white rounded-full border border-white px-4 py-2.5 font-semibold inline-flex items-center" href="/resources/documentary">
+                  Watch the teaser
+                  <svg className="ml-2.5 inline" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.41073 3.57757C9.73616 3.25214 10.2637 3.25214 10.5891 3.57757L16.4224 9.41091C16.4623 9.45075 16.4979 9.49471 16.5291 9.54193C16.5497 9.57317 16.5676 9.60561 16.5836 9.63877C16.6017 9.67643 16.6176 9.71541 16.63 9.75596C16.6351 9.77287 16.6389 9.79009 16.643 9.80723C16.6577 9.86919 16.6666 9.93364 16.6666 10.0001C16.6666 10.0693 16.6564 10.136 16.6405 10.2003C16.6371 10.2144 16.6342 10.2287 16.63 10.2426C16.6175 10.2834 16.6018 10.3227 16.5836 10.3606C16.5669 10.3953 16.5476 10.4289 16.5258 10.4615C16.5153 10.4772 16.5039 10.4922 16.4924 10.5071C16.4707 10.5353 16.4483 10.5635 16.4224 10.5893L10.5891 16.4226C10.2637 16.748 9.73614 16.748 9.41073 16.4226C9.08531 16.0972 9.08535 15.5697 9.41073 15.2442L13.8215 10.8334H4.16659C3.70637 10.8334 3.33329 10.4603 3.33325 10.0001C3.33325 9.53986 3.70635 9.16677 4.16659 9.16677H13.8215L9.41073 4.75596C9.08531 4.43054 9.08535 3.90302 9.41073 3.57757Z" fill="#FFF"/>
+                  </svg>
+                </Link>
+              </div>
+            </div>
+            <Link prefetch={false} href="/resources/documentary" className="group block relative rounded-lg overflow-hidden shadow-2xl" style={{ paddingTop: '56.25%' }}>
+              <img
+                src="https://i.ytimg.com/vi/yQ5HxDoftdg/hqdefault.jpg"
+                alt="AYLLU: Memories and Visions teaser thumbnail"
+                className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+                <div className="rounded-full bg-white/90 p-4">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 5V19L19 12L8 5Z" fill="#23282B"/>
+                  </svg>
+                </div>
+              </div>
+            </Link>
+          </div>
+          <div className="border-t border-white/10 mt-4 pt-10 px-4 lg:px-16 pb-16">
+            <p className="text-center text-white/60 text-xs uppercase tracking-widest mb-6">Official Selections & Honors — 9 Festivals Worldwide</p>
+            <div className="flex flex-wrap items-center justify-center gap-6 lg:gap-10">
+              {[
+                { name: 'Maoriland Film Festival', logo: 'https://d75cfcm8x0ifj.cloudfront.net/maoriland-2.png' },
+                { name: 'Festival Internacional de Cine y Comunicación de los Pueblos Indígenas', logo: 'https://d75cfcm8x0ifj.cloudfront.net/clacpi.png' },
+                { name: "Festival international Présence autochtone", logo: 'https://d75cfcm8x0ifj.cloudfront.net/festival-autochtone.png' },
+                { name: 'Indigenous Cultures Short Film Festival', logo: 'https://d75cfcm8x0ifj.cloudfront.net/incuff.png' },
+                { name: 'RNCI Red Nation International Film Festival & Awards', logo: 'https://d75cfcm8x0ifj.cloudfront.net/red-nation.png' },
+                { name: 'Kunturñawi Ecuadorian Film Festival', logo: 'https://d75cfcm8x0ifj.cloudfront.net/kunturnawi.png' },
+              ].map((fest) => (
+                <img key={fest.name} src={fest.logo} alt={fest.name} title={fest.name} className="h-14 lg:h-16 w-auto object-contain opacity-80 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" />
+              ))}
+            </div>
           </div>
         </div>
       </div>

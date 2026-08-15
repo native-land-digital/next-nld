@@ -8,10 +8,10 @@ const MOBILE_BREAKPOINT = 768;
 // const TOTAL_PAGES = 6;
 
 const pages = [
-  'https://next-nld-uploads.s3.us-west-2.amazonaws.com/zine/1/page-01.jpg',
+  'https://d75cfcm8x0ifj.cloudfront.net/zine/1/page-01.jpg',
   ...Array.from({ length: 3 }, (_, i) => {
     const num = String(i + 2).padStart(2, '0');
-    return [`https://next-nld-uploads.s3.us-west-2.amazonaws.com/zine/1/split-${num}-L.jpg`, `https://next-nld-uploads.s3.us-west-2.amazonaws.com/zine/1/split-${num}-R.jpg`];
+    return [`https://d75cfcm8x0ifj.cloudfront.net/zine/1/split-${num}-L.jpg`, `https://d75cfcm8x0ifj.cloudfront.net/zine/1/split-${num}-R.jpg`];
   }).flat(),
 ];
 
