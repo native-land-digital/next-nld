@@ -10,7 +10,7 @@ export default async function DashboardMenu() {
   const tDash = await getTranslations('Dashboard');
 
   return (
-    <nav className="shadow absolute left-0 top-0 z-99 h-screen w-72 flex-col overflow-y-hidden bg-blue-900 duration-300 ease-linear lg:static lg:translate-x-0 -translate-x-full">
+    <nav className="shadow absolute left-0 top-0 z-[99] h-screen w-72 flex-col overflow-y-hidden bg-blue-900 duration-300 ease-linear lg:static lg:translate-x-0 -translate-x-full">
       <div className="flex items-center gap-2 px-6 py-5.5 mt-5 lg:py-6.5">
         <a href="/">
           <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 504 504" width="60px" height="60px">
