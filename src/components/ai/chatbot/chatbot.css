@@ -19,7 +19,7 @@
   @apply text-black;
 }
 
-.ai-geocoder .mapboxgl-ctrl-geocoder {
+.ai-geocoder .maplibregl-ctrl-geocoder {
   @apply m-auto;
   @apply border;
   @apply border-black;

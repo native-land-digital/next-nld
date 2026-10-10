@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
 import mapboxgl from 'mapbox-gl';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import { createGeocoder } from '@/components/maps/geocoder';
 
 import { getUniqueFeatures, isMobile } from '@/components/maps/map-utils';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css';
 
 export default function MainMap({ map, setMap, setSelectedFeature }) {
 
@@ -109,9 +109,8 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
       const nav = new mapboxgl.NavigationControl();
       map.addControl(nav, "bottom-right");
     }
-    const geocoder = new MapboxGeocoder({
-      accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
-      mapboxgl: mapboxgl,
+    const geocoder = createGeocoder({
+      maplibregl: mapboxgl,
       placeholder : t('search'),
       externalGeocoder : entryQuery,
       flyTo : {
