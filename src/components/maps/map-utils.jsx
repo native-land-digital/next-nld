@@ -18,6 +18,7 @@ export const entryQuery = (query) => {
             place_name : entry.name + ` (${entry.category})`,
             category : entry.category,
             center : entry.centroid.coordinates,
+            geometry : { type : "Point", coordinates : entry.centroid.coordinates },
             bbox : makeBoundsFromPoly(entry)
           }
         })

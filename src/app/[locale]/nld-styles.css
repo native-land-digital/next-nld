@@ -1,5 +1,10 @@
 /* Special from NLD designs */
 
+:root {
+  /* Fallback before Header measures its own rendered height on mount; see header.jsx */
+  --nld-header-bottom: 104px;
+}
+
 /* Fonts */
 .nld-font-jost {
   font-family: "Jost", sans-serif;

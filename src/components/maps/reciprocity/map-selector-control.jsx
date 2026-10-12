@@ -48,7 +48,7 @@ export default function SelectorControl({ map, selectedFeature, risksRenewalsOpt
 
     return (
 
-      <div className="mt-8 lg:mt-0 lg:h-auto w-full lg:w-80 absolute z-10 left-0 top-0 font-noto-sans">
+      <div className="lg:h-auto w-full lg:w-80 absolute z-10 left-0 font-noto-sans" style={{ top : 'var(--nld-header-bottom)' }}>
         <div className="w-full lg:w-80">
           <div className="w-72 m-4 nld-bg-blue-800-10 rounded-full lg:rounded-xl p-0 lg:p-2.5">
             <div className="hidden lg:flex">
