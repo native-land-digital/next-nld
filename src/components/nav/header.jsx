@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
 import { useSession } from "next-auth/react";
 import Link from 'next/link'
@@ -15,9 +15,32 @@ export default function Header() {
   const tDash = useTranslations('Dashboard');
 
   const [ openNav, setOpenNav ] = useState(false);
+  const navRef = useRef(null);
+
+  // Publishes the header's actual rendered bottom edge as a CSS var so
+  // absolutely-positioned page content (e.g. the map search/filter panels)
+  // can sit below it instead of being covered by it.
+  useEffect(() => {
+    const updateHeaderOffset = () => {
+      if(navRef.current) {
+        const bottom = navRef.current.getBoundingClientRect().bottom;
+        document.documentElement.style.setProperty('--nld-header-bottom', `${Math.round(bottom)}px`);
+      }
+    }
+    updateHeaderOffset();
+    window.addEventListener('resize', updateHeaderOffset);
+    const observer = new ResizeObserver(updateHeaderOffset);
+    if(navRef.current) {
+      observer.observe(navRef.current);
+    }
+    return () => {
+      window.removeEventListener('resize', updateHeaderOffset);
+      observer.disconnect();
+    }
+  }, [])
 
   return (
-    <nav className="mt-8 lg:mt-0 flex items-center justify-between flex-wrap py-4 px-3 lg:px-6 absolute z-[99] w-full">
+    <nav ref={navRef} className="mt-8 lg:mt-0 flex items-center justify-between flex-wrap py-4 px-3 lg:px-6 absolute z-[99] w-full">
       <Logo />
       <MobileMenu session={session} />
       <div className={`hidden bg-white p-4 rounded-xl absolute right-0 top-0 mt-4 mx-4 lg:bg-transparent lg:p-0 lg:block w-auto justify-end `}>

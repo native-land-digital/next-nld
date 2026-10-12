@@ -6,7 +6,7 @@ export default function TogglesControl({ setModalOpen,  map }) {
 
     return (
       <div>
-        <div className="m-4 absolute right-0 bottom-0 mb-16 lg:mb-4 lg:top-0 z-[5] lg:z-10 pointer-events-none">
+        <div className="m-4 absolute right-0 bottom-0 mb-16 lg:mb-4 lg:top-[var(--nld-header-bottom)] z-[5] lg:z-10 pointer-events-none">
           <Link prefetch={false} className="block rounded-full border nld-border-teal-100 nld-bg-blue-800 p-2.5 cursor-pointer pointer-events-auto hover:bg-sky-800" href="/">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M16 17L21 12L16 7" stroke="#A0C6CD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

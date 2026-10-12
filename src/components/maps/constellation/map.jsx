@@ -4,12 +4,12 @@ import mapboxgl from 'mapbox-gl';
 import circle from '@turf/circle';
 import bbox from '@turf/bbox';
 import booleanContains from '@turf/boolean-contains';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import { createGeocoder } from '@/components/maps/geocoder';
 
 import { randomStartingPosition, createSetFeatureCollection, entryQuery, getUniqueFeatures, isMobile } from '@/components/maps/map-utils';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css';
 
 export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, currentLayers }) {
 
@@ -79,9 +79,8 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
       const nav = new mapboxgl.NavigationControl();
       map.addControl(nav, "bottom-right");
     }
-    const geocoder = new MapboxGeocoder({
-      accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
-      mapboxgl: mapboxgl,
+    const geocoder = createGeocoder({
+      maplibregl: mapboxgl,
       placeholder : t('search'),
       externalGeocoder : entryQuery,
       flyTo : {
