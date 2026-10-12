@@ -1,5 +1,10 @@
 /* Special from NLD designs */
 
+:root {
+  /* Fallback before Header measures its own rendered height on mount; see header.jsx */
+  --nld-header-bottom: 104px;
+}
+
 /* Fonts */
 .nld-font-jost {
   font-family: "Jost", sans-serif;
@@ -385,7 +390,14 @@
 }
 
 /* Geocoders */
-#nld_geocoder .mapboxgl-ctrl-geocoder, #front-page-geocoder .mapboxgl-ctrl-geocoder {
+/* MapLibre geocoder used as a control on a Mapbox GL map needs the mapboxgl-ctrl behaviour */
+.mapboxgl-ctrl-top-left .maplibregl-ctrl-geocoder {
+  pointer-events: auto;
+  float: left;
+  clear: both;
+  margin: 10px 0 0 10px;
+}
+#nld_geocoder .maplibregl-ctrl-geocoder, #front-page-geocoder .maplibregl-ctrl-geocoder {
   @apply w-full;
   @apply mt-2.5;
   @apply shadow-none;
@@ -397,46 +409,46 @@
   @apply nld-text-teal-100;
   @apply text-[16px];
 }
-#front-page-geocoder.geocoder-place-search .mapboxgl-ctrl-geocoder {
+#front-page-geocoder.geocoder-place-search .maplibregl-ctrl-geocoder {
   @apply p-2;
   @apply rounded-lg;
   @apply text-[20px];
 }
-#front-page-geocoder .mapboxgl-ctrl-geocoder {
+#front-page-geocoder .maplibregl-ctrl-geocoder {
   @apply mt-0;
   @apply max-w-full;
 }
-#front-page-geocoder .mapboxgl-ctrl-geocoder--input, #nld_geocoder .mapboxgl-ctrl-geocoder--input {
+#front-page-geocoder .maplibregl-ctrl-geocoder--input, #nld_geocoder .maplibregl-ctrl-geocoder--input {
   @apply border;
   @apply rounded-full;
   @apply nld-border-teal-100;
   @apply nld-bg-blue-800-10;
   @apply nld-text-teal-100;
 }
-#front-page-geocoder.geocoder-place-search .mapboxgl-ctrl-geocoder--input {
+#front-page-geocoder.geocoder-place-search .maplibregl-ctrl-geocoder--input {
   @apply border;
   @apply rounded-full;
   @apply nld-border-teal-100;
   @apply bg-white;
   @apply nld-text-teal-500;
 }
-#front-page-geocoder.geocoder-place-search .mapboxgl-ctrl-geocoder--input::placeholder{
+#front-page-geocoder.geocoder-place-search .maplibregl-ctrl-geocoder--input::placeholder{
   @apply nld-text-teal-500;
 }
-#nld_geocoder .mapboxgl-ctrl-geocoder--input::placeholder, #front-page-geocoder .mapboxgl-ctrl-geocoder--input::placeholder {
+#nld_geocoder .maplibregl-ctrl-geocoder--input::placeholder, #front-page-geocoder .maplibregl-ctrl-geocoder--input::placeholder {
   @apply nld-text-teal-100;
 }
-#front-page-geocoder.geocoder-place-search .mapboxgl-ctrl-geocoder--icon-search {
+#front-page-geocoder.geocoder-place-search .maplibregl-ctrl-geocoder--icon-search {
   @apply top-[17px];
   @apply left-[12px];
 }
-#nld_geocoder .mapboxgl-ctrl-geocoder--icon-search, #front-page-geocoder .mapboxgl-ctrl-geocoder--icon-search {
+#nld_geocoder .maplibregl-ctrl-geocoder--icon-search, #front-page-geocoder .maplibregl-ctrl-geocoder--icon-search {
   @apply top-[11px];
 }
-#nld_geocoder .mapboxgl-ctrl-geocoder--icon-close, #front-page-geocoder .mapboxgl-ctrl-geocoder--icon-close {
+#nld_geocoder .maplibregl-ctrl-geocoder--icon-close, #front-page-geocoder .maplibregl-ctrl-geocoder--icon-close {
   @apply mt-[8px];
 }
-#nld_geocoder .mapboxgl-ctrl-geocoder--button, #front-page-geocoder .mapboxgl-ctrl-geocoder--button {
+#nld_geocoder .maplibregl-ctrl-geocoder--button, #front-page-geocoder .maplibregl-ctrl-geocoder--button {
   background: transparent;
 }
 .nld-select .nld-select__control {

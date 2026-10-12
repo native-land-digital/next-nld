@@ -1,7 +1,7 @@
 'use client'
 import React, { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import { createGeocoder } from '@/components/maps/geocoder';
 
 const MessageParser = ({ children, actions }) => {
 
@@ -12,8 +12,7 @@ const MessageParser = ({ children, actions }) => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN;
     if(!geocoderCreated) {
       geocoderCreated = true;
-      const geocoder = new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
+      const geocoder = createGeocoder({
         placeholder : "Search for a place you're interested in..."
       });
       geocoder.on('result', async (e) => {

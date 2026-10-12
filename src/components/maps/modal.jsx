@@ -6,7 +6,7 @@ export default function MapModal({ setModalOpen, modalOpen, headerText, bodyText
   const t = useTranslations('DisclaimerModal');
 
   return (
-    <div className={`${modalOpen ? 'opacity-100' : 'opacity-0 hidden'} front-page-modal h-full w-full size-full fixed top-0 start-0 z-[80] opacity-0 overflow-x-hidden transition-all overflow-y-auto pointer-events-none`} role="dialog" tabIndex="-1">
+    <div className={`${modalOpen ? 'opacity-100' : 'opacity-0 hidden'} front-page-modal h-full w-full size-full fixed top-0 start-0 z-[110] opacity-0 overflow-x-hidden transition-all overflow-y-auto pointer-events-none`} role="dialog" tabIndex="-1">
       <div className="sm:max-w-2xl sm:w-full m-3 sm:mx-auto">
         <div className="flex flex-col nld-bg-teal-50 shadow-sm rounded-xl pointer-events-auto p-4">
           <div className="flex justify-between items-center py-3 px-4">

@@ -2,14 +2,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
 import mapboxgl from 'mapbox-gl';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import { createGeocoder } from '@/components/maps/geocoder';
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import combine from "@turf/combine";
 import bbox from "@turf/bbox";
 import { toast } from 'react-toastify';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 
 export default function MapEditor({ geometry_type, geometry, setGeometry }) {
@@ -122,9 +122,8 @@ export default function MapEditor({ geometry_type, geometry, setGeometry }) {
   const addControls = () => {
     const nav = new mapboxgl.NavigationControl();
     map.addControl(nav, "bottom-right");
-    const geocoder = new MapboxGeocoder({
-      accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
-      mapboxgl: mapboxgl
+    const geocoder = createGeocoder({
+      maplibregl: mapboxgl
     });
     map.addControl(geocoder, "top-left");
     const newDraw = new MapboxDraw({

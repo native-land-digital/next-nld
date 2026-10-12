@@ -1,12 +1,12 @@
 "use client";
 import { useEffect } from 'react';
 import { useTranslations } from '@/i18n/client-i18n';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import { createGeocoder } from '@/components/maps/geocoder';
 import { useRouter } from 'next/navigation';
 
 import { entryQuery } from '@/components/maps/map-utils';
 
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css';
 
 export default function FrontPageGeocoder({ initialValue = false, placePage = false }) {
 
@@ -14,10 +14,8 @@ export default function FrontPageGeocoder({ initialValue = false, placePage = fa
   const t = useTranslations('FrontMap');
 
   useEffect(() => {
-    const geocoder = new MapboxGeocoder({
-      accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN,
+    const geocoder = createGeocoder({
       placeholder: initialValue ? initialValue : t('search-front'),
-      minLength : 4,
       externalGeocoder : entryQuery
     });
     geocoder.on('result', ({ result }) => {

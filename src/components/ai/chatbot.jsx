@@ -7,7 +7,7 @@ import config from '@/components/ai/chatbot/config.js';
 import MessageParser from '@/components/ai/chatbot/MessageParser.js';
 import ActionProvider from '@/components/ai/chatbot/ActionProvider.jsx';
 
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css';
 import '@/components/ai/chatbot/chatbot.css'
 
 export default function AIChatbot({ startMinimized = true, startClosed = false }) {
