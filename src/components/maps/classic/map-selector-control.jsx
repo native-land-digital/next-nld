@@ -5,8 +5,9 @@ import AsyncSelect from 'react-select/async';
 import Link from 'next/link'
 
 import { makeBoundsFromPoly, isMobile } from '@/components/maps/map-utils';
+import SearchPlacesButton from '@/components/maps/search-places-button';
 
-export default function SelectorControl({ allLayers, map, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, languageOptions, treatyOptions }) {
+export default function SelectorControl({ allLayers, map, geocoder, currentLayers, setCurrentLayers, selectedFeatures, setSelectedFeatures, languageOptions, treatyOptions }) {
 
     const t = useTranslations('FrontMap');
     const tMaps = useTranslations('Listings');
@@ -136,7 +137,10 @@ export default function SelectorControl({ allLayers, map, currentLayers, setCurr
               </svg>
               <p className="ml-2.5 hidden lg:block nld-text-sm nld-text-teal-100">{t('search-address')}</p>
             </div>
-            <div id="nld_geocoder" className="m-0 mt-4" />
+            <div className="nld-geocoder-row mt-4">
+              <div id="nld_geocoder" className="m-0" />
+              {geocoder ? <SearchPlacesButton geocoder={geocoder} label={t('find-address')} iconOnly /> : null}
+            </div>
           </div>
 
           <div onClick={() => setShowFilters(!showFilters)} className="block lg:hidden absolute top-0 right-0 m-4">

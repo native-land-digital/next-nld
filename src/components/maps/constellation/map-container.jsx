@@ -13,6 +13,7 @@ export default function MapContainer({
 }) {
   const allLayers = ["languages"];
   const [map, setMap] = useState(false);
+  const [geocoder, setGeocoder] = useState(false);
   const [modalOpen, setModalOpen] = useState(true);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [currentLayers, setCurrentLayers] = useState(["languages"]);
@@ -60,6 +61,7 @@ export default function MapContainer({
       <SelectorControl
         allLayers={allLayers}
         map={map}
+        geocoder={geocoder}
         currentLayers={currentLayers}
         setCurrentLayers={setCurrentLayers}
         selectedFeatures={selectedFeatures}
@@ -72,6 +74,7 @@ export default function MapContainer({
         map={map}
         currentLayers={currentLayers}
         setMap={setMap}
+        setGeocoder={setGeocoder}
         setSelectedFeatures={setSelectedFeatures}
       />
     </div>
