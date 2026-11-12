@@ -8,6 +8,7 @@ import SelectorControl from '@/components/maps/reciprocity/map-selector-control'
 
 export default function MapContainer({ risksRenewalsOptions }) {
   const [map, setMap] = useState(false);
+  const [geocoder, setGeocoder] = useState(false);
   const [ modalOpen, setModalOpen ] = useState(false);
   const reciprocityLayers = ["next-nld-risks", "next-nld-renewals"];
   const [selectedFeature, setSelectedFeature] = useState(false);
@@ -21,6 +22,7 @@ export default function MapContainer({ risksRenewalsOptions }) {
       <MapModal setModalOpen={setModalOpen} modalOpen={modalOpen} headerText="disclaimer-header" bodyText="reciprocity-disclaimer" footerText="disclaimer-close" />
       <SelectorControl
         map={map}
+        geocoder={geocoder}
         selectedFeature={selectedFeature}
         setSelectedFeature={setSelectedFeature}
         risksRenewalsOptions={risksRenewalsOptions}
@@ -29,6 +31,7 @@ export default function MapContainer({ risksRenewalsOptions }) {
       <Map
         map={map}
         setMap={setMap}
+        setGeocoder={setGeocoder}
         setSelectedFeature={setSelectedFeature}
       />
     </div>

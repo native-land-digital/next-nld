@@ -4,8 +4,9 @@ import AsyncSelect from 'react-select/async';
 import Link from 'next/link'
 
 import { isMobile } from '@/components/maps/map-utils';
+import SearchPlacesButton from '@/components/maps/search-places-button';
 
-export default function SelectorControl({ map, selectedFeature, risksRenewalsOptions }) {
+export default function SelectorControl({ map, geocoder, selectedFeature, risksRenewalsOptions }) {
 
     const t = useTranslations('FrontMap');
     const tMaps = useTranslations('Maps');
@@ -66,7 +67,10 @@ export default function SelectorControl({ map, selectedFeature, risksRenewalsOpt
               </svg>
               <p className="ml-2.5 hidden lg:block nld-text-sm nld-text-teal-100">{tMaps('search-address-risks-renewals')}</p>
             </div>
-            <div id="nld_geocoder" className="m-0 mt-4" />
+            <div className="nld-geocoder-row mt-4">
+              <div id="nld_geocoder" className="m-0" />
+              {geocoder ? <SearchPlacesButton geocoder={geocoder} label={t('find-address')} iconOnly /> : null}
+            </div>
           </div>
         </div>
 

@@ -9,6 +9,7 @@ import SelectorControl from '@/components/maps/placenames/map-selector-control';
 export default function MapContainer({ placenameOptions }) {
 
   const [map, setMap] = useState(false);
+  const [geocoder, setGeocoder] = useState(false);
   const [ modalOpen, setModalOpen ] = useState(false);
   const placenameLayers = ["next-nld-placenames-major", "next-nld-placenames-minor", "next-nld-placenames-mini"];
   const [selectedFeature, setSelectedFeature] = useState(false);
@@ -22,6 +23,7 @@ export default function MapContainer({ placenameOptions }) {
       <MapModal setModalOpen={setModalOpen} modalOpen={modalOpen} headerText="disclaimer-header" bodyText="placenames-disclaimer" footerText="disclaimer-close" />
       <SelectorControl
         map={map}
+        geocoder={geocoder}
         placenameOptions={placenameOptions}
         selectedFeature={selectedFeature}
         setSelectedFeature={setSelectedFeature}
@@ -30,6 +32,7 @@ export default function MapContainer({ placenameOptions }) {
       <Map
         map={map}
         setMap={setMap}
+        setGeocoder={setGeocoder}
         setSelectedFeature={setSelectedFeature}
       />
     </div>
