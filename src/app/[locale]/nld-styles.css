@@ -408,13 +408,18 @@
   @apply nld-border-teal-100;
   @apply nld-text-teal-100;
   @apply text-[16px];
+  /* The library hardcodes min-width: 240px on this element itself, separate
+     from our flex-1 wrapper div -- when the row is narrower than that (e.g.
+     the map sidebar, once a button sits beside it), the control ignores the
+     wrapper and overflows into whatever is next to it */
+  min-width : 0;
 }
 #front-page-geocoder.geocoder-place-search .maplibregl-ctrl-geocoder {
   @apply p-2;
   @apply rounded-lg;
   @apply text-[20px];
 }
-#front-page-geocoder .maplibregl-ctrl-geocoder {
+#front-page-geocoder .maplibregl-ctrl-geocoder, #nld_geocoder .maplibregl-ctrl-geocoder {
   @apply mt-0;
   @apply max-w-full;
 }
@@ -450,6 +455,58 @@
 }
 #nld_geocoder .maplibregl-ctrl-geocoder--button, #front-page-geocoder .maplibregl-ctrl-geocoder--button {
   background: transparent;
+}
+/* Both the map sidebars (.nld-geocoder-row, wrapping #nld_geocoder) and the
+   front page / place page (#front-page-geocoder) show the "find address"
+   action inline beside the search input, sized to the input's own box so
+   the suggestions dropdown (scoped to the input, not this row) never
+   overlaps it */
+.nld-geocoder-row, #front-page-geocoder {
+  @apply flex;
+  @apply items-center;
+}
+#nld_geocoder, #front-page-geocoder .nld-geocoder-input-slot {
+  @apply flex-1;
+  @apply min-w-0;
+}
+/* Margin instead of flex gap -- universally supported, no ambiguity about
+   whether the spacing is actually taking effect */
+.nld-geocoder-row .nld-geocoder-search-places {
+  @apply ml-2;
+}
+#front-page-geocoder .nld-geocoder-search-places {
+  @apply ml-2;
+}
+.nld-geocoder-search-places {
+  @apply flex-shrink-0;
+  @apply whitespace-nowrap;
+  @apply text-sm;
+  @apply px-4;
+  @apply py-1.5;
+  @apply rounded-full;
+  @apply border;
+  @apply nld-border-teal-100;
+  @apply nld-text-teal-100;
+  @apply bg-transparent;
+  @apply cursor-pointer;
+}
+.nld-geocoder-search-places:hover {
+  @apply nld-bg-blue-800-10;
+}
+#front-page-geocoder.geocoder-place-search .nld-geocoder-search-places {
+  @apply nld-border-teal-100;
+  @apply nld-text-teal-500;
+}
+/* Map sidebars: no room for a labelled pill next to the input, so it's an
+   icon-only button instead (label still set via aria-label/title) */
+.nld-geocoder-search-places--icon {
+  @apply px-0;
+  @apply py-0;
+  @apply flex;
+  @apply items-center;
+  @apply justify-center;
+  width: 36px;
+  height: 36px;
 }
 .nld-select .nld-select__control {
   @apply border;

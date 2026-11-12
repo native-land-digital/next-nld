@@ -8,7 +8,7 @@ import { randomStartingPosition, createSetFeatureCollection, entryQuery, getUniq
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css';
 
-export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, currentLayers }) {
+export default function MainMap({ allLayers, map, setMap, setGeocoder, setSelectedFeatures, currentLayers }) {
 
   const t = useTranslations('FrontMap');
 
@@ -94,6 +94,7 @@ export default function MainMap({ allLayers, map, setMap, setSelectedFeatures, c
       }, 500)
     })
     document.getElementById('nld_geocoder').appendChild(geocoder.onAdd(map));
+    setGeocoder(geocoder);
   }
 
   const setLayerEvents = () => {

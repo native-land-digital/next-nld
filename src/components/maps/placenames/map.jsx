@@ -8,7 +8,7 @@ import { randomPlacenameStartingPosition, getUniqueFeatures, isMobile } from '@/
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css';
 
-export default function MainMap({ map, setMap, setSelectedFeature }) {
+export default function MainMap({ map, setMap, setGeocoder, setSelectedFeature }) {
 
   const t = useTranslations('FrontMap');
 
@@ -117,6 +117,7 @@ export default function MainMap({ map, setMap, setSelectedFeature }) {
       }
     });
     document.getElementById('nld_geocoder').appendChild(geocoder.onAdd(map));
+    setGeocoder(geocoder);
   }
 
   return (

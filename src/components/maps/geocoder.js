@@ -8,7 +8,7 @@ const PLACE_MIN_LENGTH = 4;
 // Fetches Mapbox place results. Carmen GeoJSON features (place_name, center,
 // geometry, and optionally bbox)
 const fetchPlaceResults = async (config) => {
-  if(!config.query || config.query.length < PLACE_MIN_LENGTH) {
+  if(!config.query || config.query.length < 2) {
     return [];
   }
   const params = new URLSearchParams({
@@ -61,18 +61,28 @@ const fetchLocalResults = async (localGeocoder, query) => {
 export const createGeocoder = (options = {}) => {
   const { externalGeocoder, ...restOptions } = options;
 
+  // When there's a free local geocoder (site entries) to fall back on, the
+  // paid Mapbox place lookup is billed per request and this geocoder sees
+  // enough volume that firing it on every keystroke was the dominant cost
+  // driver -- so it only runs when explicitly requested via searchPlaces(),
+  // not while typing. Surfaces with no local fallback (map editor, chatbot)
+  // keep searching Mapbox live, since there's nothing else to show.
+  let worldSearchRequested = false;
+
   const geocoderApi = {
     forwardGeocode : async (config) => {
+      const includePlaces = !externalGeocoder || worldSearchRequested;
+      worldSearchRequested = false;
       const [ localFeatures, placeFeatures ] = await Promise.all([
         fetchLocalResults(externalGeocoder, config.query),
-        fetchPlaceResults(config)
+        includePlaces ? fetchPlaceResults(config) : Promise.resolve([])
       ]);
       // Our own entries first, Mapbox place results after
       return { type : "FeatureCollection", features : [ ...localFeatures, ...placeFeatures ] };
     }
   };
 
-  return new MaplibreGeocoder(geocoderApi, {
+  const geocoder = new MaplibreGeocoder(geocoderApi, {
     showResultsWhileTyping : true,
     showResultMarkers : false,
     marker : !!options.maplibregl,
@@ -81,4 +91,13 @@ export const createGeocoder = (options = {}) => {
     getItemValue : (item) => item.place_name,
     ...restOptions
   });
+
+  // Explicitly fires the paid Mapbox place lookup for whatever is currently
+  // typed, bypassing the free entry search that runs live while typing
+  geocoder.searchPlaces = () => {
+    worldSearchRequested = true;
+    geocoder.setInput(geocoder._inputEl.value);
+  };
+
+  return geocoder;
 }
